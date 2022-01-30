@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.1.2
-  # heroku: circleci/heroku@1.2.3 #      CD
+  # heroku: circleci/heroku@1.2.3 # CD
 
 jobs:
   # ci
@@ -34,7 +34,7 @@ jobs:
           path: ~/rails-pk
       - ruby/install-deps
       - run:
-          name: Database setups # (circleci_step名前になる)
+          name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
       - run: # rspec
           name: Rspec
