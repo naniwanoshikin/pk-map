@@ -72,9 +72,9 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
-          requires:
-            - test
-          filters: # mainブランチにマージされた時のみ実行
-            branches:
-              only: main
+      # - deploy:
+      #     requires:
+      #       - test
+      #     filters: # mainブランチにマージされた時のみ実行
+      #       branches:
+      #         only: main
