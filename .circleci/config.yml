@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.1.2
-  # heroku: circleci/heroku@1.2.3 # CD
+  heroku: circleci/heroku@1.2.3 # CD
 
 jobs:
   # ci
@@ -45,7 +45,7 @@ jobs:
   # cd
   deploy:
     docker:
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7
     steps:
       - checkout:
       - setup_remote_docker: # dockerコマンド
