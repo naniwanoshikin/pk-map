@@ -38,7 +38,7 @@ jobs:
           command: bundle exec rails db:migrate
       - run:
           name: Yarn Install
-          command: yarn install
+          command: bundle exec yarn install
       - run: # rspec
           name: Rspec
           command: bundle exec rspec
