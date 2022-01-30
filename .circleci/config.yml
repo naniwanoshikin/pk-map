@@ -33,8 +33,8 @@ jobs:
       - checkout:
           path: ~/rails-pk
       - run:
-          name: yarn Install
-          command: yarn install
+          name: Yarn Install
+          command: bundle exec yarn install
       - run: bundle exec bin/webpack
       - ruby/install-deps
       - run:
