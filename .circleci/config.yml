@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.1.2
-  # heroku: circleci/heroku@1.2.3 # cd用
+  # heroku: circleci/heroku@1.2.3 # cd
 
 jobs:
   # ci
@@ -12,7 +12,7 @@ jobs:
     working_directory: ~/rails-pk/src # gitHubのリポ名
     steps:
       - checkout:
-        path: ~/rails-pk # Gitリポをホームdirにコピー(checkout)
+          path: ~/rails-pk # Gitリポをホームdirにコピー(checkout)
       - ruby/install-deps # bundle install
 
   test:
@@ -78,4 +78,3 @@ workflows:
       #     filters: # mainブランチにマージされた時のみ実行
       #       branches:
       #         only: main
-
