@@ -36,9 +36,6 @@ jobs:
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
-      - run:
-          name: Yarn Install
-          command: bundle exec yarn install
       - run: # rspec
           name: Rspec
           command: bundle exec rspec
