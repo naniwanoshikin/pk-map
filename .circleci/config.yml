@@ -12,7 +12,7 @@ jobs:
     working_directory: ~/rails-pk/src # gitHubのリポ名
     steps:
       - checkout:
-          path: ~/rails-pk # Gitリポをホームdirにコピー(checkout)
+          path: ~/rails-pk # Gitリポをホームdirにコピー
       - ruby/install-deps # bundle install
 
   test:
@@ -36,6 +36,9 @@ jobs:
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
+      - run:
+          name: Yarn Install
+          command: yarn install
       - run: # rspec
           name: Rspec
           command: bundle exec rspec
