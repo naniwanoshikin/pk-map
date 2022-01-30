@@ -17,7 +17,7 @@ jobs:
 
   test:
     docker:
-      - image: cimg/ruby:2.7
+      - image: cimg/ruby:2.7-node # yarn install用に-nodeつけた
       - image: circleci/mysql:5.5
         environment: # (config/database.yml test)
           MYSQL_ROOT_PASSWORD: password
