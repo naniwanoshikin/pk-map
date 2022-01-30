@@ -34,7 +34,7 @@ jobs:
           path: ~/rails-pk
       - ruby/install-deps
       - run:
-          name: Database setups
+          name: Database setups # (circleci_step名前になる)
           command: bundle exec rails db:migrate
       - run: # rspec
           name: Rspec
