@@ -8,16 +8,16 @@ jobs:
   # ci
   build:
     docker:
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7 # circleci -> cimg: bundle installエラー
     working_directory: ~/rails-pk/src # gitHubのリポ名
     steps:
       - checkout:
-          path: ~/rails-pk # Gitリポをホームdirにコピー(checkout)
+          path: ~/rails-pk # Gitリポをホームdirにコピー
       - ruby/install-deps # bundle install
 
   test:
     docker:
-      - image: circleci/ruby:2.7
+      - image: cimg/ruby:2.7-node # yarn install用に-nodeつけた
       - image: circleci/mysql:5.5
         environment: # (config/database.yml test)
           MYSQL_ROOT_PASSWORD: password
@@ -33,6 +33,8 @@ jobs:
       - checkout:
           path: ~/rails-pk
       - ruby/install-deps
+      - run: bundle exec yarn install # Yarn
+      - run: bundle exec rails webpacker:compile # webpacker
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
