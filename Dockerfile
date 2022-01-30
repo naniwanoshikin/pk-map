@@ -1,4 +1,4 @@
-FROM ruby:2.7.4
+FROM ruby:2.7
 
 # Herokuデプロイ時につける
 # ENV RAILS_ENV=production
