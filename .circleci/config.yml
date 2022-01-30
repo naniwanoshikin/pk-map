@@ -31,7 +31,7 @@ jobs:
     working_directory: ~/rails-pk/src
     steps:
       - checkout:
-        path: ~/rails-pk
+          path: ~/rails-pk
       - ruby/install-deps
       - run:
           name: Database setup
