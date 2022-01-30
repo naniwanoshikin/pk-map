@@ -1,0 +1,81 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1.2
+  # heroku: circleci/heroku@1.2.3 # cd用
+
+jobs:
+  # ci
+  build:
+    docker:
+      - image: circleci/ruby:2.7
+    working_directory: ~/rails-pk/src # gitHubのリポ名
+    steps:
+      - checkout:
+        path: ~/rails-pk # Gitリポをホームdirにコピー(checkout)
+      - ruby/install-deps # bundle install
+
+  test:
+    docker:
+      - image: circleci/ruby:2.7
+      - image: circleci/mysql:5.5
+        environment: # (config/database.yml test)
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: app_test
+          MYSQL_USER: root
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      APP_DATABASE_HOST: "127.0.0.1" # (config/database.yml test)
+      RAILS_ENV: test
+    working_directory: ~/rails-pk/src
+    steps:
+      - checkout:
+        path: ~/rails-pk
+      - ruby/install-deps
+      - run:
+          name: Database setup
+          command: bundle exec rails db:migrate
+      - run: # rspec
+          name: Rspec
+          command: bundle exec rspec
+
+  # cd
+  # deploy:
+  #   docker:
+  #     - image: circleci/ruby:2.7
+  #   steps:
+  #     - checkout:
+  #     - setup_remote_docker: # dockerコマンドを使えるようにする
+  #       version: 19.03.13
+  #     - heroku/install # Herokuコマンドを使えるようにする(orbs)
+  #     # localでやったことと同じことをやっている
+  #     - run:
+  #         name: heroku login
+  #         command: heroku container:login
+  #     - run: # imageをpush
+  #         name: push docker image
+  #         command: heroku container:push web -a $HEROKU_APP_NAME
+  #     - run: # imageをrelease
+  #         name: release docker image
+  #         command: heroku container:release web -a $HEROKU_APP_NAME
+  #     - run:
+  #         name: database setup
+  #         command: heroku run bundle exec rake db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      # - deploy:
+      #     requires:
+      #       - test
+      #     filters: # mainブランチにマージされた時のみ実行
+      #       branches:
+      #         only: main
+
