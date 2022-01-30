@@ -8,7 +8,7 @@ jobs:
   # ci
   build:
     docker:
-      - image: cimg/ruby:2.7 # circleci/だとbundle installでエラー
+      - image: cimg/ruby:2.7 # circleci -> cimg: bundle installエラー
     working_directory: ~/rails-pk/src # gitHubのリポ名
     steps:
       - checkout:
@@ -33,8 +33,8 @@ jobs:
       - checkout:
           path: ~/rails-pk
       - ruby/install-deps
-      - run: bundle exec yarn install
-      - run: bundle exec rails webpacker:compile
+      - run: bundle exec yarn install # Yarn
+      - run: bundle exec rails webpacker:compile # webpacker
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
