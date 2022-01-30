@@ -33,7 +33,8 @@ jobs:
       - checkout:
           path: ~/rails-pk
       - ruby/install-deps
-      - run: NODE_ENV=test bundle exec rails webpacker:compile
+      - run: bundle exec yarn install
+      - run: bundle exec rails webpacker:compile
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
