@@ -32,10 +32,7 @@ jobs:
     steps:
       - checkout:
           path: ~/rails-pk
-      - run:
-          name: Yarn Install
-          command: bundle exec yarn install
-      - run: bundle exec bin/webpack
+      - run: bundle exec rake assets:precompile
       - ruby/install-deps
       - run:
           name: Database setup # (circleci_step名)
