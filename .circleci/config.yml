@@ -45,9 +45,9 @@ jobs:
   # cd
   deploy:
     docker:
-      - image: cimg/ruby:2.7
+      - image: circleci/ruby:2.7
     steps:
-      - checkout:
+      - checkout
       - setup_remote_docker: # dockerコマンド
         version: 19.03.13
       - heroku/install
