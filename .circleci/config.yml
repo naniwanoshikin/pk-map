@@ -32,8 +32,8 @@ jobs:
     steps:
       - checkout:
           path: ~/rails-pk
-      - run: bundle exec rake assets:precompile
       - ruby/install-deps
+      - run: bundle exec rake assets:precompile
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
