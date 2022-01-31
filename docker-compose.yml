@@ -17,7 +17,7 @@ services:
     ports:
       - "3000:3000"
     # environment:
-    #   RAILS_ENV: development # 追加
+    #   RAILS_ENV: development # これかかなくていい？
     tty: true # -t
     stdin_open: true # -i
     links:

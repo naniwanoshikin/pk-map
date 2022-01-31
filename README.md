@@ -1,12 +1,26 @@
 # README
-aa
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+
+
+## URL
+https://rails-pk.herokuapp.com/
+
+
+## 使用技術
+* 基本環境
+  * Ruby 2.6.5
+  * Rails 6.1.4
+  * Puma
+  * MySQL 8.0
+  * Docker
+  * docker-compose
+  * Git, Github
+* フロント技術
+
+* 本番環境
+  * CircleCI
 
 Things you may want to cover:
-
-* Ruby version
 
 * System dependencies
 
@@ -23,7 +37,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-
 
 運動する場所を探すためのせめてもの探査アプリ
 seek the SPOT
