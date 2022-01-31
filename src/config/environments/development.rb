@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # 自己責任で本番環境のホストを許可
-  config.hosts << "rails-pk.herokuapp.com"
+  # config.hosts << "rails-pk.herokuapp.com"
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
