@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.1.2
-  # heroku: circleci/heroku@1.2.3 # CD
+  heroku: circleci/heroku@1.2.3 # CD
 
 jobs:
   # ci
@@ -43,40 +43,38 @@ jobs:
           command: bundle exec rspec
 
   # cd
-  # deploy:
-  #   docker:
-  #     - image: circleci/ruby:2.7
-  #   steps:
-  #     - checkout:
-  #     - setup_remote_docker: # dockerコマンドを使えるようにする
-  #       version: 19.03.13
-  #     - heroku/install # Herokuコマンドを使えるようにする(orbs)
-  #     # localでやったことと同じことをやっている
-  #     - run:
-  #         name: heroku login
-  #         command: heroku container:login
-  #     - run: # imageをpush
-  #         name: push docker image
-  #         command: heroku container:push web -a $HEROKU_APP_NAME
-  #     - run: # imageをrelease
-  #         name: release docker image
-  #         command: heroku container:release web -a $HEROKU_APP_NAME
-  #     - run:
-  #         name: database setup
-  #         command: heroku run bundle exec rake db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME
-
+  deploy:
+    docker:
+      - image: circleci/ruby:2.7
+    steps:
+      - checkout
+      - setup_remote_docker: # docker コマンド
+          version: 19.03.13
+      - heroku/install
+      - run:
+          name: heroku login
+          command: heroku container:login
+      - run: # imageをpush
+          name: push docker image
+          command: heroku container:push web -a $HEROKU_APP_NAME
+      - run: # imageをrelease
+          name: release docker image
+          command: heroku container:release web -a $HEROKU_APP_NAME
+      - run: # migrate
+          name: database setup
+          command: heroku run bundle exec rake db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleciアプリ)
 
 workflows:
   version: 2
-  build_and_test:
+  build_test_and_deploy:
     jobs:
       - build
       - test:
           requires:
             - build
-      # - deploy:
-      #     requires:
-      #       - test
-      #     filters: # mainブランチにマージされた時のみ実行
-      #       branches:
-      #         only: main
+      - deploy:
+          requires:
+            - test
+          filters: # mainブランチにマージされた時のみ実行
+            branches:
+              only: main
