@@ -60,9 +60,9 @@ jobs:
       - run: # imageをrelease
           name: release docker image
           command: heroku container:release web -a $HEROKU_APP_NAME
-      - run:
+      - run: # migrate
           name: database setup
-          command: heroku run bundle exec rake db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME
+          command: heroku run bundle exec rake db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleciアプリ)
 
 workflows:
   version: 2
