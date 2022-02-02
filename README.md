@@ -39,7 +39,7 @@ Things you may want to cover:
 * ...
 
 運動する場所を探すためのせめてもの探査アプリ
-seek the SPOT
+PKSpot
 
 スポット情報: 全国のスポットを調べる
 公園一覧
