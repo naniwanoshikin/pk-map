@@ -5,6 +5,11 @@
 ## URL
 https://rails-pk.herokuapp.com/
 
+## 実装機能
+
+### ユーザー関連
+* ユーザー登録 (device)
+
 
 ## 使用技術
 * 基本環境
@@ -12,11 +17,15 @@ https://rails-pk.herokuapp.com/
   * Rails 6.1.4
   * Puma
   * MySQL 8.0
-  * Docker
-  * docker-compose
+  * Docker 20.10.11
+  * docker-compose 1.29.2
   * Git, Github
 * フロント技術
+  * Sass
+  * Bootstrap
 
+* テスト環境
+  * RSpec 3.10
 * 本番環境
   * CircleCI
 
@@ -39,7 +48,10 @@ Things you may want to cover:
 * ...
 
 運動する場所を探すためのせめてもの探査アプリ
-PKSpot
+
+トレーサー情報交換サイト: PKSpot
+
+人気のスポットを紹介！
 
 スポット情報: 全国のスポットを調べる
 公園一覧
@@ -53,4 +65,10 @@ PKSpot
   名前(匿名)
   年齢
   出身
+
+口コミ
+鉄棒よかった〜
+段差がちょうどいい
+
+
 
