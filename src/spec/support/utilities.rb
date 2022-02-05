@@ -1,0 +1,1 @@
+include ApplicationHelper # (helpers/application_helper_spec.rb)
