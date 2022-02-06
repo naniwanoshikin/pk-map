@@ -5,7 +5,7 @@
 
 default: &default
   adapter: mysql2
-  encoding: utf8 # 5 utf8mb4 → utf8
+  encoding: utf8 # 5 utf8mb4から変更
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: password # (docker-compose.yml)
