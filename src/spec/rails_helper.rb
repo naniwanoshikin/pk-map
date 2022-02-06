@@ -38,8 +38,8 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # Factory_botの設定 5 これ合ってる???
-  # config.includeFactoryBot::Syntax::Methods
+  # Factory_botの設定
+  config.include FactoryBot::Syntax::Methods # 5
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

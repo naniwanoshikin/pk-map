@@ -12,7 +12,10 @@ module App
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # デフォルトのlocaleを日本語にする
-    config.i18n.default_locale = :ja # 5
+    # デフォルトのlocaleを日本語にする (5)
+    config.i18n.default_locale = :ja
+
+    # 今後自動でslimに変更 (6)
+    # config.generators.template_engine = :slim
   end
 end
