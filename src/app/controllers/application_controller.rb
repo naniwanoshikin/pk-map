@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   private # 5 rails routes perfix
   def after_sign_in_path_for(resource)
-     root_path # ログイン後のpath
+     about_path # ログイン後のpath
   end
 
   def after_sign_out_path_for(resource)
