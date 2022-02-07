@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
   end
+
+  resources :users, :only => [:show] # 7
 end

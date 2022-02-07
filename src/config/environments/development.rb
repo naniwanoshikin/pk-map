@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # コードの更新がすぐ反映 = false
   config.cache_classes = false
 
   # Do not eager load code on boot.
