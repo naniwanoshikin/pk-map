@@ -12,10 +12,18 @@ module App
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # デフォルトのlocaleを日本語にする (5)
+    # localeを日本語にする (5)
     config.i18n.default_locale = :ja
-
-    # 今後自動でslimに変更 (6)
-    # config.generators.template_engine = :slim
+    # ファイル生成 7
+    config.generators do |g|
+      # rspecにする
+      g.test_framework :rspec,
+        fixtures: true,
+        view_specs: false,
+        helper_specs: false,
+        # routing_specs: false,
+        request_specs: false # , つけない
+      # g.fixture_replacement :factory_bot, dir: "spec/factories"
+    end
   end
 end

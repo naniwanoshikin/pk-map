@@ -28,6 +28,7 @@ https://rails-pk.herokuapp.com/
   * RSpec 3.10
 * 本番環境
   * CircleCI
+  * Heroku
 
 Things you may want to cover:
 

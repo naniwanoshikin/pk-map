@@ -9,8 +9,12 @@
   <body>
     <%= render 'layouts/header' %>
     <div class="container">
+      <%# 7 %>
+      <%= render 'layouts/flash' %>
       <%= yield %>
       <%= render 'layouts/footer' %>
+      <%# 7 %>
+      <%= debug(params) if Rails.env.development? %>
     </div>
   </body>
 </html>

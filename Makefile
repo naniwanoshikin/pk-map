@@ -18,7 +18,12 @@ down:
 c:
 	docker-compose exec web rails c
 cs:
-	docker-compose exec web rails console --sandbox
+	docker-compose exec web rails c --sandbox
+# ルーティング
+routesu:
+	docker-compose exec web rails routes | grep users
+routess:
+	docker-compose exec web rails routes | grep sessions
 # Rspec
 t:
 	docker-compose exec web bundle exec rspec
@@ -26,6 +31,13 @@ tm:
 	docker-compose exec web bundle exec rspec spec/models
 tf:
 	docker-compose exec web bundle exec rspec spec/features
-# db:migrate
+tr:
+	docker-compose exec web bundle exec rspec spec/requests
+# Rubocop
+rubo:
+	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
+# migrate
 mg:
 	docker-compose exec web rails db:migrate
+mgreset:
+	docker-compose exec web rails db:migrate:reset

@@ -2,6 +2,8 @@ ja:
   activerecord:
     attributes:
       user:
+        name: 名前 # 7
+        age: 年齢 # 7
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
         confirmed_at: パスワード確認時刻
@@ -140,4 +142,4 @@ ja:
       not_locked: はロックされていません。
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
-        other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+        other: "%{count} 件のエラー %{resource}は保存されませんでした。"
