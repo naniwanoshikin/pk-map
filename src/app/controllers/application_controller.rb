@@ -4,13 +4,14 @@ class ApplicationController < ActionController::Base
   end
 
 
-  private # 5 rails routes perfix
-  def after_sign_in_path_for(resource)
-     about_path # ログイン後のpath
+  private # 5
+  # ログイン後のpath = 名前付きルート perfix
+  def after_sign_in_path_for(resource) # 引数はid?
+    user_path(resource)
   end
-
+  # ログアウト後のpath
   def after_sign_out_path_for(resource)
-    new_user_session_path # ログアウト後のpath
+    root_path
   end
 
 end

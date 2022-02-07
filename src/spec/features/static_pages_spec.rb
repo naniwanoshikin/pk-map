@@ -18,7 +18,8 @@ describe "Static pages" do
     it_should_behave_like "all static pages"
     # タイトルに表示されない
     it { should_not have_title('| Home') }
-    # it { should have_selector('h1', text: 'Sample App') }
+    # ?
+    it { should have_selector('h1', text: 'Sample App') }
   end
 
   describe "Help page" do
