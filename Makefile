@@ -33,8 +33,10 @@ rm:
 	docker-compose exec web bundle exec rspec spec/models
 rf:
 	docker-compose exec web bundle exec rspec spec/features
+rh:
+	docker-compose exec web bundle exec rspec spec/helpers
 rr:
-	docker-compose exec web bundle exec rspec spec/requests/users_logins_spec.rb
+	docker-compose exec web bundle exec rspec spec/requests
 # Rubocop
 rubo:
 	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
