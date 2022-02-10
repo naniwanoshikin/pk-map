@@ -164,6 +164,15 @@ input {
   height: auto !important;
 }
 
+// 9
+.checkbox {
+  display: inline; // 追加 checkboxのずれ修正
+}
+#user_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
 // 7
 #error_explanation {
   color: red;
