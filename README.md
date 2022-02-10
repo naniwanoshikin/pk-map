@@ -8,7 +8,7 @@ https://rails-pk.herokuapp.com/
 ## 実装機能
 
 ### ユーザー関連
-* ユーザー登録 (device)
+* ユーザー登録、ログイン機能 (devise)
 
 
 ## 使用技術
@@ -17,13 +17,13 @@ https://rails-pk.herokuapp.com/
   * Rails 6.1.4
   * Puma
   * MySQL 8.0
-  * Docker 20.10.11
-  * docker-compose 1.29.2
+  * Docker 20.10.12
+  * docker-compose 2.2.3
   * Git, Github
 * フロント技術
   * Sass
   * Bootstrap
-
+  * jQuery
 * テスト環境
   * RSpec 3.10
 * 本番環境

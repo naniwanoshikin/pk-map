@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
+  # deviseに新しくルーティングを追加したい場合
   devise_scope :user do
   end
 
