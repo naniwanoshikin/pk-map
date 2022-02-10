@@ -49,6 +49,7 @@ describe "Users pages", type: :request do
       describe "登録後" do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
+        it { should have_link('Log out') } # 8 ログアウト表示
         it { should have_title(full_title(user.name)) }
         # flash
         it { should have_selector('div.alert.alert-notice', text: 'アカウント登録が完了しました。') }

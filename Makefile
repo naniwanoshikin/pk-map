@@ -20,19 +20,21 @@ c:
 cs:
 	docker-compose exec web rails c --sandbox
 # ルーティング
+routes:
+	docker-compose exec web rails routes
 routesu:
 	docker-compose exec web rails routes | grep users
 routess:
 	docker-compose exec web rails routes | grep sessions
 # Rspec
-t:
+r:
 	docker-compose exec web bundle exec rspec
-tm:
+rm:
 	docker-compose exec web bundle exec rspec spec/models
-tf:
+rf:
 	docker-compose exec web bundle exec rspec spec/features
-tr:
-	docker-compose exec web bundle exec rspec spec/requests
+rr:
+	docker-compose exec web bundle exec rspec spec/requests/users_logins_spec.rb
 # Rubocop
 rubo:
 	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
