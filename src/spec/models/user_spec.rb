@@ -111,4 +111,8 @@ describe User, type: :model do # 6
       specify { expect(user_for_invalid_password).to be false } # 変更
     end
   end
+  # 9.1.4
+  it 'ダイジェストが存在しない場合は認証失敗' do
+    expect(@user.valid_password?('')).to be_falsy
+  end
 end
