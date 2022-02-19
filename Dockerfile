@@ -8,9 +8,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && apt-get update -qq \
   && apt-get install -y nodejs yarn
 
-# rails db 使えるようにmysql-client 追加
-RUN apt-get install -y mariadb-client
-
 WORKDIR /app
 COPY ./src /app
 # Ruby関連のライブラリのインストール

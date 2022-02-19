@@ -16,11 +16,16 @@ services:
       - ./src:/app
     ports:
       - "3000:3000"
-    # environment:
-    #   RAILS_ENV: development # これかかなくていい？
     tty: true # -t
     stdin_open: true # -i
     links:
       - db
     depends_on:
       - db # (config/database.yml)
+    environment: # rspec用
+      - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
+
+  chrome:    #Chromeでのテスト実行用コンテナ できず
+    image: selenium/standalone-chrome-debug
+    ports:
+      - '4444:4444'
