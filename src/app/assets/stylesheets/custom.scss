@@ -1,5 +1,5 @@
 @import "bootstrap-sprockets";
-@import "bootstrap";
+@import "bootstrap"; // 複数かいたらエラー出た
 
 /* mixins, variables, etc. */
 $gray-medium-light: #eaeaea;
@@ -199,4 +199,30 @@ input {
   &-notice {
     background: rgba(146, 236, 137, 0.521);
   }
+}
+
+
+// 7 (users/index)
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid $gray-lighter;
+  }
+}
+
+// ページネーション
+.pagination > li > a {
+  border: none;
+  color: #696969;
+  &:hover {
+    border-radius: 15px;
+  }
+}
+/* 表示しているページ番号 */
+.pagination > .active > a {
+  background: #93c9ff;
+  border-radius: 15px;
 }

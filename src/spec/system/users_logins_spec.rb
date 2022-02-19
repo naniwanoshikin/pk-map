@@ -18,7 +18,7 @@ describe 'ログイン', type: :system do # 8
   end
 
   scenario 'ログイン成功' do
-    valid_signin(user) # (support/utilities.rb)
+    sign_in(user) # (support/utilities.rb)
     expect(current_path).to eq user_path(user)
     expect(page).to have_link('Profile', href: user_path(user))
     expect(page).to have_link('Log out', href: logout_path)

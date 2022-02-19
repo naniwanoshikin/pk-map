@@ -1,9 +1,15 @@
-# ログイン用 8_2版
-def valid_signin(user)
+# ログイン用 8
+
+def sign_in(user)
+  visit new_user_session_path
   fill_in "Eメール",    with: user.email
   fill_in "パスワード", with: user.password
   click_on "ログイン"
+  # Capybaraを使用していない場合にもサインインする。
+  # cookies[:remember_token] = user.remember_token
 end
+
+
 # エラーメッセージ用 2版
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
