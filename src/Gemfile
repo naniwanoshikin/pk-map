@@ -17,6 +17,8 @@ gem 'devise'      # 5
 gem 'devise-i18n' # 5
 gem 'slim-rails'  # 6
 gem 'html2slim'   # 6
+gem 'faker'       # 10
+gem 'kaminari'    # 10
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -40,5 +42,4 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
   gem 'webdrivers'
-  gem 'database_cleaner' # 5
 end

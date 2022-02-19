@@ -18,11 +18,11 @@ module App
     config.generators do |g|
       # rspecにする
       g.test_framework :rspec,
-        fixtures: true,
+        fixtures: false,
         view_specs: false,
         helper_specs: false,
-        # routing_specs: false,
-        request_specs: true
+        routing_specs: false,
+        request_specs: false
       # g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
   end

@@ -20,12 +20,14 @@ https://rails-pk.herokuapp.com/
   * Docker 20.10.12
   * docker-compose 2.2.3
   * Git, Github
-* フロント技術
+  - フロント技術
   * Sass
   * Bootstrap
   * jQuery
 * テスト環境
   * RSpec 3.10
+    * System spec
+    * Request spec
 * 本番環境
   * CircleCI
   * Heroku
