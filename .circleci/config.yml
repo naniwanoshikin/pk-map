@@ -63,6 +63,9 @@ jobs:
       - run: # migrate
           name: database setup
           command: heroku run bundle exec rails db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleci)
+      - run: # seed
+          name: database setup
+          command: heroku run bundle exec rails db:seed RAILS_ENV=production -a $HEROKU_APP_NAME
 
 workflows:
   version: 2
