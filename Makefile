@@ -1,4 +1,4 @@
-# 5 コマンド省略
+# 5 省略コマンド
 
 # 確認
 ps:
@@ -14,6 +14,9 @@ up:
 # 停止
 stop:
 	docker-compose stop
+# 全削除
+prune:
+	docker system prune
 # 削除
 down:
 	docker-compose down
@@ -51,6 +54,7 @@ rm:
 	docker-compose exec web bundle exec rspec spec/models
 rh:
 	docker-compose exec web bundle exec rspec spec/helpers
+
 # migrate
 mg:
 	docker-compose exec web rails db:migrate
@@ -58,9 +62,14 @@ reset:
 	docker-compose exec web rails db:migrate:reset
 status:
 	docker-compose exec web rails db:migrate:status
+mgdown:
+	docker-compose exec web rails db:migrate:down VERSION=20220203213922
 seed:
 	docker-compose exec web rails db:seed
 
 dev:
 	docker-compose exec web rails db:environment:set RAILS_ENV=development
 
+# 任意
+g:
+	docker-compose exec web rails g controller Posts

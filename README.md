@@ -1,18 +1,39 @@
-# README
+# PKSpot
+デスクワークの息抜きに地元で運動できる場所を探そう。
 
+全国の人気の公園やスポットを紹介！
 
+今すぐ登録して情報交換しよう！
 
-## URL
-https://rails-pk.herokuapp.com/
+<!-- スポット情報: 調べる
+公園一覧
+  鶴見緑地
+鉄棒を調べる
+  高さ情報
+壁
+スロープ
+登録
+  トレーサー情報
+  名前(匿名)
+  年齢
+  出身
+口コミ
+鉄棒よかった〜
+段差がちょうどいい -->
+
+## 情報交換サイト
+こちらの[Webページ](https://rails-pk.herokuapp.com/)を公開予定です。
 
 ## 実装機能
 
 ### ユーザー関連
 * ユーザー登録、ログイン機能 (devise)
+* プロフィール編集
 
+### 投稿関連
 
 ## 使用技術
-* 基本環境
+* 開発環境
   * Ruby 2.6.5
   * Rails 6.1.4
   * Puma
@@ -32,46 +53,13 @@ https://rails-pk.herokuapp.com/
   * CircleCI
   * Heroku
 
-Things you may want to cover:
 
 * System dependencies
 
 * Configuration
 
-* Database creation
-
 * Database initialization
-
-* How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-
-* ...
-
-運動する場所を探すためのせめてもの探査アプリ
-
-トレーサー情報交換サイト: PKSpot
-
-人気のスポットを紹介！
-
-スポット情報: 全国のスポットを調べる
-公園一覧
-  鶴見緑地
-鉄棒があるかを調べる
-  高さ情報
-壁
-スロープ
-登録
-  トレーサー情報
-  名前(匿名)
-  年齢
-  出身
-
-口コミ
-鉄棒よかった〜
-段差がちょうどいい
-
-
-
