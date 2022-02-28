@@ -67,9 +67,19 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
   # devise 初期設定 デフォルトURL
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # アカウント有効化
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   :address => "smtp.gmail.com",
+  #   :port => '587',
+  #   :domain => 'smtp.gmail.com',
+  #   :user_name => "@gmail.com",
+  #   :password => "パスワード",
+  #   :authentication => :login
+  # }
 end
