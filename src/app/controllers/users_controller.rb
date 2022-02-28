@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show # 7
     @user = User.find(params[:id])
+    @posts = @user.posts.page(params[:page]).per(10) # 13
   end
 
   def index # 10

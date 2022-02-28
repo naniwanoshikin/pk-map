@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # bcrypt'のコスト関数を下げることでテストの速度を向上 7
+  # bcrypt'のコスト関数を下げることでテスト速度を向上 7
   ActiveModel::SecurePassword.min_cost = true
 
   config.cache_classes = false

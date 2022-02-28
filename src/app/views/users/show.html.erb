@@ -9,7 +9,14 @@
       </h1>
     </section>
   </aside>
+  <%# 13 %>
+  <div class="col-md-8">
+    <% if @user.posts.any? %>
+      <h3>Posts (<%= @user.posts.count %>)</h3>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+      <%= paginate @posts %>
+    <% end %>
+  </div>
 </div>
-
-
-<%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
