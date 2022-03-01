@@ -25,5 +25,8 @@ module App
         request_specs: false
       # g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
+
+    # 認証トークンをremoteフォームに埋め込む
+    config.action_view.embed_authenticity_token_in_remote_forms = true # 14.2.5
   end
 end

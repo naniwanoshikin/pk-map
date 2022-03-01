@@ -1,29 +1,38 @@
 <% if user_signed_in? %>
   <div class="row">
     <aside class="col-md-4">
+      <%# ユーザー情報 %>
       <section class="user_info">
         <%= render 'shared/user_info' %>
       </section>
+      <%# 統計情報 %>
+      <section class="stats">
+        <%= render 'shared/stats' %>
+      </section>
+      <%# プロフィール編集 %>
+      <section class="profile_edit">
+        <%= link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-default" %>
+      </section>
+      <%# 投稿フォーム %>
       <section class="post_form">
         <%= render 'shared/post_form' %>
       </section>
     </aside>
     <div class="col-md-8">
-      <h3>Post Feed</h3>
-      <%= render 'shared/feed' %>
+      <h3>地域情報</h3>
+      <%# ajax %>
+      <div id="ajax_feed">
+        <%= render 'shared/feed' %>
+      </div>
     </div>
   </div>
 <% else %>
   <div class="center jumbotron">
-    <h1>Welcome to the Sample App</h1>
+    <h1>外に出よう</h1>
+    <h2 class="text-warning">動ける場所が見つかる</h2>
+    <%= link_to "登録", 'users/sign_up', class: "btn btn-lg btn-primary" %>
+    <%= link_to "ゲストログイン", users_guest_in_path, method: :post, class: "btn btn-lg btn-success" %>
 
-    <h2>
-      This is the home page for the
-      <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
-      sample application.
-    </h2>
-    <%# devise %>
-    <%= link_to "Sign up now!", 'users/sign_up', class: "btn btn-lg btn-primary" %>
   </div>
 
   <%= link_to image_tag("rails.svg", alt: "Rails logo", width: "200px"), "https://rubyonrails.org/" %>

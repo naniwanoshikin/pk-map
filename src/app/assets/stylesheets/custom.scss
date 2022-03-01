@@ -110,6 +110,15 @@ footer {
   }
 }
 
+.jumbotron {
+  background: center/cover image-url('mie.JPG')
+  rgba(255,255,255,0.7);
+  background-blend-mode: lighten;
+  h1 {
+    font-family: "Yu Gothic", "游ゴシック";
+  }
+}
+
 // 7
 /* miscellaneous */
 
@@ -156,6 +165,47 @@ aside {
 
 .gravatar_edit {
   margin-top: 15px;
+}
+
+// 統計情報
+.stats {
+  // 中央揃えにできない...
+  overflow: auto;
+  padding: 0 10px;
+  text-align: center;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $gray-lighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+  strong {
+    display: block;
+    color: black;
+  }
+}
+
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+
+.users.follow {
+  padding: 0;
 }
 
 
@@ -219,6 +269,11 @@ input {
     padding: 10px 0;
     border-bottom: 1px solid $gray-lighter;
   }
+}
+
+// プロフィール編集 (home)
+.profile_edit a {
+  display: block;
 }
 
 // ページネーション

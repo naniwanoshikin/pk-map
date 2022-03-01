@@ -1,0 +1,8 @@
+<%# (users/show) pagination ajax %>
+<% if @user.posts.any? %>
+  <h3>地域情報</h3>
+  <ol class="posts">
+    <%= render @posts %>
+  </ol>
+  <%= paginate @posts, remote: true %>
+<% end %>
