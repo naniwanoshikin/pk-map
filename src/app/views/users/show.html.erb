@@ -1,3 +1,4 @@
+<%# プロフィール %>
 <% provide(:title, @user.name) %>
 
 <div class="row">
@@ -8,15 +9,18 @@
         <%= @user.name %>
       </h1>
     </section>
+    <%# 統計情報 %>
+    <section class="shared_stats">
+      <%= render 'shared/stats' %>
+    </section>
+    <%# [follow] ボタン %>
+    <%= render 'follow_form' if user_signed_in? %>
   </aside>
   <%# 13 %>
   <div class="col-md-8">
-    <% if @user.posts.any? %>
-      <h3>Posts (<%= @user.posts.count %>)</h3>
-      <ol class="posts">
-        <%= render @posts %>
-      </ol>
-      <%= paginate @posts %>
-    <% end %>
+    <%# pagination %>
+    <div id="ajax_users_show">
+      <%= render 'users/show_posts' %>
+    </div>
   </div>
 </div>

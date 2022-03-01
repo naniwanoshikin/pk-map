@@ -7,12 +7,10 @@ describe 'StaticPages', type: :system do
     expect(page).to have_title(full_title(''))
     click_link 'About'
     expect(page).to have_title(full_title('About'))
-    click_link 'Help'
-    expect(page).to have_title(full_title('Help'))
     click_link 'Contact'
     expect(page).to have_title(full_title('Contact'))
-    click_link 'Home'
-    click_link 'Sign up now!'
+    click_link 'ホーム'
+    click_link '登録'
     expect(page).to have_content('アカウント登録')
     expect(page).to have_title(full_title('新規登録'))
     click_link 'PK map'
@@ -23,9 +21,8 @@ describe 'StaticPages', type: :system do
   end
 
   it 'リンクとパスのテスト' do # 5
-    expect(page).to have_link 'Home',       href: root_path
+    expect(page).to have_link 'ホーム',       href: root_path
     expect(page).to have_link 'PK map', href: root_path
-    expect(page).to have_link 'Help',       href: help_path
     expect(page).to have_link 'About',      href: about_path
     expect(page).to have_link 'Contact',    href: contact_path
     # expect(page).to have_link 'Sign up now!', href: new_user_registration_path # hrefがだめ?

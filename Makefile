@@ -72,4 +72,4 @@ dev:
 
 # 任意
 g:
-	docker-compose exec web rails g controller Posts
+	docker-compose exec web rails g controller Notifications index

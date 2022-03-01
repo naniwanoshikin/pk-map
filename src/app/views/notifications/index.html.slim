@@ -1,0 +1,14 @@
+- provide(:title, '通知')
+
+h2
+  | 通知
+
+.row
+  - if @notifications.exists?
+    .col-md-8.col-md-offset-2
+      ul.notify
+        = render @notifications
+      /= paginate @notifications
+  - else
+    h4
+      | 通知はありません

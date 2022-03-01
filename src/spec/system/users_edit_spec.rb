@@ -5,7 +5,8 @@ describe 'ユーザー編集', type: :system do # 10
   before do
     visit new_user_session_path
     login_as(user)
-    click_link 'Settings'
+    click_link 'ホーム'
+    click_link 'プロフィール編集'
   end
 
   scenario '編集失敗: 無効な値' do
@@ -27,6 +28,5 @@ describe 'ユーザー編集', type: :system do # 10
     expect(current_path).to eq user_path(user)
     expect(has_css?('.alert-notice')).to be_truthy
   end
-
 
 end
