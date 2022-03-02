@@ -60,12 +60,12 @@ jobs:
       - run: # imageをrelease
           name: release docker image
           command: heroku container:release web -a $HEROKU_APP_NAME
-      - run: # migrate
-          name: database setup
-          command: heroku run bundle exec rails db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleci)
       - run: # reset
           name: database reset
           command: heroku run bundle exec rails db:migrate:reset RAILS_ENV=production -a $HEROKU_APP_NAME
+      - run: # migrate
+          name: database setup
+          command: heroku run bundle exec rails db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleci)
       - run: # seed
           name: database seed
           command: heroku run bundle exec rails db:seed RAILS_ENV=production -a $HEROKU_APP_NAME
