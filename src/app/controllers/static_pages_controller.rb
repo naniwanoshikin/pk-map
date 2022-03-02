@@ -3,6 +3,12 @@ class StaticPagesController < ApplicationController
     if user_signed_in?
       @post = current_user.posts.build
       @feed_items = current_user.feed.page(params[:page]).per(5)
+
+      # pagination ajax
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
   end
 

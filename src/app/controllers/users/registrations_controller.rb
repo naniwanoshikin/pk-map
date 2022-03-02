@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  # ゲストユーザーは更新・削除できない
+  before_action :guest_user_not, only: [:update, :destroy]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -39,7 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
-  # 10 ユーザー情報編集
+  # ユーザー情報編集
   # '現在のパスワード'を入力不要にする
   def update_resource(resource, params)
     resource.update_without_password(params)
@@ -47,6 +49,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # 編集後のパス
   def after_update_path_for(resource)
     user_path(resource)
+  end
+
+  def guest_user_not
+    if resource.email == 'guest@railstutorial.org'
+      redirect_to root_path,
+      alert: 'ゲストユーザーは更新・削除できません。'
+    end
   end
 
   # def configure_sign_up_params

@@ -35,10 +35,10 @@ describe 'Users', type: :request do
   end
 
   # リダイレクト
-  describe "GET /users" do
-    it "redirects login when not logged in" do
-      get users_path
-      expect(response).to redirect_to login_url
-    end
-  end
+  # describe "GET /users" do
+  #   it "redirects login when not logged in" do
+  #     get users_path
+  #     expect(response).to redirect_to login_url
+  #   end
+  # end
 end
