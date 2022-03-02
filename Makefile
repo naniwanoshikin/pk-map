@@ -73,3 +73,7 @@ dev:
 # 任意
 g:
 	docker-compose exec web rails g controller Notifications index
+
+# 本番環境
+h:
+	docker-compose exec web heroku run bundle exec rails db:migrate:reset RAILS_ENV=production -a $HEROKU_APP_NAME
