@@ -54,6 +54,9 @@ jobs:
       - run:
           name: heroku login
           command: heroku container:login
+      - run:
+          name: heroku update
+          command: heroku update
       - run: # imageをpush
           name: push docker image
           command: heroku container:push web -a $HEROKU_APP_NAME
@@ -62,7 +65,7 @@ jobs:
           command: heroku container:release web -a $HEROKU_APP_NAME
       - run: # reset
           name: database reset
-          command: heroku run bundle exec rails db:migrate:reset RAILS_ENV=production -a $HEROKU_APP_NAME
+          command: heroku run bundle exec rails db:migrate:reset RAILS_ENV=production -a $HEROKU_APP_NAME DISABLE_DATABASE_ENVIRONMENT_CHECK=1
       - run: # migrate
           name: database setup
           command: heroku run bundle exec rails db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleci)
