@@ -310,8 +310,8 @@ input {
 
 #ajax_feed, #ajax_users_show, #ajax_users_index {
   // ページネーション
-  .pagination {
-    & > li > a {
+  ul.pagination {
+    li > a {
       border: none;
       color: #696969;
       &:hover {
@@ -319,7 +319,7 @@ input {
       }
     }
     /* 表示しているページ番号 */
-    & > .active > a {
+    .active > a {
       background: #93c9ff;
       border-radius: 15px;
     }

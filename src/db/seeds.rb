@@ -9,7 +9,7 @@ user1 = User.create!( # 10
 
 # ゲストユーザー
 user2 = User.create!(
-  name:  "田中 ゲスト",
+  name:  "ゲスト田中",
   email: "guest@railstutorial.org",
   password:              "foobar",
   password_confirmation: "foobar",
@@ -41,37 +41,78 @@ end
 # _______________________________________________________
 # リレーションシップ
 users = User.all
-following = users[1..45] # user(2~46) 計45人
-followers = users[3..40] # user(4~41) 計38人
+
 # 管理者がフォローする
+following = users[1..17] # user(2~18) 17人
 following.each { |followed| user1.follow(followed) }
 # 管理者がフォローされる
+followers = users[3..26] # user(4~27) 24人
 followers.each { |follower| follower.follow(user1) }
-
-following = users[3..10] # user(4~11) 計8人
-followers = users[4..20] # user(5~21) + ゲスト 計17人
-# ゲストがフォローする
-following.each { |followed| user2.follow(followed) }
-# ゲストがフォローされる
-followers.each { |follower| follower.follow(user2) }
-
-# _______________________________________________________
-# 通知
-[
-  # user1に対して
-  [4, 1, nil, nil, "follow"],
-  [5, 1, nil, nil, "follow"],
-  # user2に対して
-  [1, 2, nil, nil, "follow"],
-  [3, 2, nil, nil, "follow"],
-  [5, 2, nil, nil, "follow"],
-].each do |visitor, visited, post, comment, action|
+# 管理者へフォロー通知
+followers.each do |follower|
   Notification.create!({
-    visitor_id: visitor,
-    visited_id: visited,
-    post_id: post,   # 返信元id
-    comment_id: comment, # 返信id
-    action: action,
+    visitor_id: follower.id,
+    visited_id: 1,
+    post_id: nil,
+    comment_id: nil,
+    action: "follow",
     checked: false
   })
+end
+
+# ゲストがフォローする
+following = users[3..10] # user(4~11) 8人
+following.each { |followed| user2.follow(followed) }
+# ゲストがフォローされる
+followers = users[4..11] # user(5~12) 8人
+followers.each { |follower| follower.follow(user2) }
+# ゲストへフォロー通知
+followers.each do |follower|
+  Notification.create!({
+    visitor_id: follower.id,
+    visited_id: 2,
+    post_id: nil,
+    comment_id: nil,
+    action: "follow",
+    checked: false
+  })
+end
+
+# _______________________________________________________
+# いいね
+posts = Post.all
+user1 = User.first
+user2 = User.second
+user3 = User.third
+user4 = User.fourth
+
+# 管理人がいいねする投稿 (post_id)
+likes_posts = posts[1..10] # 計10投稿
+likes_posts.each { |post| user1.like(post) }
+# ゲストがいいねする投稿
+likes_posts = posts[4..8] # 5投稿
+likes_posts.each { |post| user2.like(post) }
+# user3がいいねする投稿
+likes_posts = posts[0..3] # 3投稿
+likes_posts.each { |post| user3.like(post) }
+# user4がいいねする投稿
+likes_posts = posts[3..5] # 3投稿
+likes_posts.each { |post| user4.like(post) }
+
+# ゲストにいいね通知
+# ゲストの投稿集
+guest_posts = Post.where("user_id=?", 2).take(9)
+guest_posts.each do |guest_post|
+  # ゲストのある投稿にいいねしたユーザー達
+  iine_users = guest_post.like_users
+  iine_users.each do |iine_user|
+    Notification.create!({
+      visitor_id: iine_user.id, # いいねした人
+      visited_id: 2,
+      post_id: guest_post.id, # ゲストの投稿id
+      comment_id: nil,
+      action: "like",
+      checked: false
+    })
+  end
 end

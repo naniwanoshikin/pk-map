@@ -1,5 +1,3 @@
-
-
 // (header_nav) サイズ調整用
 header {
   // ベル
@@ -11,28 +9,30 @@ header {
 // 通知マーク全体
 .notice {
   // 円マーク 未確認通知がある時のみ
+  position: relative; // 微調整
   .n-circle {
+    font-size: 1.6em;
     color: #efa04c;
-    width: 0px; // ずれをなくす為
-    position: relative; // 微調整
-    top: 1px;
-    right: 12px;
+    position: absolute; // 微調整
+    top: 12px;
+    right: 6px;
     transform: scale(0) rotate(-150deg);
-    animation: rotation .5s ease .3s 1 forwards;
+    animation: rotation 0.5s ease 0.3s 1 forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     // 通知数
-    span.counter {
+    .counter {
       color: rgb(63, 51, 224);
-      font-size: 0.7em;
       position: absolute; // 微調整
-      right: -14px;
-      top: 1px;
+      font-size: 0.6em;
     }
     @keyframes rotation {
       0% {
         transform: scale(0) rotate(-80deg);
       }
       50% {
-        transform: scale(.5) rotate(-50deg);
+        transform: scale(0.5) rotate(-50deg);
       }
       100% {
         transform: scale(1) rotate(0deg);
@@ -41,23 +41,32 @@ header {
   }
 }
 
-
-// (index)
-ul.notify {
+// (index) ul
+.notify {
   list-style: none;
-  padding-left: 10px;
+  padding-left: 0;
   margin-top: 5px;
   margin-bottom: 0;
-}
-
-// (_notification)
-.form-inline span {
-  display: flex;
-  align-items: center;
-  .action_mark {
-    margin-right: 10px;
-    .fa-user {
-      color: #00a1e9;
+  // (_notification)
+  li {
+    padding: 2px 5px;
+    &:hover {
+      opacity: 0.8;
+      background: rgb(243, 241, 241);
+      border-radius: 5px;
+    }
+    .form-inline span {
+      display: flex;
+      align-items: center;
+      .action_mark {
+        margin-right: 10px;
+        .fa-user {
+          color: #00a1e9;
+        }
+      }
+      .like_notify {
+        color: gray;
+      }
     }
   }
 }
