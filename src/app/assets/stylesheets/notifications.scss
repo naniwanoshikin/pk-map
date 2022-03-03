@@ -1,10 +1,61 @@
-// Place all the styles related to the Notifications controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
 
+
+// (header/footer_nav)
+// 通知マーク全体
+.notice {
+  // ベル 共通
+  .fa-bell {
+    font-size: 1.5em;
+  }
+  // 未確認通知がある時
+  // 円マーク
+  .n-circle {
+    color: #efa04c;
+    width: 0px; // ずれをなくす為
+    position: relative; // 微調整
+    top: 1px;
+    right: 12px;
+    transform: scale(0) rotate(-150deg);
+    animation: rotation .5s ease .3s 1 forwards;
+    // 通知数
+    span.counter {
+      color: rgb(63, 51, 224);
+      font-size: 0.7em;
+      position: absolute; // 微調整
+      right: -14px;
+      top: 0px;
+    }
+    @keyframes rotation {
+      0% {
+        transform: scale(0) rotate(-80deg);
+      }
+      50% {
+        transform: scale(.5) rotate(-50deg);
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+  }
+}
+
+
+// (index)
 ul.notify {
   list-style: none;
-  padding-left: 15px;
-  margin-top: 10px;
+  padding-left: 10px;
+  margin-top: 5px;
   margin-bottom: 0;
+}
+
+// (_notification)
+.form-inline span {
+  display: flex;
+  align-items: center;
+  .action_mark {
+    margin-right: 10px;
+    .fa-user {
+      color: #00a1e9;
+    }
+  }
 }

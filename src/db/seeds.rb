@@ -9,7 +9,7 @@ user1 = User.create!( # 10
 
 # ゲストユーザー
 user2 = User.create!(
-  name:  "Guest User",
+  name:  "ゲストユーザー",
   email: "guest@railstutorial.org",
   password:              "foobar",
   password_confirmation: "foobar",

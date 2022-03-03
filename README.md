@@ -4,7 +4,6 @@
 全国の人気の公園やスポットを紹介するサービスです。
 
 <!--
-example@railstutorial.org
 スポット: 調べる
 公園一覧
   鶴見緑地
@@ -35,28 +34,41 @@ Webページは[こちら](https://rails-pk.herokuapp.com/)です。
 * 一覧のページネーション機能 (kaminari) (ajax)
 
 ### 投稿関連
+* 投稿詳細画面
 
 ### その他機能
 * 通知機能 (フォローのみ)
 
 
 ## 使用技術
-* 開発環境
+* フロントエンド
+  * HTML/CSS/Sass/slim
+  * Bootstrap 3.4.1
+  * jQuery 3.4.1
+* バックエンド
   * Ruby 2.6.5
   * Rails 6.1.4
-  * Puma
-  * MySQL 8.0
+* インフラ
   * Docker 20.10.12
   * docker-compose 2.2.3
-  * Git, Github
-  * フロント技術
-    * Sass
-    * Bootstrap
-    * jQuery
-* テスト環境
+  * Puma
+  * MySQL 8.0
   * RSpec 3.10
     * System spec
     * Request spec
-* 本番環境
   * CircleCI
-  * Heroku
+  * Heroku 7.59.2
+* その他
+  * Visual Studio Code
+  * Git, Github
+
+<!--
+
+苦労したところ
+
+フロントエンド
+- レスポンシブ footer はスマホ画面では下端にする
+- 通知のベルマーク
+バックエンド
+- ??
+ -->

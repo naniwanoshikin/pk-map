@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
       unconfirm.update(checked: true)
     end
 
-    # 自分以外の通知一覧
+    # 自分以外の通知一覧 = 画面に表示されるもの
     @notifications = unconfirms.where.not(visitor_id: current_user.id)
   end
 end

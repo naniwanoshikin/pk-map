@@ -5,7 +5,7 @@ describe 'ユーザー編集', type: :system do # 10
   before do
     visit new_user_session_path
     login_as(user)
-    click_link 'ホーム'
+    visit user_path(user)
     click_link 'プロフィール編集'
   end
 

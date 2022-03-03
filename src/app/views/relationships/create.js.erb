@@ -1,4 +1,4 @@
-
+<%# (users/_follow_form) %>
 $("#follow_form").html("<%= escape_javascript(render('users/follow_un')) %>");
-
+<%# (shared/_stats) %>
 $("#followers").html('<%= @user.followers.count %>');
