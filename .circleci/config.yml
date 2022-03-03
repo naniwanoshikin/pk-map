@@ -54,9 +54,6 @@ jobs:
       - run:
           name: heroku login
           command: heroku container:login
-      - run:
-          name: heroku update
-          command: heroku update
       - run: # imageをpush
           name: push docker image
           command: heroku container:push web -a $HEROKU_APP_NAME

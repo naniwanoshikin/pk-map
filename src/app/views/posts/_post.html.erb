@@ -1,14 +1,15 @@
-<%# 1つ1つの投稿 %>
+<%# 個々の投稿 (shared/_feed), (users/_show_posts) %>
 <li id="post-<%= post.id %>">
+  <%# 画像 %>
   <%= link_to gravatar_for(post.user, size: 50), post.user %>
+  <%# 名前 %>
   <span class="user"><%= post.user.name %></span>
-  <span class="content"><%= post.content %></span>
+  <%# 投稿 %>
+  <%= link_to post, class: "link" do %>
+    <span class="content"><%= post.content %></span>
+  <% end %>
+  <%# 3分前 %>
   <span class="timestamp">
-    <%# 3分前 %>
     <%= time_ago_in_words(post.created_at) %>前
-    <% if current_user?(post.user) %>
-      <%= link_to "delete", post, method: :delete,
-          data: { confirm: "You sure?" } %>
-    <% end %>
   </span>
 </li>

@@ -25,7 +25,7 @@ services:
     environment: # rspec用
       - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
 
-  chrome:    #Chromeでのテスト実行用コンテナ できず
+  chrome: # Chromeでのテスト実行用コンテナ できず
     image: selenium/standalone-chrome-debug
     ports:
       - '4444:4444'

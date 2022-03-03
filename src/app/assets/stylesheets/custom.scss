@@ -59,11 +59,19 @@ p {
   line-height: 1.7em;
 }
 
-// nav
+// _______________________________________________
 nav {
   #navbar {
     margin-top: 0; // ずれ修正
   }
+  // アイコン PCのみ
+  .only_pc {
+    display: none;
+  }
+  // 設定
+  // .dropdown {
+  //   text-align: right;
+  // }
 }
 
 /* header */
@@ -84,6 +92,7 @@ nav {
   }
 }
 
+
 /* footer */
 
 footer {
@@ -91,34 +100,48 @@ footer {
   padding-top: 5px;
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
-  & a {
+  a {
     color: $gray;
     &:hover {
       color: $gray-darker;
     }
   }
-  & small {
+  small {
     float: left;
   }
-  & ul {
+  ul {
     float: right;
     list-style: none;
-    & li {
+    padding:0;
+    margin:0;
+    li {
       float: left;
       margin-left: 15px;
     }
   }
-}
-
-.jumbotron {
-  background: center/cover image-url('mie.JPG')
-  rgba(255,255,255,0.7);
-  background-blend-mode: lighten;
-  h1 {
-    font-family: "Yu Gothic", "游ゴシック";
+  // ログイン後のフッター スマホのみ
+  .signed_in_footer {
+    // 下端に固定
+    position: fixed;
+    bottom: 0;
+    background: #b0e7d7;
+    width: 100%;
+    height: 50px;
+    left: 0;
+    z-index: 5;
+    ul {
+      display: flex;
+      float: none;
+      li {
+        width: 50%;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
   }
 }
 
+// _______________________________________________
 // 7
 /* miscellaneous */
 
@@ -127,6 +150,7 @@ footer {
   float: left;
   width: 100%;
   margin-top: 45px;
+  margin-bottom: 60px; // footerナビに重ならないよう
   @include box_sizing;
 }
 
@@ -173,6 +197,7 @@ aside {
   overflow: auto;
   padding: 0 10px;
   text-align: center;
+  margin-bottom: 10px;
   a {
     float: left;
     padding: 0 10px;
@@ -251,6 +276,7 @@ input {
 // 7 devise
 .alert {
   text-align: center;
+  margin-bottom: 10px;
   &-alert {
     background: rgba(255, 0, 0, 0.329);
   }
@@ -271,24 +297,35 @@ input {
   }
 }
 
-// プロフィール編集 (home)
-.profile_edit a {
-  display: block;
-}
-
-// ページネーション
-.pagination > li > a {
-  border: none;
-  color: #696969;
-  &:hover {
-    border-radius: 15px;
+// プロフィール編集 (users/show)
+.profile_edit {
+  margin-top: 0;
+  padding: 0;
+  a {
+    display: block;
   }
 }
-/* 表示しているページ番号 */
-.pagination > .active > a {
-  background: #93c9ff;
-  border-radius: 15px;
+
+
+
+#ajax_feed, #ajax_users_show, #ajax_users_index {
+  // ページネーション
+  .pagination {
+    & > li > a {
+      border: none;
+      color: #696969;
+      &:hover {
+        border-radius: 15px;
+      }
+    }
+    /* 表示しているページ番号 */
+    & > .active > a {
+      background: #93c9ff;
+      border-radius: 15px;
+    }
+  }
 }
+
 
 // 13
 /* posts */
@@ -335,5 +372,29 @@ span.image {
   margin-top: 10px;
   input {
     border: 0;
+  }
+}
+
+
+// aタグ無効化 (posts/_post)
+.link {
+  color : inherit;
+  // text-decoration : none;
+  &:hover {
+    color : inherit; // なぜリンクは青くなる?
+    // text-decoration: none;
+  }
+}
+
+
+// フッター非表示
+@media (min-width: 768px) {
+  .signed_in_footer {
+    display: none;
+  }
+  nav {
+    .only_pc {
+      display: block;
+    }
   }
 }

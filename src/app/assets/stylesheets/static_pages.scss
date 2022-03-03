@@ -1,3 +1,24 @@
-// Place all the styles related to the StaticPages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+
+// home
+.jumbotron {
+  background: center/cover image-url('mie.JPG')
+  rgba(255,255,255,0.7);
+  background-blend-mode: lighten;
+  height: 55vh;
+  margin-top: 10px;
+  h1 {
+    font-family: "Yu Gothic", "游ゴシック";
+    margin-top: 30px;
+  }
+  h2 {
+    margin-bottom: 50px;
+  }
+}
+
+// about
+.recommend_spot {
+  display: flex;
+  ul {
+    margin-right: 20px;
+  }
+}
