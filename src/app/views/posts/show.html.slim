@@ -12,3 +12,9 @@ span.actions.small
 p
   span.content
     = @post.content
+
+/ いいね
+| <div id="likes_like_
+= @post.id
+| ">
+= render "likes/like", post: @post

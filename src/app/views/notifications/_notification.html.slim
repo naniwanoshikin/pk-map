@@ -8,10 +8,12 @@ li
         - case notification.action
         - when 'follow' then
           div.i.fas.fa-user.fa-lg
+        - when 'like' then
+          div.i.fas.fa-heart.fa-lg
       / アイコン
       = link_to gravatar_for(visitor, size: 35), visitor
       / 〜さんが〜しました
-      div
+      .notify_content
         strong
           = visitor.name
         = 'さん'
@@ -20,8 +22,11 @@ li
         - when 'follow' then
           = "にフォローされました"
         - when 'like' then
+          | が
           = link_to 'あなたの投稿', notification.post, style: "font-weight: bold;"
-          = "がいいねしました"
+          | にいいねしました
+          p.like_notify
+            = notification.post.content
         - when 'comment' then
           - if notification.post.user_id == visited.id
             = link_to "があなたの投稿", notification.post, style: "font-weight: bold;"
