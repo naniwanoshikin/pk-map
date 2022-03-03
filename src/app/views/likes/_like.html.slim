@@ -1,0 +1,19 @@
+/ (posts/_post, posts/show)
+
+/ いいね数
+= post.likes.count
+| 件のいいね
+
+/ いいねしている場合
+- if current_user&.like?(post)
+  = link_to like_path(current_user.likes.find_by(post: post)),
+    method: :delete, class: 'link', remote: true do
+    / ハート赤
+    i.fas.fa-heart.fa-lg
+
+/ いいねしていない場合
+- else
+  = link_to likes_path(post: post),
+  method: :post, class: 'link', remote: true do
+    / ハート白
+    i.far.fa-heart.fa-lg

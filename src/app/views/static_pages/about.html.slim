@@ -14,9 +14,19 @@ div
           = Post.all.length
           | 個
         li
-          | 通知数:
-          = Notification.all.length
+          | いいね数:
+          = Like.all.length
           | 個
+          | /通知
+          = Notification.where("action=?", 'like').all.length
+          | 件
+        li
+          | リレーションシップ:
+          = Relationship.all.length
+          | 個
+          | /通知
+          = Notification.where("action=?", 'follow').all.length
+          | 件
     hr
   div
     h3 本アプリの対象者

@@ -1,8 +1,11 @@
 class User < ApplicationRecord
   before_save { email.downcase! } # 6
-
   # 投稿
   has_many :posts, dependent: :destroy
+  # いいね
+  has_many :likes, dependent: :destroy
+  # userがいいねした投稿
+  has_many :like_posts, through: :likes, source: :post
 
   # フォローする
   has_many :active_relationships, class_name: "Relationship",
@@ -74,20 +77,34 @@ class User < ApplicationRecord
   # _______________________________________________
   # 通知レコードを作成 (userがフォローする)
   def create_notification_follow!(user) # Relationships(C)
-    # 検索レコード
+    # レコードを検索 = 「ボタン連打」に備える
     temp = Notification.where([
       "visitor_id = ? and visited_id = ? and action = ? ",
       user.id,  # フォローする人
       id,       # フォローされる人
       'follow'
     ])
-    if temp.blank? # 「連続でフォローボタンを押す」に備える
+    if temp.blank?
       notification = user.active_notifications.new(
         visited_id: id,
         action: 'follow'
       )
       notification.save if notification.valid?
     end
+  end
+
+  # _______________________________________________
+  # userがpostをいいねする
+  def like(post) # Likes(C)
+    likes.create(post_id: post.id)
+  end
+  # いいね解除
+  def unlike(post)
+    likes.find_by(post_id: post.id).destroy
+  end
+  # selfがpostをいいねしてたらtrue
+  def like?(post)
+    like_posts.include?(post)
   end
 
 end

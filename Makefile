@@ -69,18 +69,20 @@ mgdown:
 seed:
 	docker-compose exec web rails db:seed
 
-dev:
-	docker-compose exec web rails db:environment:set RAILS_ENV=development
-# 生成
-g:
-	docker-compose exec web rails g model Like user:reference post:references
 
-# slim に変換 ファイル指定 src/は消す erbのバックアップ不可
+# slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
 slim:
-	docker-compose exec web bundle exec erb2slim app/views/layouts/_footer.html.erb app/views/layouts/_footer.html.slim -d
+	docker-compose exec web bundle exec erb2slim app/views/likes/aa.html.erb app/views/likes/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
 	git checkout src/app/views/static_pages/about.html.erb
 # 特定の相対パス, 特定の拡張子のファイルを削除
-d:
+filed:
 	find src/app/views -type f -name "*.slim" -delete
+
+# 生成
+g:
+	docker-compose exec web rails g controller Likes create destroy
+# 削除
+d:
+	docker-compose exec web rails d model Like

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   get 'notifications/index'
   root 'static_pages#home'
   get  '/help',    to: 'static_pages#help'
@@ -28,5 +30,6 @@ Rails.application.routes.draw do
 
   resources :posts,         only: [:create, :destroy, :show, :new]
   resources :relationships, only: [:create, :destroy]
+  resources :likes,         only: [:create, :destroy]
   resources :notifications, only: :index
 end
