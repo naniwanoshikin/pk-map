@@ -1,15 +1,14 @@
 / 統計情報 (users/show)
 - @user ||= current_user
-.stats
-  a
-    strong.stat
-      = @user.posts.count
-    | 投稿数
-  = link_to followers_user_path(@user)
-    strong#followers.stat
-      = @user.followers.count
-    | フォロワー
-  = link_to following_user_path(@user)
-    strong#following.stat
-      = @user.following.count
-    | フォロー中
+a
+  strong.stat
+    = @user.posts.count
+  | 投稿数
+= link_to followers_user_path(@user)
+  strong#followers.stat
+    = @user.followers.count
+  | フォロワー
+= link_to following_user_path(@user)
+  strong#following.stat
+    = @user.following.count
+  | フォロー中

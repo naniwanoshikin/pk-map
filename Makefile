@@ -72,7 +72,7 @@ seed:
 
 # slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
 slim:
-	docker-compose exec web bundle exec erb2slim app/views/likes/aa.html.erb app/views/likes/aa.html.slim -d
+	docker-compose exec web bundle exec erb2slim app/views/shared/_post_search_form.html.erb app/views/shared/_post_search_form.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
 	git checkout src/app/views/static_pages/about.html.erb
