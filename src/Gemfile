@@ -20,6 +20,7 @@ gem 'slim-rails'  # 6
 gem 'html2slim'   # 6
 gem 'faker'       # 10
 gem 'kaminari'    # 10
+gem 'ransack'     # 検索
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
