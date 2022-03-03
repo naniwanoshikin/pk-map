@@ -14,7 +14,5 @@ p
     = @post.content
 
 / いいね
-| <div id="likes_like_
-= @post.id
-| ">
-= render "likes/like", post: @post
+div id="likes_like_#{@post.id}"
+  = render "likes/like", post: @post
