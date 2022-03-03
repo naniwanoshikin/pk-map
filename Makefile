@@ -73,7 +73,7 @@ dev:
 	docker-compose exec web rails db:environment:set RAILS_ENV=development
 # 生成
 g:
-	docker-compose exec web rails g controller Notifications index
+	docker-compose exec web rails g model Like user:reference post:references
 
 # slim に変換 ファイル指定 src/は消す erbのバックアップ不可
 slim:
