@@ -1,13 +1,29 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_user!,
+  only: [:create, :destroy, :new]
+  # 投稿のない詳細画面は表示しない
+  before_action :correct_post,       only: :show
+  # 自分以外のユーザーの投稿は削除できない
+  before_action :correct_user,       only: :destroy
+
+
+  # 投稿詳細
+  def show
+    # @post
+  end
+
+  # 投稿フォーム
+  def new
+    @post = current_user.posts.build # (shared/_post_form)
+  end
 
   # 投稿する
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      flash[:success] = "Post created!"
-      redirect_to root_url
+      redirect_to root_url, notice: '投稿しました'
     else
+      # (shared/feed)
       @feed_items = current_user.feed.page(params[:page]).per(10)
       render 'static_pages/home'
     end
@@ -16,13 +32,22 @@ class PostsController < ApplicationController
   def destroy
     @post = current_user.posts.find_by(id: params[:id])
     @post.destroy
-    flash[:success] = "Micropost deleted"
-    redirect_to request.referrer || root_url
+    redirect_to request.referrer || root_url, alert: '投稿を削除しました'
   end
 
   private
 
-  def post_params
+  def post_params # create
     params.require(:post).permit(:content)
+  end
+
+  def correct_post # show
+    @post = Post.find_by(id: params[:id])
+    redirect_to root_url if @post.nil?
+  end
+
+  def correct_user # destroy
+    @post = current_user.posts.find_by(id: params[:id])
+    redirect_to root_url if @post.nil?
   end
 end

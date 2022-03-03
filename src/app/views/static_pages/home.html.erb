@@ -5,18 +5,6 @@
       <section class="user_info">
         <%= render 'shared/user_info' %>
       </section>
-      <%# 統計情報 %>
-      <section class="stats">
-        <%= render 'shared/stats' %>
-      </section>
-      <%# プロフィール編集 %>
-      <section class="profile_edit">
-        <%= link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-default" %>
-      </section>
-      <%# 投稿フォーム %>
-      <section class="post_form">
-        <%= render 'shared/post_form' %>
-      </section>
     </aside>
     <div class="col-md-8">
       <h3>地域情報</h3>
@@ -29,11 +17,8 @@
 <% else %>
   <div class="center jumbotron">
     <h1>外に出よう</h1>
-    <h2 class="text-warning">動ける場所が見つかる</h2>
+    <h2 class="text-warning">動ける場所は見つかる</h2>
     <%= link_to "登録", 'users/sign_up', class: "btn btn-lg btn-primary" %>
     <%= link_to "ゲストログイン", users_guest_in_path, method: :post, class: "btn btn-lg btn-success" %>
-
   </div>
-
-  <%= link_to image_tag("rails.svg", alt: "Rails logo", width: "200px"), "https://rubyonrails.org/" %>
 <% end %>

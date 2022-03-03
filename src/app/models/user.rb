@@ -37,6 +37,7 @@ class User < ApplicationRecord
   # 10 ユーザ編集用 現在のパスワード
   attr_accessor :current_password
 
+  # _______________________________________________
   # ゲストログイン
   def self.guest
     find_by!(email: 'guest@railstutorial.org') do |user|
@@ -44,7 +45,7 @@ class User < ApplicationRecord
     end
   end
 
-
+  # _______________________________________________
   # フィード
   def feed
     part_of_feed = "
@@ -56,6 +57,7 @@ class User < ApplicationRecord
     .includes(:user)
   end
 
+  # _______________________________________________
   # selfがother_userをフォロー
   def follow(other_user) # Relationship(C)
     following << other_user
@@ -69,6 +71,7 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  # _______________________________________________
   # 通知レコードを作成 (userがフォローする)
   def create_notification_follow!(user) # Relationships(C)
     # 検索レコード
@@ -78,7 +81,7 @@ class User < ApplicationRecord
       id,       # フォローされる人
       'follow'
     ])
-    if temp.blank?
+    if temp.blank? # 「連続でフォローボタンを押す」に備える
       notification = user.active_notifications.new(
         visited_id: id,
         action: 'follow'

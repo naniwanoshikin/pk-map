@@ -7,7 +7,6 @@ describe "Authentication", type: :request do
     let(:user) { FactoryBot.create(:user) }
     before { sign_in user }
     # あり
-    it { should have_link('マイページ', href: user_path(user)) }
     it { should have_link('ログアウト', href: logout_path) }
     # ない
     it { should_not have_link('ログイン', href: login_path) }

@@ -31,13 +31,13 @@ class UsersController < ApplicationController
 
   # 一覧
   def following # 14.2.3
-    @title = "Following"
+    @title = "フォロー中"
     @user  = User.find(params[:id])
     @users = @user.following.page(params[:page]).per(10)
     render 'show_follow' # (users/show_follow)
   end
   def followers
-    @title = "Followers"
+    @title = "フォロワー"
     @user  = User.find(params[:id])
     @users = @user.followers.page(params[:page]).per(10)
     render 'show_follow' # 共用

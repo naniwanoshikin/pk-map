@@ -29,7 +29,7 @@ cs:
 bash:
 	docker-compose exec web bundle exec --rm web bash
 # mysql起動: password入力
-sql:
+db:
 	docker-compose exec web rails db
 # ルーティング
 route:
@@ -38,6 +38,8 @@ routeu:
 	docker-compose exec web rails routes | grep users
 routes:
 	docker-compose exec web rails routes | grep sessions
+routep:
+	docker-compose exec web rails routes | grep posts
 # Rubocop
 rbo:
 	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
@@ -69,7 +71,16 @@ seed:
 
 dev:
 	docker-compose exec web rails db:environment:set RAILS_ENV=development
-
-# 任意
+# 生成
 g:
 	docker-compose exec web rails g controller Notifications index
+
+# slim に変換 ファイル指定 src/は消す erbのバックアップ不可
+slim:
+	docker-compose exec web bundle exec erb2slim app/views/layouts/_footer.html.erb app/views/layouts/_footer.html.slim -d
+# 直前のコミットに戻る 特定のファイル
+co:
+	git checkout src/app/views/static_pages/about.html.erb
+# 特定の相対パス, 特定の拡張子のファイルを削除
+d:
+	find src/app/views -type f -name "*.slim" -delete

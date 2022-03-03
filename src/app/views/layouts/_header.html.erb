@@ -14,17 +14,28 @@
 
     <nav>
       <ul id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse">
-        <li><%= link_to "ホーム", root_path %></li>
+        <%# レスポンシブ %>
+        <li class=""><%= link_to root_path do %>
+          <i class="fa fa-home fa-lg"></i>
+        <% end %></li>
         <%# 8 %>
         <% if user_signed_in? %>
-          <li><%= link_to "マイページ", current_user %></li>
-          <li><%= link_to '通知', notifications_path %></li>
-          <li><%= link_to "ユーザー一覧", users_path %></li>
+          <li class="only_pc"><%= render 'layouts/circle' %></li>
+          <li class="only_pc"><%= link_to new_post_path do %>
+            <i class="fas fa-plus-circle fa-lg"></i>
+          <% end %></li>
+          <li class="only_pc"><%= link_to current_user do %>
+            <i class="fas fa-user fa-lg"></i>
+          <% end %></li>
+          <%# ドロップダウンメニュー %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              設定 <b class="caret"></b>
+              <%# 歯車 %>
+              <i class="fas fa-cog fa-lg"></i>
+              <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+              <li><%= link_to "ユーザー一覧", users_path %></li>
               <li><%= link_to "About",   about_path %></li>
               <li class="divider"></li>
               <li>

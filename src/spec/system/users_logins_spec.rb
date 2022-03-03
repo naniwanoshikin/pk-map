@@ -20,7 +20,6 @@ describe 'ログイン', type: :system do # 8
   scenario 'ログイン成功' do
     sign_in(user) # (support/utilities.rb)
     expect(current_path).to eq user_path(user)
-    expect(page).to have_link('マイページ', href: user_path(user))
     expect(page).to have_link('ログアウト', href: logout_path)
     expect(page).to have_no_link 'Log in'
     expect(page).to have_title(full_title(user.name))

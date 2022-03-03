@@ -1,0 +1,33 @@
+footer
+  - if user_signed_in?
+    / スマホのみ下端固定
+    nav.signed_in_footer
+      ul
+        li
+          = link_to root_path do
+            i.fa.fa-home.fa-2x
+        / 通知
+        li
+          = render 'layouts/circle'
+        / 投稿
+        li
+          = link_to new_post_path do
+            i.fas.fa-plus-circle.fa-2x
+        li
+          = link_to current_user do
+            i.fas.fa-user.fa-2x
+  - else
+    small
+      | By
+      a[href="https://spapf-24842.web.app/"]
+        |  shikitti
+      |  2022
+    nav
+      ul
+        li
+          = link_to "Help", help_path
+        li
+          = link_to "Contact", contact_path
+        li
+          a[href="https://shikintutrial.herokuapp.com/"]
+            | つぶやき

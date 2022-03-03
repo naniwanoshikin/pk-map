@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     passwords: 'users/passwords'
   }
-  # deviseに新しくルーティングを追加
+  # deviseにルーティングを追加
   devise_scope :user do
     # テスト用で名前付きルート名のみ変更 9
     post '/users/sign_in', to: 'users/sessions#create', as: 'login'
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :posts,         only: [:create, :destroy, :show]
+  resources :posts,         only: [:create, :destroy, :show, :new]
   resources :relationships, only: [:create, :destroy]
   resources :notifications, only: :index
 end
