@@ -1,14 +1,16 @@
 
 
+// (header_nav) サイズ調整用
+header {
+  // ベル
+  .fa-bell {
+    font-size: 1.3em;
+  }
+}
 // (header/footer_nav)
 // 通知マーク全体
 .notice {
-  // ベル 共通
-  .fa-bell {
-    font-size: 1.5em;
-  }
-  // 未確認通知がある時
-  // 円マーク
+  // 円マーク 未確認通知がある時のみ
   .n-circle {
     color: #efa04c;
     width: 0px; // ずれをなくす為
@@ -23,7 +25,7 @@
       font-size: 0.7em;
       position: absolute; // 微調整
       right: -14px;
-      top: 0px;
+      top: 1px;
     }
     @keyframes rotation {
       0% {

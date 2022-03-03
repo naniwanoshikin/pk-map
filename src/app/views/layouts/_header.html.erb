@@ -14,16 +14,20 @@
 
     <nav>
       <ul id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse">
-        <%# レスポンシブ %>
+        <%# ホーム %>
         <li class=""><%= link_to root_path do %>
           <i class="fa fa-home fa-lg"></i>
         <% end %></li>
         <%# 8 %>
         <% if user_signed_in? %>
+          <%# レスポンシブ %>
+          <%# 通知 %>
           <li class="only_pc"><%= render 'layouts/circle' %></li>
+          <%# 投稿 %>
           <li class="only_pc"><%= link_to new_post_path do %>
-            <i class="fas fa-plus-circle fa-lg"></i>
+            <i class="fas fa-pencil-alt fa-lg"></i>
           <% end %></li>
+          <%# マイページ %>
           <li class="only_pc"><%= link_to current_user do %>
             <i class="fas fa-user fa-lg"></i>
           <% end %></li>

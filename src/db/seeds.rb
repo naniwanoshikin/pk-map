@@ -2,14 +2,14 @@
 user1 = User.create!( # 10
   name:  "Example User",
   email: "example@railstutorial.org",
-  password:              "foobar",
+  password:              "foobar", # spec
   password_confirmation: "foobar",
   admin: true
 )
 
 # ゲストユーザー
 user2 = User.create!(
-  name:  "ゲストユーザー",
+  name:  "田中 ゲスト",
   email: "guest@railstutorial.org",
   password:              "foobar",
   password_confirmation: "foobar",
@@ -40,7 +40,6 @@ end
 
 # _______________________________________________________
 # リレーションシップ
-# 一般
 users = User.all
 following = users[1..45] # user(2~46) 計45人
 followers = users[3..40] # user(4~41) 計38人

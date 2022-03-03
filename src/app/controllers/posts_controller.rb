@@ -25,7 +25,7 @@ class PostsController < ApplicationController
     else
       # (shared/feed)
       @feed_items = current_user.feed.page(params[:page]).per(10)
-      render 'static_pages/home'
+      render 'posts/new'
     end
   end
 
