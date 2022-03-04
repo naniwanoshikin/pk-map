@@ -80,6 +80,7 @@ co:
 filed:
 	find src/app/views -type f -name "*.slim" -delete
 
+
 # 生成
 g:
 	docker-compose exec web rails g controller Likes create destroy
