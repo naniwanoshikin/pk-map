@@ -101,7 +101,7 @@ likes_posts.each { |post| user4.like(post) }
 
 # ゲストにいいね通知
 # ゲストの投稿集
-guest_posts = Post.where("user_id=?", 2).take(9)
+guest_posts = Post.where("user_id=?", 2).take(6)
 guest_posts.each do |guest_post|
   # ゲストのある投稿にいいねしたユーザー達
   iine_users = guest_post.like_users
@@ -111,7 +111,7 @@ guest_posts.each do |guest_post|
       visited_id: 2,
       post_id: guest_post.id, # ゲストの投稿id
       comment_id: nil,
-      action: "like",
+      action: 'like',
       checked: false
     })
   end
