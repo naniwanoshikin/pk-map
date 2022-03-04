@@ -4,10 +4,10 @@ class RelationshipsController < ApplicationController
   def create
     # フォローされるユーザー
     @user = User.find(params[:followed_id])
+    # @userをフォロー
     current_user.follow(@user)
-
-    # current_userが@userに通知を送る
-    @user.create_notification_follow!(current_user)
+    # @userに通知
+    current_user.notify_to_follow!(@user)
 
     respond_to do |format|
       format.html { redirect_to @user }

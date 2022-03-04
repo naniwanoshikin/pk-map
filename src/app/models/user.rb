@@ -51,6 +51,8 @@ class User < ApplicationRecord
   # _______________________________________________
   # フィード
   def feed
+    # - 自身がフォローしているユーザー
+    # - 自身
     part_of_feed = "
     relationships.follower_id = :id
     or posts.user_id = :id
@@ -61,32 +63,32 @@ class User < ApplicationRecord
   end
 
   # _______________________________________________
-  # selfがother_userをフォロー
-  def follow(other_user) # Relationship(C)
-    following << other_user
+  # selfがuserをフォロー
+  def follow(user) # Relationship(C)
+    following << user
   end
-  # selfがother_userをフォロー解除
-  def unfollow(other_user) # Relationship(C)
-    active_relationships.find_by(followed_id: other_user.id).destroy
+  # selfがuserをフォロー解除
+  def unfollow(user) # Relationship(C)
+    active_relationships.find_by(followed_id: user.id).destroy
   end
-  # selfがother_userをフォローしてたらtrue
-  def following?(other_user) # (users/_follow_form)
-    following.include?(other_user)
+  # selfがuserをフォローしてたらtrue
+  def following?(user) # (users/_follow_form)
+    following.include?(user)
   end
 
   # _______________________________________________
-  # 通知レコードを作成 (userがフォローする)
-  def create_notification_follow!(user) # Relationships(C)
-    # レコードを検索 = 「ボタン連打」に備える
+  # selfがuserにフォロー通知する
+  def notify_to_follow!(user) # Relationships(C)
+    # レコードを検索 「ボタン連打」に備える
     temp = Notification.where([
       "visitor_id = ? and visited_id = ? and action = ? ",
-      user.id,  # フォローする人
-      id,       # フォローされる人
+      id,      # フォローする
+      user.id, # フォローされる
       'follow'
     ])
     if temp.blank?
-      notification = user.active_notifications.new(
-        visited_id: id,
+      notification = self.active_notifications.new(
+        visited_id: user.id,
         action: 'follow'
       )
       notification.save if notification.valid?
@@ -107,4 +109,29 @@ class User < ApplicationRecord
     like_posts.include?(post)
   end
 
+  # _______________________________________________
+  # selfがpost.userにいいね通知する
+  def like_and_notify!(post) # Likes(C)
+    # 既にいいねされているか検索 「ボタン連打」に備える
+    temp = Notification.where([
+      "visitor_id = ? and visited_id = ?
+      and post_id = ? and action = ? ",
+      id,           # いいねしたユーザー
+      post.user_id, # いいねされるユーザー
+      post.id,      # いいねした投稿id
+      'like'
+    ])
+    # 通知されていない場合
+    if temp.blank?
+      notification = self.active_notifications.new(
+        visited_id: post.user_id,
+        post_id: post.id,
+        action: 'like'
+      )
+      # 無効な通知 or 自分の投稿への通知は除く
+      return if notification.invalid? || notification.visitor_id == notification.visited_id
+      # 通知する
+      notification.save
+    end
+  end
 end
