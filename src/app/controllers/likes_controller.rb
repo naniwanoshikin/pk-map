@@ -5,7 +5,6 @@ class LikesController < ApplicationController
   def create
     @post = Post.find(params[:post])
     current_user.like(@post)
-
     # current_userが@post.userに通知を送る
     @post.create_notification_like!(current_user)
 
