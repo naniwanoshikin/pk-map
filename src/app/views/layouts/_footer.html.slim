@@ -1,7 +1,7 @@
 footer
   - if user_signed_in?
     / スマホのみ下端固定
-    nav.signed_in_footer
+    nav.signed_in
       ul
         li
           = link_to root_path do
@@ -17,16 +17,17 @@ footer
           = link_to current_user do
             i.fas.fa-user.fa-2x
   - else
-    small
-      a[href="https://spapf-24842.web.app/"]
-        |  SHIKITTI
-      |  2022
-    nav
-      ul
-        li
-          = link_to "Help", help_path
-        li
-          = link_to "Contact", contact_path
-        li
-          a[href="https://shikintutrial.herokuapp.com/"]
-            | つぶやき
+    .not_signed_in
+      small
+        a[href="https://spapf-24842.web.app/"]
+          |  SHIKITTI
+        |  2022
+      nav
+        ul
+          li
+            = link_to "Help", help_path
+          li
+            = link_to "Contact", contact_path
+          li
+            a[href="https://shikintutrial.herokuapp.com/"]
+              | つぶやき

@@ -4,9 +4,10 @@ class LikesController < ApplicationController
   # いいねする
   def create
     @post = Post.find(params[:post])
+    # @postをいいねする
     current_user.like(@post)
-    # current_userが@post.userに通知を送る
-    @post.create_notification_like!(current_user)
+    # @post.userに通知する
+    current_user.like_and_notify!(@post)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
