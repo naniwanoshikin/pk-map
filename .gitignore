@@ -10,6 +10,8 @@ src/.bundle
 # 追加 rspec用
 src/vendor/bundle
 
+.DS_Store
+
 # Ignore all logfiles and tempfiles.
 src/log/*
 src/tmp/*
