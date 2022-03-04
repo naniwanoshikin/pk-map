@@ -96,18 +96,12 @@ nav {
 /* footer */
 
 footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
     color: $gray;
     &:hover {
       color: $gray-darker;
     }
-  }
-  small {
-    float: left;
   }
   ul {
     float: right;
@@ -119,8 +113,17 @@ footer {
       margin-left: 15px;
     }
   }
-  // ログイン後のフッター スマホのみ
-  .signed_in_footer {
+  // 未ログイン
+  .not_signed_in {
+    border-top: 1px solid $gray-medium-light;
+    margin-top: 45px;
+    padding-top: 5px;
+    small {
+      float: left;
+    }
+  }
+  // ログイン後 レスポンシブ スマホのみ
+  .signed_in {
     // 下端に固定
     position: fixed;
     bottom: 0;
@@ -392,7 +395,7 @@ span.image {
 
 // フッター非表示
 @media (min-width: 768px) {
-  .signed_in_footer {
+  .signed_in {
     display: none;
   }
   nav {
