@@ -2,43 +2,40 @@
 - visited = notification.visited
 li
   .form-inline
-    span
-      / マーク
-      .action_mark
-        - case notification.action
-        - when 'follow' then
-          div.i.fas.fa-user.fa-lg
-        - when 'like' then
-          div.i.fas.fa-heart.fa-lg
-      / アイコン
-      = link_to gravatar_for(visitor, size: 35), visitor
-      / 〜さんが〜しました
-      .notify_content
-        strong
-          = visitor.name
-        = 'さん'
+    / マーク
+    .action_mark
+      - case notification.action
+      - when 'follow'
+        div.i.fas.fa-user.fa-xs
+      - when 'like'
+        div.i.fas.fa-heart.fa-xs
+    / アイコン
+    = link_to gravatar_for(visitor, size: 35), visitor
 
-        - case notification.action
-        - when 'follow' then
-          = "にフォローされました"
-        - when 'like' then
-          | が
-          = link_to 'あなたの投稿', notification.post, style: "font-weight: bold;"
-          | にいいねしました
-          p.like_notify
-            = notification.post.content
-        - when 'comment' then
-          - if notification.post.user_id == visited.id
-            = link_to "があなたの投稿", notification.post, style: "font-weight: bold;"
-          - else
-            span
-              = link_to post_path(notification.post) do
-                = image_tag avatar_url(notification.post.user).to_s, class: "icon_mini"
-                strong
-                  = notification.post.user.name + 'さんの投稿'
-          = "にコメントしました"
-          p.text-muted.mb-0
-            = Comment.find_by(id: notification.comment_id)&.comment
+    / 文章
+    .notify_content
+      strong
+        = visitor.name
+      = 'さん'
+
+      - case notification.action
+      - when 'follow'
+        = "にフォローされました"
+      - when 'like'
+        | がいいねしました
+        p.like_notify
+          = link_to notification.post.content, notification.post
+      - when 'comment'
+        - if notification.post.user_id == visited.id
+          = link_to "があなたの投稿", notification.post, style: "font-weight: bold;"
+        - else
+          span
+            = link_to post_path(notification.post) do
+              = image_tag avatar_url(notification.post.user).to_s, class: "icon_mini"
+              strong
+                = notification.post.user.name + 'さんの投稿'
+        = "にコメントしました"
+        p.text-muted.mb-0
+          = Comment.find_by(id: notification.comment_id)&.comment
   .small.text-muted.text-right
     = time_ago_in_words(notification.created_at).upcase
-  hr

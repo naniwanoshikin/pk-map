@@ -128,7 +128,7 @@ class User < ApplicationRecord
         post_id: post.id,
         action: 'like'
       )
-      # 無効な通知 or 自分の投稿への通知は除く
+      # 無効な通知 or 自分の投稿へのいいねは除く
       return if notification.invalid? || notification.visitor_id == notification.visited_id
       # 通知する
       notification.save
