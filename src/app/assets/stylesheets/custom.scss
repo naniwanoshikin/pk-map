@@ -92,9 +92,6 @@ nav {
   }
 }
 
-
-/* footer */
-
 footer {
   color: $gray-light;
   a {
@@ -145,16 +142,18 @@ footer {
   }
 }
 
+main {
+  margin-bottom: 70px; // footerナビに重ならないよう
+}
 // _______________________________________________
 // 7
 /* miscellaneous */
 
 .debug_dump {
-  clear: both;
-  float: left;
+  // clear: both;
+  // float: left;
   width: 100%;
-  margin-top: 45px;
-  margin-bottom: 70px; // footerナビに重ならないよう
+  margin-top: 35px;
   @include box_sizing;
 }
 
@@ -309,21 +308,24 @@ input {
 }
 
 
-
+// ページネーション箇所
 #ajax_feed, #ajax_users_show, #ajax_users_index {
-  // ページネーション
-  ul.pagination {
-    li > a {
-      border: none;
-      color: #696969;
-      &:hover {
+  nav {
+    text-align: center;
+    // ul
+    .pagination {
+      li > a {
+        border: none;
+        color: #696969;
+        &:hover {
+          border-radius: 15px;
+        }
+      }
+      /* 表示しているページ番号 */
+      .active > a {
+        background: #93c9ff;
         border-radius: 15px;
       }
-    }
-    /* 表示しているページ番号 */
-    .active > a {
-      background: #93c9ff;
-      border-radius: 15px;
     }
   }
 }

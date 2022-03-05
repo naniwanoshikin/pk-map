@@ -54,8 +54,8 @@ following.each { |followed| user2.follow(followed) }
 [
   [users[2..16], user1], # user(3~17) 15人 管理人
   [users[4..11], user2], # user(5~12) 8人 ゲスト
-].each { |followers, user|
-  followers.each { |follower|
+].shuffle.each { |followers, user|
+  followers.shuffle.each { |follower|
     # フォロー + 通知
     follower.follow(user)
     follower.notify_to_follow!(user)
@@ -72,7 +72,7 @@ user4 = User.fourth
   [user2, posts[4..8]], # 5投稿 ゲスト
   [user3, posts[0..3]], # 3投稿
   [user4, posts[3..5]], # 3投稿
-].each { |user, likes_posts|
+].shuffle.each { |user, likes_posts|
   likes_posts.each { |post|
     # いいね + 通知
     user.like(post)

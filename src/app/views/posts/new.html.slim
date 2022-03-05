@@ -1,4 +1,17 @@
 h2 投稿する
 
 section.post_form
-  = render 'shared/post_form', object: @post
+  = render 'post_form', object: @post
+
+
+
+/ 住所登録
+= form_with model: @post, url: root_path do |f|
+  .form-group
+    p スポットを入力
+    = f.text_field :name, placeholder: "鶴見緑地", class: "form-control"
+    br
+    p 住所を入力
+    = f.text_field :address, placeholder: "大阪市鶴見区緑地公園2-163", class: "form-control"
+    br
+    = f.submit "登録する", class: "btn btn-primary"

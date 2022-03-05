@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
   def index
-    # 未確認の通知レコード集
+    # 未確認の通知一覧
     unconfirms = current_user.passive_notifications
 
     # 確認済 にする
@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
       unconfirm.update(checked: true)
     end
 
-    # 自分以外の通知一覧 = 画面に表示されるもの
-    @notifications = unconfirms.where.not(visitor_id: current_user.id)
+    # 画面に表示される通知一覧
+    @notifications = unconfirms.page(params[:page]).per(5)
   end
 end
