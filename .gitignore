@@ -11,6 +11,7 @@ src/.bundle
 src/vendor/bundle
 
 .DS_Store
+src/.env
 
 # Ignore all logfiles and tempfiles.
 src/log/*

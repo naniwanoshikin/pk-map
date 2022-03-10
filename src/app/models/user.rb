@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   # userがいいねした投稿
   has_many :like_posts, through: :likes, source: :post
+  # コメント
+  has_many :comments, dependent: :destroy
 
   # フォローする
   has_many :active_relationships, class_name: "Relationship",
@@ -40,11 +42,20 @@ class User < ApplicationRecord
   # 10 ユーザ編集用 現在のパスワード
   attr_accessor :current_password
 
+  # addressが登録されたら, 緯度経度も自動登録
+  geocoded_by :address
+  after_validation :geocode
+
   # _______________________________________________
   # ゲストログイン
-  def self.guest
-    find_by!(email: 'guest@railstutorial.org') do |user|
-      user.password = 'foobar'
+  def self.guest1
+    find_by!(email: 'example-1@railstutorial.org') do |user|
+      user.password = 'foobar' # Registrations(C)
+    end
+  end
+  def self.guest2
+    find_by!(email: 'example-4@railstutorial.org') do |user|
+      user.password = 'password'
     end
   end
 
@@ -77,7 +88,7 @@ class User < ApplicationRecord
   end
 
   # _______________________________________________
-  # selfがuserにフォロー通知する
+  # selfがuserにフォローを通知する
   def notify_to_follow!(user) # Relationships(C)
     # レコードを検索 「ボタン連打」に備える
     temp = Notification.where([
@@ -110,8 +121,8 @@ class User < ApplicationRecord
   end
 
   # _______________________________________________
-  # selfがpost.userにいいね通知する
-  def like_and_notify!(post) # Likes(C)
+  # selfがpost.userへいいねを通知する
+  def notify_to_like!(post) # Likes(C)
     # 既にいいねされているか検索 「ボタン連打」に備える
     temp = Notification.where([
       "visitor_id = ? and visited_id = ?
@@ -133,5 +144,37 @@ class User < ApplicationRecord
       # 通知する
       notification.save
     end
+  end
+
+  # _______________________________________________
+  # selfがpostユーザーにcommentを通知
+  def notify_to_comment!(post, comment_id) # Comments(C), seed
+    # 自分以外にコメントしている人の投稿集id
+    temp_ids = Comment.select(:user_id, :created_at).where(post_id: post.id).where.not(user_id: id).distinct
+
+    # 誰もコメントしていない場合
+    if temp_ids.blank?
+      save_notify_comment!(post, comment_id, post.user_id)
+    else
+      # 既にコメントしている人がいる場合
+      temp_ids.each do |temp_id|
+        save_notify_comment!(post, comment_id, temp_id['user_id'])
+      end
+    end
+  end
+
+  # postへのcommentをvisited_idに通知
+  def save_notify_comment!(post, comment_id, visited_id)
+    # 同じ投稿に複数回通知可
+    notification = self.active_notifications.new(
+      visited_id: visited_id, # コメント先の投稿ユーザー
+      post_id: post.id,            # コメント先の投稿
+      comment_id: comment_id, # コメントid
+      action: 'comment'
+    )
+    # 無効な通知 or 自分の投稿へのコメントは除く
+    return if notification.invalid? || notification.visitor_id == notification.visited_id
+    # 通知
+    notification.save
   end
 end

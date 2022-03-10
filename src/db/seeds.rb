@@ -4,21 +4,23 @@ user1 = User.create!( # 10
   email: "example@railstutorial.org",
   password:              "foobar", # spec
   password_confirmation: "foobar",
-  admin: true
+  admin: true,
+  # address: '天王寺'
 )
 
 # ゲストユーザー
 user2 = User.create!(
-  name:  "ゲスト田中",
-  email: "guest@railstutorial.org",
+  name:  "ゲスト鈴木",
+  email: "example-1@railstutorial.org",
   password:              "foobar",
   password_confirmation: "foobar",
+  # address: '新世界'
 )
 
-# 一般ユーザー 40人
+# 一般ユーザー 40人 n=0
 40.times do |n|
 name  = Faker::Name.name
-email = "example-#{n+1}@railstutorial.org"
+email = "example-#{n+2}@railstutorial.org"
 password = "password"
 User.create!(
   name:  name,
@@ -28,19 +30,23 @@ User.create!(
 )
 end
 
-
 # _______________________________________________________
-# 最初のユーザー6人
-users = User.order(:created_at).take(6) # 13
-# 投稿
-20.times do
+# 投稿したユーザー数
+users = User.order(:created_at).take(10)
+# 一人当たりの投稿数
+10.times do
+  # https://github.com/faker-ruby/faker
+  address = Faker::Address.city
   content = Faker::Lorem.sentence(word_count: 5)
-  users.each { |user| user.posts.create!(content: content) }
+  users.each { |user| user.posts.create!(
+    content: content,
+    address: address,
+  ) }
 end
 
 # _______________________________________________________
-# リレーションシップ
 users = User.all
+# リレーションシップ
 
 # 管理者がフォローするユーザー
 following = users[1..17] # user(2~18) 17人
@@ -48,7 +54,6 @@ following.each { |followed| user1.follow(followed) }
 # ゲストがフォローするユーザー
 following = users[3..10] # user(4~11) 8人
 following.each { |followed| user2.follow(followed) }
-
 
 # followers が user をフォローする
 [
@@ -76,6 +81,31 @@ user4 = User.fourth
   likes_posts.each { |post|
     # いいね + 通知
     user.like(post)
-    user.like_and_notify!(post)
+    user.notify_to_like!(post)
   }
 }
+
+# _______________________________________________________
+user5 = User.fifth
+# userがそのpostに対してcontentとコメント
+[
+  [user1, posts[1], "かなりいい鉄棒"],
+  [user1, posts[3], "壁が噛みやすい"],
+  [user1, posts[4], "滑ってしまう"],
+  [user1, posts[8], "程よい鉄棒"],
+  [user2, posts[0], "まぁまぁな壁"],
+  [user2, posts[5], "レールがちょうどいい"],
+  [user3, posts[3], "鉄棒の高さは1mくらいでちょうどいい"],
+  [user3, posts[1], "とてもやりやすい^_^"],
+  [user4, posts[2], "アクセスがしやすい"],
+  [user4, posts[2], "ブロックが多くて良い"],
+  [user5, posts[3], "鉄棒よかった〜"],
+].shuffle.each do |user, post, content|
+  # userがコメント
+  comment = user.comments.create!(
+    post_id: post.id, # コメント先の投稿
+    content: content, # コメント内容
+  )
+  # 通知
+  user.notify_to_comment!(post, comment.id)
+end

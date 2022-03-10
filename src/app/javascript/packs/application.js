@@ -8,6 +8,7 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+// 起動
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
@@ -15,3 +16,6 @@ ActiveStorage.start()
 // 8
 require("jquery")
 import "bootstrap"
+
+// 直上の jquery 読み込み
+// require("post.js")

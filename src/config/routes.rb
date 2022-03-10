@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'likes/create'
-  get 'likes/destroy'
-  get 'notifications/index'
   root 'static_pages#home'
   get  '/help',    to: 'static_pages#help'
   get  '/about',   to: 'static_pages#about'
@@ -18,8 +15,9 @@ Rails.application.routes.draw do
     # テスト用で名前付きルート名のみ変更 9
     post '/users/sign_in', to: 'users/sessions#create', as: 'login'
     delete '/users/sign_out', to: 'users/sessions#destroy', as: 'logout'
-    # ゲストログイン
-    post '/users/guest_in', to: 'users/sessions#guest_in'
+    # ゲストログイン home(V) to Sesssions(C)
+    post '/users/guest1', to: 'users/sessions#guest_in1'
+    post '/users/guest2', to: 'users/sessions#guest_in2'
   end
 
   resources :users, only: [:index, :show, :destroy] do # 7, 10
@@ -28,7 +26,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :posts,         only: [:create, :destroy, :show, :new]
+  resources :posts,         only: [:create, :destroy, :show, :new] do
+    resources :comments,    only: [:create, :destroy]
+  end
   resources :relationships, only: [:create, :destroy]
   resources :likes,         only: [:create, :destroy]
   resources :notifications, only: :index

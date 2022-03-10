@@ -1,0 +1,21 @@
+
+ul#comments {
+  list-style: none;
+  padding: 0 10px;
+  margin: 0 auto;
+  max-width: 600px;
+  li {
+    padding: 8px 0;
+    border-top: 1px dotted #8c8b8b;
+    .fa-trash-alt {
+      float: right;
+    }
+    .comment_content {
+      margin-left: 30px;
+      padding-top: 10px;
+    }
+    .timestamp {
+      text-align: right;
+    }
+  }
+}

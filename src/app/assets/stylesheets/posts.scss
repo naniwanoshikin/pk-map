@@ -1,3 +1,58 @@
-// Place all the styles related to the Posts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+
+// (posts/show, _post) 共通
+.actions {
+  display: flex;
+  .comment_count {
+    margin-left: 5px;
+    font-size: 16px;
+    color: gray;
+  }
+}
+
+
+// (posts/_post)
+.posts {
+  list-style: none;
+  margin-top: 20px;
+  display: grid;
+  // grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+
+  gap: 20px 10px; // 余白
+
+  & > div {
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    width: 200px;
+    height: 200px;
+  }
+  // ユーザー名
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .content {
+    display: block;
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: gray;
+    display: block;
+    text-align: right;
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+}
+
+// (posts/show)
+.comment {
+  h4 {
+    text-align: center;
+  }
+}

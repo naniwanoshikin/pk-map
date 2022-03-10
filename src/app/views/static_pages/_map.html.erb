@@ -1,0 +1,123 @@
+<%# Home %>
+
+<%# 住所入力 %>
+<label for="address">スポット名</label>
+<div class="input-group">
+  <input id="address" type="textbox" value="" class='form-control' placeholder="大泉緑地">
+  <%# 検索する %>
+  <span class="input-group-btn">
+    <input type="button" value="Go" onclick="codeAddress()" class="btn btn-primary">
+  </span>
+</div>
+
+<div id="display"></div>
+<div id='map'></div>
+
+<style>
+  #map {
+    height: 400px;
+    border-radius: 10px;
+  }
+</style>
+
+<script>
+
+  // 検索結果: '緯度経度'
+  const display = document.getElementById('display')
+
+  let map
+
+  // 初期画面: User情報
+  function initMap(){
+    // 地図
+    const target = document.getElementById('map')
+    // オブジェクト生成
+    geocoder = new google.maps.Geocoder()
+
+    // 現在のユーザーの住所
+    let user_address = {
+      lat: <%= current_user.latitude %>, // 緯度
+      lng: <%= current_user.longitude %>  // 経度
+    }
+    // 中心位置を表示
+    map = new google.maps.Map(target, {
+      center: user_address,
+      zoom: 13,
+      mapTypeControl: false, // 地図|写真
+      streetViewControl: false, // ストリートビューマーク
+      // mapTypeId: 'roadmap' // 地図の種類
+      styles: [{
+        // 全てのラベルを非表示
+        // featureType: 'all',
+        // elementType: 'labels',
+        // stylers: [
+        //   {visibility: 'off'},
+        // ],
+      }],
+      icon: {
+        url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+        // サイズ
+        scaledSize: new google.maps.Size(40, 40)
+      }
+    });
+    // 自身のピンをさす
+    marker = new google.maps.Marker({
+      map: map,
+      position: user_address
+    });
+
+    // 投稿一覧
+    <% @posts.each do |post| %>
+      // ピンをさす
+      marker = new google.maps.Marker({
+        map: map,
+        position: {
+          lat: <%= post.latitude %>,
+          lng: <%= post.longitude %>
+        }
+      });
+
+      // 情報ウィンドウ(吹き出し)の定義
+      infowindow = new google.maps.InfoWindow({
+
+        content: "<a href='<%= post_url(post.id) %>'><%= post.address %></a>"
+      });
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+    <% end %>
+  }
+
+  // 住所検索した時
+  function codeAddress(){
+    // 入力値
+    let inputAddress = document.getElementById('address').value;
+    // ジオコーディングをするためのリクエストを送信
+    geocoder.geocode( { 'address': inputAddress}, (results, status) => {
+      // 検索結果がヒットした時
+      if (status == 'OK') {
+        // 入力した値の緯度経度
+        let ido_kedo = results[0].geometry.location
+        // 地図の中心の位置を追加 + 表示?
+        map.setCenter(ido_kedo);
+        // ピンをさす
+        marker = new google.maps.Marker({
+          map: map,
+          position: ido_kedo,
+          // 色
+          icon: {
+          url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
+          // サイズ (縦, 横)
+          scaledSize: new google.maps.Size(40, 40)
+      }
+        });
+        display.textContent = "位置:" + ido_kedo
+      } else {
+        alert('該当する結果がありませんでした:' + status);
+      }
+    });
+  }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap" async defer></script>

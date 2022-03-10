@@ -1,6 +1,6 @@
 / 投稿詳細 Posts(C)
 h2
-  | 詳細
+  = @post.address
 
 .post_header
   = link_to 'javascript:history.back()', class: '' do
@@ -10,10 +10,87 @@ h2
 span.actions.small
   - if current_user?(@post.user)
     = link_to "delete", @post, method: :delete, data: { confirm: "You sure?" }
-p
-  span.content
-    = @post.content
 
-/ いいね
-div id="likes_like_#{@post.id}"
-  = render "likes/like", post: @post
+/ 地図
+#post_map style='
+  height: 250px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+'
+
+.actions
+  / コメント
+  div
+    i.far.fa-comment.fa-lg
+    span.comment_count
+      = @post.comments.count
+  / いいね
+  div id="likes_like_#{@post.id}"
+    = render "likes/like", post: @post
+
+
+/ 画像
+p
+  = link_to gravatar_for(@post.user, size: 20), @post.user
+  span
+    span.content
+      = @post.content
+
+
+/ コメント一覧
+.comment
+  h2
+    | スポット情報
+
+  - if @comments.any?
+    ul#comments
+      = render @comments
+      / (comments/_comment)
+  - else
+    h4
+      | コメントはありません
+
+h2
+  | 情報を追加
+= form_with(model: @comment, url: post_comments_path(params[:id]), local: true) do |f|
+  - if user_signed_in?
+    = render 'shared/error_messages', object: @comment
+  = f.hidden_field :post_id, value: params[:id]
+  .input-group
+    = f.text_field :content, placeholder: "鉄棒が錆びている", class: "form-control"
+    span.input-group-btn
+      = f.submit "追加", class: "btn btn-primary"
+/ →Comments(C)
+
+
+
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
+script{ async src=google_api }
+
+javascript:
+
+  let map2;
+
+  function initMap() {
+    geocoder = new google.maps.Geocoder()
+
+    const target = document.getElementById('post_map')
+
+    map2 = new google.maps.Map(target, {
+      center: {
+        lat: gon.post.latitude,
+        lng: gon.post.longitude
+      },
+      zoom: 13,
+      mapTypeControl: false, // 地図|航空写真
+    });
+
+    marker = new google.maps.Marker({
+      position: {
+        lat: gon.post.latitude,
+        lng: gon.post.longitude
+      },
+      map: map2
+    });
+  }
