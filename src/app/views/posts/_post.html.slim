@@ -28,7 +28,7 @@ div id="post-#{post.id}"
   .footer_post
     / 画像
     p
-      = link_to gravatar_for(post.user, size: 15), post.user
+      = link_to gravatar_for(post.user, size: 20), post.user
     / 3分前
     span.timestamp
       = time_ago_in_words(post.created_at)

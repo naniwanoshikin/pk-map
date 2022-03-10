@@ -1,0 +1,23 @@
+/ プロフィール
+- provide(:title, @user.name)
+
+.row
+  aside.col-md-4
+    / ユーザー情報
+    section.user_info
+      = render 'shared/user_info', user: @user
+    / 統計情報
+    section.stats
+      = render 'shared/stats'
+    / ボタン
+    - if current_user?(@user)
+      / プロフィール編集
+      section.profile_edit
+        = link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-default"
+    - else
+      / [follow] ボタン
+      = render 'follow_form' if user_signed_in?
+  / pagination
+  .col-md-8
+    #ajax_users_show
+      = render 'users/show_posts'

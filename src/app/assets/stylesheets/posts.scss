@@ -2,6 +2,9 @@
 // (posts/show, _post) 共通
 .actions {
   display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 10px auto;
   .comment_count {
     margin-left: 5px;
     font-size: 16px;
@@ -50,9 +53,35 @@
   }
 }
 
+// aタグ無効化 (posts/_post)
+.link {
+  color : inherit;
+  // text-decoration : none;
+  &:hover {
+    color : inherit; // なぜリンクは青くなる?
+    // text-decoration: none;
+  }
+}
+
+
 // (posts/show)
 .comment {
   h4 {
     text-align: center;
+  }
+}
+
+// (post/new)
+.post_form {
+  // .field_with_errors {
+  //   max-width: 100px;
+  // }
+  // チェックボックス
+  input[type="checkbox"] {
+    max-width: 30px;
+  }
+  textarea {
+    // height: 80px;
+    margin-bottom: 10px;
   }
 }

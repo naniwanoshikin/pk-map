@@ -8,7 +8,7 @@ li
       = comment.user.name
     / 削除ボタン
     - if current_user?(comment.user)
-      = link_to post_comment_path(comment.post), class: "text-danger ", method: :delete do
+      = link_to post_comments_path(comment.post), class: "text-danger", method: :delete do
         i.fas.fa-trash-alt
   / コメント
   .comment_content

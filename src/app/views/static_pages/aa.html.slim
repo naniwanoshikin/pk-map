@@ -1,19 +1,13 @@
-- # コメント (posts/show)
-li
-  - # 画像
-  = link_to gravatar_for(comment.user, size: 20), comment.user, class: ""
-  - # コメント
-  div
-    strong
-      = comment.user.name
-  - # コメント
-  div
-    = comment.content
-  .timestamp
-    = l comment.created_at
-  - # 削除ボタン
-  - if current_user?(comment.user)
-    = link_to post_comment_path(comment.post),
-    -       class: "text-danger ",
-    -       method: :delete do
-    i.fas.fa-trash-alt
+
+.field
+  - %w(公園 スロープ 鉄棒 壁 芝生 施設 街).each.with_index do |ingredient,i|
+    label
+      = check_box_tag 'samurai[ingredients][]', ingredient,false,id:"samurai_ingredients_#{i}"
+      = ingredient
+
+
+
+
+.field
+  = f.check_box :spot_type, class: "spot"
+  = f.label :spot_type, '公園'

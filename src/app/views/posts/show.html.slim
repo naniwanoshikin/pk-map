@@ -6,11 +6,6 @@ h2
   = link_to 'javascript:history.back()', class: '' do
     i.fas.fa-long-arrow-alt-left.fa-lg
 
-/ 投稿削除
-span.actions.small
-  - if current_user?(@post.user)
-    = link_to "delete", @post, method: :delete, data: { confirm: "You sure?" }
-
 / 地図
 #post_map style='
   height: 250px;
@@ -20,22 +15,29 @@ span.actions.small
 '
 
 .actions
-  / コメント
+  / コメント数
   div
     i.far.fa-comment.fa-lg
     span.comment_count
       = @post.comments.count
-  / いいね
+  / いいね数
   div id="likes_like_#{@post.id}"
     = render "likes/like", post: @post
 
+  / 削除
+  div
+    - if current_user?(@post.user)
+      = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
+        i.fas.fa-trash-alt.fa-lg
 
-/ 画像
+/ ユーザー情報
 p
   = link_to gravatar_for(@post.user, size: 20), @post.user
   span
     span.content
       = @post.content
+    p.spot_type
+      = @post.spot_type.class
 
 
 / コメント一覧
@@ -53,7 +55,7 @@ p
 
 h2
   | 情報を追加
-= form_with(model: @comment, url: post_comments_path(params[:id]), local: true) do |f|
+= form_with(model: @comment, url: post_comments_path(@post), local: true) do |f|
   - if user_signed_in?
     = render 'shared/error_messages', object: @comment
   = f.hidden_field :post_id, value: params[:id]

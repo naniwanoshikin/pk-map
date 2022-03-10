@@ -1,0 +1,68 @@
+// 7 (users/index)
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-bottom: 1px solid gainsboro;
+  }
+}
+
+// (users/show)
+aside {
+  // ユーザー情報
+  .user_info {
+    p {
+      color: gray;
+    }
+  }
+  // 統計情報
+  .stats {
+    overflow: auto;
+    padding: 0;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    a {
+      padding: 0 15px;
+      border-left: 1px solid gainsboro;
+      color: gray;
+      &:first-child {
+        border: 0;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    strong {
+      display: block;
+      color: black;
+    }
+  }
+  // プロフィール編集
+  .profile_edit {
+    margin-top: 0;
+    padding: 0;
+    a {
+      display: block;
+    }
+  }
+}
+
+
+// (show_follow) 一覧
+.user_avatars {
+  overflow: auto;
+  margin-top: 10px;
+  .gravatar {
+    margin: 1px 1px;
+  }
+  a {
+    padding: 0;
+  }
+}
+.users.follow {
+  padding: 0;
+}

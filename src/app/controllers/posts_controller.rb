@@ -44,7 +44,11 @@ class PostsController < ApplicationController
   private
 
   def post_params # create
-    params.require(:post).permit(:content, :address)
+    params.require(:post).permit(
+      :content,
+      :address,
+      :checkbox, spot_type: []
+    )
   end
 
   def correct_post # show
