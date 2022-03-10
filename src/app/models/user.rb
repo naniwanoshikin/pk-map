@@ -50,12 +50,17 @@ class User < ApplicationRecord
   # ゲストログイン
   def self.guest1
     find_by!(email: 'example-1@railstutorial.org') do |user|
-      user.password = 'foobar' # Registrations(C)
+      user.password = 'foobar'
     end
   end
   def self.guest2
     find_by!(email: 'example-4@railstutorial.org') do |user|
       user.password = 'password'
+    end
+  end
+  def self.guest3
+    find_by!(email: 'example@railstutorial.org') do |user|
+      user.password = 'foobar'
     end
   end
 
@@ -163,18 +168,18 @@ class User < ApplicationRecord
     end
   end
 
-  # postへのcommentをvisited_idに通知
-  def save_notify_comment!(post, comment_id, visited_id)
-    # 同じ投稿に複数回通知可
-    notification = self.active_notifications.new(
-      visited_id: visited_id, # コメント先の投稿ユーザー
-      post_id: post.id,            # コメント先の投稿
-      comment_id: comment_id, # コメントid
-      action: 'comment'
-    )
-    # 無効な通知 or 自分の投稿へのコメントは除く
-    return if notification.invalid? || notification.visitor_id == notification.visited_id
-    # 通知
-    notification.save
-  end
+    # postへのcommentをvisited_idに通知
+    def save_notify_comment!(post, comment_id, visited_id)
+      # 同じ投稿に複数回通知可
+      notification = self.active_notifications.new(
+        visited_id: visited_id, # コメント先の投稿ユーザー
+        post_id: post.id,       # コメント先の投稿
+        comment_id: comment_id, # コメントid
+        action: 'comment'
+      )
+      # 無効な通知 or 自分の投稿へのコメントは除く
+      return if notification.invalid? || notification.visitor_id == notification.visited_id
+      # 通知
+      notification.save
+    end
 end

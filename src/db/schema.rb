@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
     t.string "address"
     t.float "latitude"
     t.float "longitude"
+    t.text "spot_type"
     t.index ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

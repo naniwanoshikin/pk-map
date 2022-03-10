@@ -5,7 +5,7 @@ user1 = User.create!( # 10
   password:              "foobar", # spec
   password_confirmation: "foobar",
   admin: true,
-  # address: '天王寺'
+  address: '天王寺'
 )
 
 # ゲストユーザー
@@ -14,7 +14,7 @@ user2 = User.create!(
   email: "example-1@railstutorial.org",
   password:              "foobar",
   password_confirmation: "foobar",
-  # address: '新世界'
+  address: '新世界'
 )
 
 # 一般ユーザー 40人 n=0
@@ -46,16 +46,15 @@ end
 
 # _______________________________________________________
 users = User.all
-# リレーションシップ
 
-# 管理者がフォローするユーザー
+# 管理者がfollowingをフォロー
 following = users[1..17] # user(2~18) 17人
 following.each { |followed| user1.follow(followed) }
-# ゲストがフォローするユーザー
+# ゲストがfollowingをフォロー
 following = users[3..10] # user(4~11) 8人
 following.each { |followed| user2.follow(followed) }
 
-# followers が user をフォローする
+# followers が user をフォロー
 [
   [users[2..16], user1], # user(3~17) 15人 管理人
   [users[4..11], user2], # user(5~12) 8人 ゲスト
@@ -87,7 +86,7 @@ user4 = User.fourth
 
 # _______________________________________________________
 user5 = User.fifth
-# userがそのpostに対してcontentとコメント
+# userがそのpostに対してコメント
 [
   [user1, posts[1], "かなりいい鉄棒"],
   [user1, posts[3], "壁が噛みやすい"],

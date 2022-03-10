@@ -29,8 +29,9 @@ ja:
         unlock_token: ロック解除用トークン
         updated_at: 更新日
       post:
-        address: スポット
-        content: スポット情報
+        address: スポット名
+        spot_type: タイプ
+        content: スポット詳細
     models:
       user: ユーザー
   devise:

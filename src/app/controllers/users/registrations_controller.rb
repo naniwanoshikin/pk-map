@@ -52,7 +52,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def guest_user_not # email: User(M)
-    if resource.email == 'example-1@railstutorial.org' || resource.email == 'example-4@railstutorial.org'
+    if resource.email == 'example-1@railstutorial.org' || resource.email == 'example-4@railstutorial.org' || resource.email == 'example@railstutorial.org'
       redirect_to root_path,
       alert: 'ゲストユーザーは更新・削除できません。'
     end

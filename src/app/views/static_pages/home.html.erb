@@ -3,7 +3,7 @@
     <aside class="col-md-4">
       <%# ユーザー情報 %>
       <section class="user_info">
-        <%= render 'shared/user_info' %>
+        <%= render 'shared/user_info', user: current_user %>
       </section>
     </aside>
     <div class="col-md-8">
@@ -25,9 +25,11 @@
     <h1>外に出よう</h1>
     <h2 class="text-warning">動ける場所は見つかる</h2>
     <%= link_to "登録", 'users/sign_up', class: "btn btn-lg btn-primary" %>
+    <%# Registrations(C) %>
     <%= link_to "登録なしでログイン", users_guest1_path, method: :post, class: "btn btn-lg btn-success" %>
     <% if Rails.env.development? %>
       <%= link_to "ログイン3", users_guest2_path, method: :post, class: "btn btn-lg btn-warning" %>
+      <%= link_to "ログイン1", users_guest3_path, method: :post, class: "btn btn-lg btn-danger" %>
     <% end %>
   </div>
 <% end %>

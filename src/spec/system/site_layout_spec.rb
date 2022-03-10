@@ -7,8 +7,6 @@ describe 'StaticPages', type: :system do
     expect(page).to have_title(full_title(''))
     click_link 'About'
     expect(page).to have_title(full_title('About'))
-    click_link 'Contact'
-    expect(page).to have_title(full_title('Contact'))
     click_link 'PK map'
     click_link '登録'
     expect(page).to have_content('アカウント登録')
@@ -23,7 +21,6 @@ describe 'StaticPages', type: :system do
   it 'リンクとパスのテスト' do # 5
     expect(page).to have_link 'PK map',  href: root_path
     expect(page).to have_link 'About',   href: about_path
-    expect(page).to have_link 'Contact', href: contact_path
     # expect(page).to have_link 'Sign up now!', href: new_user_registration_path # hrefがだめ?
   end
 end

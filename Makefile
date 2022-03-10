@@ -62,10 +62,10 @@ mg:
 	docker-compose exec web rails db:migrate
 reset:
 	docker-compose exec web rails db:migrate:reset
-status:
+mgs:
 	docker-compose exec web rails db:migrate:status
 mgd:
-	docker-compose exec web rails db:migrate:down VERSION=20220309035728
+	docker-compose exec web rails db:migrate:down VERSION=20220306214030
 seed:
 	docker-compose exec web rails db:seed
 

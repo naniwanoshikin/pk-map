@@ -1,4 +1,7 @@
-/ (static_pages/home) 13
-= link_to gravatar_for(current_user, size: 50), current_user
+/ (home) 13
+= link_to gravatar_for(user, size: 50), user
 h1
-  = current_user.name
+  = user.name
+p
+  = user.address
+  |  勢

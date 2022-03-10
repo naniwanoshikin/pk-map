@@ -9,6 +9,12 @@ section.post_form
     = f.label 'スポット名'
     = f.text_field :address, placeholder: "鶴見緑地", class: "form-control"
 
+    = f.label 'タイプ'
+    .field
+      - %w(公園 スロープ 鉄棒).each.with_index do |spot, i|
+        = f.check_box :spot_type, {multiple: true}, spot, nil
+        = f.label :spot_type, spot
+
     = f.label 'スポット詳細'
     .field
       = f.text_area :content, placeholder: "かなり広いしおすすめスポット!", class: "form-control"
