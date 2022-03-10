@@ -1,0 +1,27 @@
+<%# コメント (posts/show) %>
+<li>
+
+  <%# 画像 %>
+  <%= link_to gravatar_for(comment.user, size: 20), comment.user, class: "" %>
+
+  <%# コメント %>
+  <div class="">
+    <strong><%= comment.user.name %></strong>
+  </div>
+  <%# コメント %>
+  <div class="">
+    <%= comment.content %>
+  </div>
+
+  <div class="timestamp">
+    <%= l comment.created_at %>
+  </div>
+  <%# 削除ボタン %>
+  <% if current_user?(comment.user) %>
+    <%= link_to post_comment_path(comment.post),
+      class: "text-danger ",
+      method: :delete do %>
+      <i class="fas fa-trash-alt"></i>
+    <% end  %>
+  <% end %>
+</li>

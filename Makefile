@@ -64,15 +64,15 @@ reset:
 	docker-compose exec web rails db:migrate:reset
 status:
 	docker-compose exec web rails db:migrate:status
-mgdown:
-	docker-compose exec web rails db:migrate:down VERSION=20220301222732
+mgd:
+	docker-compose exec web rails db:migrate:down VERSION=20220309035728
 seed:
 	docker-compose exec web rails db:seed
 
 
 # slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
 slim:
-	docker-compose exec web bundle exec erb2slim app/views/notifications/aa.html.erb app/views/notifications/aa.html.slim -d
+	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
 	git checkout src/app/views/static_pages/about.html.erb
@@ -83,7 +83,7 @@ filed:
 
 # 生成
 g:
-	docker-compose exec web rails g controller Likes create destroy
+	docker-compose exec web rails g model Comment content:string user:references post:references
 # 削除
 d:
-	docker-compose exec web rails d model Like
+	docker-compose exec web rails d model Comment

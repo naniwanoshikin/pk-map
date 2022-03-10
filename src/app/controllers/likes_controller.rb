@@ -7,7 +7,7 @@ class LikesController < ApplicationController
     # @postをいいねする
     current_user.like(@post)
     # @post.userに通知する
-    current_user.like_and_notify!(@post)
+    current_user.notify_to_like!(@post)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }

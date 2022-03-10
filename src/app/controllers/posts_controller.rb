@@ -10,20 +10,26 @@ class PostsController < ApplicationController
   # 投稿詳細
   def show
     # @post
+    # map JS用
+    gon.post = @post
+    # 投稿に対するコメント集
+    @comments = @post.comments
+    # コメントを新規作成
+    @comment = current_user.comments.build if user_signed_in?
   end
 
   # 投稿フォーム
   def new
-    @post = current_user.posts.build # (shared/_post_form)
+    @post = current_user.posts.build
   end
 
   # 投稿する
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to root_url, notice: '投稿しました'
+      redirect_to root_url, notice: 'スポット情報が追加されました'
     else
-      # (shared/feed)
+      # (users/feed)
       @feed_items = current_user.feed.page(params[:page]).per(10)
       render 'posts/new'
     end
@@ -38,7 +44,7 @@ class PostsController < ApplicationController
   private
 
   def post_params # create
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:content, :address)
   end
 
   def correct_post # show

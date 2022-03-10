@@ -50,7 +50,6 @@ header {
   li {
     border-top: 1px dotted #8c8b8b;
     border-bottom: 1px dotted #fff;
-
     padding: 20px 5px;
     padding-bottom: 10px;
     &:hover {
@@ -60,19 +59,25 @@ header {
     .form-inline {
       display: flex;
       align-items: center;
+      // マーク
       .action_mark {
         margin-right: 8px;
         .fa-user {
           color: #00a1e9;
         }
       }
-      .like_notify {
-        color: gray;
-        a {
+      // 文章
+      .notify_content {
+        a  {
           color : inherit;
-          &:hover {
-            color : inherit; // なぜリンクは青くなる?
-            text-decoration: none;
+        }
+        .like_notify, .comment_notify {
+          color: gray;
+          a {
+            &:hover {
+              color : inherit; // なぜリンクは青くなる?
+              text-decoration: none;
+            }
           }
         }
       }

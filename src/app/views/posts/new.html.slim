@@ -1,17 +1,16 @@
-h2 投稿する
+- provide(:title, "Spot_Post")
+h2 スポット情報を入力
 
+/ 投稿フォーム
 section.post_form
-  = render 'post_form', object: @post
+  = form_with(model: @post, local: true) do |f|
+    = render 'shared/error_messages', object: @post
 
+    = f.label 'スポット名'
+    = f.text_field :address, placeholder: "鶴見緑地", class: "form-control"
 
+    = f.label 'スポット詳細'
+    .field
+      = f.text_area :content, placeholder: "かなり広いしおすすめスポット!", class: "form-control"
+    = f.submit "投稿", class: "btn btn-primary"
 
-/ 住所登録
-= form_with model: @post, url: root_path do |f|
-  .form-group
-    p スポットを入力
-    = f.text_field :name, placeholder: "鶴見緑地", class: "form-control"
-    br
-    p 住所を入力
-    = f.text_field :address, placeholder: "大阪市鶴見区緑地公園2-163", class: "form-control"
-    br
-    = f.submit "登録する", class: "btn btn-primary"
