@@ -14,6 +14,7 @@ class Post < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
   validates :address, presence: true
+  # validates :spot_type, presence: true # seedで引っかかるため
 
   # addressが登録されたら, 緯度経度も自動登録
   geocoded_by :address

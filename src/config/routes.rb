@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     # ゲストログイン home(V) to Sesssions(C)
     post '/users/guest1', to: 'users/sessions#guest_in1'
     post '/users/guest2', to: 'users/sessions#guest_in2'
+    post '/users/guest3', to: 'users/sessions#guest_in3'
   end
 
   resources :users, only: [:index, :show, :destroy] do # 7, 10
@@ -27,7 +28,7 @@ Rails.application.routes.draw do
   end
 
   resources :posts,         only: [:create, :destroy, :show, :new] do
-    resources :comments,    only: [:create, :destroy]
+    resource :comments,     only: [:create, :destroy]
   end
   resources :relationships, only: [:create, :destroy]
   resources :likes,         only: [:create, :destroy]
