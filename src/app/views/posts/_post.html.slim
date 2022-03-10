@@ -1,0 +1,35 @@
+/ 個々の投稿 (shared/_feed), (users/_show_posts)
+
+div id="post-#{post.id}"
+  / スポット名
+  p
+    = post.address
+    / = post.latitude
+    / | ,
+    / = post.longitude
+  / 名前
+  / span.user
+  / = post.user.name
+  / 投稿文
+  = link_to post, class: "link" do
+    span.content
+      = post.content
+
+  .actions
+    / コメント
+    div
+      i.far.fa-comment.fa-lg
+      span.comment_count
+        = post.comments.count
+    / いいね
+    div id="likes_like_#{post.id}"
+      = render "likes/like", post: post
+
+  .footer_post
+    / 画像
+    p
+      = link_to gravatar_for(post.user, size: 15), post.user
+    / 3分前
+    span.timestamp
+      = time_ago_in_words(post.created_at)
+      | 前

@@ -2,6 +2,8 @@ class StaticPagesController < ApplicationController
   def home
     if user_signed_in?
       @post = current_user.posts.build
+      # google map 一覧
+      @posts = Post.all
 
       # 投稿検索がヒットした時
       if params[:q] && params[:q].reject { |value| value.blank? }.present?

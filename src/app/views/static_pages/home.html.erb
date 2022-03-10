@@ -9,9 +9,11 @@
     <div class="col-md-8">
       <%# 検索 %>
       <div class="search_form">
-        <%= render 'shared/posts_search' %>
+        <%= render 'static_pages/posts_search' %>
       </div>
-      <h3>地域情報</h3>
+      <div class="pkmap">
+        <%= render 'static_pages/map' %>
+      </div>
       <%# 投稿一覧 %>
       <div id="ajax_feed">
         <%= render 'shared/feed' %>
@@ -23,6 +25,9 @@
     <h1>外に出よう</h1>
     <h2 class="text-warning">動ける場所は見つかる</h2>
     <%= link_to "登録", 'users/sign_up', class: "btn btn-lg btn-primary" %>
-    <%= link_to "登録なしでログイン", users_guest_in_path, method: :post, class: "btn btn-lg btn-success" %>
+    <%= link_to "登録なしでログイン", users_guest1_path, method: :post, class: "btn btn-lg btn-success" %>
+    <% if Rails.env.development? %>
+      <%= link_to "ログイン3", users_guest2_path, method: :post, class: "btn btn-lg btn-warning" %>
+    <% end %>
   </div>
 <% end %>

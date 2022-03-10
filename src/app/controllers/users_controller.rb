@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # ログインを要求
-  before_action :authenticate_user!, only: [:show, :destroy, :following, :followers]
+  before_action :authenticate_user!, only: [:destroy, :following, :followers]
   before_action :admin_user,     only: :destroy
 
   def show # 7

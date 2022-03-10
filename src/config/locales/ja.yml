@@ -204,6 +204,8 @@ ja: # 7
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+    formats: # (comments/comment)
+      default: "%Y/%m/%d %H:%M"
   views:
     pagination:
       first: <i class="fas fa-angle-double-left"></i>

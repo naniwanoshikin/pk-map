@@ -9,7 +9,8 @@ module App
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = "Tokyo"
+    # config.active_record.default_timezone = :local
     # config.eager_load_paths << Rails.root.join("extras")
 
     # localeを日本語にする 5

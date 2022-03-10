@@ -1,4 +1,6 @@
 class NotificationsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     # 未確認の通知一覧
     unconfirms = current_user.passive_notifications

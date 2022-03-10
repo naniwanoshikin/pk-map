@@ -1,0 +1,19 @@
+- # コメント (posts/show)
+li
+  - # 画像
+  = link_to gravatar_for(comment.user, size: 20), comment.user, class: ""
+  - # コメント
+  div
+    strong
+      = comment.user.name
+  - # コメント
+  div
+    = comment.content
+  .timestamp
+    = l comment.created_at
+  - # 削除ボタン
+  - if current_user?(comment.user)
+    = link_to post_comment_path(comment.post),
+    -       class: "text-danger ",
+    -       method: :delete do
+    i.fas.fa-trash-alt

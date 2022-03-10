@@ -17,6 +17,11 @@
       </div>
 
       <div class="field">
+        <%= f.label :address %><br />
+        <%= f.text_field :address, autofocus: true, autocomplete: "address", class: 'form-control' %>
+      </div>
+
+      <div class="field">
         <%= f.label :password %>
         <%# (config/initializers/devise.rb) %>
         <% if @minimum_password_length %>
