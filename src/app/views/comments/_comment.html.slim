@@ -2,10 +2,18 @@
 li
   .comment_user
     / 画像
-    = link_to gravatar_for(comment.user, size: 20), comment.user, class: ""
+    = link_to gravatar_for(comment.user, size: 25), comment.user, class: ""
     / 名前
     strong
       = comment.user.name
+    / 口コミ数
+    span.review_number
+      = comment.user.comments.count
+      | 件の口コミ
+    / 評価
+    .comment_score
+      = comment.score
+
     / 削除ボタン
     - if current_user?(comment.user)
       = link_to post_comments_path(comment.post), class: "text-danger", method: :delete do
@@ -14,5 +22,6 @@ li
   .comment_content
     = comment.content
   / 時間
-  .timestamp
-    = l comment.created_at
+  .small.text-muted.text-right
+    = time_ago_in_words(comment.created_at).upcase
+    | 前

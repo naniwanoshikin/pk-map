@@ -49,18 +49,18 @@ class User < ApplicationRecord
   # _______________________________________________
   # ゲストログイン
   def self.guest1
-    find_by!(email: 'example-1@railstutorial.org') do |user|
+    find_by!(email: 'example@railstutorial.org') do |user|
       user.password = 'foobar'
     end
   end
   def self.guest2
-    find_by!(email: 'example-4@railstutorial.org') do |user|
-      user.password = 'password'
+    find_by!(email: 'example-1@railstutorial.org') do |user|
+      user.password = 'foobar'
     end
   end
   def self.guest3
-    find_by!(email: 'example@railstutorial.org') do |user|
-      user.password = 'foobar'
+    find_by!(email: 'example-4@railstutorial.org') do |user|
+      user.password = 'password'
     end
   end
 

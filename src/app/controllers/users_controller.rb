@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show # 7
     @user = User.find(params[:id])
-    @posts = @user.posts.page(params[:page]).per(10) # 13
+    @posts = @user.posts.page(params[:page]).per(6) # 13
 
     # pagination ajax
     respond_to do |format|

@@ -65,7 +65,7 @@ reset:
 mgs:
 	docker-compose exec web rails db:migrate:status
 mgd:
-	docker-compose exec web rails db:migrate:down VERSION=20220306214030
+	docker-compose exec web rails db:migrate:down VERSION=20220309035728
 seed:
 	docker-compose exec web rails db:seed
 
@@ -87,3 +87,9 @@ g:
 # 削除
 d:
 	docker-compose exec web rails d model Comment
+
+in:
+	docker-compose exec web rails webpacker:install
+# コンパイル
+w:
+	docker-compose exec web rails webpacker:compile

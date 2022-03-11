@@ -2,19 +2,19 @@
 h2
   = @post.address
 
-.post_header
-  = link_to 'javascript:history.back()', class: '' do
-    i.fas.fa-long-arrow-alt-left.fa-lg
-
 / 地図
 #post_map style='
-  height: 250px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 600px;
+  height: 280px;
+  margin: 0 auto;
+  border-radius: 8px;
 '
 
-.actions
+.show_actions
+  / 戻る
+  .post_header
+    = link_to 'javascript:history.back()', class: '' do
+      i.fas.fa-long-arrow-alt-left.fa-lg
   / コメント数
   div
     i.far.fa-comment.fa-lg
@@ -31,20 +31,16 @@ h2
         i.fas.fa-trash-alt.fa-lg
 
 / ユーザー情報
-p
-  = link_to gravatar_for(@post.user, size: 20), @post.user
-  span
-    span.content
-      = @post.content
-    p.spot_type
-      = @post.spot_type.class
+.user_post
+  = link_to gravatar_for(@post.user, size: 25), @post.user
+  span.content
+    = @post.content
+  / p.spot_type
+  /   = @post.spot_type.class
 
 
 / コメント一覧
 .comment
-  h2
-    | スポット情報
-
   - if @comments.any?
     ul#comments
       = render @comments
@@ -53,18 +49,8 @@ p
     h4
       | コメントはありません
 
-h2
-  | 情報を追加
-= form_with(model: @comment, url: post_comments_path(@post), local: true) do |f|
-  - if user_signed_in?
-    = render 'shared/error_messages', object: @comment
-  = f.hidden_field :post_id, value: params[:id]
-  .input-group
-    = f.text_field :content, placeholder: "鉄棒が錆びている", class: "form-control"
-    span.input-group-btn
-      = f.submit "追加", class: "btn btn-primary"
-/ →Comments(C)
-
+- if user_signed_in?
+  = render "comments/form", comment: @comment
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe

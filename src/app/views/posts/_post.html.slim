@@ -2,34 +2,45 @@
 
 div id="post-#{post.id}"
   / スポット名
-  p
-    = post.address
-    / = post.latitude
-    / | ,
-    / = post.longitude
-  / 名前
-  / span.user
-  / = post.user.name
-  / 投稿文
-  = link_to post, class: "link" do
-    span.content
-      = post.content
-
-  .actions
-    / コメント
-    div
-      i.far.fa-comment.fa-lg
-      span.comment_count
-        = post.comments.count
-    / いいね
-    div id="likes_like_#{post.id}"
-      = render "likes/like", post: post
-
-  .footer_post
-    / 画像
+  header
     p
-      = link_to gravatar_for(post.user, size: 20), post.user
+      = post.address
+      / = post.latitude
+      / | ,
+      / = post.longitude
+    / 名前
+    / span.user
+    / = post.user.name
+  main
+    / 評価
+    .average_score
+      // ★★☆☆☆
+      .star_rating
+        div class="star_front" style="width: #{post.comment_score_percentage}%"
+          | ★★★★★
+        .star_back
+          | ★★★★★
+      / 平均点
+      .score_review
+        .average_number
+          = post.avg_score
+          |  (
+          = post.comments.count
+          | )
+    / 投稿文
+    p.content
+      = link_to post, class: "link" do
+        = post.content
+
+    .actions
+      / いいね
+      div id="likes_like_#{post.id}"
+        = render "likes/like", post: post
+
+  footer.post
+    / 画像
+    = link_to gravatar_for(post.user, size: 20), post.user
     / 3分前
-    span.timestamp
+    .timestamp
       = time_ago_in_words(post.created_at)
       | 前

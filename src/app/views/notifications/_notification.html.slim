@@ -6,20 +6,19 @@ li
     .action_mark
       - case notification.action
       - when 'follow'
-        div.i.fas.fa-user.fa-xs
+        div.i.fas.fa-user.fa-lg
       - when 'like'
-        div.i.fas.fa-heart.fa-xs
+        div.i.fas.fa-heart.fa-lg
       - when 'comment'
-        div.i.far.fa-comment.fa-xs
+        div.i.far.fa-comment.fa-lg
 
     / アイコン
-    = link_to gravatar_for(visitor, size: 35), visitor
+    = link_to gravatar_for(visitor, size: 30), visitor
 
     / 文章
     .notify_content
-      = link_to visitor
-        strong
-          = visitor.name
+      strong
+        = link_to visitor.name, visitor
       = 'さん'
 
       - case notification.action
@@ -32,7 +31,7 @@ li
       - when 'comment'
         = "がコメントしました"
         p.comment_notify
-          / 相手のコメント
+          / 相手のコメント, リンク先
           = link_to notification.comment.content, notification.post
 
   .small.text-muted.text-right

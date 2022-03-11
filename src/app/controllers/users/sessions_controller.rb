@@ -19,15 +19,15 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # ゲストログイン
-  def guest_in1 # routes
-    user = User.guest1 # User(M)
-    sign_in user
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
-  end
-  def guest_in2
-    user = User.guest2
+  def guest_in1
+    user = User.guest1
     sign_in user
     redirect_to root_path, notice: 'ユーザー2'
+  end
+  def guest_in2 # routes
+    user = User.guest2 # User(M)
+    sign_in user
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end
   def guest_in3
     user = User.guest3

@@ -4,7 +4,7 @@
     <%# StaticPages(C) %>
     <%= render @feed_items %>
     <%# (posts/_post) %>
-  </ol>
+  </div>
   <%= paginate @feed_items,
     remote: true, # ajax
     params: { controller: :static_pages, action: :home }

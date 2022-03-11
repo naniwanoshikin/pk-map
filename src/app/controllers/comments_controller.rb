@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user,   only: :destroy
+  before_action :correct_user, only: :destroy
 
   # コメントする
   def create
@@ -30,9 +30,9 @@ class CommentsController < ApplicationController
     def comment_params
       # (posts/show)
       params.require(:comment).permit(
-        # :user_id,
         :post_id,
-        :content
+        :score,
+        :content,
       )
     end
     def correct_user
