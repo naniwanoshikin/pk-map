@@ -4,7 +4,7 @@
 <label for="address">スポット名</label>
 <div class="input-group">
   <input id="address" type="textbox" value="" class='form-control' placeholder="大泉緑地">
-  <%# 検索する %>
+  <%# 検索 %>
   <span class="input-group-btn">
     <input type="button" value="Go" onclick="codeAddress()" class="btn btn-primary">
   </span>
@@ -42,7 +42,7 @@
     // 中心位置を表示
     map = new google.maps.Map(target, {
       center: user_address,
-      zoom: 13,
+      zoom: 14,
       mapTypeControl: false, // 地図|写真
       streetViewControl: false, // ストリートビューマーク
       // mapTypeId: 'roadmap' // 地図の種類

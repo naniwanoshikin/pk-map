@@ -4,8 +4,7 @@
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
-      <%= link_to gravatar_for(@user, size: 50), @user %>
-      <h1><%= @user.name %></h1>
+      <%= render 'shared/user_info', user: @user %>
     </section>
     <%# 統計情報 %>
     <section class="stats">
@@ -21,7 +20,7 @@
     <% end %>
   </aside>
   <div class="col-md-8">
-    <h3><%= @title %></h3>
+    <h2><%= @title %></h2>
     <% if @users.any? %>
       <ul class="users follow">
         <%= render @users %>

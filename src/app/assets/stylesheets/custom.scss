@@ -219,9 +219,12 @@ input {
 
 // 7
 #error_explanation {
+  span {
+    color: #696969;
+  }
   ul {
     color: red;
-    list-style: '- ';
+    list-style: square;
     // margin: 0 0 30px 0;
   }
 }

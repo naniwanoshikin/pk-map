@@ -4,18 +4,20 @@
 // that code so it'll be compiled.
 
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
+// import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 // 起動
 Rails.start()
-Turbolinks.start()
 ActiveStorage.start()
+// Turbolinks.start() // googlemap api script再読み込み防止
 
 // 8
 require("jquery")
 import "bootstrap"
 
-// 直上の jquery 読み込み
-// require("post.js")
+// 読み込み ★★☆☆☆
+// require("comment.js")
+
+// import "../styles/application.scss"

@@ -1,6 +1,94 @@
 
-// (posts/show, _post) 共通
-.actions {
+// (posts/_post)
+.posts {
+  list-style: none;
+  margin-top: 20px;
+  display: grid;
+  gap: 20px 10px; // 余白
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+  & > div {
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    // width: 200px;
+    // height: 200px;
+  }
+  header {
+    // ユーザー名
+    .user {
+      margin-top: 5em;
+      padding-top: 0;
+    }
+  }
+  main {
+    // 評価
+    .average_score {
+      display: flex;
+      margin-bottom: 5px;
+      .star_rating {
+        position: relative;
+        width: 5em;
+        height: 1em;
+        font-size: 18px;
+        margin-right: 5px;
+        // ★★
+        .star_front {
+          position: absolute;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+          color: #ffcc33;
+        }
+        // ☆☆☆☆☆
+        .star_back {
+          color: #ccc;
+        }
+      }
+      .score_review {
+        font-size: 16px;
+        .average_number {
+          color: gray;
+        }
+      }
+    }
+    .content {
+      color: gray;
+      display: block;
+      img {
+        display: block;
+        padding: 5px 0;
+      }
+    }
+    // aタグ無効化
+    .link {
+      color: inherit;
+      // text-decoration : none;
+      &:hover {
+        color: inherit; // なぜリンクは青くなる?
+        // text-decoration: none;
+      }
+    }
+  }
+  footer {
+    .timestamp {
+      color: gray;
+      float: right;
+    }
+    .gravatar {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+}
+
+// (posts/show)
+.user_post {
+  margin: 0 20px;
+  padding: 10px 5px;
+}
+// (posts/show, _post)
+.show_actions {
   display: flex;
   justify-content: space-between;
   width: 50%;
@@ -12,64 +100,12 @@
   }
 }
 
-
-// (posts/_post)
-.posts {
-  list-style: none;
-  margin-top: 20px;
-  display: grid;
-  // grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-
-  gap: 20px 10px; // 余白
-
-  & > div {
-    padding: 10px;
-    border: 1px solid #e8e8e8;
-    border-radius: 5px;
-    width: 200px;
-    height: 200px;
-  }
-  // ユーザー名
-  .user {
-    margin-top: 5em;
-    padding-top: 0;
-  }
-  .content {
-    display: block;
-    img {
-      display: block;
-      padding: 5px 0;
-    }
-  }
-  .timestamp {
-    color: gray;
-    display: block;
-    text-align: right;
-  }
-  .gravatar {
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-}
-
-// aタグ無効化 (posts/_post)
-.link {
-  color : inherit;
-  // text-decoration : none;
-  &:hover {
-    color : inherit; // なぜリンクは青くなる?
-    // text-decoration: none;
-  }
-}
-
-
-// (posts/show)
 .comment {
   h4 {
     text-align: center;
   }
 }
+
 
 // (post/new)
 .post_form {

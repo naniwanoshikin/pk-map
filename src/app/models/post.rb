@@ -20,4 +20,21 @@ class Post < ApplicationRecord
   geocoded_by :address
   after_validation :geocode
 
+  # 平均評価 3.2
+  def avg_score # (posts/post)
+    unless self.comments.empty?
+      # 小数点1桁
+      self.comments.average(:score).round(1).to_f
+    else
+      0.0
+    end
+  end
+  # 平均評価 64%
+  def comment_score_percentage
+    unless self.comments.empty?
+      self.comments.average(:score).round(1).to_f*100/5
+    else
+      0.0
+    end
+  end
 end

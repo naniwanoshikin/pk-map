@@ -32,6 +32,9 @@ ja:
         address: スポット名
         spot_type: タイプ
         content: スポット詳細
+      comment:
+        score: 点数
+        content: コメント
     models:
       user: ユーザー
   devise:

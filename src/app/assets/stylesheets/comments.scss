@@ -1,21 +1,51 @@
-
+// (posts/show)
 ul#comments {
   list-style: none;
   padding: 0 10px;
   margin: 0 auto;
   max-width: 600px;
+  // (comments/comment)
   li {
     padding: 8px 0;
     border-top: 1px dotted #8c8b8b;
+    .comment_user {
+      .review_number {
+        margin-left: 10px;
+        color: gray;
+      }
+    }
     .fa-trash-alt {
       float: right;
     }
     .comment_content {
       margin-left: 30px;
-      padding-top: 10px;
+      padding-top: 8px;
     }
     .timestamp {
       text-align: right;
     }
   }
 }
+
+// (comments/form)
+.rating-box {
+  font-size: 30px;
+  // ★★☆☆☆ 2/5
+  .main-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 15px;
+    // (★★☆☆☆)
+    .ratings {
+      color: #ffcc00;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    // 2/5
+    .rating_value_display {
+      font-size: 20px;
+    }
+  }
+}
+
