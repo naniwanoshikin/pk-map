@@ -50,7 +50,7 @@ header {
   li {
     border-top: 1px dotted #8c8b8b;
     border-bottom: 1px dotted #fff;
-    padding: 20px 5px;
+    padding: 15px 5px;
     padding-bottom: 10px;
     &:hover {
       opacity: 0.8;
@@ -58,7 +58,7 @@ header {
     }
     .form-inline {
       display: flex;
-      align-items: center;
+      // align-items: center;
       // マーク
       .action_mark {
         margin-right: 8px;
@@ -68,12 +68,16 @@ header {
       }
       // 文章
       .notify_content {
-        a  {
+        width: 90%;
+        // 鈴木さん
+        strong > a  {
           color : inherit;
         }
+        // post.content
         .like_notify, .comment_notify {
-          color: gray;
           a {
+            color: gray;
+            display: block;
             &:hover {
               color : inherit; // なぜリンクは青くなる?
               text-decoration: none;

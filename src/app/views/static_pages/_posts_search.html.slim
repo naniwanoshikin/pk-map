@@ -1,29 +1,8 @@
 / (home)
 = search_form_for @q, url: @url do |f|
-  = f.label :content_cont, 'キーワード'
+  = f.label :content_cont, '探す'
   .input-group
-    = f.text_field :content_cont, placeholder: "なかなか広い", class: 'form-control js_text'
+    = f.text_field :content_cont, placeholder: "広い", class: 'form-control js_text'
     span.input-group-btn
-      = f.submit 'Go', class: "btn btn-primary"
-
-/ これ書くとエラー
-script[type="text/javascript"]
-  | $(document).ready(function() {
-      // console.log("test");
-      $('.js_text').on('keyup', function () {
-        let title = $.trim($(this).val());
-        console.log(title);
-        // ajaxリクエスト
-        $.ajax({
-          // リクエストのタイプ
-          type: 'GET',
-          // リクエストを送信するURL
-          url: '/posts/post',
-          // サーバーに送信するデータ
-          data:  { post: title },
-          // サーバーから返却される型
-          dataType: 'json'
-        })
-
-      })
-    });
+      = f.button :type => "submit", class: "btn btn-primary" do
+        i.fas.fa-search

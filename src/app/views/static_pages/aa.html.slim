@@ -1,13 +1,13 @@
 
-.field
-  - %w(公園 スロープ 鉄棒 壁 芝生 施設 街).each.with_index do |ingredient,i|
-    label
-      = check_box_tag 'samurai[ingredients][]', ingredient,false,id:"samurai_ingredients_#{i}"
-      = ingredient
-
-
-
-
-.field
-  = f.check_box :spot_type, class: "spot"
-  = f.label :spot_type, '公園'
+    .content.average_score
+      .star-rating.mb-2
+        |  <div class="star-rating-front" style="width: 
+        = ramen_shop.review_score_percentage
+        | %">★★★★★
+      .star-rating-back
+        | ★★★★★
+    .average-score-display.ml-3.pt-2
+      = ramen_shop.avg_score
+      | 点（
+      = ramen_shop.reviews.count
+      | 件のレビュー） 
