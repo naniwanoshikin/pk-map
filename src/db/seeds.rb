@@ -73,7 +73,7 @@ posts = Post.all
 user3 = User.third
 user4 = User.fourth
 user5 = User.fifth
-user6 = User.sixth
+user6 = User.all[5]
 [
   [user1, posts[1..10]], # 10投稿 管理人
   [user2, posts[4..8]], # 5投稿 ゲスト
