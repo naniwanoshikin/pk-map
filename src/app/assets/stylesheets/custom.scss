@@ -235,8 +235,8 @@ input {
 
 // formのエラー箇所
 .field_with_errors {
-  @extend .is-invalid; // bootstrap4
   .form-control {
+    @extend .is-invalid !optional; // bootstrap4
     color: rgb(255, 93, 93);
   }
 }
