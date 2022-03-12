@@ -1,19 +1,23 @@
-<div class="card mb-6">
 
-  <div class="card-content">
-    <div class="content">
+  <div class="container">
+    <nav>
+      <ul id="navbar" class="nav navbar-nav navbar-right navbar-collapse collapse">
 
-      <div class="content average-score">
-        <div class="star-rating mb-2">
-          <div class="star-rating-front" style="width: <%= ramen_shop.review_score_percentage %>%">★★★★★</div>
-          <div class="star-rating-back">★★★★★</div>
-        </div>
-        <div class="average-score-display ml-3 pt-2">
-          <%= ramen_shop.avg_score %>点（<%= ramen_shop.reviews.count %>件のレビュー）
-        </div>
-      </div>
-      
-    </div>
+        <% if user_signed_in? %>
+
+
+          <li class="dropdown">
+            <ul class="dropdown-menu">
+              <li></li>
+              <li><%= link_to "About",    %></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to "",  %>
+              </li>
+            </ul>
+          </li>
+        <% else %>
+        <% end %>
+      </ul>
+    </nav>
   </div>
-
-</div>

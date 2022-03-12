@@ -27,7 +27,7 @@ cs:
 	docker-compose exec web rails c --sandbox
 # シェル
 bash:
-	docker-compose exec web bundle exec --rm web bash
+	docker-compose run --rm web bash
 # mysql起動: password入力
 db:
 	docker-compose exec web rails db
@@ -75,7 +75,7 @@ slim:
 	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
-	git checkout src/app/views/static_pages/about.html.erb
+	git checkout src/app/assets/stylesheets/comments.scss
 # 特定の相対パス, 特定の拡張子のファイルを削除
 filed:
 	find src/app/views -type f -name "*.slim" -delete

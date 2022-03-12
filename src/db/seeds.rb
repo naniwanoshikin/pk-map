@@ -69,17 +69,17 @@ following.each { |followed| user2.follow(followed) }
 
 # _______________________________________________________
 # userがpostsをいいね
-posts = Post.all
+posts = Post.all[1..20]
 user3 = User.third
 user4 = User.fourth
 user5 = User.fifth
 user6 = User.all[5]
 [
-  [user1, posts[1..10]], # 10投稿 管理人
-  [user2, posts[4..8]], # 5投稿 ゲスト
-  [user3, posts[0..3]], # 3投稿
-  [user4, posts[3..5]], # 3投稿
-  [user5, posts[2..5]], # 4投稿
+  [user1, posts.sample(10)], # 10投稿
+  [user2, posts.sample(5)], # 5投稿
+  [user3, posts.sample(6)], # 6投稿
+  [user4, posts.sample(3)], # 3投稿
+  [user5, posts.sample(4)], # 4投稿
 ].shuffle.each { |user, likes_posts|
   likes_posts.each { |post|
     # いいねと通知
