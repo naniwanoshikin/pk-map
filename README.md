@@ -1,21 +1,20 @@
-# PKSpot
+# PKmap
 息抜きに地元で運動できる場所を探しませんか。
 
 全国の公園や人気のスポットを紹介するサービスです。
 
-![shot1](https://user-images.githubusercontent.com/67915047/156552349-62b13de9-9c28-407a-ab60-dec68d50429f.png)
-
 <!--
-
 目的: googlemapのような情報の蓄積 Twitterのような呟きではない
 
 苦労したこと
 
+導入
+- docker, cicd, devise, rspec, webpack
+
 フロントエンド
 - レスポンシブ スマホでは下端にfooterを固定
 - 微調整 通知のベル position: relative
-- JSの読み込み時間がかかる...
-- 構成に関する知識も方法も知らない
+- 構成に関する知識や方法が知らない 人のgithubを見た
 
 バックエンド
 - 地図の表示
@@ -38,14 +37,23 @@
 - メルカリ, インスタ, googlemap, amazon
 - その他
 
+方針
+- わからないことをメモして1つ1つ潰していった
+
 感想
 - slimによるコード量削減がすごい
 - フロントとバックエンドの両立の難しさ 手が回らない
+- JSの読み込み時間がかかる...
 
 -->
 
 ## 公開ページ
 [こちら](https://rails-pk.herokuapp.com/)の画面からゲストログインできます。
+
+|ログイン前|ログイン後|
+|---|---|
+|![shot1](https://user-images.githubusercontent.com/67915047/156552349-62b13de9-9c28-407a-ab60-dec68d50429f.png)|![map1](https://user-images.githubusercontent.com/67915047/157975655-bfceb0a0-667a-4e14-b5e0-993cf8482ed0.jpg)|
+
 
 ## 実装機能
 

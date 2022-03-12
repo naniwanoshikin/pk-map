@@ -11,7 +11,7 @@
       </section>
     </aside>
     <%# メイン 地図 %>
-    <div class="col-md-8">
+    <div class="col-md-8 mt-md-3">
       <div class="pkmap">
         <%= render 'static_pages/map' %>
       </div>
@@ -24,12 +24,12 @@
 <% else %>
   <div class="center jumbotron">
     <h1>外に出よう</h1>
-    <h2 class="text-warning">動ける場所は見つかる</h2>
+    <h2 class="">動ける場所は見つかる</h2>
     <%= link_to "登録", 'users/sign_up', class: "btn btn-lg btn-primary" %>
     <%# Registrations(C) %>
     <% if Rails.env.development? %>
-      <%= link_to "ログイン1", users_guest1_path, method: :post, class: "btn btn-lg btn-danger" %>
-      <%= link_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-lg btn-warning" %>
+      <%= link_to "ログイン1", users_guest1_path, method: :post, class: "btn btn-danger" %>
+      <%= link_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-warning" %>
     <% end %>
     <%= link_to "登録なしでログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success" %>
   </div>
