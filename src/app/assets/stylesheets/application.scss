@@ -1,0 +1,10 @@
+// @import '~bootstrap/scss/bootstrap'; // webpackで使用
+@import "bootstrap"; // 先に書かないと他が反映されない
+@import "custom";
+@import "static_pages";
+@import "users";
+@import "posts";
+@import "likes";
+@import "comments";
+@import "notifications";
+

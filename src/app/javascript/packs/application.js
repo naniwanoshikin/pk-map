@@ -13,11 +13,11 @@ Rails.start()
 ActiveStorage.start()
 // Turbolinks.start() // googlemap api script再読み込み防止
 
-// 8
-require("jquery")
-import "bootstrap"
 
-// 読み込み ★★☆☆☆
-// require("comment.js")
+//= require jquery3
+//= require popper
+//= require bootstrap
 
-// import "../styles/application.scss"
+// webpack使う場合
+// import 'bootstrap';
+// import '../stylesheets/application.scss';
