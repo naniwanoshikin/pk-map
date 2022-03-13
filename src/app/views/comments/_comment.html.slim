@@ -10,9 +10,18 @@ li
     span.review_number
       = comment.user.comments.count
       | 件の口コミ
-    / 評価
-    .comment_score
-      = comment.score
+
+    / ★★ + ☆☆☆☆☆
+    .user_score
+      // ★★☆☆☆
+      .star_rating
+        div class="star_front"
+          - comment.score.times do
+           | ★
+          end
+        / ☆☆☆☆☆
+        .star_back
+          | ★★★★★
 
     / 削除ボタン
     - if current_user?(comment.user)

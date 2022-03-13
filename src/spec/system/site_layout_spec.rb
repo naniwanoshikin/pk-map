@@ -8,7 +8,7 @@ describe 'StaticPages', type: :system do
     click_link 'About'
     expect(page).to have_title(full_title('About'))
     click_link 'PK map'
-    click_link '登録'
+    click_link 'Sign up'
     expect(page).to have_content('アカウント登録')
     expect(page).to have_title(full_title('新規登録'))
     click_link 'PK map'

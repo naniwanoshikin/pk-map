@@ -8,7 +8,9 @@ footer
             i.fa.fa-home.fa-2x
         / 通知
         li
-          = render 'layouts/circle'
+          = link_to notifications_path do
+            i.far.fa-bell.fa-2x
+            = render 'layouts/circle'
         / 投稿
         li
           = link_to new_post_path do

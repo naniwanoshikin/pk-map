@@ -1,7 +1,7 @@
 - visitor = notification.visitor
 - visited = notification.visited
 li
-  .form-inline
+  .f_inline
     / マーク
     .action_mark
       - case notification.action
@@ -19,20 +19,20 @@ li
     .notify_content
       strong
         = link_to visitor.name, visitor
-      = 'さん'
-
-      - case notification.action
-      - when 'follow'
-        = "にフォローされました"
-      - when 'like'
-        | がいいねしました
-        p.like_notify
-          = link_to notification.post.content, notification.post
-      - when 'comment'
-        = "がコメントしました"
-        p.comment_notify
-          / 相手のコメント, リンク先
-          = link_to notification.comment.content, notification.post
+      span.text-black-50
+        = 'さん'
+        - case notification.action
+        - when 'follow'
+          = "にフォローされました"
+        - when 'like'
+          | がいいねしました
+          p.like_notify
+            = link_to notification.post.content, notification.post
+        - when 'comment'
+          = "がコメントしました"
+          p.comment_notify
+            / 相手のコメント, リンク先
+            = link_to notification.comment.content, notification.post
 
   .small.text-muted.text-right
     = time_ago_in_words(notification.created_at).upcase

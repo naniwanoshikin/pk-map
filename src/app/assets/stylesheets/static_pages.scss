@@ -1,5 +1,6 @@
 
-// home
+// (home)
+// ログイン前
 .jumbotron {
   background: center/cover image-url('mie.JPG')
   rgba(255,255,255,0.7);
@@ -15,15 +16,21 @@
   }
 }
 
-// about
-.recommend_spot {
-  display: flex;
-  ul {
-    margin-right: 20px;
+// ログイン後
+// 検索
+.post_search, .map_search {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  input {
+    border-radius: 5px 0 0 5px;
+  }
+  button {
+    border-radius: 0 5px 5px 0;
   }
 }
 
-// 投稿検索 (home)
-.post_search {
-  margin: 10px 0;
+// (home, post/show)
+#map {
+  margin: 20px 0;
 }
