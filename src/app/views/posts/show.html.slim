@@ -2,55 +2,53 @@
 h2
   = @post.address
 
-/ 地図
-#post_map style='
-  max-width: 600px;
-  height: 280px;
-  margin: 0 auto;
-  border-radius: 8px;
-'
+.container
+  .row
+    .col-md-9.col-md-offset-2.mx-auto
+      / 地図
+      #post_map
 
-.show_actions
-  / 戻る
-  .post_header
-    = link_to 'javascript:history.back()', class: '' do
-      i.fas.fa-long-arrow-alt-left.fa-lg
-  / コメント数
-  div
-    i.far.fa-comment.fa-lg
-    span.comment_count
-      = @post.comments.count
-  / いいね数
-  div id="likes_like_#{@post.id}"
-    = render "likes/like", post: @post
+      .show_actions
+        / 戻る
+        .post_header
+          = link_to 'javascript:history.back()', class: '' do
+            i.fas.fa-long-arrow-alt-left.fa-lg
+        / コメント
+        div
+          i.far.fa-comment.fa-lg
+          span.comment_count
+            = @post.comments.count
+        / いいね
+        div id="likes_like_#{@post.id}"
+          = render "likes/like", post: @post
+        / 削除
+        div
+          - if current_user?(@post.user)
+            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
+              i.fas.fa-trash-alt.fa-lg
 
-  / 削除
-  div
-    - if current_user?(@post.user)
-      = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
-        i.fas.fa-trash-alt.fa-lg
-
-/ ユーザー情報
-.user_post
-  = link_to gravatar_for(@post.user, size: 25), @post.user
-  span.content
-    = @post.content
-  / p.spot_type
-  /   = @post.spot_type.class
+      / ユーザー情報
+      .user_post.text-center.my-3
+        = link_to gravatar_for(@post.user, size: 25), @post.user
+        span.content
+          = @post.content
+        / p.spot_type
+        /   = @post.spot_type.class
 
 
-/ コメント一覧
-.comment
-  - if @comments.any?
-    ul#comments
-      = render @comments
-      / (comments/_comment)
-  - else
-    h4
-      | コメントはありません
+      / コメント一覧
+      .comment
+        - if @comments.any?
+          ul#comments
+            = render @comments
+            / (comments/_comment)
+        - else
+          h4
+            | コメントはありません
 
-- if user_signed_in?
-  = render "comments/form", comment: @comment
+      / コメントフォーム
+      - if user_signed_in?
+        = render "comments/form", comment: @comment
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe

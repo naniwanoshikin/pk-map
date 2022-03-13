@@ -1,60 +1,64 @@
 - provide(:title, "About")
-h2 PK map
-div
-  - if user_signed_in?
-    div
-      h3 アプリ情報
-      ul
-        li
-          | 登録者数:
-          = User.all.length
-          | 人
-        li
-          | 投稿数:
-          = Post.all.length
-          | 個
-        li
-          | いいね数:
-          = Like.all.length
-          | 個
-          | /通知
-          = Notification.where("action=?", 'like').all.length
-          | 件
-        li
-          | リレーションシップ:
-          = Relationship.all.length
-          | 個
-          | /通知
-          = Notification.where("action=?", 'follow').all.length
-          | 件
-    hr
-  div
-    h3 本アプリの対象者
-    ul
-      li 地元で動ける場所を知りたい
-      li 人気の動ける場所を知りたい
-      li 外に出るきっかけが欲しい
-      li 部屋にこもりがち
-      li 軽く動きたい
-  hr
-  div
-    p 私はパルクールをしていますが、地図で動けそうな場所を探す中で、どこで動くのがいいのかどこが人気か感想があればいいなと思い、このアプリを作成しました。
-    div
-      h3 パルクールについて
-      ul
-        li 年齢関係なく誰でも簡単に始められる
-        li 初心者でも自分だけの動きを作れる
-        li 時間や場所に縛られない
-        li いつでも簡単に始められる
-        li 外の風を浴びながら動ける
-        li 極めると重力を感じなくなる
-        li 極めると回れる
-    div
-      h3 おすすめの場所
-      div.recommend_spot
+h2 本アプリについて
+
+.container
+  .row
+    .col-md-9.mx-auto
+      - if user_signed_in?
+        div
+          h3 アプリ情報
+          ul
+            li
+              | 登録者数:
+              = User.all.length
+              | 人
+            li
+              | 投稿数:
+              = Post.all.length
+              | 個
+            li
+              | いいね数:
+              = Like.all.length
+              | 個
+              | /通知
+              = Notification.where("action=?", 'like').all.length
+              | 件
+            li
+              | リレーションシップ:
+              = Relationship.all.length
+              | 個
+              | /通知
+              = Notification.where("action=?", 'follow').all.length
+              | 件
+          hr
+      div
+        p 地図で動けそうな場所を探す中で、そのスポットの情報や感想、どこが人気かを知れるといいなと思い、このアプリを作成しました。
+        hr
+      div
+        h2 対象者
         ul
-          li 道端のブロック
-          li 道端のレール
-          li 公園の鉄棒
-        p
+          li 地元で動ける場所を知りたい
+          li 人気のスポットを知りたい
+          li 部屋にこもりがちで、外に出るきっかけが欲しい
+          li 軽く動きたい
+        hr
+      div
+        h2 私の思うパルクール
+        ul
+          li 年齢関係なく誰でも簡単に始められる
+          li 初心者でも自分だけの動きを作れる
+          li 時間や場所に縛られない
+          li いつでも簡単に始められる
+          li 外の風を浴びながら動ける
+          li 極めると重力を感じなくなる
+          li 極めると回れる
+        hr
+      div
+        h2 私がおすすめする場所
+        div.d-flex
+          ul.mr-5
+            li 公園
+            li 鉄棒
+            li 道端のブロック
+            li 道端のレール
           = link_to image_tag("rails.svg", alt: "Rails logo", width: "100px"), "https://rubyonrails.org/"

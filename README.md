@@ -8,30 +8,35 @@
 
 苦労したこと
 
-導入
-- docker, cicd, devise, rspec, webpack
+導入、環境構築: ぶっちゃけこれが一番しんどかった
+- docker
+- cicd: プルリクエスト, build, test
+- devise
+- rspec
+- webpack_JS
+- bootstrap 3 → 4
 
 フロントエンド
 - レスポンシブ スマホでは下端にfooterを固定
 - 微調整 通知のベル position: relative
-- 構成に関する知識や方法が知らない 人のgithubを見た
+- <div>構成の知識や方法が知らない 人のgithubを見た
 
 バックエンド
-- 地図の表示
-  - homeページ JSにerbを入れる 繰り返し
-  - 詳細ページ JSにインスタンス変数を入れる gon
-- seed を綺麗に書く (フォロー、いいね、コメント) * 通知
+- 地図の表示 gon: JSにインスタンス変数を入れる
+  - Homeページ  ピンは複数 + 吹き出し
+  - 詳細ページ  ピンは1つ
+- seed: (フォロー、いいね、コメント) * 通知
 - フォーム送信のpath 作成・削除 (routes, posts/show, comments/comment)
 
 インフラ
-- 環境構築
-  - Docker
-    - build, test
-    - 3つの環境
-      - RSpec
-  - CircleCI
-    - プルリクエストのやり方
-- 何10分も時間がかかる
+- Docker
+  - 3つの環境
+  - 何10分も時間がかかる
+
+感想
+- slimによるコード量削減がすごい
+- フロントとバックエンドの両立の難しさ 手が回らない
+- JSの読み込み時間がかかる...
 
 参考
 - メルカリ, インスタ, googlemap, amazon
@@ -39,11 +44,6 @@
 
 方針
 - わからないことをメモして1つ1つ潰していった
-
-感想
-- slimによるコード量削減がすごい
-- フロントとバックエンドの両立の難しさ 手が回らない
-- JSの読み込み時間がかかる...
 
 -->
 
@@ -76,7 +76,7 @@
 * フロントエンド
   * HTML/CSS/Sass/Javascript
   * slim
-  * Bootstrap 3.4.1
+  * Bootstrap 4.5.0
   * jQuery 3.4.1
 * バックエンド
   * Ruby 2.6.5
