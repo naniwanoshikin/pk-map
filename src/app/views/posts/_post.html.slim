@@ -1,13 +1,12 @@
 / 個々の投稿 (shared/_feed), (users/_show_posts)
 
 div id="post-#{post.id}"
-  / スポット名
-  header
-    p
-      = post.address
-      / = post.latitude
-      / | ,
-      / = post.longitude
+  / スポット名 JS (shared/feed)
+  header id="post_header#{post.id}"
+    = post.address
+    / = post.latitude
+    / | ,
+    / = post.longitude
     / 名前
     / span.user
     / = post.user.name

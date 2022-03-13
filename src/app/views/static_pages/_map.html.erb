@@ -1,18 +1,6 @@
-<%# Home %>
-
-<%# 住所入力 %>
-<label for="address">スポット名</label>
-<div class="input-group">
-  <input id="address" type="textbox" value="" class='form-control' placeholder="大泉緑地">
-  <%# 検索 %>
-  <span class="input-group-btn">
-    <input type="button" value="Go" onclick="codeAddress()" class="btn btn-primary">
-  </span>
-</div>
-
-<div id="display"></div>
+<%# Home メイン %>
+<h2>周辺地図</h2>
 <div id='map'></div>
-
 <style>
   #map {
     height: 400px;
@@ -21,9 +9,6 @@
 </style>
 
 <script>
-
-  // 検索結果: '緯度経度'
-  const display = document.getElementById('display')
 
   let map
 
@@ -42,7 +27,7 @@
     // 中心位置を表示
     map = new google.maps.Map(target, {
       center: user_address,
-      zoom: 14,
+      zoom: 7,
       mapTypeControl: false, // 地図|写真
       streetViewControl: false, // ストリートビューマーク
       // mapTypeId: 'roadmap' // 地図の種類
@@ -67,57 +52,33 @@
     });
 
     // 投稿一覧
-    <% @posts.each do |post| %>
-      // ピンをさす
-      marker = new google.maps.Marker({
+    gon.posts.forEach(post => {
+      // ピンをさす: 繰り返しなので let 入れないとエラー
+      let marker = new google.maps.Marker({
         map: map,
         position: {
-          lat: <%= post.latitude %>,
-          lng: <%= post.longitude %>
+          // 位置情報がないとここでエラー
+          lat: post.latitude,
+          lng: post.longitude
         }
       });
-
       // 情報ウィンドウ(吹き出し)の定義
-      infowindow = new google.maps.InfoWindow({
-
-        content: "<a href='<%= post_url(post.id) %>'><%= post.address %></a>"
+      let infowindow = new google.maps.InfoWindow({
+        content: `<a href='/posts/${post.id}'>${post.address}</a>`
       });
-      marker.addListener('click', function() {
+      // リンク表示
+      marker.addListener('mouseover', function() {
         infowindow.open(map, marker);
       });
-    <% end %>
-  }
-
-  // 住所検索した時
-  function codeAddress(){
-    // 入力値
-    let inputAddress = document.getElementById('address').value;
-    // ジオコーディングをするためのリクエストを送信
-    geocoder.geocode( { 'address': inputAddress}, (results, status) => {
-      // 検索結果がヒットした時
-      if (status == 'OK') {
-        // 入力した値の緯度経度
-        let ido_kedo = results[0].geometry.location
-        // 地図の中心の位置を追加 + 表示?
-        map.setCenter(ido_kedo);
-        // ピンをさす
-        marker = new google.maps.Marker({
-          map: map,
-          position: ido_kedo,
-          // 色
-          icon: {
-          url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
-          // サイズ (縦, 横)
-          scaledSize: new google.maps.Size(40, 40)
-      }
-        });
-        display.textContent = "位置:" + ido_kedo
-      } else {
-        alert('該当する結果がありませんでした:' + status);
-      }
+      // marker.addListener('mouseout', function(){
+      //   infowin.close();
+      // });
     });
   }
 
 </script>
+
+<%# 検索 %>
+<%= javascript_pack_tag 'map.js' %>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap" async defer></script>

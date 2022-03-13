@@ -1,16 +1,10 @@
-// (header_nav)
-header {
-  .fa-bell {
-    font-size: 1.3em; // 微調整
-  }
-}
 // (header/footer_nav)
 // 通知マーク全体
 .notice {
   // 円マーク 未確認通知がある時のみ
   position: relative; // 微調整
   .n-circle {
-    font-size: 1.6em;
+    font-size: 1.3em;
     color: #efa04c;
     position: absolute; // 微調整
     top: 12px;
@@ -50,13 +44,13 @@ header {
   li {
     border-top: 1px dotted #8c8b8b;
     border-bottom: 1px dotted #fff;
-    padding: 15px 5px;
-    padding-bottom: 10px;
+    padding: 10px 0;
+    padding-bottom: 5px;
     &:hover {
       opacity: 0.8;
       background: rgb(243, 241, 241);
     }
-    .form-inline {
+    .f_inline {
       display: flex;
       // align-items: center;
       // マーク

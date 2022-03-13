@@ -1,15 +1,15 @@
 - provide(:title, '通知')
+h2 通知
 
-h2
-  | 通知
-.row
-  - if @notifications.exists?
-    .col-md-8.col-md-offset-2
-      ul#notify_lists
-        = render @notifications
-      / ajax css が適用されない...
-      #view_more
-        = link_to_next_page @notifications, 'もっと見る', remote: true, class: 'btn btn-primary'
-  - else
-    h2
-      | 通知はありません
+.container
+  .row
+    .col-md-9.col-md-offset-2.mx-auto
+      - if @notifications.exists?
+        ul#notify_lists
+          = render @notifications
+        / ajax css が適用されない...
+        #view_more
+          = link_to_next_page @notifications, 'もっと見る', remote: true, class: 'btn btn-primary'
+      - else
+        h2
+          | 通知はありません

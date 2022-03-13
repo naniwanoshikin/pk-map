@@ -1,0 +1,12 @@
+/ 住所入力 (home) -> (map.js)
+= form_with do |f|
+  = f.label :address, 'スポット名'
+  .input-group
+    = f.text_field :address, placeholder: "大泉緑地", class: 'form-control'
+    / 検索
+    .input-group-btn
+      = f.button :type => "button", class: "btn btn-primary codeaddress" do
+        i.fas.fa-search
+
+/ 位置: 緯度経度
+#display

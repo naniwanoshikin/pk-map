@@ -1,13 +1,3 @@
-
-    .content.average_score
-      .star-rating.mb-2
-        |  <div class="star-rating-front" style="width: 
-        = ramen_shop.review_score_percentage
-        | %">★★★★★
-      .star-rating-back
-        | ★★★★★
-    .average-score-display.ml-3.pt-2
-      = ramen_shop.avg_score
-      | 点（
-      = ramen_shop.reviews.count
-      | 件のレビュー） 
+script
+  // 検索結果: '緯度経度'
+  const display = document.getElementById('display')

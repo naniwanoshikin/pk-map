@@ -1,8 +1,8 @@
 // 7
 @mixin box_sizing {
-  -moz-box-sizing:    border-box;
+  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  box-sizing:         border-box;
+  box-sizing: border-box;
 }
 
 /* universal */
@@ -28,7 +28,12 @@ textarea {
 
 /* typography */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1;
 }
 
@@ -42,7 +47,8 @@ h1 {
 h2 {
   font-size: 1.2em;
   letter-spacing: -1px;
-  margin: 30px 0;
+  margin: 20px 0;
+  margin-top: 25px;
   text-align: center;
   font-weight: normal;
   color: gray;
@@ -54,43 +60,44 @@ p {
 }
 
 // _______________________________________________
-/* header */
+
 header.navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 5%;
   z-index: 10;
+  opacity: 0.9;
+  #logo {
+    margin-left: 15px;
+    font-size: 1.6em;
+    color: #fff;
+    // text-transform: uppercase;
+    letter-spacing: -1px;
+    padding-top: 9px;
+    font-weight: bold;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  nav {
+    // ul
+    .navbar-nav {
+      // li
+      .nav-link,
+      .dropdown-item {
+        color: lightgray;
+      }
+      // PCのみ
+      .only_pc {
+        display: none;
+      }
+    }
+  }
 }
 
-nav {
-  // #navbar {
-  //   margin-top: 0; // ずれ修正
-  // }
-  // アイコン PCのみ
-  .only_pc {
-    display: none;
-  }
-  // ドロップダウン
-  // .dropdown {
-  //   text-align: right;
-  // }
-}
-
-
-#logo {
-  float: left;
-  margin-right: 10px;
-  margin-left: 10px;
-  font-size: 1.7em;
-  color: #fff;
-  // text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-  &:hover {
-    text-decoration: none;
-  }
+main {
+  margin-bottom: 70px; // footerナビに重ならないよう
 }
 
 footer {
@@ -104,8 +111,8 @@ footer {
   ul {
     float: right;
     list-style: none;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
     li {
       float: left;
       margin-left: 15px;
@@ -143,9 +150,6 @@ footer {
   }
 }
 
-main {
-  margin-bottom: 70px; // footerナビに重ならないよう
-}
 // _______________________________________________
 // 7
 /* miscellaneous */
@@ -198,10 +202,12 @@ aside {
   margin-top: 15px;
 }
 
-
 /* forms */
 
-input, textarea, select, .uneditable-input {
+input,
+textarea,
+select,
+.uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
@@ -213,6 +219,18 @@ input {
 }
 
 // ログイン画面
+// 7 devise
+.alert {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #696969;
+  &-alert {
+    background: rgba(255, 0, 0, 0.329);
+  }
+  &-notice {
+    background: rgba(146, 236, 137, 0.521);
+  }
+}
 .checkbox {
   display: inline; // ずれ修正
 }
@@ -241,21 +259,11 @@ input {
   }
 }
 
-// 7 devise
-.alert {
-  text-align: center;
-  margin-bottom: 10px;
-  &-alert {
-    background: rgba(255, 0, 0, 0.329);
-  }
-  &-notice {
-    background: rgba(146, 236, 137, 0.521);
-  }
-}
-
 
 // ページネーション箇所
-#ajax_feed, #ajax_users_show, #ajax_users_index {
+#ajax_feed,
+#ajax_users_show,
+#ajax_users_index {
   nav {
     // ul
     .pagination {
@@ -277,19 +285,23 @@ input {
   }
 }
 
-// (home, post/show)
-#map {
-  margin: 20px 0;
-}
-
 // フッター非表示
 @media (min-width: 768px) {
-  .signed_in {
-    display: none;
+  header.navbar {
+    nav {
+      // ul
+      .navbar-nav {
+        // li
+        .only_pc {
+          display: block;
+          margin-right: 15px;
+        }
+      }
+    }
   }
-  nav {
-    .only_pc {
-      display: block;
+  footer {
+    .signed_in {
+      display: none;
     }
   }
 }

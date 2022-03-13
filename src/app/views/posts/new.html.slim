@@ -1,23 +1,25 @@
 - provide(:title, "Spot_Post")
 h2 スポット情報を入力
 
-.row
-  .col-md-6.col-md-offset-3
-    / 投稿フォーム
-    section.post_form
-      = form_with(model: @post, local: true) do |f|
-        = render 'shared/error_messages', object: @post
+.container
+  .row
+    .col-md-9.col-md-offset-2.mx-auto
+      / 投稿フォーム
+      section.post_form
+        = form_with(model: @post, local: true) do |f|
+          = render 'shared/error_messages', object: @post
 
-        = f.label 'スポット名'
-        = f.text_field :address, placeholder: "鶴見緑地", class: "form-control"
+          .form-group
+            = f.label :address, 'スポット名'
+            = f.text_field :address, placeholder: "鶴見緑地", class: "form-control"
 
-        = f.label 'タイプ'
-        .field
-          - %w(公園 スロープ 鉄棒).each.with_index do |spot, i|
-            = f.check_box :spot_type, {multiple: true}, spot, nil
-            = f.label :spot_type, spot
+          .form-group
+            = f.label :spot_type, 'タイプ'
+            - %w(公園 スロープ 鉄棒).each.with_index do |spot, i|
+              = f.check_box :spot_type, {multiple: true}, spot, nil
+              = f.label :spot_type, spot
 
-        = f.label 'スポット詳細'
-        .field
-          = f.text_area :content, placeholder: "鉄棒がきれい", class: "form-control"
-        = f.submit "投稿", class: "btn btn-primary"
+          .form-group
+            = f.label :content, 'スポット詳細'
+            = f.text_area :content, placeholder: "鉄棒がきれい", class: "form-control"
+            = f.submit "投稿", class: "btn btn-primary"

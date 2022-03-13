@@ -2,17 +2,23 @@ class StaticPagesController < ApplicationController
   def home
     if user_signed_in?
       @post = current_user.posts.build
-      # google map 一覧
-      @posts = Post.all
+      # 住所一覧 (_map, shared/feed)
+      gon.posts = Post.all
 
       # 投稿検索がヒットした時
       if params[:q] && params[:q].reject { |value| value.blank? }.present?
         @q = current_user.feed.ransack(posts_search_params)
         @feed_items = @q.result.page(params[:page]).per(6)
       else
+        # 検索していない時
         @q = Post.none.ransack
-        # (shared/_feed) 13
+
+        # (shared/_feed)
         @feed_items = current_user.feed.page(params[:page]).per(6)
+
+        # (shared/_feed) JS map
+        gon.feed = @feed_items
+
       end
       @url = root_path
 
