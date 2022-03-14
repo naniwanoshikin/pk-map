@@ -1,16 +1,16 @@
 - visitor = notification.visitor
 - visited = notification.visited
 li
-  .f_inline
+  .f_inline.d-flex
     / マーク
-    .action_mark
+    .action_mark.mr-2
       - case notification.action
       - when 'follow'
-        div.i.fas.fa-user.fa-lg
+        i.fas.fa-user.fa-lg
       - when 'like'
-        div.i.fas.fa-heart.fa-lg
+        i.fas.fa-heart.fa-lg
       - when 'comment'
-        div.i.far.fa-comment.fa-lg
+        i.far.fa-comment.fa-lg
 
     / アイコン
     = link_to gravatar_for(visitor, size: 30), visitor
@@ -19,21 +19,21 @@ li
     .notify_content
       strong
         = link_to visitor.name, visitor
-      span.text-black-50
+      span.text-black
         = 'さん'
         - case notification.action
         - when 'follow'
-          = "にフォローされました"
+          | にフォローされました
         - when 'like'
           | がいいねしました
           p.like_notify
             = link_to notification.post.content, notification.post
         - when 'comment'
-          = "がコメントしました"
+          | がコメントしました
           p.comment_notify
             / 相手のコメント, リンク先
             = link_to notification.comment.content, notification.post
 
-  .small.text-muted.text-right
+  .small.text-muted.text-right.mr-2
     = time_ago_in_words(notification.created_at).upcase
     | 前

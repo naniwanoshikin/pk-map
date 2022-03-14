@@ -1,5 +1,5 @@
 - provide(:title, "Spot_Post")
-h2 スポット情報を入力
+h2 スポット情報
 
 .container
   .row
@@ -15,6 +15,7 @@ h2 スポット情報を入力
 
           .form-group
             = f.label :spot_type, 'タイプ'
+            br
             - %w(公園 スロープ 鉄棒).each.with_index do |spot, i|
               = f.check_box :spot_type, {multiple: true}, spot, nil
               = f.label :spot_type, spot

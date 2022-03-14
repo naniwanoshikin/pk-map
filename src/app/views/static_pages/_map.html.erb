@@ -1,9 +1,9 @@
 <%# Home メイン %>
-<h2>周辺地図</h2>
+<h2>周辺スポット</h2>
 <div id='map'></div>
 <style>
   #map {
-    height: 400px;
+    height: 350px;
     border-radius: 10px;
   }
 </style>
@@ -27,7 +27,7 @@
     // 中心位置を表示
     map = new google.maps.Map(target, {
       center: user_address,
-      zoom: 7,
+      zoom: 13,
       mapTypeControl: false, // 地図|写真
       streetViewControl: false, // ストリートビューマーク
       // mapTypeId: 'roadmap' // 地図の種類
@@ -57,17 +57,17 @@
       let marker = new google.maps.Marker({
         map: map,
         position: {
-          // 位置情報がないとここでエラー
+          // 高精度な位置情報がないとここでエラー
           lat: post.latitude,
           lng: post.longitude
         }
       });
-      // 情報ウィンドウ(吹き出し)の定義
+      // 情報ウィンドウ(吹き出し)
       let infowindow = new google.maps.InfoWindow({
         content: `<a href='/posts/${post.id}'>${post.address}</a>`
       });
       // リンク表示
-      marker.addListener('mouseover', function() {
+      marker.addListener('click', function() {
         infowindow.open(map, marker);
       });
       // marker.addListener('mouseout', function(){

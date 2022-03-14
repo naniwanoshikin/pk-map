@@ -1,40 +1,48 @@
 // (header/footer_nav)
-// 通知マーク全体
-.notice {
-  // 円マーク 未確認通知がある時のみ
-  position: relative; // 微調整
-  .n-circle {
-    font-size: 1.3em;
-    color: #efa04c;
-    position: absolute; // 微調整
-    top: 12px;
-    right: 6px;
-    transform: scale(0) rotate(-150deg);
-    animation: rotation 0.5s ease 0.3s 1 forwards;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // 通知数
-    .counter {
-      color: rgb(63, 51, 224);
-      position: absolute; // 微調整
-      font-size: 0.6em;
-    }
-    @keyframes rotation {
-      0% {
-        transform: scale(0) rotate(-80deg);
+// ベル + ➓
+li > .notice {
+  .fa-bell {
+    position: relative; // 基準
+    // ➓ 未確認通知がある時のみ
+    .n-circle {
+      color: red;
+      position: absolute;
+      top: 1px;
+      left: 5px;
+      transform: scale(0) rotate(-150deg);
+      animation: rotation 0.5s ease 0.3s 1 forwards;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // 通知数
+      .counter {
+        color: white;
+        position: absolute;
+        font-size: 0.6em; // 相対
       }
-      50% {
-        transform: scale(0.5) rotate(-50deg);
-      }
-      100% {
-        transform: scale(1) rotate(0deg);
+      @keyframes rotation {
+        0% {
+          transform: scale(0) rotate(-80deg);
+        }
+        50% {
+          transform: scale(0.5) rotate(-50deg);
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+        }
       }
     }
   }
 }
+header .n-circle {
+  font-size: 1.1em;
+}
+footer .n-circle {
+  font-size: 0.9em;
+}
 
-// (index) ul
+
+// (index)_ul
 #notify_lists {
   list-style: none;
   padding-left: 0;
@@ -43,7 +51,6 @@
   // (_notification)
   li {
     border-top: 1px dotted #8c8b8b;
-    border-bottom: 1px dotted #fff;
     padding: 10px 0;
     padding-bottom: 5px;
     &:hover {
@@ -51,29 +58,26 @@
       background: rgb(243, 241, 241);
     }
     .f_inline {
-      display: flex;
-      // align-items: center;
       // マーク
       .action_mark {
-        margin-right: 8px;
         .fa-user {
           color: #00a1e9;
         }
       }
       // 文章
       .notify_content {
-        width: 90%;
         // 鈴木さん
-        strong > a  {
-          color : inherit;
+        strong > a {
+          color: inherit;
         }
         // post.content
-        .like_notify, .comment_notify {
+        .like_notify,
+        .comment_notify {
           a {
             color: gray;
             display: block;
             &:hover {
-              color : inherit; // なぜリンクは青くなる?
+              color: inherit; // なぜリンクは青くなる?
               text-decoration: none;
             }
           }

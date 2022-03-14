@@ -1,0 +1,8 @@
+/ (users/show) pagination ajax
+h2 スポット登録一覧
+
+- if @user.posts.any?
+  .posts
+    = render @posts
+    / (posts/post)
+  = paginate @posts, remote: true

@@ -16,8 +16,10 @@
         = link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-outline-secondary"
     - else
       / [follow] ボタン
-      = render 'follow_form' if user_signed_in?
-  / pagination
+      section.profile_follow
+        = render 'follow_form' if user_signed_in?
+
+  / 登録一覧 pagination
   .col-md-8
     #ajax_users_show
       = render 'users/show_posts'

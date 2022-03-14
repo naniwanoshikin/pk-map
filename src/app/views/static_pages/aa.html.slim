@@ -1,3 +1,29 @@
-script
-  // 検索結果: '緯度経度'
-  const display = document.getElementById('display')
+- # 19 DMライン (rooms/show)
+- messages.each do |message|
+  - unless current_user?(message.user)
+    - # 相手ユーザー
+    .dm-box.left-box
+      - # 画像
+      = link_to gravatar_for(message.user, size: 40), message.user, class: "dm-image"
+      .text-left
+
+  - else
+    .dm-box.right-box
+      .text-right
+
+  - # メッセージ
+  .dm-content
+    strong
+      = message.content
+  .timestamp
+    - # 25
+    = l message.created_at, format: :short2
+    - # 削除ボタン
+    - if current_user?(message.user)
+      |  _
+      = link_to message,
+      -               class: "text-danger",
+      -               method: :delete,
+      -               # data: { confirm: "You sure?" },
+      -               remote: true do
+      i.fas.fa-trash-alt
