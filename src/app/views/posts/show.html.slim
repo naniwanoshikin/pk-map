@@ -44,7 +44,7 @@ h2
       #comments
         - if @comments.any?
           ul
-            = render @comment, comments: @comments
+            = render @comments
             / (comments/_comment)
         - else
           h2.text-center

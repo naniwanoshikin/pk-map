@@ -29,7 +29,7 @@
             scaledSize: new google.maps.Size(40, 40)
           }
         });
-        display.textContent = "位置:" + ido_kedo
+        display.textContent = "位置 " + ido_kedo
       } else {
         alert('該当する結果がありませんでした:' + status);
       }

@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :like_posts, through: :likes, source: :post
   # コメント
   has_many :comments, dependent: :destroy
+  # userがコメントした投稿
+  has_many :comment_posts, through: :comments, source: :post
 
   # フォローする
   has_many :active_relationships, class_name: "Relationship",

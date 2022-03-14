@@ -1,4 +1,4 @@
-/ 個々の投稿 (shared/_feed), (users/_show_posts)
+/ 1つの投稿 (shared/_feed), (users/_show_posts) 引数: post
 
 div id="post-#{post.id}"
   / スポット名 JS (shared/feed)
@@ -27,18 +27,18 @@ div id="post-#{post.id}"
           = post.comments.count
           | )
     / 投稿文
-    p.content
+    .content
       = link_to post, class: "link" do
-        = post.content
+        = simple_format post.content
 
-    .actions
+
+  footer
+    .image_like
+      / 画像
+      = link_to gravatar_for(post.user, size: 20), post.user
       / いいね
       div id="likes_like_#{post.id}"
         = render "likes/like", post: post
-
-  footer.post
-    / 画像
-    = link_to gravatar_for(post.user, size: 20), post.user
     / 3分前
     .timestamp
       = time_ago_in_words(post.created_at)
