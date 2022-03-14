@@ -43,8 +43,8 @@ class User < ApplicationRecord
   attr_accessor :current_password
 
   # addressが登録されたら, 緯度経度も自動登録
-  geocoded_by :address
-  after_validation :geocode
+  geocoded_by :address # 緯度経度を算出
+  after_validation :geocode # 住所変更時に緯度経度も変更
 
   # _______________________________________________
   # ゲストログイン

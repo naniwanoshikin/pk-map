@@ -6,13 +6,18 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     @post = @comment.post
+    @comments = @post.comments
     if @comment.save
       # 通知
       current_user.notify_to_comment!(@post, @comment.id)
 
-      redirect_to @post, notice: 'コメントしました'
+      respond_to do |format|
+        format.html { redirect_to @post, notice: 'コメントしました' }
+        format.js
+      end
     else
-      @comments = @post.comments
+      # map JS用
+      gon.post = @post
       render 'posts/show'
     end
   end
@@ -21,9 +26,12 @@ class CommentsController < ApplicationController
   def destroy
     # @comment
     @post = @comment.post
-    @comments = Comment.where(post_id: @comment.post_id)
+    @comments = Comment.where(post_id: @post.id)
     @comment.destroy
-    redirect_to @post, alert: 'コメントを削除しました'
+    respond_to do |format|
+      format.html { redirect_to @post, alert: 'コメントを削除しました' }
+      format.js
+    end
   end
 
   private

@@ -1,15 +1,30 @@
 / (posts/show) → Comments(C)
-h2 レビューする
 
 .container
   .row
     .col-md-6.col-md-offset-3.mx-auto
-      .comment_form
+      button.btn.btn-primary type="button" data-toggle="modal" data-target="#exampleModal"
+        | コメントする
+
+/ モーダル画面
+#exampleModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"]
+  .modal-dialog role="document"
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title
+          = @post.address
+
+        button.close[type="button" data-dismiss="modal" aria-label="Close"]
+          span[aria-hidden="true"]
+            | ×
+      .modal-body
+        / 本文
+        / フォーム
         - if user_signed_in?
           = render 'shared/error_messages', object: comment
-
         .rating-box
-          = form_with model: comment, url: post_comments_path(@post), local: true do |f|
+          = form_with model: comment, url: post_comments_path(@post) do |f|
+
             .form-group.main-rating
               .ratings
                 / くり抜き状態
@@ -22,13 +37,18 @@ h2 レビューする
                 span#rating_value
                   | 0
                 | /5
-            = f.hidden_field :post_id, value: params[:id]
+            / Comments(C)_post_id に入る
+            = f.hidden_field :post_id, value: @post.id
+
             / 星の個数 js
             = f.hidden_field :score, id: "hidden_score"
 
             .form-group
-              = f.text_field :content, placeholder: "鉄棒が錆びている", class: "form-control"
+              = f.text_area :content, placeholder: "鉄棒が錆びている", class: "form-control"
 
-            = f.submit "コメント", class: "btn btn-primary"
+            .modal-footer
+              button.btn.btn-secondary type="button" data-dismiss="modal"
+                | 閉じる
+              = f.submit "投稿", class: "btn btn-primary"
 
 = javascript_pack_tag 'comment.js'

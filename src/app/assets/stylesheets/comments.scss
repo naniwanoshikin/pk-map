@@ -1,5 +1,5 @@
 // (posts/show)
-ul#comments {
+#comments > ul {
   list-style: none;
   padding: 0 10px;
   margin: 0 auto;
@@ -9,66 +9,77 @@ ul#comments {
     padding: 8px 0;
     border-top: 1px dotted #8c8b8b;
     .comment_user {
+      // 口コミ数
       .review_number {
         margin-left: 10px;
         color: gray;
       }
-    }
-    // ★★ + ☆☆☆☆☆
-    .user_score {
-      display: flex;
-      // ★★☆☆☆
-      .star_rating {
-        position: relative;
-        width: 5em;
-        height: 1em;
-        font-size: 18px;
-        margin-right: 5px;
-        // ★★
-        .star_front {
-          position: absolute;
-          top: 0;
-          left: 0;
-          overflow: hidden;
-          color: #ffcc33;
-        }
-        // ☆☆☆☆☆
-        .star_back {
-          color: #ccc;
+      // ★★ + ☆☆☆☆☆
+      .user_score {
+        display: flex;
+        // ★★☆☆☆
+        .star_rating {
+          position: relative;
+          width: 5em;
+          height: 1em;
+          font-size: 18px;
+          margin-right: 5px;
+          // ★★
+          .star_front {
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            color: #ffcc33;
+          }
+          // ☆☆☆☆☆
+          .star_back {
+            color: #ccc;
+          }
         }
       }
     }
-    .fa-trash-alt {
-      float: right;
-    }
+    // コメント
     .comment_content {
       margin-left: 30px;
       padding-top: 8px;
-    }
-    .timestamp {
-      text-align: right;
+      p {
+        margin: 0;
+      }
     }
   }
 }
 
 // (comments/form)
-.rating-box {
-  font-size: 30px;
-  // ★★☆☆☆ 2/5
-  .main-rating {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 15px;
-    // (★★☆☆☆)
-    .ratings {
-      color: #ffcc00;
-      cursor: pointer;
-      margin-right: 10px;
+#exampleModal {
+  top: 15%;
+  // フォーム
+  .rating-box {
+    font-size: 30px;
+    // ★★☆☆☆ 2/5
+    .main-rating {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 15px;
+      // (★★☆☆☆)
+      .ratings {
+        color: #ffcc00;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      // 2/5
+      .rating_value_display {
+        font-size: 20px;
+      }
     }
-    // 2/5
-    .rating_value_display {
-      font-size: 20px;
+    // ボタン
+    .modal-footer {
+      justify-content: center;
+      // 送信 custom.scss
+      input[type="submit"] {
+        width: 30%;
+      }
     }
   }
 }
