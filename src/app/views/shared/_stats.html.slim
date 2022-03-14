@@ -1,6 +1,7 @@
 / 統計情報 (users/show)
 - @user ||= current_user
-a
+
+= link_to @user
   strong.stat
     = @user.posts.count
   | 投稿数

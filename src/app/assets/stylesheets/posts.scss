@@ -55,29 +55,33 @@
       color: gray;
       display: block;
       font-size: 1em;
-      img {
-        display: block;
-        padding: 5px 0;
+      p {
+        margin-bottom: 0;
       }
-    }
-    // aタグ無効化
-    .link {
-      color: inherit;
-      // text-decoration : none;
-      &:hover {
-        color: inherit; // なぜリンクは青くなる?
-        // text-decoration: none;
+      // aタグ
+      .link {
+        color: inherit;
+        // text-decoration : none;
+        &:hover {
+          color: inherit; // なぜリンクは青くなる?
+          text-decoration: none;
+        }
       }
     }
   }
   footer {
+    display: flex;
+    align-items: flex-end;
+    .image_like {
+      display: flex;
+      align-items: center;
+      .gravatar {
+        margin-right: 10px;
+      }
+    }
     .timestamp {
       color: gray;
-      float: right;
-    }
-    .gravatar {
-      float: left;
-      margin-right: 10px;
+      margin-left: auto; // 右よせ
     }
   }
 }

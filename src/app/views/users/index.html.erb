@@ -5,8 +5,8 @@
 <%# ajax %>
 <div id="ajax_users_index">
   <ul class="users">
-    <%# (users/_user) %>
     <%= render @users %>
+    <%# (users/_user) %>
   </ul>
   <%= paginate @users, remote: true %>
 </div>

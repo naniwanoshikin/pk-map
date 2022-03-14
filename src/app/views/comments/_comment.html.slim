@@ -1,37 +1,37 @@
 / コメント (posts/show)
-- comments.each do |comment|
-  li
-    .comment_user
-      / 画像
-      = link_to gravatar_for(comment.user, size: 25), comment.user, class: ""
-      / 名前
-      strong
-        = comment.user.name
-      / 口コミ数
-      span.review_number
+li
+  .comment_user
+    / 画像
+    = link_to gravatar_for(comment.user, size: 30), comment.user
+    / 名前
+    strong
+      = link_to comment.user.name, comment.user
+    / ５件の口コミ
+    span.review_number
+      = link_to show_comments_user_path(comment.user) do
         = comment.user.comments.count
         | 件の口コミ
-      / 削除ボタン
-      - if current_user?(comment.user)
-        = link_to post_comments_path(comment.post), class: "text-danger", method: :delete do
-          i.fas.fa-trash-alt.float-right
 
-      / ★★ + ☆☆☆☆☆
-      .user_score
-        // ★★☆☆☆
-        .star_rating
-          div class="star_front"
-            - comment.score.times do
+    / 削除ボタン
+    - if current_user?(comment.user)
+      = link_to post_comments_path(comment.post), class: "text-danger", method: :delete do
+        i.fas.fa-trash-alt.float-right
+
+    / ★★ + ☆☆☆☆☆
+    .user_score
+      // ★★☆☆☆
+      .star_rating
+        div class="star_front"
+          - comment.score.times do
             | ★
-            end
-          / ☆☆☆☆☆
-          .star_back
-            | ★★★★★
+        / ☆☆☆☆☆
+        .star_back
+          | ★★★★★
 
-    / コメント 改行あり
-    .comment_content
-      = simple_format comment.content
-    / 時間
-    .small.text-muted.text-right
-      = time_ago_in_words(comment.created_at).upcase
-      | 前
+  / コメント 改行あり
+  .comment_content
+    = simple_format comment.content
+  / 時間
+  .small.text-muted.text-right
+    = time_ago_in_words(comment.created_at).upcase
+    | 前
