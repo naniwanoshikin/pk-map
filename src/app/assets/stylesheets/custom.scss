@@ -259,11 +259,11 @@ input {
   }
 }
 
-
 // ページネーション箇所
 #ajax_feed,
 #ajax_users_show,
-#ajax_users_index {
+#ajax_users_index,
+#ajax_users_show_comments {
   nav {
     // ul
     .pagination {

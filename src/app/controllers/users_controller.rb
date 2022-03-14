@@ -14,6 +14,13 @@ class UsersController < ApplicationController
     end
   end
 
+  # コメントした一覧
+  def show_comments
+    @user = User.find(params[:id])
+    # @userのコメント集
+    @user_comment_posts = @user.comment_posts.page(params[:page]).per(4)
+  end
+
   def index # 10
     @users = User.page(params[:page]).per(15)
     # pagination
@@ -23,6 +30,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # 管理者のみ
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"

@@ -31,7 +31,7 @@ aside {
     justify-content: center;
     text-align: center;
     a {
-      padding: 0 15px;
+      padding: 0 10px;
       border-left: 1px solid gainsboro;
       color: gray;
       &:first-child {
@@ -71,7 +71,8 @@ aside {
 // 画像一覧
 .user_avatars {
   overflow: auto;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-left: 5px;
   .gravatar {
     margin: 1px 1px;
   }

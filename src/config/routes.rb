@@ -21,9 +21,10 @@ Rails.application.routes.draw do
     post '/users/guest3', to: 'users/sessions#guest_in3'
   end
 
-  resources :users, only: [:index, :show, :destroy] do # 7, 10
+  resources :users, only: [:index, :show, :destroy] do
     member do
       get :following, :followers
+      get :show_comments
     end
   end
 

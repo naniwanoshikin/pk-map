@@ -1,4 +1,4 @@
-/ プロフィール
+/ プロフィール コメント
 - provide(:title, @user.name)
 
 .row
@@ -19,7 +19,7 @@
       section.profile_follow
         = render 'follow_form' if user_signed_in?
 
-  / 登録一覧 pagination
+  / コメント一覧 pagination
   .col-md-7
-    #ajax_users_show
-      = render 'users/show_posts'
+    #ajax_users_show_comments
+      = render 'users/show_comments'
