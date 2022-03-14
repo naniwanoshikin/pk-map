@@ -17,8 +17,8 @@ user2 = User.create!(
   address: '上本町'
 )
 
-# 一般ユーザー 40人 n=0
-40.times do |n|
+# 一般ユーザー n=0
+30.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+2}@railstutorial.org"
   password = "password"
@@ -39,9 +39,9 @@ user4 = User.fourth
 user5 = User.fifth
 user6 = User.all[5]
 
-users = User.order(:created_at).take(15)
+users = User.order(:created_at).take(25)
 # 一人当たりの投稿数
-4.times do
+1.times do
   address = Faker::Address.city
   content = Faker::Lorem.sentence(word_count: 5)
 
@@ -53,16 +53,17 @@ end
 
 [
   # 名古屋勢
-  [user1, '久屋大通', 'ロサンゼルス広場が亡くなった'],
-  [user1, '栄', 'ロサンゼルス広場が亡くなった'],
+  [user1, '久屋大通', 'ロサンゼルス広場が消滅した'],
+  [user1, '栄', 'ロス広場が亡くなった'],
   [user1, '矢場町', '大きいパイプがある'],
   [user1, '岐阜公園', '橋がある'],
   # 大阪勢
   [user2, '大阪城', '山を登った先にある'],
-  # [user2, 'パワーアーツ', 'ピンクの床'], // 詳細
+  [user2, 'パワーアーツ', 'ピンクの床'], # 詳細
   [user2, '鶴見緑地', 'レールがちょうどいい'],
   # 岐阜勢
-  # [user3, '各務原市民公園', '良質な芝生だった'], // 詳細
+  [user3, '各務原市民公園', '良質な芝生だった'], # 詳細
+  [user3, '学びの森', '良質な芝生がある'],
   [user3, '犬山城', '鉄棒が1mくらいの高さでちょうどいい'],
   # 大阪勢
   [user4, '西成区', '匂いがする'],
@@ -91,10 +92,11 @@ following.each { |followed| user1.follow(followed) }
 following = users[3..10] # user(4~11) 8人
 following.each { |followed| user2.follow(followed) }
 
-# followers が user をフォロー
 [
-  [users[2..14], user1], # user(3~5) 13人 管理人
-  [users[4..11], user2], # user(5~12) 8人 ゲスト
+  # (3~15) 10人が管理人をフォロー
+  [users[2..14].sample(10), user1],
+  # (5~12) 6人がゲストをフォロー
+  [users[4..11].sample(6), user2],
 ].shuffle.each { |followers, user|
   followers.shuffle.each { |follower|
     # フォローと通知
@@ -107,11 +109,12 @@ following.each { |followed| user2.follow(followed) }
 # userがpostsをいいね
 posts = Post.all[1..20]
 [
-  [user1, posts.sample(10)], # 10投稿
-  [user2, posts.sample(5)], # 5投稿
-  [user3, posts.sample(6)], # 6投稿
-  [user4, posts.sample(3)], # 3投稿
-  [user5, posts.sample(4)], # 4投稿
+  [user1, posts.sample(10)], # 10投稿にいいね
+  [user2, posts.sample(2)],
+  [user3, posts.sample(6)],
+  [user4, posts.sample(5)],
+  [user5, posts.sample(5)],
+  [user6, posts.sample(2)],
 ].shuffle.each { |user, likes_posts|
   likes_posts.each { |post|
     # いいねと通知

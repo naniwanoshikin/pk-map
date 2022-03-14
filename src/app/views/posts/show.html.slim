@@ -35,20 +35,21 @@ h2
         / p.spot_type
         /   = @post.spot_type.class
 
-
-      / コメント一覧
-      .comment
-        - if @comments.any?
-          ul#comments
-            = render @comments
-            / (comments/_comment)
-        - else
-          h4
-            | コメントはありません
-
       / コメントフォーム
       - if user_signed_in?
-        = render "comments/form", comment: @comment
+        .comment_form.my-3.text-center
+          = render "comments/form", comment: @comment
+
+      / コメント一覧
+      #comments
+        - if @comments.any?
+          ul
+            = render @comment, comments: @comments
+            / (comments/_comment)
+        - else
+          h2.text-center
+            | コメントはありません
+
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
@@ -68,7 +69,7 @@ javascript:
         lat: gon.post.latitude,
         lng: gon.post.longitude
       },
-      zoom: 13,
+      zoom: 14,
       mapTypeControl: false, // 地図|航空写真
     });
 

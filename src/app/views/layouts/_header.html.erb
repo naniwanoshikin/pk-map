@@ -19,8 +19,9 @@
         <%# 通知 %>
         <li class="nav-item only_pc">
           <%= link_to notifications_path, class: 'nav-link notice' do %>
-          <i class="far fa-bell fa-lg"></i>
-          <%= render 'layouts/circle' %>
+            <i class="far fa-bell fa-lg">
+              <%= render 'layouts/circle' %>
+            </i>
           <% end %>
         </li>
         <%# 投稿 %>

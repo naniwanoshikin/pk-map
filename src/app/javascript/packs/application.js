@@ -17,7 +17,3 @@ ActiveStorage.start()
 //= require jquery3
 //= require popper
 //= require bootstrap
-
-// webpack使う場合
-// import 'bootstrap';
-// import '../stylesheets/application.scss';

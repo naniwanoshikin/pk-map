@@ -1,8 +1,8 @@
 # PKmap
+```
 息抜きに地元で運動できる場所を探しませんか。
-
 全国の公園や人気のスポットを紹介するサービスです。
-
+```
 <!--
 目的: googlemapのような情報の蓄積 Twitterのような呟きではない
 
@@ -14,7 +14,7 @@
 - devise
 - rspec
 - webpack_JS
-- bootstrap 3 → 4
+- bootstrap 3.4.1 → 4.5.0
 
 フロントエンド
 - レスポンシブ スマホでは下端にfooterを固定
@@ -50,38 +50,42 @@
 ## 公開ページ
 [こちら](https://rails-pk.herokuapp.com/)の画面からゲストログインできます。
 
-|ログイン前|ログイン後|
+|ログイン後|コメント画面|
 |---|---|
-|![shot1](https://user-images.githubusercontent.com/67915047/156552349-62b13de9-9c28-407a-ab60-dec68d50429f.png)|![map1](https://user-images.githubusercontent.com/67915047/157975655-bfceb0a0-667a-4e14-b5e0-993cf8482ed0.jpg)|
+|![map1](https://user-images.githubusercontent.com/67915047/157975655-bfceb0a0-667a-4e14-b5e0-993cf8482ed0.jpg)|![map3](https://user-images.githubusercontent.com/67915047/158097271-b1fca94e-6d1a-4604-98f3-7b73a28faa05.jpg)|
 
 
 ## 実装機能
 
 ### ユーザー関連
-* ユーザー登録、プロフィール編集
-* ログイン機能 (devise)
-* フォロー/フォロワー機能
+* ユーザー登録、編集
+* ログイン (devise)
+* フォロー
 
-### 投稿関連
-* スポット投稿
-* スポット詳細: いいね、星レビュー機能
-* 単純検索 (ransack)
+### スポット投稿関連
+* 投稿、検索
+* スポット一覧表示 Googlemap
+* コメント 星レビュー
 
-### その他機能
-* 通知: フォロー, いいね、コメント
+### その他
+* 通知: フォロー、いいね、コメント
+* 非同期 (ajax): フォロー、いいね、ページネーション
 * ページネーション (kaminari)
-* 非同期 (ajax): フォロー, いいね, ページネーション
+* 検索 (ransack)
 
 ## 使用技術
 * フロントエンド
-  * HTML/CSS/Sass/Javascript
-  * slim
+  * HTML/CSS/Sass/JavaScript
+  * Slim
   * Bootstrap 4.5.0
   * jQuery 3.4.1
 * バックエンド
   * Ruby 2.6.5
   * Rails 6.1.4
+  <!-- 地図を表示 -->
   * Maps JavaScript API
+  <!-- 高精度で緯度経度を算出 -->
+  * Geocoding API
 * インフラ
   * Docker 20.10.12
   * docker-compose 2.2.3
@@ -95,4 +99,4 @@
 * その他
   * Visual Studio Code
   * Git, Github
-  * drawio
+  <!-- * drawio -->

@@ -46,16 +46,26 @@ aside {
       color: black;
     }
   }
-  // プロフィール編集
-  .profile_edit {
-    margin-top: 0;
-    padding: 0;
+  // プロフィール編集、[follow] ボタン
+  .profile_edit, .profile_follow {
+    margin: 5px 20px;
+    // [プロフィール編集]
     a {
       display: block;
+    }
+    // [follow] ボタン
+    .follow {
+      background: #487c38;
+    }
+    // [follow]/[unfollow]
+    input[type="submit"] {
+      margin: 0;
     }
   }
 }
 
+// 登録一覧 (users/show_posts)
+// なし
 
 // (users/show_follow)
 // 画像一覧

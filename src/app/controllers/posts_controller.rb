@@ -29,8 +29,8 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to root_url, notice: 'スポット情報が追加されました'
     else
-      # (users/feed)
-      @feed_items = current_user.feed.page(params[:page]).per(10)
+      # (shared/feed)
+      # @feed_items = current_user.feed.page(params[:page]).per(10)
       render 'posts/new'
     end
   end
