@@ -6,7 +6,12 @@ h2
   .row
     .col-md-9.col-md-offset-2.mx-auto
       / 地図
-      #post_map
+      / #post_map
+      - results=Geocoder.search(@post.address)
+      - if results.present?
+        - @latlng=results.first.coordinates
+        = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@latlng[0]},#{@latlng[1]}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
+
 
       .show_actions
         / 戻る
@@ -53,7 +58,7 @@ h2
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-script{ async src=google_api }
+/ script{ async src=google_api }
 
 javascript:
 
