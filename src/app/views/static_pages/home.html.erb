@@ -1,11 +1,7 @@
 <% if user_signed_in? %>
   <div class="row">
     <aside class="col-md-4">
-      <%# ユーザー情報 %>
-      <section class="user_info">
-        <%= render 'shared/user_info', user: current_user %>
-      </section>
-      <%# 検索 %>
+      <h2>スポットを調べる</h2>
       <section class="map_search">
         <%= render 'search_map' %>
       </section>
@@ -29,7 +25,8 @@
     <h1>外に出よう</h1>
     <h2 class="">動ける場所は見つかる</h2>
     <%# Registrations(C) %>
-    <%= link_to "登録なしでログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success" %>
+    <%= link_to "ゲストログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success" %>
+    <p class="small text-dark mt-2">登録せずにログインできます</p>
     <% if Rails.env.development? %>
       <br>
       <%= link_to "ログイン1", users_guest1_path, method: :post, class: "btn btn-danger" %>
