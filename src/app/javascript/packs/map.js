@@ -1,10 +1,8 @@
 'use strict'; {
-  // 住所検索 (home/_map_search)
+  // 住所入力 検索 (home/_map_search)
 
   // 検索ボタン
   const go = document.querySelector('.codeaddress');
-  // 検索結果 (map_search)
-  const display = document.getElementById('display');
 
   go.addEventListener("click", function () {
     // 入力値
@@ -29,7 +27,7 @@
             scaledSize: new google.maps.Size(40, 40)
           }
         });
-        display.textContent = "位置 " + ido_kedo
+        // display.textContent = "位置 " + ido_kedo // 不要かも
       } else {
         alert('該当する結果がありませんでした:' + status);
       }

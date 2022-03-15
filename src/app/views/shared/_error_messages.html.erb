@@ -1,8 +1,7 @@
+<%# (posts/new), (posts/show_コメント失敗) %>
 <% if object.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      <%# [×] ボタン %>
-      <%= alert %><button type="button" class="close" data-dismiss="alert">&times;</button>
       <span><%= pluralize(object.errors.count, "つ") %>
       のエラーがあります。</span>
     </div>
