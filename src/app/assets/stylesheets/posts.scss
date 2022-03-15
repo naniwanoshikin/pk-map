@@ -3,7 +3,7 @@
   list-style: none;
   margin-top: 20px;
   display: grid;
-  gap: 20px 10px; // 余白
+  gap: 15px 5px; // 余白
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 
   & > div {
@@ -95,27 +95,35 @@
 }
 
 // (posts/show)
-#post_map {
-  max-width: 600px;
-  height: 280px;
-  margin: 0 auto;
-  border-radius: 8px;
-}
-// (posts/show, _post)
-.show_actions {
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-  margin: 10px auto;
-  .comment_count {
-    margin-left: 5px;
-    font-size: 16px;
-    color: gray;
+.posts_show {
+  // マップ
+  #posts_show_map {
+    max-width: 600px;
+    height: 280px;
+    margin: 0 auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  // 画像
+  .show_img {
+    img {
+      width: 100%;
+    }
+  }
+  // (posts/show, _post)
+  .show_actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px 0;
+    .comment_count {
+      margin-left: 5px;
+      font-size: 16px;
+      color: gray;
+    }
   }
 }
-.user_post {
-  padding: 10px 5px;
-}
+
 
 // (post/new)
 .post_form {
