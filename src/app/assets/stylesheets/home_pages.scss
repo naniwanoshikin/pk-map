@@ -16,6 +16,18 @@
   }
 }
 
+// (home)
+#map {
+  margin: 20px 0;
+  // 吹き出し
+  .infowindow {
+    img {
+      width: 100%;
+    }
+  }
+}
+
+
 // ログイン後
 // 検索
 .post_search, .map_search {
@@ -30,7 +42,3 @@
   }
 }
 
-// (home, post/show)
-#map {
-  margin: 20px 0;
-}

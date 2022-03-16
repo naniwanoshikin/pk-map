@@ -1,4 +1,5 @@
 'use strict'; {
+  // (comments/form)
   // (★★☆☆☆)
   const stars = document.querySelector('.ratings').children;
 

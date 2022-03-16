@@ -53,7 +53,7 @@
 
     // 投稿一覧
     gon.posts.forEach(post => {
-      // ピンをさす: 繰り返しなので let 入れないとエラー
+      // マーカーをさす: 繰り返しなので let 入れないとエラー
       let marker = new google.maps.Marker({
         map: map,
         position: {
@@ -63,12 +63,16 @@
         },
         // title: contentString
       });
-      // 情報ウィンドウ(吹き出し)
-      let infowindow = new google.maps.InfoWindow({
-        content: `<a href='/posts/${post.id}'>${post.address}</a>`
-      });
-      // リンク表示
+      // 吹き出し表示
+      let infowindow = new google.maps.InfoWindow();
       marker.addListener('click', function() {
+        infowindow.setContent(
+          // リンク + 画像
+          '<div class="infowindow">'
+          + `<a href='/posts/${post.id}'>${post.address}</a>`
+          + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${post.latitude},${post.longitude}&sensor=true&key=AIzaSyA2YdMd79mZjF37-kyRXI3Gjo4aYbg1cIg' >`
+          + '</div>'
+        );
         infowindow.open(map, marker);
       });
       // marker.addListener('mouseout', function(){

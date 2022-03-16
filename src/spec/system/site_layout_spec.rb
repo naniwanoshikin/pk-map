@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'StaticPages', type: :system do
+describe 'HomePages', type: :system do
   before { visit root_path }
 
   it 'リンク先のタイトルをテスト' do # 3

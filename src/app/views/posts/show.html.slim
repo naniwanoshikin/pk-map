@@ -6,7 +6,7 @@ h2
   .row
     .col-md-9.col-md-offset-2.mx-auto.posts_show
       / 地図
-      / #posts_show_map
+      #posts_show_map
 
       / 画像
       .show_img
@@ -54,7 +54,7 @@ h2
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-/ script{ async src=google_api }
+script{ async src=google_api }
 
 javascript:
 
