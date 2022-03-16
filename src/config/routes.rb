@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  root 'static_pages#home'
-  get  '/help',    to: 'static_pages#help'
-  get  '/about',   to: 'static_pages#about'
-  get  '/contact', to: 'static_pages#contact'
+  root 'home_pages#home'
+  get  '/help',    to: 'home_pages#help'
+  get  '/about',   to: 'home_pages#about'
+  get  '/contact', to: 'home_pages#contact'
+
+  # ajax 投稿ワード検索
+  # namespace :home_pages do
+  #   resources :homes, only: :home, defaults: { format: :json }
+  # end
+  # resources :home_pages
 
   # コントローラのルーティングを変更: devise → users
   devise_for :users, controllers: {

@@ -1,28 +1,20 @@
 // 未使用
-// 検索用 (home)
+// 投稿検索用 (home/search_post)
 
 $(function () {
-  // home ページに記述するよりも後回しになる
-  // $("h2").css("color", "red");
-});
-
-
-$(document).ready(function() {
-   // console.log("test");
-  $('.js_text').on('keyup', function () {
-    let title = $.trim($(this).val());
+  $('.js_ajax_text').on('keyup', function () {
+    let title = $.trim($(this).val()); // 入力値
     console.log(title);
     // ajaxリクエスト
     $.ajax({
       // リクエストのタイプ
       type: 'GET',
       // リクエストを送信するURL
-      url: '/posts/post',
+      url: '/home_pages/homes', // ここの名前注意
       // サーバーに送信するデータ
-      data:  { post: title },
+      data:  { title: title },
       // サーバーから返却される型
       dataType: 'json'
     })
-
    })
 });
