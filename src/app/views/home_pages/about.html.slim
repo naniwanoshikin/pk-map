@@ -4,9 +4,12 @@ h2 本アプリについて
 .container
   .row
     .col-md-9.mx-auto
+      div
+        p 地図で動けそうな場所を探す中で、そのスポットの情報や口コミがあるといいなと思い、本アプリを作成しました。
+        hr
       - if user_signed_in?
         div
-          h3 アプリ情報
+          h2 アプリ集計
           ul
             li
               | 登録者数:
@@ -16,6 +19,13 @@ h2 本アプリについて
               | 投稿数:
               = Post.all.length
               | 個
+            li
+              | コメント数:
+              = Comment.all.length
+              | 個
+              | /通知
+              = Notification.where("action=?", 'comment').all.length
+              | 件
             li
               | いいね数:
               = Like.all.length
@@ -31,9 +41,6 @@ h2 本アプリについて
               = Notification.where("action=?", 'follow').all.length
               | 件
           hr
-      div
-        p 地図で動けそうな場所を探す中で、そのスポットの情報や口コミがあるといいなと思い、本アプリを作成しました。
-        hr
       div
         h2 対象者
         ul
@@ -54,7 +61,7 @@ h2 本アプリについて
           li 外の風を浴びながら動ける
           li 極めると重力を感じなくなる
           li 極めると回れる
-        p １つでも魅力を感じてしまった方、一緒にパルクールしてみませんか？
+        p １つでも魅力を感じてしまった方、一緒にパルクールしませんか？
         hr
       div
         h2 私がおすすめする場所
@@ -65,6 +72,3 @@ h2 本アプリについて
             li 道端のブロック
             li 道端のレール
           = link_to image_tag("rails.svg", alt: "Rails logo", width: "100px"), "https://rubyonrails.org/"
-        hr
-
-      = link_to 'ホーム', root_path

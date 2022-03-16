@@ -1,5 +1,5 @@
 'use strict'; {
-  // 住所入力 検索 (home/_map_search)
+  // 住所入力 検索 (home/_search_map)
 
   // 検索ボタン
   const go = document.querySelector('.codeaddress');
