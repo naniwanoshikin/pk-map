@@ -1,10 +1,7 @@
 / (posts/show) → Comments(C)
 
-.container
-  .row
-    .col-md-6.col-md-offset-3.mx-auto
-      button.btn.btn-primary type="button" data-toggle="modal" data-target="#exampleModal"
-        | コメントする
+button.btn.btn-primary type="button" data-toggle="modal" data-target="#exampleModal"
+  | コメントする
 
 / モーダル画面
 #exampleModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"]

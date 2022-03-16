@@ -4,25 +4,30 @@ h2
 
 .container
   .row
-    .col-md-9.col-md-offset-2.mx-auto
+    .col-md-9.col-md-offset-2.mx-auto.posts_show
       / 地図
-      / #post_map
-      - results=Geocoder.search(@post.address)
-      - if results.present?
-        - @latlng=results.first.coordinates
-        = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@latlng[0]},#{@latlng[1]}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
+      / #posts_show_map
 
+      / 画像
+      .show_img
+        = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@post.latitude},#{@post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
+
+      / 住所 Post(M)
+      .show_addres.my-3
+        = @post.munic
+      / ユーザーより
+      .user_post.text-center.mt-3
+        = link_to gravatar_for(@post.user, size: 25), @post.user
+        span.content
+          = @post.content
+        / p.spot_type
+        /   = @post.spot_type.class
 
       .show_actions
         / 戻る
         .post_header
-          = link_to 'javascript:history.back()', class: '' do
+          = link_to 'javascript:history.back()' do
             i.fas.fa-long-arrow-alt-left.fa-lg
-        / コメント
-        div
-          i.far.fa-comment.fa-lg
-          span.comment_count
-            = @post.comments.count
         / いいね
         div id="likes_like_#{@post.id}"
           = render "likes/like", post: @post
@@ -32,29 +37,20 @@ h2
             = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
               i.fas.fa-trash-alt.fa-lg
 
-      / ユーザー情報
-      .user_post.text-center.my-3
-        = link_to gravatar_for(@post.user, size: 25), @post.user
-        span.content
-          = @post.content
-        / p.spot_type
-        /   = @post.spot_type.class
-
-      / コメントフォーム
-      - if user_signed_in?
-        .comment_form.my-3.text-center
-          = render "comments/form", comment: @comment
+        / コメントフォーム
+        - if user_signed_in?
+          .comment_form.my-3.text-center
+            = render "comments/form", comment: @comment
 
       / コメント一覧
       #comments
         - if @comments.any?
           ul
-            = render @comments
-            / (comments/_comment)
+            = render 'comments/comment', comments: @comments
+            / (comments/_comment) @commentsと書くとなぜか複製..
         - else
           h2.text-center
             | コメントはありません
-
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
@@ -62,14 +58,14 @@ h2
 
 javascript:
 
-  let map2;
+  let show_map;
 
   function initMap() {
     geocoder = new google.maps.Geocoder()
 
-    const target = document.getElementById('post_map')
+    const target = document.getElementById('posts_show_map')
 
-    map2 = new google.maps.Map(target, {
+    show_map = new google.maps.Map(target, {
       center: {
         lat: gon.post.latitude,
         lng: gon.post.longitude
@@ -83,6 +79,6 @@ javascript:
         lat: gon.post.latitude,
         lng: gon.post.longitude
       },
-      map: map2
+      map: show_map
     });
   }

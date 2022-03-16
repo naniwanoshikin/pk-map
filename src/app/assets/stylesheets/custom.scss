@@ -109,13 +109,14 @@ footer {
     }
   }
   ul {
-    float: right;
-    list-style: none;
     padding: 0;
-    margin: 0;
-    li {
-      float: left;
-      margin-left: 15px;
+    list-style: none;
+  }
+  // ログイン後_スマホ
+  .signed_in {
+    // ナビの色
+    .active {
+      color:green;
     }
   }
   // 未ログイン
@@ -123,8 +124,17 @@ footer {
     border-top: 1px solid #eaeaea;
     margin-top: 45px;
     padding-top: 5px;
+    padding-bottom: 45px;
     small {
       float: left;
+    }
+    ul {
+      float: right;
+      margin: 0;
+      li {
+        float: left;
+        margin-left: 15px;
+      }
     }
   }
   // ログイン後 レスポンシブ スマホのみ
@@ -239,7 +249,7 @@ input {
   margin-left: 0;
 }
 
-// 7
+// 7 (posts/new), (posts/show)_コメント時
 #error_explanation {
   span {
     color: #696969;
@@ -247,11 +257,11 @@ input {
   ul {
     color: red;
     list-style: square;
+    text-align: left; // (posts/show)_コメント時
     // margin: 0 0 30px 0;
   }
 }
-
-// formのエラー箇所
+// div エラー箇所
 .field_with_errors {
   .form-control {
     @extend .is-invalid !optional; // bootstrap4
