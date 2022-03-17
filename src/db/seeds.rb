@@ -18,7 +18,7 @@ user2 = User.create!(
 )
 
 # 一般ユーザー n=0
-30.times do |n|
+28.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+2}@railstutorial.org"
   password = "password"
@@ -36,20 +36,20 @@ end
 users = User.all
 
 # 管理者がfollowingをフォロー
-following = users[1..17] # user(2~18) 17人
+following = users[1..15] # user(2~16) 15人
 following.each { |followed| user1.follow(followed) }
 # ゲストがfollowingをフォロー
 following = users[3..10] # user(4~11) 8人
 following.each { |followed| user2.follow(followed) }
 
 [
-  # (3~15) 10人が管理人をフォロー
-  [users[2..14].sample(10), user1],
-  # (5~12) 6人がゲストをフォロー
-  [users[4..11].sample(6), user2],
+  # 管理人をフォロー
+  [users[2..14].sample(10), user1], # (3~15) 10人
+  # ゲストをフォロー
+  [users[3..9].sample(4), user2], # (4~10)
 ].shuffle.each { |followers, user|
   followers.shuffle.each { |follower|
-    # フォローと通知
+    # フォロー + 通知
     follower.follow(user)
     follower.notify_to_follow!(user)
   }
@@ -71,7 +71,10 @@ user4 = User.fourth
 user5 = User.fifth
 user6 = User.all[5]
 user7 = User.all[6]
+user8 = User.all[7]
 
+# [ ]のインデントずれると反映されない可能性あるので要注意
+# ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園
 [
   [user6, '住之江公園', '広いな', [
     [user3, 3, "港の方にあるよ。港町かな？"],
@@ -82,7 +85,7 @@ user7 = User.all[6]
   [user4, '天王寺公園', 'アクセスがしやすい', [
     [user1, 3, "アクセスがしやすい"],
   ]],
-  [user2, 'パワーアーツ', 'ピンク色の床', [
+  [user4, 'パワーアーツ', 'ピンク色の床', [
     [user3, 3, "去年ようやく2F行ったよ"],
   ]],
   [user5, '浪速公園', '壁が多くて良い', [
@@ -101,7 +104,7 @@ user7 = User.all[6]
     [user4, 4, "鉄棒ある!"],
     [user3, 4, "グライダーでキャットできたいな〜"],
   ]],
-  [user2, '大阪城公園', '坂道を登った先にある', [
+  [user5, '大阪城公園', '坂道を登った先にある', [
     [user1, 4, "歴史を感じる"],
   ]],
   [user3, '各務原市民公園', '噴水がある', [
@@ -118,14 +121,13 @@ user7 = User.all[6]
   [user4, '桃谷公園', '斜めのレールがある', [
     [user3, 4, "秋には紅葉で映える"],
   ]],
-  [user2, '学びの森', '良質な芝生がある', [
+  [user2, '学びの森', '良い芝生だった', [
     [user4, 3, "まぁまぁな壁"],
     [user3, 4, "トリッキングバトルにうってつけ"],
-    [user6, 4, "良き芝生だった"],
-    [user1, 4, "とてもやりやすい^_^"],
+    [user7, 4, "とてもやりやすい^_^"],
   ]],
-  [user2, '上汐町公園', 'グライダーがきつい', [
-    [user1, 3, "あそこキャット難しいもんな"],
+  [user3, '上汐町公園', 'グライダーがきつい', [
+    [user2, 3, "キャット難しいよな"],
   ]],
   [user1, '久屋大通', 'ロサンゼルス広場が消滅した', [
     [user4, 4, "ブロックが多かった"],
@@ -142,13 +144,11 @@ user7 = User.all[6]
     [user3, 1, "歩くのしんどい..."],
     [user5, 4, "壁が噛みやすい"],
     [user4, 5, "レールしたい"],
-    ]],
+  ]],
   [user2, '岐阜公園', '橋がある', [
     [user3, 3, "山の麓なんだよここ"],
     [user4, 4, "滝もある"],
   ]],
-
-  # ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園
 ].each do |user, address, content, comments|
   # userがpost
   post = user.posts.create!(
@@ -171,12 +171,12 @@ end
 # userがpostsをいいね
 posts = Post.all[1..15]
 [
-  [user1, posts.sample(10)], # 10投稿にいいね
+  [user1, posts.sample(4)], # 10投稿にいいね
   [user2, posts.sample(2)],
-  [user3, posts.sample(6)],
-  [user4, posts.sample(5)],
-  [user5, posts.sample(5)],
-  [user6, posts.sample(2)],
+  [user3, posts.sample(2)],
+  [user4, posts.sample(2)],
+  [user5, posts.sample(3)],
+  [user6, posts.sample(1)],
 ].shuffle.each { |user, likes_posts|
   likes_posts.each { |post|
     # いいねと通知
