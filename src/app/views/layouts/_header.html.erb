@@ -49,7 +49,7 @@
         </li>
       <% else %>
       <%# ログインしていない場合 %>
-        <li class="nav-item"><%= link_to "Home", root_path, class: 'nav-link mr-2' %></li>
+        <li class="nav-item only_pc not_signed_in"><%= link_to "Home", root_path, class: 'nav-link mr-2' %></li>
         <li class="nav-item"><%= link_to "About", about_path, class: 'nav-link mr-2' %></li>
         <li class="nav-item"><%= link_to "Sign up", new_user_registration_path, class: 'nav-link mr-2' %></li>
         <li class="nav-item"><%= link_to "Log in", user_session_path, class: 'nav-link' %></li>
