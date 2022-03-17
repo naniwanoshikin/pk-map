@@ -1,5 +1,3 @@
-# 5 省略コマンド
-
 # 確認
 ps:
 	docker-compose ps
