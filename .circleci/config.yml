@@ -8,7 +8,7 @@ jobs:
   # ci
   build:
     docker:
-      - image: cimg/ruby:2.7 # circleci -> cimg: bundle installエラー
+      - image: cimg/ruby:2.7 # bundle installエラー出た為変更
     working_directory: ~/pk-map/src # gitHubのリポ名
     steps:
       - checkout:
@@ -17,7 +17,7 @@ jobs:
 
   test:
     docker:
-      - image: cimg/ruby:2.7-node # yarn install用に-nodeつけた
+      - image: cimg/ruby:2.7-node # yarn install用に変更
       - image: circleci/mysql:5.5
         environment: # (config/database.yml test)
           MYSQL_ROOT_PASSWORD: password
