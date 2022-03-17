@@ -18,7 +18,7 @@ user2 = User.create!(
 )
 
 # 一般ユーザー n=0
-30.times do |n|
+28.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+2}@railstutorial.org"
   password = "password"
@@ -74,6 +74,7 @@ user7 = User.all[6]
 user8 = User.all[7]
 
 # [ ]のインデントずれると反映されない可能性あるので要注意
+# ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園
 [
   [user6, '住之江公園', '広いな', [
     [user3, 3, "港の方にあるよ。港町かな？"],
@@ -120,10 +121,9 @@ user8 = User.all[7]
   [user4, '桃谷公園', '斜めのレールがある', [
     [user3, 4, "秋には紅葉で映える"],
   ]],
-  [user2, '学びの森', '良質な芝生がある', [
+  [user2, '学びの森', '良い芝生だった', [
     [user4, 3, "まぁまぁな壁"],
     [user3, 4, "トリッキングバトルにうってつけ"],
-    [user6, 4, "良き芝生だった"],
     [user7, 4, "とてもやりやすい^_^"],
   ]],
   [user3, '上汐町公園', 'グライダーがきつい', [
@@ -149,8 +149,6 @@ user8 = User.all[7]
     [user3, 3, "山の麓なんだよここ"],
     [user4, 4, "滝もある"],
   ]],
-
-  # ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園
 ].each do |user, address, content, comments|
   # userがpost
   post = user.posts.create!(
