@@ -13,7 +13,9 @@ Rails.start()
 ActiveStorage.start()
 // Turbolinks.start() // googlemap api script再読み込み防止
 
+// webpack
+import 'bootstrap'
+import '../stylesheets/application.scss'
 
-//= require jquery3
-//= require popper
-//= require bootstrap
+// (V)で画像を読み込む (home/about)_image_pack_tag
+require.context("../images", true);

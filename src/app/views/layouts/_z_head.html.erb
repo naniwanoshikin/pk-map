@@ -5,10 +5,7 @@
 <%= include_gon %>
 <%# pagination アイコン %>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-<%# bootstrapとの読み込み順どうすればいい %>
-<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%# webpack %>
+<%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 <%# 全ファイルでJSを読み込む %>
 <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-<%# bootstrap4 ドロップダウン %>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

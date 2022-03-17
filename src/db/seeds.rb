@@ -36,20 +36,20 @@ end
 users = User.all
 
 # 管理者がfollowingをフォロー
-following = users[1..17] # user(2~18) 17人
+following = users[1..15] # user(2~16) 15人
 following.each { |followed| user1.follow(followed) }
 # ゲストがfollowingをフォロー
 following = users[3..10] # user(4~11) 8人
 following.each { |followed| user2.follow(followed) }
 
 [
-  # (3~15) 10人が管理人をフォロー
-  [users[2..14].sample(10), user1],
-  # (5~12) 6人がゲストをフォロー
-  [users[4..11].sample(6), user2],
+  # 管理人をフォロー
+  [users[2..14].sample(10), user1], # (3~15) 10人
+  # ゲストをフォロー
+  [users[3..9].sample(4), user2], # (4~10)
 ].shuffle.each { |followers, user|
   followers.shuffle.each { |follower|
-    # フォローと通知
+    # フォロー + 通知
     follower.follow(user)
     follower.notify_to_follow!(user)
   }
@@ -125,7 +125,7 @@ user7 = User.all[6]
     [user1, 4, "とてもやりやすい^_^"],
   ]],
   [user2, '上汐町公園', 'グライダーがきつい', [
-    [user1, 3, "あそこキャット難しいもんな"],
+    [user1, 3, "キャット難しいよな"],
   ]],
   [user1, '久屋大通', 'ロサンゼルス広場が消滅した', [
     [user4, 4, "ブロックが多かった"],
@@ -171,12 +171,12 @@ end
 # userがpostsをいいね
 posts = Post.all[1..15]
 [
-  [user1, posts.sample(10)], # 10投稿にいいね
+  [user1, posts.sample(4)], # 10投稿にいいね
   [user2, posts.sample(2)],
-  [user3, posts.sample(6)],
-  [user4, posts.sample(5)],
-  [user5, posts.sample(5)],
-  [user6, posts.sample(2)],
+  [user3, posts.sample(2)],
+  [user4, posts.sample(2)],
+  [user5, posts.sample(3)],
+  [user6, posts.sample(1)],
 ].shuffle.each { |user, likes_posts|
   likes_posts.each { |post|
     # いいねと通知
