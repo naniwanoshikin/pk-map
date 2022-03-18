@@ -8,16 +8,16 @@ jobs:
   # ci
   build:
     docker:
-      - image: cimg/ruby:2.7 # circleci -> cimg: bundle installエラー
-    working_directory: ~/rails-pk/src # gitHubのリポ名
+      - image: cimg/ruby:2.7 # bundle installエラー出た為変更
+    working_directory: ~/pk-map/src # gitHubのリポ名
     steps:
       - checkout:
-          path: ~/rails-pk # Gitリポをホームdirにコピー
+          path: ~/pk-map # Gitリポをホームdirにコピー
       - ruby/install-deps # bundle install
 
   test:
     docker:
-      - image: cimg/ruby:2.7-node # yarn install用に-nodeつけた
+      - image: cimg/ruby:2.7-node # yarn install用に変更
       - image: circleci/mysql:5.5
         environment: # (config/database.yml test)
           MYSQL_ROOT_PASSWORD: password
@@ -28,17 +28,17 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1" # (config/database.yml test)
       RAILS_ENV: test
-    working_directory: ~/rails-pk/src
+    working_directory: ~/pk-map/src
     steps:
       - checkout:
-          path: ~/rails-pk
+          path: ~/pk-map
       - ruby/install-deps
-      - run: bundle exec yarn install # Yarn
-      - run: bundle exec rails webpacker:compile # webpacker
+      - run: bundle exec yarn install
+      - run: bundle exec rails webpacker:compile
       - run:
           name: Database setup # (circleci_step名)
           command: bundle exec rails db:migrate
-      - run: # rspec
+      - run:
           name: Rspec
           command: bundle exec rspec
 
@@ -54,19 +54,19 @@ jobs:
       - run:
           name: heroku login
           command: heroku container:login
-      - run: # imageをpush
+      - run: # imageをpush 環境変数は(circleci)上で設定
           name: push docker image
           command: heroku container:push web -a $HEROKU_APP_NAME
       - run: # imageをrelease
           name: release docker image
           command: heroku container:release web -a $HEROKU_APP_NAME
-      - run: # reset
+      - run:
           name: database reset
           command: heroku run bundle exec rails db:migrate:reset RAILS_ENV=production -a $HEROKU_APP_NAME DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-      - run: # migrate
+      - run:
           name: database setup
-          command: heroku run bundle exec rails db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME # (circleci)
-      - run: # seed
+          command: heroku run bundle exec rails db:migrate RAILS_ENV=production -a $HEROKU_APP_NAME
+      - run:
           name: database seed
           command: heroku run bundle exec rails db:seed RAILS_ENV=production -a $HEROKU_APP_NAME
 

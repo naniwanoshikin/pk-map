@@ -345,7 +345,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.4.4)
-  bootstrap (~> 4.5.2)
   byebug
   capybara (>= 3.26)
   devise
@@ -358,7 +357,6 @@ DEPENDENCIES
   hirb
   html2slim
   jbuilder (~> 2.7)
-  jquery-rails
   kaminari
   listen (~> 3.3)
   mysql2 (~> 0.5)

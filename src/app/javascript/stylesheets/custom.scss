@@ -116,7 +116,7 @@ footer {
   .signed_in {
     // ナビの色
     .active {
-      color:green;
+      color: green;
     }
   }
   // 未ログイン
@@ -124,7 +124,7 @@ footer {
     border-top: 1px solid #eaeaea;
     margin-top: 45px;
     padding-top: 5px;
-    padding-bottom: 45px;
+    padding-bottom: 50px;
     small {
       float: left;
     }
@@ -295,21 +295,35 @@ input {
   }
 }
 
-// フッター非表示
 @media (min-width: 768px) {
   header.navbar {
     nav {
       // ul
       .navbar-nav {
-        // li
+        // li ログインしている状態
         .only_pc {
           display: block;
           margin-right: 15px;
+          // 未ログイン時
+          &.not_signed_in {
+            margin-right: 0;
+          }
         }
       }
     }
   }
+  // フッター非表示
   footer {
+    // 未ログイン
+    .not_signed_in {
+      ul {
+        // li
+        .only_phone {
+          display: none;
+        }
+      }
+    }
+    // ログイン後
     .signed_in {
       display: none;
     }
