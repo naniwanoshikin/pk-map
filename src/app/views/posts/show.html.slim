@@ -9,19 +9,16 @@ h2
       #posts_show_map
 
       / 画像
-      .show_img
-        = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@post.latitude},#{@post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
+      / .show_img
+      /  = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@post.latitude},#{@post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
 
       / 住所 Post(M)
-      .show_addres.my-3
+      .show_addres.mt-3
         = @post.munic
-      / ユーザーより
-      .user_post.text-center.mt-3
-        = link_to gravatar_for(@post.user, size: 25), @post.user
-        span.content
-          = @post.content
-        / p.spot_type
-        /   = @post.spot_type.class
+      / 投稿ユーザー
+      .user_post.mt-2
+        | 投稿: 
+        = link_to @post.user.name, @post.user
 
       .show_actions
         / 戻る
@@ -31,16 +28,16 @@ h2
         / いいね
         div id="likes_like_#{@post.id}"
           = render "likes/like", post: @post
-        / 削除
-        div
-          - if current_user?(@post.user)
-            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
-              i.fas.fa-trash-alt.fa-lg
 
         / コメントフォーム
         - if user_signed_in?
           .comment_form.my-3.text-center
             = render "comments/form", comment: @comment
+        / 削除
+        div
+          - if current_user?(@post.user)
+            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
+              i.fas.fa-trash-alt.fa-lg
 
       / コメント一覧
       #comments
@@ -70,7 +67,7 @@ javascript:
         lat: gon.post.latitude,
         lng: gon.post.longitude
       },
-      zoom: 14,
+      zoom: 15,
       mapTypeControl: false, // 地図|航空写真
     });
 
@@ -80,5 +77,17 @@ javascript:
         lng: gon.post.longitude
       },
       map: show_map
+    });
+    // 吹き出し
+    infowindow = new google.maps.InfoWindow();
+    marker.addListener('click', function() {
+      infowindow.setContent(
+        // 画像
+        '<div class="infowindow show_img">'
+        + `<span class="">${gon.post.content}</span>`
+        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${gon.post.latitude},${gon.post.longitude}&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }' >`
+        + '</div>'
+      );
+      infowindow.open(show_map, marker);
     });
   }

@@ -2,9 +2,9 @@ class PostsController < ApplicationController
   before_action :authenticate_user!,
   only: [:create, :destroy, :new]
   # 投稿のない詳細画面は表示しない
-  before_action :correct_post,       only: :show
+  before_action :correct_post,   only: [:show, :like_users]
   # 自分以外のユーザーの投稿は削除できない
-  before_action :correct_user,       only: :destroy
+  before_action :correct_user,   only: :destroy
 
 
   # 投稿詳細
@@ -16,6 +16,12 @@ class PostsController < ApplicationController
     @comments = @post.comments
     # コメントを新規作成
     @comment = current_user.comments.build if user_signed_in?
+  end
+
+  # いいねしたユーザー一覧
+  def like_users
+    @post = Post.find(params[:id])
+    @post_like_users = @post.like_users.page(params[:page]).per(10)
   end
 
   # 投稿フォーム

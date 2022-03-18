@@ -67,7 +67,6 @@ mgd:
 seed:
 	docker-compose exec web rails db:seed
 
-
 # slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
 slim:
 	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
@@ -85,9 +84,3 @@ g:
 # 削除
 d:
 	docker-compose exec web rails d model Comment
-
-in:
-	docker-compose exec web rails webpacker:install
-# コンパイル
-w:
-	docker-compose exec web rails webpacker:compile
