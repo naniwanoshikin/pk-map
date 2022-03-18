@@ -15,5 +15,8 @@
     i.far.fa-heart.fa-lg
 
 / いいね数
-span.like_count
-  = post.likes.count
+- if post.likes.any?
+  span
+    / (posts/like_users)
+    = link_to like_users_post_path(post), class: 'like_count' do
+      = post.likes.count

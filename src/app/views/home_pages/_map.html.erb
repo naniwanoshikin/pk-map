@@ -70,7 +70,7 @@
           // リンク + 画像
           '<div class="infowindow">'
           + `<a href='/posts/${post.id}'>${post.address}</a>`
-          + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${post.latitude},${post.longitude}&sensor=true&key=AIzaSyA2YdMd79mZjF37-kyRXI3Gjo4aYbg1cIg' >`
+          + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${post.latitude},${post.longitude}&sensor=true&key=<%= ENV['GOOGLE_MAP_API'] %>' >`
           + '</div>'
         );
         infowindow.open(map, marker);

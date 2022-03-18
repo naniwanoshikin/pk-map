@@ -41,16 +41,17 @@ class Post < ApplicationRecord
   # 岐阜県各務原市〜町 を算出
   def munic # (posts/show)
     spot_name = URI.encode_www_form({address: self.address})
-    # Geocoding APIを叩く
+    # APIを叩く
     uri = URI.parse("https://maps.googleapis.com/maps/api/geocode/json?#{spot_name}&key=#{ENV["GOOGLE_MAP_API"]}")
 
     api_response = Net::HTTP.get_response(uri)
     response_body = JSON.parse(api_response.body)
     if response_body["results"][0]
-      address_components = response_body["results"][0]["address_components"]
-      ken = address_components[6]["long_name"] # 県
-      shi = address_components[5]["long_name"] # 市
-      tyo = address_components[4]["long_name"] # 町
+      adds = response_body["results"][0]["address_components"]
+      # ここの書き方が不十分 難しい...
+      ken = adds[-2]["long_name"] # 県
+      shi = adds[-3]["long_name"] # 市
+      tyo = adds[-4]["long_name"] # 町
       return '住所: ' + ken + shi + tyo
     end
   end
