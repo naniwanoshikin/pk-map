@@ -1,7 +1,13 @@
 / (posts/show) → Comments(C)
 
-button.btn.btn-primary type="button" data-toggle="modal" data-target="#exampleModal"
-  | コメントする
+span type="button" data-toggle="modal" data-target="#exampleModal"
+  i.far.fa-comment.fa-lg
+
+/ コメント数
+- if @post.comments.any?
+  span.comment_count
+    = @post.comments.count
+
 
 / モーダル画面
 #exampleModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"]
