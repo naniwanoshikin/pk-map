@@ -1,6 +1,6 @@
 const { environment } = require('@rails/webpacker')
 
-// 8 jQueryを有効にする
+// 8 jQueryを有効にする ここないとajaxもできない
 const webpack = require('webpack')
 environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
