@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2022_03_09_222732) do
 
-  create_table "comments", charset: "utf8mb3", force: :cascade do |t|
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
     t.string "content"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "likes", charset: "utf8mb3", force: :cascade do |t|
+  create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "notifications", charset: "utf8mb3", force: :cascade do |t|
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "visitor_id", null: false
     t.integer "visited_id", null: false
     t.integer "post_id"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
     t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
   end
 
-  create_table "posts", charset: "utf8mb3", force: :cascade do |t|
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "relationships", charset: "utf8mb3", force: :cascade do |t|
+  create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
     t.datetime "created_at", precision: 6, null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

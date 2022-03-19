@@ -19,3 +19,5 @@ import '../stylesheets/application.scss'
 
 // (V)で画像を読み込む (home/about)_image_pack_tag
 require.context("../images", true);
+
+// console.log('a')

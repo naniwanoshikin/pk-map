@@ -23,8 +23,8 @@
               scaledSize: new google.maps.Size(40, 40)
             }
           });
-          console.log(ido_kedo);
-          console.log(status); // OK
+          // console.log(ido_kedo);
+          // console.log(status); // OK
         } else {
           alert('該当する結果がありませんでした:' + status);
         }
