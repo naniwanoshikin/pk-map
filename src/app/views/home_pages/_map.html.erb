@@ -5,6 +5,7 @@
   #map {
     height: 350px;
     border-radius: 10px;
+    margin: 20px 0;
   }
 </style>
 
@@ -75,15 +76,9 @@
         );
         infowindow.open(map, marker);
       });
-      // marker.addListener('mouseout', function(){
-      //   infowin.close();
-      // });
     });
   }
 
 </script>
-
-<%# 住所入力 検索 %>
-<%= javascript_pack_tag 'map.js' %>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap" async defer></script>

@@ -66,13 +66,16 @@ mgd:
 	docker-compose exec web rails db:migrate:down VERSION=20220309035728
 seed:
 	docker-compose exec web rails db:seed
+dbc:
+	docker-compose exec web rails db:create:all
+
 
 # slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
 slim:
 	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
-	git checkout src/app/assets/stylesheets/comments.scss
+	git checkout src/app/assets/stylesheets/application.css
 # 特定の相対パス, 特定の拡張子のファイルを削除
 filed:
 	find src/app/views -type f -name "*.slim" -delete
