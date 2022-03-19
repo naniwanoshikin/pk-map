@@ -75,7 +75,7 @@ slim:
 	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
-	git checkout src/app/assets/stylesheets/comments.scss
+	git checkout src/app/assets/stylesheets/application.css
 # 特定の相対パス, 特定の拡張子のファイルを削除
 filed:
 	find src/app/views -type f -name "*.slim" -delete
