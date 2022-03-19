@@ -1,5 +1,5 @@
 'use strict'; {
-  // 住所入力 検索 (home/_search_map)
+  // 住所入力 検索 (home/search_map)
 
   // 検索ボタン
   const go = document.querySelector('.codeaddress');
@@ -27,11 +27,21 @@
             scaledSize: new google.maps.Size(40, 40)
           }
         });
+        let infowindow = new google.maps.InfoWindow();
+        marker.addListener('click', function() {
+          infowindow.setContent(
+            // リンク + 画像
+            '<div class="infowindow">'
+            + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${ido_kedo.lat()},${ido_kedo.lng()}&sensor=true&key=${ process.env.GOOGLE_MAP_API }' >`
+            + '</div>'
+          );
+          infowindow.open(map, marker);
+        });
+
         // display.textContent = "位置 " + ido_kedo // 不要かも
       } else {
         alert('該当する結果がありませんでした:' + status);
       }
     });
   })
-
 }

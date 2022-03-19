@@ -19,12 +19,9 @@
 
 // (home)
 #map {
-  margin: 20px 0;
   // 吹き出し
-  .infowindow {
-    img {
-      width: 100%;
-    }
+  .infowindow > img {
+    width: 100%;
   }
 }
 

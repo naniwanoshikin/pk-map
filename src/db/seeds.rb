@@ -1,6 +1,6 @@
 # 管理ユーザー
 user1 = User.create!( # 10
-  name:  "Jason Paul",
+  name:  "Jason Pole",
   email: "example@railstutorial.org",
   password:              "foobar", # spec
   password_confirmation: "foobar",
@@ -57,14 +57,13 @@ following.each { |followed| user2.follow(followed) }
 
 # _______________________________________________________
 # 投稿
-users = User.order(:created_at).take(10).sample(2)
-# 一人当たりの投稿数
-1.times do
-  users.each { |user| user.posts.create!(
-    address: Faker::Address.city,
-    content: Faker::Lorem.sentence(word_count: 4),
-  ) }
-end
+# 一人当たりの投稿
+User.order(:created_at).take(10).sample(1).each { |user|
+  user.posts.create!(
+  address: Faker::Address.city,
+  content: Faker::Lorem.sentence(word_count: 4),
+  )
+}
 
 user3 = User.third
 user4 = User.fourth
@@ -76,7 +75,7 @@ user8 = User.all[7]
 # ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園, 矢場町
 [
   [user6, '住之江公園', '広いな', [
-    [user3, 3, "港の方にあるよ。港町かな？"],
+    [user7, 3, "港の方にあるよ。港町かな？"],
   ]],
   [user4, '真田山公園', 'いろんな遊具がある', [
     [user1, 4, "行きたくなる"],
@@ -92,16 +91,16 @@ user8 = User.all[7]
     [user7, 3, "新しいスポットになる予感"],
   ]],
   [user2, '犬山城', 'ブロックが多くて良い', [
-    [user3, 3, "いいなぁ愛知行きたくてしょうがない.."],
+    [user3, 3, "いいなぁ愛知行きたくてしょうがない！"],
   ]],
   [user5, '長居公園', 'かなり走れる', [
     [user1, 1, "スロープ硬いよ.."],
-    [user3, 3, "まぁまぁな鉄棒"],
+    [user8, 3, "まぁまぁな鉄棒"],
     [user7, 3, "ランニングしている人で行き交っている"],
   ]],
   [user6, 'MAX ATTACK', '段差が多い', [
     [user4, 4, "鉄棒ある!"],
-    [user3, 4, "グライダーでキャットできたいな〜"],
+    [user3, 4, "グライダーでキャット頑張るぞ"],
   ]],
   [user5, '大阪城公園', '坂道を登った先にある', [
     [user1, 4, "歴史を感じる"],
@@ -140,7 +139,7 @@ user8 = User.all[7]
     [user2, 3, "わいも"],
   ]],
   [user2, '矢場町駅', '大きいパイプがある', [
-    [user3, 1, "歩くのしんどい..."],
+    [user7, 1, "歩くのしんどい..."],
     [user5, 4, "壁が噛みやすい"],
     [user4, 5, "レールしたい"],
   ]],

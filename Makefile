@@ -66,6 +66,9 @@ mgd:
 	docker-compose exec web rails db:migrate:down VERSION=20220309035728
 seed:
 	docker-compose exec web rails db:seed
+dbc:
+	docker-compose exec web rails db:create:all
+
 
 # slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
 slim:

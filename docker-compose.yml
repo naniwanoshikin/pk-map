@@ -8,13 +8,14 @@ services:
     volumes:
       - ./src/db/mysql_data:/var/lib/mysql
     environment:
+      # TZ: Asia/Tokyo
       MYSQL_ROOT_PASSWORD: password # (config/database.yml)
   web:
     build: .
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'" # 5
     volumes:
       - ./src:/app
-    ports:
+    ports: # ローカル:コンテナ localhost
       - "8080:8080"
     tty: true # -t
     stdin_open: true # -i
@@ -24,6 +25,7 @@ services:
       - db # (config/database.yml)
     environment: # rspec用
       - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
+      # RAILS_ENV: development # これつけたがいい？
 
   chrome: # Chromeでのテスト実行用コンテナ できず
     image: selenium/standalone-chrome-debug
