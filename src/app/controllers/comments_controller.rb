@@ -29,8 +29,8 @@ class CommentsController < ApplicationController
     @comments = Comment.where(post_id: @post.id)
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to @post, alert: 'コメントを削除しました' }
-      format.js
+      format.html { redirect_to @post, alert: 'Comment deleted' }
+      format.js { flash[:danger] = "Comment deleted" }
     end
   end
 
@@ -43,8 +43,9 @@ class CommentsController < ApplicationController
         :content,
       )
     end
-    def correct_user
-      @comment = current_user.comments.find_by(post_id: params[:post_id]) # (comments/comment)_path
+
+    def correct_user # destroy
+      @comment = current_user.comments.find_by(id: params[:comment_id]) # (comments/comment)
       redirect_to root_url if @comment.nil?
     end
 end

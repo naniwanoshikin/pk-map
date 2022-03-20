@@ -1,13 +1,36 @@
-/ 住所入力 (home) -> (map.js)
-= form_with do |f|
-  = f.label :address, 'スポット名'
-  .input-group
-    = f.text_field :address, placeholder: "鶴見緑地", class: 'form-control'
-    / 検索
-    .input-group-btn
-      = f.button :type => "button", class: "btn btn-primary codeaddress" do
-        i.fas.fa-search
-
+/ 住所入力 (home)
+section.map_search
+  = form_with do |f|
+    = f.label :address, 'スポット名'
+    .input-group
+      = f.text_field :address, placeholder: "鶴見緑地", class: 'form-control'
+      / 検索
+      .input-group-btn
+        = f.button :type => "button", class: "btn btn-primary codeaddress" do
+          i.fas.fa-search
 
 / 住所検索
 = javascript_pack_tag 'search_add.js'
+
+
+
+
+/ 投稿ワード
+section.post_search
+  / (home)
+  = search_form_for @q, url: @url do |f|
+    = f.label :content_cont, '投稿ワード'
+    .input-group
+      = f.text_field :content_cont, placeholder: "レール", class: 'form-control js_ajax_text'
+      .input-group-btn
+        = f.button :type => "submit", class: "btn btn-primary" do
+          i.fas.fa-search
+
+/ ワード検索 ajax予定 未使用
+/ = javascript_pack_tag 'search_post.js'
+
+
+
+
+/ ラジオボタン検索作成予定
+/ section.radio_search

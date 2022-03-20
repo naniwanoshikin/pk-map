@@ -1,8 +1,9 @@
 / (users/show) pagination ajax
 .d-flex.justify-content-around
   h2 スポット登録一覧
-  = link_to show_comments_user_path(@user) do
-    h2 コメント一覧
+  - if @user.comments.present?
+    = link_to show_comments_user_path(@user) do
+      h2 コメント一覧
 
 - if @user.posts.any?
   .posts

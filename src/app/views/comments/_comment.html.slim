@@ -14,9 +14,9 @@
           = comment.user.comments.count
           | 件の口コミ
 
-      / 削除ボタン
+      / 削除ボタン post_id: 必須, comment_id: (C)に渡すparams指定
       - if current_user?(comment.user)
-        = link_to post_comments_path(comment.post), class: "text-danger", method: :delete, remote: true do
+        = link_to post_comments_path(post_id: comment.post, comment_id: comment.id), class: "text-danger", method: :delete, remote: true do
           i.fas.fa-trash-alt.float-right
 
       / ★★ + ☆☆☆☆☆

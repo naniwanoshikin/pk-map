@@ -19,6 +19,11 @@ h2
       .user_post.mt-2
         | 投稿: 
         = link_to @post.user.name, @post.user
+      / 芝生の質
+      - if @post.spot_quality.present?
+        .spot_quality.mt-2
+          | 芝生: 
+          = @post.spot_quality
 
       .show_actions
         / 戻る
@@ -40,14 +45,13 @@ h2
               i.fas.fa-trash-alt.fa-lg
 
       / コメント一覧
-      #comments
-        - if @comments.any?
-          ul
-            = render 'comments/comment', comments: @comments
-            / (comments/_comment) @commentsと書くとなぜか複製..
-        - else
-          h2.text-center
-            | コメントはありません
+      - if @comments.any?
+        ul#comments
+          = render @comment, comments: @comments
+          / (comments/_comment) @commentsと書くと複製
+      - else
+        h2.text-center
+          | コメントはありません
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe

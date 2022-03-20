@@ -53,6 +53,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(
       :content,
       :address,
+      :spot_quality, # radio
       :checkbox, spot_type: []
     )
   end
