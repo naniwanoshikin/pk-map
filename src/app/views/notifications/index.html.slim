@@ -7,9 +7,11 @@ h2 通知
       - if @notifications.exists?
         ul#notify_lists
           = render @notifications
-        / ajax css が適用されない...
-        #view_more
-          = link_to_next_page @notifications, 'もっと見る', remote: true, class: 'btn btn-primary'
+
+        / ボタン ajax
+        #view_more.text-center
+          = link_to_next_page @notifications, 'もっと見る', class: 'btn btn-border', remote: true
+
       - else
         h2
           | 通知はありません

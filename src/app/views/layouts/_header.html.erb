@@ -36,6 +36,8 @@
         <% end %></li>
         <%# ドロップダウン %>
         <li class="nav-item dropdown">
+          <%# About %>
+          <%= link_to "About", about_path, class: "dropdown-item only_phone" %>
           <%# 歯車 %>
           <a class="nav-link dropdown-toggle pl-4 pl-md-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-cog fa-lg"></i>
@@ -43,7 +45,6 @@
           <%# 一覧 %>
           <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
             <%= link_to "ユーザー一覧", users_path, class: "dropdown-item" %>
-            <%= link_to "About", about_path, class: "dropdown-item" %>
             <%= link_to "ログアウト", destroy_user_session_path, class: "dropdown-item", method: :delete %>
           </div>
         </li>

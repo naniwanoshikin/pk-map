@@ -23,7 +23,7 @@
       }
       // マウスが乗った星までを
       for (let j = 0; j <= i; j++) {
-        console.log('a')
+        // console.log('a')
         stars[j].classList.remove("far");
         stars[j].classList.add("fas"); // 塗りつぶす
       }

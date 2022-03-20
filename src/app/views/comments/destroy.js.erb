@@ -1,3 +1,17 @@
 <%# (posts/show) %>
 $("#comments").html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>");
-<%# 上記であってると思うが、なぜかCSSが適用されない... %>
+
+
+<%# (layouts/flash)  %>
+$("#flash_messages").html(`
+  <% flash.each do |type, message| %>
+    <div class="alert alert-<%= type %>">
+      <%= message %>
+      <button type="button" class="close">&times;</button>
+    </div>
+  <% end %>
+`)
+
+$('.close').click(function() {
+  $('.alert').fadeOut(500);
+});

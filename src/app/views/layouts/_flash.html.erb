@@ -1,11 +1,14 @@
-<%# (layouts/application) ログイン、ログアウト、Post, Comment %>
-<% flash.each do |type, message| %>
-  <div class="alert alert-<%= type %>">
-    <%= message %>
-    <%# [×] ボタン %>
-    <button type="button" class="close">&times;</button>
-  </div>
-<% end %>
+<%# (layouts/application) ログイン/アウト, Post, Comment %>
+<%# id: ajax_(comment/destroy) %>
+<div id="flash_messages">
+  <% flash.each do |type, message| %>
+    <div class="alert alert-<%= type %>">
+      <%= message %>
+      <%# [×] ボタン %>
+      <button type="button" class="close">&times;</button>
+    </div>
+  <% end %>
+</div>
 
 <script>
   $(function() {
