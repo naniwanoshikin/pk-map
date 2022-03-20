@@ -113,7 +113,7 @@
   * CircleCI
   * Heroku 7.59.4
 * その他
-  * Visual Studio Code
+  <!-- * Visual Studio Code -->
   * Git, Github
   <!-- インフラ構成図 -->
   <!-- * drawio -->
