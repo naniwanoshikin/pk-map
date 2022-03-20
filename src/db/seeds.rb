@@ -1,5 +1,5 @@
 # 管理ユーザー
-user1 = User.create!( # 10
+user1 = User.create!(
   name:  "Jason Pole",
   email: "example@railstutorial.org",
   password:              "foobar", # spec
@@ -66,7 +66,7 @@ following.each { |followed| user2.follow(followed) }
 # 投稿
 # ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園, 矢場町
 [
-  [user4, '', '真田山公園', 'いろんな遊具がある。ただ子供が多い。', [
+  [user4, '', '真田山公園', 'いろんな遊具がある。ただし子供が多い。', [
     [user1, 4, "行きたくなる"],
   ]],
   [user4, '普通', '天王寺公園', 'アクセスしやすい', [
@@ -162,7 +162,7 @@ following.each { |followed| user2.follow(followed) }
 end
 
 # _______________________________________________________
-# userがpostsをいいね
+# userがpostをいいね
 posts = Post.all[1..15]
 [
   [user1, posts.sample(4)], # 4投稿にいいね
