@@ -41,7 +41,6 @@ footer .n-circle {
   font-size: 0.9em;
 }
 
-
 // (index)_ul
 #notify_lists {
   list-style: none;
@@ -86,4 +85,21 @@ footer .n-circle {
       }
     }
   }
+}
+
+#view_more {
+  // もっと見るボタン
+  // https://jajaaan.co.jp/css/button/
+  a.btn-border {
+    border: 2px solid #000;
+    border-radius: 0;
+    background: #fff;
+    -webkit-box-shadow: 4px 4px 0 #000;
+    box-shadow: 4px 4px 0 #000;
+    &:hover {
+      -webkit-box-shadow: -4px -4px 0 #000;
+      box-shadow: -4px -4px 0 #000;
+    }
+  }
+
 }

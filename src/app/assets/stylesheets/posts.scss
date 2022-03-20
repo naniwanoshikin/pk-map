@@ -110,6 +110,10 @@
       width: 100%;
     }
   }
+  // 芝生: 悪い
+  .spot_quality {
+    color: gray;
+  }
   // (posts/show, _post)
   .show_actions {
     display: flex;
@@ -130,6 +134,10 @@
   // .field_with_errors {
   //   max-width: 100px;
   // }
+  // ラジオボタン
+  input[type="radio"] {
+    max-width: 30px;
+  }
   // チェックボックス
   input[type="checkbox"] {
     max-width: 30px;

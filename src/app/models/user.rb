@@ -39,7 +39,7 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
 
-  # 10 入力必須はユーザー作成(新規登録)の時のみにする
+  # 10 入力必須はユーザー登録時のみにする
   validates :password, presence: true, on: :create, allow_nil: true
   # 10 ユーザ編集用 現在のパスワード
   attr_accessor :current_password
@@ -50,19 +50,27 @@ class User < ApplicationRecord
 
   # _______________________________________________
   # ゲストログイン
-  def self.guest1
-    find_by!(email: 'example@railstutorial.org') do |user|
+  def self.guest1 # Sessions(C)
+    find_or_create_by!(email: 'example@railstutorial.org') do |user|
+      # なければ下記の値になる
+      user.name = 'ジェイポ'
       user.password = 'foobar'
+      user.address = '梅田'
+      user.admin = true
     end
   end
   def self.guest2
-    find_by!(email: 'example-1@railstutorial.org') do |user|
+    find_or_create_by!(email: 'example-1@railstutorial.org') do |user|
+      user.name = 'ドームトマト'
       user.password = 'foobar'
+      user.address = '後楽園ホール'
     end
   end
   def self.guest3
-    find_by!(email: 'example-4@railstutorial.org') do |user|
+    find_or_create_by!(email: 'example-4@railstutorial.org') do |user|
+      user.name = 'アロヤーン'
       user.password = 'password'
+      user.address = '東淀川'
     end
   end
 

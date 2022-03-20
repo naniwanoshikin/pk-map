@@ -1,8 +1,8 @@
 <%# ul に li を追加 %>
 $('#notify_lists').append("<%= escape_javascript(render @notifications) %>");
 
-<%# 現在の'もっと見る'を削除 %>
-$("#view_more").replaceWith("<%= escape_javascript(link_to_next_page(@notifications, 'もっと見る', remote: true, id: 'view_more')) %>");
+<%# a要素 [もっと見る]を[もっと見る]に置換 理解がイマイチ.. %>
+$("#view_more a").replaceWith("<%= escape_javascript(link_to_next_page(@notifications, 'もっと見る', remote: true)) %>");
 
 <%# classつける %>
-$('#view_more').addClass('btn btn-primary');
+$('#view_more a').addClass('btn btn-border');

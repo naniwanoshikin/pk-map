@@ -1,7 +1,9 @@
 <%# (comments/form) %>
 $("textarea").val("");
-$('#exampleModal').modal('hide')
+
+$('#exampleModal').hide();
+$("body").removeClass("modal-open");
+$(".modal-backdrop").remove();
+
 <%# (posts/show) %>
 $('#comments').html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>")
-
-<%# CSSが適用されない... %>

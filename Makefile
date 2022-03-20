@@ -26,16 +26,11 @@ cs:
 # シェル
 bash:
 	docker-compose run --rm web bash
-# mysql起動: password入力
-db:
-	docker-compose exec web rails db
 # ルーティング
 route:
 	docker-compose exec web rails routes
 routeu:
 	docker-compose exec web rails routes | grep users
-routes:
-	docker-compose exec web rails routes | grep sessions
 routep:
 	docker-compose exec web rails routes | grep posts
 # Rubocop
@@ -48,8 +43,6 @@ rr:
 	docker-compose exec web bundle exec rspec spec/requests
 rs:
 	docker-compose exec web bundle exec rspec spec/system
-rse:
-	docker-compose exec web bundle exec rspec spec/system/users_edit_spec.rb
 rm:
 	docker-compose exec web bundle exec rspec spec/models
 rh:
@@ -60,17 +53,14 @@ mg:
 	docker-compose exec web rails db:migrate
 reset:
 	docker-compose exec web rails db:migrate:reset
-mgs:
-	docker-compose exec web rails db:migrate:status
-mgd:
-	docker-compose exec web rails db:migrate:down VERSION=20220309035728
 seed:
 	docker-compose exec web rails db:seed
-dbc:
-	docker-compose exec web rails db:create:all
+md:
+	docker-compose exec web rails db:migrate:down VERSION=20220306214030
+ms:
+	docker-compose exec web rails db:migrate:status
 
-
-# slim に変換 ファイル指定 src/は消す erbは削除(バックアップ不可)
+# slim に変換 src/は消す erbは削除(バックアップ不可)
 slim:
 	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
@@ -79,11 +69,3 @@ co:
 # 特定の相対パス, 特定の拡張子のファイルを削除
 filed:
 	find src/app/views -type f -name "*.slim" -delete
-
-
-# 生成
-g:
-	docker-compose exec web rails g model Comment content:string user:references post:references
-# 削除
-d:
-	docker-compose exec web rails d model Comment

@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   # ログインを要求
   before_action :authenticate_user!, only: [:destroy, :following, :followers]
-  before_action :admin_user,     only: :destroy
+  before_action :correct_user, only: [:show, :show_comments]
+  before_action :admin_user,   only: :destroy
 
-  def show # 7
-    @user = User.find(params[:id])
+  def show
+    # @user
     @posts = @user.posts.page(params[:page]).per(6) # 13
 
     # pagination ajax
@@ -14,15 +15,15 @@ class UsersController < ApplicationController
     end
   end
 
-  # コメントした一覧
+  # コメント一覧
   def show_comments
-    @user = User.find(params[:id])
+    # @user
     # @userのコメント集
     @user_comment_posts = @user.comment_posts.page(params[:page]).per(4)
   end
 
-  def index # 10
-    @users = User.page(params[:page]).per(15)
+  def index
+    @users = User.page(params[:page]).per(10)
     # pagination
     respond_to do |format|
       format.html
@@ -33,22 +34,21 @@ class UsersController < ApplicationController
   # 管理者のみ
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_url
+    redirect_to users_url, alert: "User deleted"
   end
 
   # 一覧
-  def following # 14.2.3
+  def following
     @title = "フォロー中"
     @user  = User.find(params[:id])
     @users = @user.following.page(params[:page]).per(10)
-    render 'show_follow' # (users/show_follow)
+    render 'show_follow' # (users/show_follow)_共用
   end
   def followers
     @title = "フォロワー"
     @user  = User.find(params[:id])
     @users = @user.followers.page(params[:page]).per(10)
-    render 'show_follow' # 共用
+    render 'show_follow'
   end
 
   private
@@ -56,6 +56,12 @@ class UsersController < ApplicationController
   # 管理者かどうか確認
   def admin_user
     redirect_to(root_url) unless current_user.admin?
+  end
+
+  # 正しいユーザーを要求
+  def correct_user
+    @user = User.find_by(id: params[:id])
+    redirect_to root_url if @user.nil?
   end
 
 end
