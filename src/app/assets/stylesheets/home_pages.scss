@@ -1,16 +1,13 @@
-
-// (map)
-#map {
-  // 吹き出し
-  .infowindow > img {
-    width: 100%;
-  }
+// 吹き出し
+// (home/map), (posts/show)
+.infowindow > img {
+  width: 100%;
 }
-
 
 // ログイン後
 // 検索
-.post_search, .map_search {
+.post_search,
+.map_search {
   margin: 0;
   margin-bottom: 5px;
   padding: 0;
@@ -21,4 +18,3 @@
     border-radius: 0 5px 5px 0;
   }
 }
-
