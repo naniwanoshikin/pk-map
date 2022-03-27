@@ -1,0 +1,51 @@
+<%# 未ログイン時 %>
+<div class="center jumbotron">
+  <h1>外に出よう</h1>
+  <h2 class="">動ける場所は見つかる</h2>
+  <%# Registrations(C) %>
+  <%= link_to "ゲストログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success guest_btn" %>
+  <p class="small text-dark mt-2">登録なしでログインできます</p>
+  <% if Rails.env.development? %>
+    <br>
+    <%= link_to "ログイン1", users_guest1_path, method: :post, class: "btn btn-danger" %>
+    <%= link_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-warning" %>
+  <% end %>
+</div>
+
+<%# ローディング --------------------- %>
+
+<%# JavaScriptで設定 %>
+<div id="" class="first_load">
+  <div id="" class="second_load">
+    <%# <div class="loading-one animation_loading">
+      <p class="loading-txt">Loading</p>
+    </div> %>
+  </div>
+</div>
+
+<script>
+  const guest_btn = document.querySelector('.guest_btn');
+  guest_btn.addEventListener('click', () => {
+    // console.log('guest login');
+    const div1 = document.querySelector(".first_load");
+    div1.setAttribute('id', 'loading')
+    const div2 = document.querySelector(".second_load");
+    div2.setAttribute('id', 'loading_box');
+    const div3 = document.createElement("div");
+    div3.classList.add('loading-one', 'animation_loading');
+    div2.appendChild(div3);
+    const p1 = document.createElement("p");
+    p1.classList.add('loading-txt');
+    p1.textContent = 'Loading';
+    div3.appendChild(p1);
+  });
+
+  // jQuery
+  // $(window).on('load',function(){
+  //   console.log('読み込み終わり');
+  //   // ローディング画面
+  //   $("#loading").delay(100).fadeOut('slow');
+  //   // ローディングテキスト
+  //   $("#loading_box").delay(50).fadeOut('slow');
+  // });
+</script>

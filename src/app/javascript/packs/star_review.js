@@ -14,7 +14,7 @@
   // それぞれの星について
   for (let i = 0; i < stars.length; i++) {
     // その星にマウスが乗ったとき
-    stars[i].addEventListener("mouseover", function () {
+    stars[i].addEventListener("mouseover", () => {
       // 全ての星を
       for (let j = 0; j < stars.length; j++) {
         // console.log(stars.length)
@@ -30,7 +30,7 @@
     })
 
     // その星をクリックした時
-    stars[i].addEventListener("click", function () {
+    stars[i].addEventListener("click", () => {
       hiddenScore.value = i + 1; // i = 0 - 4
       // '2'/5
       ratingValue.textContent = hiddenScore.value;
@@ -39,7 +39,7 @@
     })
 
     // その星からマウスが離れたとき
-    stars[i].addEventListener("mouseout", function () {
+    stars[i].addEventListener("mouseout", () => {
       // 全ての星を
       for (let j = 0; j < stars.length; j++) {
         stars[j].classList.add("far"); // 一旦くり抜いて
