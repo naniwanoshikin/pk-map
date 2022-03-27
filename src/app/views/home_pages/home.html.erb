@@ -1,31 +1,7 @@
 <% if user_signed_in? %>
-  <div class="row">
-    <aside class="col-md-4">
-      <h2>スポットを調べる</h2>
-      <%= render 'search_map' %>
-    </aside>
-    <%# メイン 地図 %>
-    <div class="col-md-8">
-      <div class="pkmap">
-        <%= render 'map' %>
-      </div>
-      <%# 投稿一覧 %>
-      <div id="ajax_feed">
-        <%= render 'shared/feed' %>
-      </div>
-    </div>
-  </div>
+  <%# ログイン後 %>
+  <%= render 'home_pages/home_login' %>
 <% else %>
-  <div class="center jumbotron">
-    <h1>外に出よう</h1>
-    <h2 class="">動ける場所は見つかる</h2>
-    <%# Registrations(C) %>
-    <%= link_to "ゲストログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success" %>
-    <p class="small text-dark mt-2">登録なしでログインできます</p>
-    <% if Rails.env.development? %>
-      <br>
-      <%= link_to "ログイン1", users_guest1_path, method: :post, class: "btn btn-danger" %>
-      <%= link_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-warning" %>
-    <% end %>
-  </div>
+  <%# 未ログイン時 ローディング %>
+  <%= render 'home_pages/home' %>
 <% end %>

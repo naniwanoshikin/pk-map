@@ -6,10 +6,10 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <nav class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ml-auto mr-5">
+    <ul class="navbar-nav ml-auto mr-4">
       <%# ログインしている場合 %>
       <% if user_signed_in? %>
-        <%# レスポンシブ: only_pc %>
+        <%# レスポンシブ %>
         <%# ホーム %>
         <li class="nav-item only_pc">
           <%= link_to root_path, class: 'nav-link' do %>
@@ -34,12 +34,13 @@
         <li class="nav-item only_pc"><%= link_to current_user, class: 'nav-link' do %>
           <i class="fas fa-user fa-lg"></i>
         <% end %></li>
+        <%# レスポンシブ共通 %>
         <%# ドロップダウン %>
         <li class="nav-item dropdown">
           <%# About %>
           <%= link_to "About", about_path, class: "dropdown-item only_phone" %>
           <%# 歯車 %>
-          <a class="nav-link dropdown-toggle pl-4 pl-md-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle pl-4 pl-md-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-cog fa-lg"></i>
           </a>
           <%# 一覧 %>
