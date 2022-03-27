@@ -1,0 +1,14 @@
+<div class="row">
+  <aside class="col-md-4">
+    <h2>スポットを調べる</h2>
+    <%= render 'search_spot' %>
+  </aside>
+  <main class="col-md-8">
+    <%# 地図 %>
+    <%= render 'map' %>
+    <%# スポット一覧 %>
+    <div id="ajax_feed">
+      <%= render 'shared/feed' %>
+    </div>
+  </main>
+</div>

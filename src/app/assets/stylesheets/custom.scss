@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-// _______________________________________________
+// ----------------------------------------------
 
 header.navbar {
   position: fixed;
@@ -106,7 +106,7 @@ footer {
   }
 }
 
-// _______________________________________________
+// ----------------------------------------------
 // 7
 /* miscellaneous */
 
@@ -174,8 +174,7 @@ input {
   height: auto !important;
 }
 
-// ログイン画面
-// 7 devise
+// (layouts/flash) devise ログイン/アウト, Post, Comment 7
 .alert {
   text-align: center;
   margin-bottom: 10px;
@@ -187,9 +186,24 @@ input {
     background: rgba(146, 236, 137, 0.521);
   }
 }
+// .fadeout {
+//   animation: fadeout 2s;
+//   animation-fill-mode: forwards;
+//   @keyframes fadeout {
+//     0% {
+//       opacity: 1;
+//     }
+//     100% {
+//       opacity: 0;
+//       display: none;
+//     }
+//   }
+// }
+
 .checkbox {
   display: inline; // ずれ修正
 }
+// ログイン画面
 #user_remember_me {
   width: auto;
   margin-left: 0;
@@ -208,10 +222,9 @@ input {
   }
 }
 
-// field_with_errors はwebpackへ
+// field_with_errors: webpackへ
 
-
-// ページネーション箇所
+// ページネーション
 #ajax_feed,
 #ajax_users_show,
 #ajax_users_index,
@@ -226,6 +239,9 @@ input {
         color: #696969;
         &:hover {
           border-radius: 15px;
+        }
+        &:active {
+          color: #b0e7d7;
         }
       }
       /* 表示しているページ番号 */
@@ -258,7 +274,7 @@ input {
       }
     }
   }
-  // フッター非表示
+  // 非表示
   footer {
     // 未ログイン
     .not_signed_in {

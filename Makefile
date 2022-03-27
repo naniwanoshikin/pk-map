@@ -62,7 +62,7 @@ ms:
 
 # slim に変換 src/は消す erbは削除(バックアップ不可)
 slim:
-	docker-compose exec web bundle exec erb2slim app/views/static_pages/aa.html.erb app/views/static_pages/aa.html.slim -d
+	docker-compose exec web bundle exec erb2slim app/views/home_pages/aa.html.erb app/views/home_pages/aa.html.slim -d
 # 直前のコミットに戻る 特定のファイル
 co:
 	git checkout src/app/javascript/stylesheets
