@@ -1,13 +1,22 @@
-<%# (home_pages/home) %>
+<%# (home_pages/home_login) %>
+
 <% if @feed_items.any? %>
-  <div class="posts">
-    <%= render @feed_items %>
-    <%# (posts/_post) %>
+  <div id="ajax_feed">
+    <div class="posts">
+      <%= render @feed_items %>
+      <%# (posts/_post) %>
+    </div>
+    <%= paginate @feed_items,
+      remote: true, # ajax
+      params: { controller: :home_pages, action: :home }
+    %>
   </div>
-  <%= paginate @feed_items,
-    remote: true, # ajax
-    params: { controller: :home_pages, action: :home }
-  %>
+<% else %>
+  <h2 class="mt-5">あなたの知るスポットを投稿したり、<br>ユーザーをフォローしましょう</h2>
+  <div class="text-center">
+    <p><%= link_to "投稿する", new_post_path %></p>
+    <p><%= link_to "ユーザーを探す", users_path %></p>
+  </div>
 <% end %>
 
 <%# 住所をクリックするとマップ表示 エラーのため未使用 %>

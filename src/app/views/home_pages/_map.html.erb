@@ -1,12 +1,8 @@
-<%# Home %>
-<div class="pkmap">
-  <h2>周辺スポット</h2>
-  <div id='map'></div>
-</div>
-
+<%# Home_ログイン後 %>
+<div id='pkmap'></div>
 
 <style>
-  #map {
+  #pkmap {
     height: 350px;
     border-radius: 10px;
     margin: 20px 0;
@@ -17,21 +13,28 @@
 
   let map
 
-  // 初期画面: User情報
+  // 初期
   function initMap(){
     // 地図
-    const target = document.getElementById('map')
+    const target = document.getElementById('pkmap')
     // オブジェクト生成
     geocoder = new google.maps.Geocoder()
 
-    // 現在のユーザーの住所
-    let user_address = {
-      lat: <%= current_user.latitude %>, // 緯度
-      lng: <%= current_user.longitude %>  // 経度
+    // 自身の住所: 緯度, 経度
+    user_address = {
+      lat: <%= current_user.latitude %>,
+      lng: <%= current_user.longitude %>
     }
+    // 最新フィードの住所がもしあれば 条件演算子
+    new_post_address = (gon.feed[0]) ? {
+      lat: gon.feed[0].latitude,
+      lng: gon.feed[0].longitude
+    } : null
+
     // 中心位置を表示
     map = new google.maps.Map(target, {
-      center: user_address,
+      // フィードがなければ自身の住所 論理和
+      center: new_post_address || user_address,
       zoom: 13,
       mapTypeControl: false, // 地図|写真
       streetViewControl: false, // ストリートビューマーク
@@ -50,7 +53,7 @@
         scaledSize: new google.maps.Size(40, 40)
       }
     });
-    // 自身のピンをさす
+    // 自身の住所のマーカー
     marker = new google.maps.Marker({
       map: map,
       position: user_address
@@ -58,7 +61,7 @@
 
     // 投稿一覧
     gon.posts.forEach(post => {
-      // マーカーをさす: 繰り返しなので let 入れないとエラー
+      // マーカー: 繰り返しなので let 入れないとエラー
       let marker = new google.maps.Marker({
         map: map,
         position: {
@@ -68,7 +71,7 @@
         },
         // title: contentString
       });
-      // 吹き出し表示
+      // 吹き出し
       let infowindow = new google.maps.InfoWindow();
       marker.addListener('click', function() {
         infowindow.setContent(

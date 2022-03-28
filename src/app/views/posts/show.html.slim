@@ -4,7 +4,7 @@ h2
 
 .container
   .row
-    .col-md-9.col-md-offset-2.mx-auto.posts_show
+    .col-md-9.col-md-offset-2.mx-auto.px-0.posts_show
       / 地図
       #posts_show_map
 
@@ -87,7 +87,7 @@ javascript:
     marker.addListener('click', function() {
       infowindow.setContent(
         // 画像
-        '<div class="infowindow show_img">'
+        '<div class="infowindow">'
         + `<span class="">${gon.post.content}</span>`
         + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${gon.post.latitude},${gon.post.longitude}&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }' >`
         + '</div>'
