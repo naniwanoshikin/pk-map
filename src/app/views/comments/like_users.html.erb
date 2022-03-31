@@ -1,0 +1,13 @@
+<% provide(:title, 'いいねしたユーザー') %>
+<h2>いいねしたユーザー</h2>
+
+<% if @comment_like_users.any? %>
+  <div id="">
+    <ul class="users">
+      <%= render @comment_like_users  %>
+      <%# (users/_user) %>
+    </ul>
+  </div>
+<% else %>
+  <h2>いいねユーザーはいません</h2>
+<% end %>

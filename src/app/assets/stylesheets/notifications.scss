@@ -62,9 +62,13 @@ footer .n-circle {
         .fa-user {
           color: #00a1e9;
         }
+        .fa-heart {
+          color: red;
+        }
       }
       // 文章
       .notify_content {
+        width: 100%;
         // 鈴木さん
         strong > a {
           color: inherit;
@@ -101,5 +105,4 @@ footer .n-circle {
       box-shadow: -4px -4px 0 #000;
     }
   }
-
 }

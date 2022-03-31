@@ -2,14 +2,14 @@ class User < ApplicationRecord
   before_save { email.downcase! } # 6
   # 投稿
   has_many :posts, dependent: :destroy
-  # いいね
-  has_many :likes, dependent: :destroy
-  # userがいいねした投稿
-  has_many :like_posts, through: :likes, source: :post
   # コメント
   has_many :comments, dependent: :destroy
   # userがコメントした投稿
   has_many :comment_posts, through: :comments, source: :post
+  # いいね
+  has_many :likes, dependent: :destroy
+  # userがいいねしたコメント
+  has_many :like_comments, through: :likes, source: :comment
 
   # フォローする
   has_many :active_relationships, class_name: "Relationship",
@@ -122,44 +122,19 @@ class User < ApplicationRecord
   end
 
   # _______________________________________________
-  # userがpostをいいねする
-  def like(post) # Likes(C)
-    likes.create(post_id: post.id)
+  # userがcommentをいいねする
+  def like(comment) # Likes(C)
+    likes.create(comment_id: comment.id)
   end
   # いいね解除
-  def unlike(post)
-    likes.find_by(post_id: post.id).destroy
+  def unlike(comment)
+    likes.find_by(comment_id: comment.id).destroy
   end
-  # selfがpostをいいねしてたらtrue
-  def like?(post)
-    like_posts.include?(post)
+  # selfがcommentをいいねしてたらtrue
+  def like?(comment)
+    like_comments.include?(comment)
   end
 
-  # _______________________________________________
-  # selfがpost.userへいいねを通知する
-  def notify_to_like!(post) # Likes(C)
-    # 既にいいねされているか検索 「ボタン連打」に備える
-    temp = Notification.where([
-      "visitor_id = ? and visited_id = ?
-      and post_id = ? and action = ? ",
-      id,           # いいねしたユーザー
-      post.user_id, # いいねされるユーザー
-      post.id,      # いいねした投稿id
-      'like'
-    ])
-    # 通知されていない場合
-    if temp.blank?
-      notification = self.active_notifications.new(
-        visited_id: post.user_id,
-        post_id: post.id,
-        action: 'like'
-      )
-      # 無効な通知 or 自分の投稿へのいいねは除く
-      return if notification.invalid? || notification.visitor_id == notification.visited_id
-      # 通知する
-      notification.save
-    end
-  end
 
   # _______________________________________________
   # selfがpostユーザーにcommentを通知
@@ -178,18 +153,44 @@ class User < ApplicationRecord
     end
   end
 
-    # postへのcommentをvisited_idに通知
-    def save_notify_comment!(post, comment_id, visited_id)
-      # 同じ投稿に複数回通知可
+  # postへのcommentをvisited_idに通知
+  def save_notify_comment!(post, comment_id, visited_id)
+    # 同じ投稿に複数回通知可
+    notification = self.active_notifications.new(
+      visited_id: visited_id, # コメント先の投稿ユーザー
+      post_id: post.id,       # コメント先の投稿
+      comment_id: comment_id, # コメントid
+      action: 'comment'
+    )
+    # 無効な通知 or 自分の投稿へのコメントは除く
+    return if notification.invalid? || notification.visitor_id == notification.visited_id
+    # 通知
+    notification.save
+  end
+
+  # _______________________________________________
+  # selfがcomment.userへいいねを通知
+  def notify_to_like!(comment) # Likes(C)
+    # 既にいいねされているか検索 「ボタン連打」に備える
+    temp = Notification.where([
+      "visitor_id = ? and visited_id = ?
+      and comment_id = ? and action = ? ",
+      id,           # いいねしたユーザー
+      comment.user_id, # いいねされるユーザー
+      comment.id,      # いいねした投稿id
+      'like'
+    ])
+    # 通知されていない場合
+    if temp.blank?
       notification = self.active_notifications.new(
-        visited_id: visited_id, # コメント先の投稿ユーザー
-        post_id: post.id,       # コメント先の投稿
-        comment_id: comment_id, # コメントid
-        action: 'comment'
+        visited_id: comment.user_id,
+        comment_id: comment.id,
+        action: 'like'
       )
-      # 無効な通知 or 自分の投稿へのコメントは除く
+      # 無効な通知 or 自分の投稿へのいいねは除く
       return if notification.invalid? || notification.visitor_id == notification.visited_id
-      # 通知
+      # 通知する
       notification.save
     end
+  end
 end
