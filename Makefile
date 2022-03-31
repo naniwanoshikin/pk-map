@@ -56,7 +56,7 @@ reset:
 seed:
 	docker-compose exec web rails db:seed
 md:
-	docker-compose exec web rails db:migrate:down VERSION=20220309222732
+	docker-compose exec web rails db:migrate:down VERSION=20220203213922
 st:
 	docker-compose exec web rails db:migrate:status
 

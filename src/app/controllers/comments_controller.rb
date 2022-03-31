@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only: :destroy
+  before_action :correct_user,     only: :destroy
+  # コメントのない詳細画面は表示できない
+  before_action :correct_comment,  only: :show
 
   # コメントする
   def create
@@ -34,6 +36,16 @@ class CommentsController < ApplicationController
     end
   end
 
+  # コメント詳細
+  def show
+  end
+
+  # いいねしたユーザー一覧
+  def like_users
+    @comment = Comment.find(params[:id])
+    @comment_like_users = @comment.like_users.page(params[:page]).per(10)
+  end
+
   private
     def comment_params
       # (posts/show)
@@ -47,5 +59,10 @@ class CommentsController < ApplicationController
     def correct_user # destroy
       @comment = current_user.comments.find_by(id: params[:comment_id]) # (comments/comment)
       redirect_to root_url if @comment.nil?
+    end
+
+    def correct_comment # show
+      @comment = Comment.find_by(id: params[:id])
+      # redirect_to root_url if @comment.nil?
     end
 end

@@ -96,6 +96,9 @@
 
 // (posts/show)
 .posts_show {
+  .user_post > a {
+    color: inherit;
+  }
   // 地図
   #detail_map {
     max-width: 700px;

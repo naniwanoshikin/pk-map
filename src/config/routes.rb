@@ -36,10 +36,14 @@ Rails.application.routes.draw do
 
   resources :posts,  only: [:create, :destroy, :show, :new] do
     resource :comments,  only: [:create, :destroy]
+  end
+
+  resources :comments,  only: [:show] do
     member do
       get :like_users
     end
   end
+
   resources :relationships, only: [:create, :destroy]
   resources :likes,         only: [:create, :destroy]
   resources :notifications, only: :index

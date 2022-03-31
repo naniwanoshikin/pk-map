@@ -4,10 +4,6 @@ class Post < ApplicationRecord
 
   # コメント
   has_many :comments, dependent: :destroy
-  # いいね
-  has_many :likes, dependent: :destroy
-  # postをいいねしたユーザー
-  has_many :like_users, through: :likes, source: :user
   # 通知
   has_many :notifications, dependent: :destroy
 
