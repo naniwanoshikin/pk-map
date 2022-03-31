@@ -56,8 +56,8 @@ reset:
 seed:
 	docker-compose exec web rails db:seed
 md:
-	docker-compose exec web rails db:migrate:down VERSION=20220306214030
-ms:
+	docker-compose exec web rails db:migrate:down VERSION=20220309222732
+st:
 	docker-compose exec web rails db:migrate:status
 
 # slim に変換 src/は消す erbは削除(バックアップ不可)

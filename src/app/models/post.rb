@@ -52,7 +52,7 @@ class Post < ApplicationRecord
       ken = adds[-2]["long_name"] # 県
       shi = adds[-3]["long_name"] # 市
       tyo = adds[-4]["long_name"] # 町
-      return '住所: ' + ken + shi + tyo
+      return ken + shi + tyo
     end
   end
 
