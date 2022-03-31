@@ -3,6 +3,11 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
+  # いいね
+  has_many :likes, dependent: :destroy
+  # commentをいいねしたユーザー
+  has_many :like_users, through: :likes, source: :user
+
   # 通知
   has_many :notifications, dependent: :destroy
 

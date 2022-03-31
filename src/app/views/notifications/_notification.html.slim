@@ -27,7 +27,7 @@ li
         - when 'like'
           | がいいねしました
           p.like_notify
-            = link_to notification.post.content, notification.post
+            = link_to notification.comment.content, notification.comment.post
         - when 'comment'
           | がコメントしました
           p.comment_notify

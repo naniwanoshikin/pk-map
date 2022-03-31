@@ -1,22 +1,22 @@
-/ (posts/_post, posts/show)
+/ (comments/_comment)
 
 / いいねしている場合
-- if current_user&.like?(post)
-  = link_to like_path(current_user.likes.find_by(post: post)),
+- if current_user&.like?(comment)
+  = link_to like_path(current_user.likes.find_by(comment: comment)),
     method: :delete, class: 'link', remote: true do
-    / ハート赤
-    i.fas.fa-heart.fa-lg
+    / Good
+    i.fas.fa-thumbs-up.fa-lg
 
 / いいねしていない場合
 - else
-  = link_to likes_path(post: post),
+  = link_to likes_path(comment: comment),
   method: :post, class: 'link', remote: true do
-    / ハート白
-    i.far.fa-heart.fa-lg
+    / いいねなし
+    i.far.fa-thumbs-up.fa-lg
 
 / いいね数
-- if post.likes.any?
+- if comment.likes.any?
   span
     / (posts/like_users)
-    = link_to like_users_post_path(post), class: 'like_count text-muted ml-1' do
-      = post.likes.count
+    = link_to like_users_comment_path(comment), class: 'like_count text-muted ml-1' do
+      = comment.likes.count

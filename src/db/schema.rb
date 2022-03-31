@@ -25,11 +25,11 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
 
   create_table "likes", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
+    t.bigint "comment_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_likes_on_post_id"
-    t.index ["user_id", "post_id"], name: "index_likes_on_user_id_and_post_id", unique: true
+    t.index ["comment_id"], name: "index_likes_on_comment_id"
+    t.index ["user_id", "comment_id"], name: "index_likes_on_user_id_and_comment_id", unique: true
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2022_03_09_222732) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
-  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "comments"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
 end

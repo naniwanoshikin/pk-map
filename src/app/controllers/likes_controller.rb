@@ -3,11 +3,11 @@ class LikesController < ApplicationController
 
   # いいねする
   def create
-    @post = Post.find(params[:post])
-    # @postをいいねする
-    current_user.like(@post)
-    # @post.userに通知する
-    current_user.notify_to_like!(@post)
+    @comment = Comment.find(params[:comment])
+    # @commentをいいねする
+    current_user.like(@comment)
+    # @comment.userに通知する
+    current_user.notify_to_like!(@comment)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
@@ -17,8 +17,8 @@ class LikesController < ApplicationController
 
   # いいね解除
   def destroy
-    @post = Like.find(params[:id]).post
-    current_user.unlike(@post)
+    @comment = Like.find(params[:id]).comment
+    current_user.unlike(@comment)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }

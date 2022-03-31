@@ -1,0 +1,12 @@
+/ コメント詳細 Comments(C)
+h2
+  = @comment.content
+
+.container
+  .row
+    .col-md-9.col-md-offset-2.mx-auto.px-0
+
+      / 戻る
+      .post_header
+        = link_to 'javascript:history.back()' do
+          i.fas.fa-long-arrow-alt-left.fa-lg
