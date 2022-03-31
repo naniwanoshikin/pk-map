@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Home pages', type: :request do
 
-  let(:base_title) { 'PK Map' }
+  let(:base_title) { 'PK マップ' }
 
   subject { page }
 
