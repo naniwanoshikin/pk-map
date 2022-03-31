@@ -18,5 +18,5 @@
 - if post.likes.any?
   span
     / (posts/like_users)
-    = link_to like_users_post_path(post), class: 'like_count' do
+    = link_to like_users_post_path(post), class: 'like_count text-muted ml-1' do
       = post.likes.count

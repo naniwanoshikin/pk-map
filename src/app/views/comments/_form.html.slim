@@ -5,7 +5,7 @@ span type="button" data-toggle="modal" data-target="#exampleModal"
 
 / コメント数
 - if @post.comments.any?
-  span.comment_count
+  span.comment_count.text-muted.ml-1
     = @post.comments.count
 
 

@@ -5,25 +5,32 @@ h2
 .container
   .row
     .col-md-9.col-md-offset-2.mx-auto.px-0.posts_show
+      / 投稿ユーザー
+      .user_post.mb-1
+        = link_to @post.user.name, @post.user
+        / 投稿削除
+        .float-right
+          - if current_user?(@post.user)
+            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
+              i.fas.fa-trash-alt.fa-lg
+
       / 地図
-      #posts_show_map
+      #detail_map
 
       / 画像
       / .show_img
       /  = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@post.latitude},#{@post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
 
-      / 住所 Post(M)
-      .show_addres.mt-3
-        = @post.munic
-      / 投稿ユーザー
-      .user_post.mt-2
-        | 投稿: 
-        = link_to @post.user.name, @post.user
-      / 芝生の質
-      - if @post.spot_quality.present?
-        .spot_quality.mt-2
-          | 芝生: 
-          = @post.spot_quality
+      .post_status.ml-4
+        / 住所 Post(M)
+        .text-muted.mt-3
+          | 住所: 
+          = @post.munic
+        / 芝生の質
+        - if @post.spot_quality.present?
+          .text-muted.mt-2
+            | 芝生: 
+            = @post.spot_quality
 
       .show_actions
         / 戻る
@@ -33,25 +40,19 @@ h2
         / いいね
         div id="likes_like_#{@post.id}"
           = render "likes/like", post: @post
-
         / コメントフォーム
         - if user_signed_in?
           .comment_form.my-3.text-center
             = render "comments/form", comment: @comment
-        / 削除
-        div
-          - if current_user?(@post.user)
-            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
-              i.fas.fa-trash-alt.fa-lg
 
       / コメント一覧
       - if @comments.any?
         ul#comments
           = render @comment, comments: @comments
-          / (comments/_comment) @commentsと書くと複製
+          / (comments/_comment) @commentsだと複製に
       - else
         h2.text-center
-          | コメントはありません
+          | コメントはまだありません
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
@@ -64,7 +65,7 @@ javascript:
   function initMap() {
     geocoder = new google.maps.Geocoder()
 
-    const target = document.getElementById('posts_show_map')
+    const target = document.getElementById('detail_map')
 
     show_map = new google.maps.Map(target, {
       center: {

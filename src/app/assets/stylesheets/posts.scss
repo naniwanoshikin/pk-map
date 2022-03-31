@@ -96,17 +96,13 @@
 
 // (posts/show)
 .posts_show {
-  // マップ
-  #posts_show_map {
-    max-width: 600px;
-    height: 280px;
+  // 地図
+  #detail_map {
+    max-width: 700px;
+    height: 300px;
     margin: 0 auto;
     border-radius: 8px;
     margin-bottom: 10px;
-  }
-  // 芝生: 悪い
-  .spot_quality {
-    color: gray;
   }
   // (posts/show, _post)
   .show_actions {
@@ -114,11 +110,6 @@
     justify-content: space-around;
     align-items: center;
     margin: 5px 0;
-    .comment_count {
-      margin-left: 5px;
-      font-size: 16px;
-      color: gray;
-    }
   }
 }
 

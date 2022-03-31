@@ -1,5 +1,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<%= favicon_link_tag('favicon.ico') %>
+<%# (public) %>
+<%= favicon_link_tag('/favicon.ico') %>
+<%= favicon_link_tag('/apple-touch-icon-180x180.png', # iOSアイコン
+                     {:rel => 'apple-touch-icon',
+                      :sizes => '180x180',
+                      :type => 'image/png'}) %>
 <%= csrf_meta_tags %>
 <%= csp_meta_tag %>
 <%# JSで@変数使用できる %>
