@@ -1,17 +1,5 @@
 <%# (posts/show) %>
 $("#comments").html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>");
 
-
-<%# (layouts/flash)  %>
-$("#flash_messages").html(`
-  <% flash.each do |type, message| %>
-    <div class="alert alert-<%= type %>">
-      <%= message %>
-      <button type="button" class="close">&times;</button>
-    </div>
-  <% end %>
-`)
-
-$('.close').click(function() {
-  $('.alert').fadeOut(500);
-});
+<%# フラッシュメッセージ %>
+$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', comments: @comments) %>");

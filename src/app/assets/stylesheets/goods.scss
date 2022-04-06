@@ -1,0 +1,18 @@
+// (comments/comment)
+// 評価ボタン
+.ev_btn {
+  width: 25%;
+}
+
+// (goods/good, bads/bad)
+// 評価アイコン
+.fa-thumbs-up,
+.fa-thumbs-down {
+  color: #6699ff;
+}
+// 評価数
+.ev_count {
+  font-size: 16px;
+  margin-left: 8px;
+  color: gray;
+}

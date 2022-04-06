@@ -6,10 +6,15 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   # userがコメントした投稿
   has_many :comment_posts, through: :comments, source: :post
-  # いいね
-  has_many :likes, dependent: :destroy
-  # userがいいねしたコメント
-  has_many :like_comments, through: :likes, source: :comment
+
+  # 高評価
+  has_many :goods, dependent: :destroy
+  # 低評価
+  has_many :bads, dependent: :destroy
+  # userが高評価したコメント
+  has_many :good_comments, through: :goods, source: :comment
+  # userが低評価したコメント
+  has_many :bad_comments, through: :bads, source: :comment
 
   # フォローする
   has_many :active_relationships, class_name: "Relationship",
@@ -122,21 +127,6 @@ class User < ApplicationRecord
   end
 
   # _______________________________________________
-  # userがcommentをいいねする
-  def like(comment) # Likes(C)
-    likes.create(comment_id: comment.id)
-  end
-  # いいね解除
-  def unlike(comment)
-    likes.find_by(comment_id: comment.id).destroy
-  end
-  # selfがcommentをいいねしてたらtrue
-  def like?(comment)
-    like_comments.include?(comment)
-  end
-
-
-  # _______________________________________________
   # selfがpostユーザーにcommentを通知
   def notify_to_comment!(post, comment_id) # Comments(C), seed
     # 自分以外にコメントしている人の投稿集id
@@ -169,25 +159,52 @@ class User < ApplicationRecord
   end
 
   # _______________________________________________
-  # selfがcomment.userへいいねを通知
-  def notify_to_like!(comment) # Likes(C)
-    # 既にいいねされているか検索 「ボタン連打」に備える
+  # userがcommentを高評価する
+  def good(comment) # (C)
+    goods.create(comment_id: comment.id)
+  end
+  # 高評価を解除
+  def ungood(comment)
+    goods.find_by(comment_id: comment.id).destroy
+  end
+  # selfがcommentを高評価してたらtrue
+  def good?(comment) # (goods/good)
+    good_comments.include?(comment)
+  end
+  # _______________________________________________
+  # userがcommentを低評価
+  def bad(comment) # bads(C)
+    bads.create(comment_id: comment.id)
+  end
+  # 低評価を解除
+  def unbad(comment)
+    bads.find_by(comment_id: comment.id).destroy
+  end
+  # selfがcommentを低評価してたらtrue
+  def bad?(comment) # (bads/bad)
+    bad_comments.include?(comment)
+  end
+
+  # _______________________________________________
+  # selfがcomment.userへ高評価を通知
+  def notify_to_good!(comment) # Goods(C)
+    # 既に高評価されているか検索 「ボタン連打」に備える
     temp = Notification.where([
       "visitor_id = ? and visited_id = ?
       and comment_id = ? and action = ? ",
-      id,           # いいねしたユーザー
-      comment.user_id, # いいねされるユーザー
-      comment.id,      # いいねした投稿id
-      'like'
+      id,           # 高評価したユーザー
+      comment.user_id, # 高評価されるユーザー
+      comment.id,      # 高評価した投稿id
+      'good'
     ])
     # 通知されていない場合
     if temp.blank?
       notification = self.active_notifications.new(
         visited_id: comment.user_id,
         comment_id: comment.id,
-        action: 'like'
+        action: 'good'
       )
-      # 無効な通知 or 自分の投稿へのいいねは除く
+      # 無効な通知 or 自分の投稿への高評価は除く
       return if notification.invalid? || notification.visitor_id == notification.visited_id
       # 通知する
       notification.save

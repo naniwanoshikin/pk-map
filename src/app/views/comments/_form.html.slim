@@ -1,13 +1,12 @@
-/ (posts/show) → Comments(C)
+/ (posts/show)
 
-span type="button" data-toggle="modal" data-target="#exampleModal"
-  i.far.fa-comment.fa-lg
-
-/ コメント数
-- if @post.comments.any?
-  span.comment_count.text-muted.ml-1
-    = @post.comments.count
-
+span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleModal"
+  / くり抜き状態 js
+  .far.fa-star.fa-2x
+  .far.fa-star.fa-2x
+  .far.fa-star.fa-2x
+  .far.fa-star.fa-2x
+  .far.fa-star.fa-2x
 
 / モーダル画面
 #exampleModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"]
@@ -21,15 +20,15 @@ span type="button" data-toggle="modal" data-target="#exampleModal"
           span[aria-hidden="true"]
             | ×
       .modal-body
-        / 本文
-        / フォーム
         - if user_signed_in?
           = render 'shared/error_messages', object: comment
+        / フォーム
         .rating-box
+          / , local: false でやったけどできず終い...
           = form_with model: comment, url: post_comments_path(@post) do |f|
 
             .form-group.main-rating
-              .ratings
+              .ratings.mr-2
                 / くり抜き状態
                 span#star.far.fa-star
                 span#star.far.fa-star
@@ -40,7 +39,7 @@ span type="button" data-toggle="modal" data-target="#exampleModal"
                 span#rating_value
                   | 0
                 | /5
-            / Comments(C) post_id に入る
+            / → Comments(C) post_id に入る
             = f.hidden_field :post_id, value: @post.id
 
             / 星の個数 js

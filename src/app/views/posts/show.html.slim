@@ -21,41 +21,34 @@ h2
       / .show_img
       /  = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@post.latitude},#{@post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
 
-
-      .post_status.ml-4
-        .text-muted
-          = @post.content
-        / 住所 Post(M)
-        .text-muted.mt-3
-          | 住所: 
-          = @post.munic
-        / 芝生の質
-        - if @post.spot_quality.present?
-          .text-muted.mt-2
-            | 芝生: 
-            = @post.spot_quality
-
-      .show_actions
+      .post_state.pl-4.my-4
         / 戻る
-        .post_header
-          = link_to 'javascript:history.back()' do
-            i.fas.fa-long-arrow-alt-left.fa-lg
-        / いいね
-        / div id="likes_like_#{@post.id}"
-        /  = render "likes/like", post: @post
+        = link_to 'javascript:history.back()' do
+          i.fas.fa-long-arrow-alt-left.fa-lg
+        / 情報
+        .ml-4
+          .text-muted
+            = @post.content
+          / 住所 Post(M)
+          .text-muted.mt-2
+            | 住所: 
+            = @post.munic
+          / 芝生の質
+          - if @post.spot_quality.present?
+            .text-muted.mt-2
+              | 芝生: 
+              = @post.spot_quality
+
+      .show_reviews.mb-4
+        h2.text-left.mb-2.pl-2 口コミを投稿しましょう
         / コメントフォーム
         - if user_signed_in?
-          .comment_form.my-3.text-center
-            = render "comments/form", comment: @comment
+          = render "comments/form", comment: @comment
 
-      / コメント一覧
-      - if @comments.any? && user_signed_in?
-        ul#comments
-          = render @comment, comments: @comments
-          / (comments/_comment) @commentsだと複製に
-      - else
-        h2.text-center
-          | コメントはまだありません
+      / コメント一覧 destroy_ajax
+      #comments
+        = render @comment
+        / (comments/_comment) @commentsだと複製
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe

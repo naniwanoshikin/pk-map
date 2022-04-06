@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'bads/create'
+  get 'bads/destroy'
   root 'home_pages#home'
   get  '/help',    to: 'home_pages#help'
   get  '/about',   to: 'home_pages#about'
@@ -40,11 +42,12 @@ Rails.application.routes.draw do
 
   resources :comments,  only: [:show] do
     member do
-      get :like_users
+      get :good_users
     end
   end
 
   resources :relationships, only: [:create, :destroy]
-  resources :likes,         only: [:create, :destroy]
+  resources :goods,         only: [:create, :destroy]
+  resources :bads,          only: [:create, :destroy]
   resources :notifications, only: :index
 end

@@ -1,0 +1,4 @@
+<%# 高評価 %>
+$("#good-<%= @comment.id %>").html("<%= escape_javascript(render "goods/good", comment: @comment) %>");
+<%# 低評価 %>
+$("#bad-<%= @comment.id %>").html("<%= escape_javascript(render "bads/bad", comment: @comment) %>");

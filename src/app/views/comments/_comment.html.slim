@@ -1,45 +1,54 @@
 / コメント (posts/show)
-/ destroy_ajax用にeach
-- comments.each do |comment|
-  li
-    / 削除ボタン post_id: 必須, comment_id: (C)に渡すparams
-    - if current_user?(comment.user)
-      = link_to post_comments_path(post_id: comment.post, comment_id: comment.id), class: "text-danger float-right", method: :delete, remote: true do
-        i.fas.fa-trash-alt
-    .comment_user.d-flex
-      / 画像
-      = link_to gravatar_for(comment.user, size: 30), comment.user
-      .name_review
-        / 名前
-        strong
-          = link_to comment.user.name, comment.user
-        br
-        / ５件の口コミ
-        span.review_number
-          = link_to show_comments_user_path(comment.user) do
-            | 口コミ 
-            = comment.user.comments.count
-            | 件
+- if @comments.any?
+  ul
+    / destroy_ajax用にeach
+    - @comments.each do |comment|
+      li
+        / 削除ボタン post_id: 必須, comment_id: (C)に渡すparams
+        - if current_user?(comment.user)
+          = link_to post_comments_path(post_id: comment.post, comment_id: comment.id), class: "text-danger float-right", method: :delete, data: { confirm: "コメントを削除しますか?" }, remote: true do
+            i.fas.fa-trash-alt
 
-    main.mb-0
-      = link_to comment, class: '' do
-        / ★★ + ☆☆☆☆☆
-        .user_score.mt-1
-          // ★★☆☆☆
-          .star_rating
-            div class="star_front"
-              - comment.score.times do
-                | ★
-            / ☆☆☆☆☆
-            .star_back
-              | ★★★★★
-          / 時間
-          .small.text-muted.ml-1
-            = time_ago_in_words(comment.created_at).upcase
-            | 前
-        / コメント 改行あり
-        .comment_content.ml-1
-          = simple_format comment.content
-    / いいねボタン
-    div id="likes_like_#{comment.id}" class="mt-2 ml-2"
-     = render "likes/like", comment: comment
+        .comment_user.d-flex
+          / 画像
+          = link_to gravatar_for(comment.user, size: 30), comment.user
+          .name_review
+            / 名前
+            strong
+              = link_to comment.user.name, comment.user
+            br
+            / ５件の口コミ
+            span.review_number
+              = link_to show_comments_user_path(comment.user) do
+                | 口コミ 
+                = comment.user.comments.count
+                | 件
+        main.mb-0
+          = link_to comment, class: '' do
+            / ★★ + ☆☆☆☆☆
+            .user_score.mt-1
+              // ★★☆☆☆
+              .star_rating
+                div class="star_front"
+                  - comment.score.times do
+                    | ★
+                / ☆☆☆☆☆
+                .star_back
+                  | ★★★★★
+              / 時間
+              .small.text-muted.ml-1
+                = time_ago_in_words(comment.created_at).upcase
+                | 前
+            / コメント 改行あり
+            .comment_content.ml-1
+              = simple_format comment.content
+        .d-flex.mt-2.mb-1
+          / Goodボタン
+          div id="good-#{comment.id}" class="ev_btn ml-5"
+            = render "goods/good", comment: comment
+          / Badボタン
+          div id="bad-#{comment.id}" class="ev_btn"
+            = render "bads/bad", comment: comment
+- else
+  h2.text-center
+    | レビューがまだありません

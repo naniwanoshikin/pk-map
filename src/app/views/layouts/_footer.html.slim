@@ -1,7 +1,7 @@
 footer
   - if user_signed_in?
     / スマホのみ下端固定
-    nav.signed_in
+    .signed_in
       ul
         li
           = link_to root_path, class: "#{"active" if request.path == root_path}" do

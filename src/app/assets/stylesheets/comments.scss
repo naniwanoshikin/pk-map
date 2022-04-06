@@ -1,5 +1,5 @@
 // (posts/show)_ajax
-ul#comments {
+#comments > ul {
   list-style: none;
   padding: 0 10px;
   margin: 0 auto;
@@ -20,30 +20,10 @@ ul#comments {
     main > a:hover {
       text-decoration: none;
     }
-    // ★★ + ☆☆☆☆☆
+    // ★★ + ☆☆☆☆☆ 4日前
     .user_score {
       display: flex;
       align-items: center;
-      // ★★☆☆☆
-      .star_rating {
-        position: relative;
-        width: 5em;
-        // height: 1em;
-        font-size: 18px;
-        margin-right: 5px;
-        // ★★
-        .star_front {
-          position: absolute;
-          top: 0;
-          left: 0;
-          overflow: hidden;
-          color: #ffcc33;
-        }
-        // ☆☆☆☆☆
-        .star_back {
-          color: #ccc;
-        }
-      }
     }
     // コメント文
     .comment_content {
@@ -59,7 +39,36 @@ ul#comments {
   }
 }
 
+// 共通 (posts/show, /post)
+// ★★☆☆☆
+.star_rating {
+  position: relative;
+  width: 5em;
+  // height: 1em;
+  font-size: 18px;
+  margin-right: 5px;
+  // ★★
+  .star_front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden; // はみ出した部分を隠す
+    color: #ffcc33;
+  }
+  // ☆☆☆☆☆
+  .star_back {
+    color: #ccc;
+  }
+}
+
 // (comments/form)
+.btn_ratings {
+  color: #ffcc00;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 20%;
+
+}
 #exampleModal {
   top: 15%;
   // form
@@ -75,7 +84,6 @@ ul#comments {
       .ratings {
         color: #ffcc00;
         cursor: pointer;
-        margin-right: 10px;
       }
       // 2/5
       .rating_value_display {
