@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:create, :destroy, :good_users]
   before_action :correct_user,     only: :destroy
-  # コメントのない詳細画面は表示できない
-  before_action :correct_comment,  only: :show
+  # コメントのない画面は表示できない
+  before_action :correct_comment,  only: [:show, :good_users]
 
   # コメントする
   def create
@@ -13,14 +13,19 @@ class CommentsController < ApplicationController
       # 通知
       current_user.notify_to_comment!(@post, @comment.id)
 
+      # (comments/form)
       respond_to do |format|
-        format.html { redirect_to @post, notice: 'コメントしました' }
-        format.js
+        format.html { redirect_to @post, notice: 'レビューを追加しました' }
+        # format.js { flash.now[:notice] = "レビューを追加しました" }
       end
     else
-      # map JS用
-      gon.post = @post
-      render 'posts/show'
+      gon.post = @post # map js
+      flash.now[:alert] = "星レビューを入力してください"
+      respond_to do |format|
+        # 失敗時のajaxできず...
+        format.html { render 'posts/show' }
+        # format.js { flash.now[:alert] = "星レビューを入力してください" }
+      end
     end
   end
 
@@ -31,8 +36,8 @@ class CommentsController < ApplicationController
     @comments = Comment.where(post_id: @post.id)
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to @post, alert: 'Comment deleted' }
-      format.js { flash[:danger] = "Comment deleted" }
+      format.html { redirect_to @post, alert: 'レビューを削除しました' }
+      format.js { flash.now[:alert] = "レビューを削除しました" }
     end
   end
 
@@ -40,10 +45,10 @@ class CommentsController < ApplicationController
   def show
   end
 
-  # いいねしたユーザー一覧
-  def like_users
-    @comment = Comment.find(params[:id])
-    @comment_like_users = @comment.like_users.page(params[:page]).per(10)
+  # 高評価したユーザー一覧
+  def good_users
+    # @comment
+    @comment_good_users = @comment.good_users.page(params[:page]).per(10)
   end
 
   private
@@ -61,8 +66,8 @@ class CommentsController < ApplicationController
       redirect_to root_url if @comment.nil?
     end
 
-    def correct_comment # show
+    def correct_comment # show, good_users
       @comment = Comment.find_by(id: params[:id])
-      # redirect_to root_url if @comment.nil?
+      redirect_to root_url if @comment.nil?
     end
 end

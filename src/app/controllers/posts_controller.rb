@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   # 自分以外のユーザーの投稿は削除できない
   before_action :correct_user,  only: :destroy
 
-
   # 投稿詳細
   def show
     # @post
@@ -14,9 +13,11 @@ class PostsController < ApplicationController
     # 投稿に対するコメント集
     @comments = @post.comments
     # コメントを新規作成
-    @comment = current_user.comments.build if user_signed_in?
-    # 未ログインの時どうしよう...
-    # @comment = @comments unless user_signed_in?
+    if user_signed_in?
+      @comment = current_user.comments.build
+    else
+      @comment = @post.user.comments.build
+    end
   end
 
   # 投稿フォーム

@@ -1,6 +1,6 @@
-class CreateLikes < ActiveRecord::Migration[6.1]
+class CreateBads < ActiveRecord::Migration[6.1]
   def change
-    create_table :likes do |t|
+    create_table :bads do |t|
       t.references :user, null: false, foreign_key: true
       t.references :comment, null: false, foreign_key: true
 

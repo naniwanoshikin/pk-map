@@ -1,17 +1,20 @@
 'use strict'; {
   // (comments/form)
   // (★★☆☆☆)
+  // (posts/show)
+  const btn_stars = document.querySelector('.btn_ratings').children;
+  // モーダル
   const stars = document.querySelector('.ratings').children;
 
-  // '2'/5 hidden_field で Comments(C)に送る値
+  // '2'/5 hidden_field で Comments(C)に送る
   const hiddenScore = document.getElementById("hidden_score");
-  // '2'/5 画面に出る値
+  // '2' 値書き換え用
   const ratingValue = document.getElementById("rating_value");
 
   // クリックした星の数
   let index;
 
-  // それぞれの星について
+  // それぞれの星
   for (let i = 0; i < stars.length; i++) {
     // その星にマウスが乗ったとき
     stars[i].addEventListener("mouseover", () => {
@@ -44,11 +47,17 @@
       for (let j = 0; j < stars.length; j++) {
         stars[j].classList.add("far"); // 一旦くり抜いて
         stars[j].classList.remove("fas");
+        // (posts/show)部分も一旦くり抜く
+        btn_stars[j].classList.add("far");
+        btn_stars[j].classList.remove("fas");
       }
       // クリックした星までを
       for (let j = 0; j <= index; j++) {
         stars[j].classList.remove("far");
         stars[j].classList.add("fas"); // 塗りつぶす
+        // (posts/show)部分も塗りつぶす
+        btn_stars[j].classList.remove("far");
+        btn_stars[j].classList.add("fas");
       }
     })
   }

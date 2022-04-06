@@ -35,12 +35,9 @@ div id="post-#{post.id}"
           = simple_format post.content
 
   footer
-    .image_like
+    .user_image
       / 画像
       = link_to gravatar_for(post.user, size: 20), post.user
-      / いいね
-      / div id="likes_like_#{post.id}"
-      /  = render "likes/like", post: post
     / 3分前
     .timestamp
       = time_ago_in_words(post.created_at)

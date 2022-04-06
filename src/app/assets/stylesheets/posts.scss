@@ -32,29 +32,16 @@
         text-decoration: none;
       }
     }
-    // 評価
+    // ★★☆☆☆ 3.0 (3)
     .average_score {
       display: flex;
       margin-bottom: 5px;
+      // 共通 (comment/comment)
+      // ★★☆☆☆
       .star_rating {
-        position: relative;
-        width: 5em;
         height: 1em;
-        font-size: 18px;
-        margin-right: 5px;
-        // ★★
-        .star_front {
-          position: absolute;
-          top: 0;
-          left: 0;
-          overflow: hidden; // はみ出した部分を隠す
-          color: #ffcc33;
-        }
-        // ☆☆☆☆☆
-        .star_back {
-          color: #ccc;
-        }
       }
+      // 3.0 (3)
       .score_review {
         font-size: 16px;
         .average_number {
@@ -73,14 +60,14 @@
       display: block;
       p {
         margin-bottom: 0;
-        font-size: 1.0em;
+        font-size: 1em;
       }
     }
   }
   footer {
     display: flex;
     align-items: flex-end;
-    .image_like {
+    .user_image {
       display: flex;
       align-items: center;
       .gravatar {
@@ -107,15 +94,11 @@
     border-radius: 8px;
     margin-bottom: 10px;
   }
-  // (posts/show, _post)
-  .show_actions {
+  .post_state {
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    margin: 5px 0;
   }
 }
-
 
 // (post/new)
 .post_form {

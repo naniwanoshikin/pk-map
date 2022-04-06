@@ -1,9 +1,21 @@
-<%# (comments/form) %>
-$("textarea").val("");
+<%# (posts/show) %>
+$("#comments").html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>");
 
+<%# フラッシュメッセージ %>
+$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', comments: @comments) %>");
+
+<%# (comments/form)_モーダル %>
+$("textarea").val("");
+<%# 画面 %>
 $('#exampleModal').hide();
+<%# マスク %>
 $("body").removeClass("modal-open");
 $(".modal-backdrop").remove();
 
-<%# (posts/show) %>
-$('#comments').html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>")
+<%# つけてみた ? %>
+$('#exampleModal').removeClass("show");
+
+<%# 星をくり抜く + 評価0 %>
+$(".fa-star").removeClass("fas");
+$(".fa-star").addClass("far");
+$("#rating_value").text("0");
