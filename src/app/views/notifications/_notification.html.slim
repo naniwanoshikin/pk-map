@@ -7,7 +7,7 @@ li
       - case notification.action
       - when 'follow'
         i.fas.fa-user.fa-lg
-      - when 'like'
+      - when 'good'
         i.fas.fa-heart.fa-lg
       - when 'comment'
         i.far.fa-comment.fa-lg
@@ -24,9 +24,9 @@ li
         - case notification.action
         - when 'follow'
           | にフォローされました
-        - when 'like'
-          | がいいねしました
-          p.like_notify
+        - when 'good'
+          | がコメントを評価しました
+          p.good_notify
             = link_to notification.comment.content, notification.comment.post
         - when 'comment'
           | がコメントしました

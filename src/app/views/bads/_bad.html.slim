@@ -1,0 +1,16 @@
+/ (comments/_comment)
+
+/ 低評価している場合
+- if current_user&.bad?(comment)
+  = link_to bad_path(current_user.bads.find_by(comment: comment)), method: :delete, class: 'link', remote: true do
+    i.fas.fa-thumbs-down.fa-lg
+/ 低評価していない場合
+- else
+  = link_to bads_path(comment: comment),
+  method: :post, class: 'link', remote: true do
+    i.far.fa-thumbs-down.fa-lg
+
+/ 低評価数 自身がコメントした場合のみ
+- if comment.user == current_user && comment.bads.any?
+  span.ev_count
+    = comment.bads.count

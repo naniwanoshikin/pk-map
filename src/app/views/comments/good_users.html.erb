@@ -1,0 +1,13 @@
+<% provide(:title, '高評価したユーザー') %>
+<h2>高評価したユーザー</h2>
+
+<% if @comment_good_users.any? %>
+  <div id="">
+    <ul class="users">
+      <%= render @comment_good_users  %>
+      <%# (users/_user) %>
+    </ul>
+  </div>
+<% else %>
+  <h2>高評価したユーザーはいません</h2>
+<% end %>

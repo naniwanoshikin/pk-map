@@ -56,7 +56,7 @@ reset:
 seed:
 	docker-compose exec web rails db:seed
 md:
-	docker-compose exec web rails db:migrate:down VERSION=20220203213922
+	docker-compose exec web rails db:migrate:down VERSION=20220309222732
 st:
 	docker-compose exec web rails db:migrate:status
 
@@ -69,3 +69,6 @@ co:
 # 特定の相対パス, 特定の拡張子のファイルを削除
 filed:
 	find src/app/views -type f -name "*.slim" -delete
+
+g:
+	docker-compose exec web rails g controller Bads create destroy

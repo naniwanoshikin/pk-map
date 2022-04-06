@@ -9,7 +9,10 @@
   <body>
     <%= render 'layouts/header' %>
     <div class="container">
-      <%= render 'layouts/flash' %>
+      <%# id: (comment/destroy)_ajax %>
+      <div id="flash_messages">
+        <%= render 'layouts/flash' %>
+      </div>
       <main>
         <%= yield %>
         <%= debug(params) if Rails.env.development? %>

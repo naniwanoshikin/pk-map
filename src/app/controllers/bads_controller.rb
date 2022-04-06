@@ -1,13 +1,17 @@
-class LikesController < ApplicationController
+class BadsController < ApplicationController
   before_action :authenticate_user!
 
-  # いいねする
+  # 低評価する
   def create
     @comment = Comment.find(params[:comment])
-    # @commentをいいねする
-    current_user.like(@comment)
-    # @comment.userに通知する
-    current_user.notify_to_like!(@comment)
+
+    current_user.bad(@comment)
+
+
+    # 高評価を解除
+    if Good.find_by(user_id: current_user.id, comment_id: @comment.id)
+      current_user.ungood(@comment)
+    end
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
@@ -15,10 +19,10 @@ class LikesController < ApplicationController
     end
   end
 
-  # いいね解除
+  # 低評価を解除
   def destroy
-    @comment = Like.find(params[:id]).comment
-    current_user.unlike(@comment)
+    @comment = Bad.find(params[:id]).comment
+    current_user.unbad(@comment)
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
