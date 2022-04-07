@@ -7,7 +7,7 @@
   </button>
   <nav class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto mr-4">
-      <%# ログインしている場合 %>
+      <%# ログイン時 %>
       <% if user_signed_in? %>
         <%# PCのみ %>
         <%# ホーム %>
@@ -50,7 +50,7 @@
           </div>
         </li>
       <% else %>
-      <%# ログインしていない場合 %>
+      <%# 未ログイン時 %>
         <li class="nav-item only_pc not_signed_in"><%= link_to "Home", root_path, class: 'nav-link mr-2' %></li>
         <li class="nav-item"><%= link_to "About", about_path, class: 'nav-link mr-2' %></li>
         <li class="nav-item"><%= link_to "Sign up", new_user_registration_path, class: 'nav-link mr-2' %></li>

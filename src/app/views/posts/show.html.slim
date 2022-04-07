@@ -40,7 +40,7 @@ h2
               = @post.spot_quality
 
       .show_reviews.mb-4
-        h2.text-left.mb-2.pl-2 口コミを投稿しましょう
+        h2.text-left.mb-3.pl-2 口コミを投稿しましょう
         / コメントフォーム
         - if user_signed_in?
           = render "comments/form", comment: @comment
