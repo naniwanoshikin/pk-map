@@ -64,8 +64,10 @@ aside {
   }
 }
 
-// 登録一覧 (users/show_posts)
-// なし
+// 登録一覧 (users/show_posts, show_comments)
+.spot_list {
+  font-size: 0.9em;
+}
 
 // (users/show_follow)
 // 画像一覧

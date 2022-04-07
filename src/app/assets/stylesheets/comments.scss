@@ -8,22 +8,8 @@
   li {
     padding: 8px 0;
     border-top: 1px dotted #8c8b8b;
-    .comment_user {
-      line-height: 0.9em;
-      // 名前, 口コミ数
-      strong > a,
-      .review_number > a {
-        color: inherit;
-        font-size: 0.9em;
-      }
-    }
     main > a:hover {
       text-decoration: none;
-    }
-    // ★★ + ☆☆☆☆☆ 4日前
-    .user_score {
-      display: flex;
-      align-items: center;
     }
     // コメント文
     .comment_content {
@@ -37,6 +23,21 @@
       }
     }
   }
+}
+// 共通 (comments/comment, show)
+// □ 丸山愛子 口コミ 6件
+.comment_user {
+  line-height: 0.9em;
+  strong > a,
+  .review_number > a {
+    color: inherit;
+    font-size: 0.9em;
+  }
+}
+// ★★ + ☆☆☆☆☆ 4日前
+.user_score {
+  display: flex;
+  align-items: center;
 }
 
 // 共通 (posts/show, /post)
@@ -67,7 +68,6 @@
   display: flex;
   justify-content: space-between;
   margin: 0 20%;
-
 }
 #exampleModal {
   top: 15%;
