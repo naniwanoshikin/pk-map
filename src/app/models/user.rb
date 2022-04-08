@@ -53,7 +53,7 @@ class User < ApplicationRecord
   geocoded_by :address # 緯度経度を算出
   after_validation :geocode # 住所変更時に緯度経度も変更
 
-  # _______________________________________________
+  # ----------------------------------------------
   # ゲストログイン
   def self.guest1 # Sessions(C)
     find_or_create_by!(email: 'example@railstutorial.org') do |user|
@@ -79,7 +79,7 @@ class User < ApplicationRecord
     end
   end
 
-  # _______________________________________________
+  # ----------------------------------------------
   # フィード
   def feed
     # - 自身がフォローしているユーザー
@@ -93,7 +93,7 @@ class User < ApplicationRecord
     .includes(:user)
   end
 
-  # _______________________________________________
+  # ----------------------------------------------
   # selfがuserをフォロー
   def follow(user) # Relationship(C)
     following << user
@@ -107,7 +107,7 @@ class User < ApplicationRecord
     following.include?(user)
   end
 
-  # _______________________________________________
+  # ----------------------------------------------
   # selfがuserにフォローを通知する
   def notify_to_follow!(user) # Relationships(C)
     # レコードを検索 「ボタン連打」に備える
@@ -126,7 +126,7 @@ class User < ApplicationRecord
     end
   end
 
-  # _______________________________________________
+  # ----------------------------------------------
   # selfがpostユーザーにcommentを通知
   def notify_to_comment!(post, comment_id) # Comments(C), seed
     # 自分以外にコメントしている人の投稿集id
@@ -158,7 +158,7 @@ class User < ApplicationRecord
     notification.save
   end
 
-  # _______________________________________________
+  # ----------------------------------------------
   # userがcommentを高評価する
   def good(comment) # (C)
     goods.create(comment_id: comment.id)
@@ -171,7 +171,7 @@ class User < ApplicationRecord
   def good?(comment) # (goods/good)
     good_comments.include?(comment)
   end
-  # _______________________________________________
+  # ----------------------------------------------
   # userがcommentを低評価
   def bad(comment) # bads(C)
     bads.create(comment_id: comment.id)
@@ -185,7 +185,7 @@ class User < ApplicationRecord
     bad_comments.include?(comment)
   end
 
-  # _______________________________________________
+  # ----------------------------------------------
   # selfがcomment.userへ高評価を通知
   def notify_to_good!(comment) # Goods(C)
     # 既に高評価されているか検索 「ボタン連打」に備える

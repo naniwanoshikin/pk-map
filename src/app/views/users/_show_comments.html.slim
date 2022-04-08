@@ -1,8 +1,8 @@
-/ (users/show_comments)
-.d-flex.justify-content-around
+/ (users/show)
+.spot_list.d-flex.justify-content-around
   = link_to @user do
     h2 スポット登録一覧
-  h2 コメント一覧
+  h2.text-dark コメント一覧
 
 - if @user.comment_posts.any?
   .posts
