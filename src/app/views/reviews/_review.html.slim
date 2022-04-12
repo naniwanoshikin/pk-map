@@ -1,0 +1,54 @@
+/ レビュー (posts/show)
+- if @reviews.any?
+  ul
+    / destroy_ajax用にeach
+    - @reviews.each do |review|
+      li
+        / 削除ボタン post_id: 必須, review_id: (C)に渡すparams
+        - if current_user?(review.user)
+          = link_to post_reviews_path(post_id: review.post, review_id: review.id), class: "text-danger float-right", method: :delete, data: { confirm: "レビューを削除しますか?" }, remote: true do
+            i.fas.fa-trash-alt
+
+        .review_user.d-flex
+          / 画像
+          = link_to gravatar_for(review.user, size: 30), review.user
+          .name_review
+            / 名前
+            strong
+              = link_to review.user.name, review.user
+            br
+            / ５件の口コミ
+            span.review_number
+              = link_to show_reviews_user_path(review.user) do
+                | 口コミ 
+                = review.user.reviews.count
+                | 件
+        main.mb-0
+          = link_to review, class: '' do
+            / ★★ + ☆☆☆☆☆ + 4日前
+            .user_score.mt-1
+              // ★★☆☆☆
+              .star_rating
+                div class="star_front"
+                  - review.score.times do
+                    | ★
+                / ☆☆☆☆☆
+                .star_back
+                  | ★★★★★
+              / 時間
+              .small.text-muted.ml-1
+                = time_ago_in_words(review.created_at).upcase
+                | 前
+            / レビュー 改行あり
+            .review_content.ml-1
+              = simple_format review.content
+        .d-flex.mt-2.mb-1
+          / Goodボタン
+          div id="good-#{review.id}" class="ev_btn ml-5"
+            = render "goods/good", review: review
+          / Badボタン
+          div id="bad-#{review.id}" class="ev_btn"
+            = render "bads/bad", review: review
+- else
+  h2.text-center
+    | レビューがまだありません

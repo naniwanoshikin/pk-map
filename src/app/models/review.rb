@@ -1,4 +1,4 @@
-class Comment < ApplicationRecord
+class Review < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
   belongs_to :user
   belongs_to :post
@@ -7,9 +7,9 @@ class Comment < ApplicationRecord
   has_many :goods, dependent: :destroy
   # 低評価
   has_many :bads, dependent: :destroy
-  # commentを高評価したユーザー
+  # reviewを高評価したユーザー
   has_many :good_users, through: :goods, source: :user
-  # commentを低評価したユーザー
+  # reviewを低評価したユーザー
   # has_many :bad_users, through: :bads, source: :user
 
   # 通知

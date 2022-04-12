@@ -10,6 +10,7 @@ module App
     config.load_defaults 6.1
 
     config.time_zone = "Tokyo"
+    # Active Recordのタイムゾーン
     # config.active_record.default_timezone = :local
     # config.eager_load_paths << Rails.root.join("extras")
 

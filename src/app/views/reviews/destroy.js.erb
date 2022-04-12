@@ -1,0 +1,5 @@
+<%# (posts/show) %>
+$("#reviews").html("<%= escape_javascript(render 'reviews/review', reviews: @reviews) %>");
+
+<%# フラッシュメッセージ %>
+$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', reviews: @reviews) %>");

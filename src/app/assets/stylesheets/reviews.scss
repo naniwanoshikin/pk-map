@@ -1,18 +1,18 @@
 // (posts/show)_ajax
-#comments > ul {
+#reviews > ul {
   list-style: none;
   padding: 0 10px;
   margin: 0 auto;
   max-width: 600px;
-  // (comments/comment)
+  // (reviews/review)
   li {
     padding: 8px 0;
     border-top: 1px dotted #8c8b8b;
     main > a:hover {
       text-decoration: none;
     }
-    // コメント文
-    .comment_content {
+    // レビュー文
+    .review_content {
       p {
         margin: 0;
         font-size: 1em;
@@ -24,9 +24,9 @@
     }
   }
 }
-// 共通 (comments/comment, show)
+// 共通 (reviews/review, show)
 // □ 丸山愛子 口コミ 6件
-.comment_user {
+.review_user {
   line-height: 0.9em;
   strong > a,
   .review_number > a {
@@ -62,7 +62,7 @@
   }
 }
 
-// (comments/form)
+// (reviews/form)
 .btn_ratings {
   color: #ffcc00;
   display: flex;

@@ -32,15 +32,15 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :destroy] do
     member do
       get :following, :followers
-      get :show_comments
+      get :show_reviews
     end
   end
 
   resources :posts,  only: [:create, :destroy, :show, :new] do
-    resource :comments,  only: [:create, :destroy]
+    resource :reviews,  only: [:create, :destroy]
   end
 
-  resources :comments,  only: [:show] do
+  resources :reviews,  only: [:show] do
     member do
       get :good_users
     end

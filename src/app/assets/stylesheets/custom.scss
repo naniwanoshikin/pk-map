@@ -109,6 +109,58 @@ footer {
   }
 }
 
+// ----------------------------------------
+// (layouts/flash) ログイン/アウト, Post, Review 7
+#flash_messages {
+  position: fixed;
+  width: 95%;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  .alert {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #696969;
+    &-alert {
+      background: rgba(255, 208, 208, 0.9);
+    }
+    &-notice {
+      background: rgba(179, 230, 174, 0.9);
+    }
+    // [x]ボタン
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+  }
+}
+// 上へ上がる
+.hidden_up {
+  animation: move 1.5s ease-in 5s forwards;
+  @keyframes move {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-170px);
+    }
+  }
+}
+// ふわっと消える animationが上書きされない様 .hidden_upより下
+.hidden_fadeout {
+  animation: fadeout 1s both;
+  @keyframes fadeout {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
 // ----------------------------------------------
 // 7
 /* miscellaneous */
@@ -177,46 +229,7 @@ input {
   height: auto !important;
 }
 
-// (layouts/flash) devise ログイン/アウト, Post, Comment 7
-#flash_messages {
-  position: fixed;
-  width: 95%;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  .alert {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #696969;
-    &-alert {
-      background: rgba(255, 208, 208, 0.9);
-    }
-    &-notice {
-      background: rgba(179, 230, 174, 0.9);
-    }
-    // [x]ボタン
-    .close {
-      position: absolute;
-      top: 3px;
-      right: 10px;
-    }
-  }
-}
-// .fadeout {
-//   animation: fadeout 2s;
-//   animation-fill-mode: forwards;
-//   @keyframes fadeout {
-//     0% {
-//       opacity: 1;
-//     }
-//     100% {
-//       opacity: 0;
-//       display: none;
-//     }
-//   }
-// }
-
+// ----------------------------------------
 .checkbox {
   display: inline; // ずれ修正
 }
@@ -226,7 +239,7 @@ input {
   margin-left: 0;
 }
 
-// 7 (posts/new), (posts/show)_コメント時
+// 7 (posts/new), (posts/show)_レビュー時
 #error_explanation {
   span {
     color: #696969;
@@ -234,7 +247,7 @@ input {
   ul {
     color: red;
     list-style: square;
-    text-align: left; // (posts/show)_コメント時
+    text-align: left; // (posts/show)_レビュー時
     // margin: 0 0 30px 0;
   }
 }
@@ -245,7 +258,7 @@ input {
 #ajax_feed,
 #ajax_users_show,
 #ajax_users_index,
-#ajax_users_show_comments {
+#ajax_users_show_reviews {
   nav {
     // ul
     .pagination {

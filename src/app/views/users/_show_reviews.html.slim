@@ -2,10 +2,10 @@
 .spot_list.d-flex.justify-content-around
   = link_to @user do
     h2 スポット登録一覧
-  h2.text-dark コメント一覧
+  h2.text-dark レビュー一覧
 
-- if @user.comment_posts.any?
+- if @user.review_posts.any?
   .posts
-    = render @user_comment_posts
+    = render @user_review_posts
     / (posts/post)
-  = paginate @user_comment_posts
+  = paginate @user_review_posts

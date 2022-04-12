@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # ログインを要求
   before_action :authenticate_user!, only: [:destroy, :following, :followers]
-  before_action :correct_user, only: [:show, :show_comments]
+  before_action :correct_user, only: [:show, :show_reviews]
   before_action :admin_user,   only: :destroy
 
   def show
@@ -15,11 +15,11 @@ class UsersController < ApplicationController
     end
   end
 
-  # コメント一覧
-  def show_comments
+  # レビュー一覧
+  def show_reviews
     # @user
-    # @userのコメント集
-    @user_comment_posts = @user.comment_posts.page(params[:page]).per(4)
+    # @userのレビュー集
+    @user_review_posts = @user.review_posts.page(params[:page]).per(4)
   end
 
   def index

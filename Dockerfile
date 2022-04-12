@@ -1,6 +1,6 @@
 FROM ruby:2.7
 
-# Herokuデプロイ時につける (testができなくなる)
+# デプロイ時につける (testができなくなる) SSL化される
 ENV RAILS_ENV=production
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \

@@ -2,19 +2,19 @@ class User < ApplicationRecord
   before_save { email.downcase! } # 6
   # 投稿
   has_many :posts, dependent: :destroy
-  # コメント
-  has_many :comments, dependent: :destroy
-  # userがコメントした投稿
-  has_many :comment_posts, through: :comments, source: :post
+  # レビュー
+  has_many :reviews, dependent: :destroy
+  # userがレビューした投稿
+  has_many :review_posts, through: :reviews, source: :post
 
   # 高評価
   has_many :goods, dependent: :destroy
   # 低評価
   has_many :bads, dependent: :destroy
-  # userが高評価したコメント
-  has_many :good_comments, through: :goods, source: :comment
-  # userが低評価したコメント
-  has_many :bad_comments, through: :bads, source: :comment
+  # userが高評価したレビュー
+  has_many :good_reviews, through: :goods, source: :review
+  # userが低評価したレビュー
+  has_many :bad_reviews, through: :bads, source: :review
 
   # フォローする
   has_many :active_relationships, class_name: "Relationship",
@@ -127,81 +127,81 @@ class User < ApplicationRecord
   end
 
   # ----------------------------------------------
-  # selfがpostユーザーにcommentを通知
-  def notify_to_comment!(post, comment_id) # Comments(C), seed
-    # 自分以外にコメントしている人の投稿集id
-    temp_ids = Comment.select(:user_id, :created_at).where(post_id: post.id).where.not(user_id: id).distinct
+  # selfがpostユーザーにreviewを通知
+  def notify_to_review!(post, review_id) # Reviews(C), seed
+    # 自分以外にレビューしている人の投稿集id
+    temp_ids = Review.select(:user_id, :created_at).where(post_id: post.id).where.not(user_id: id).distinct
 
-    # 誰もコメントしていない場合
+    # 誰もレビューしていない場合
     if temp_ids.blank?
-      save_notify_comment!(post, comment_id, post.user_id)
+      save_notify_review!(post, review_id, post.user_id)
     else
-      # 既にコメントしている人がいる場合
+      # 既にレビューしている人がいる場合
       temp_ids.each do |temp_id|
-        save_notify_comment!(post, comment_id, temp_id['user_id'])
+        save_notify_review!(post, review_id, temp_id['user_id'])
       end
     end
   end
 
-  # postへのcommentをvisited_idに通知
-  def save_notify_comment!(post, comment_id, visited_id)
+  # postへのreviewをvisited_idに通知
+  def save_notify_review!(post, review_id, visited_id)
     # 同じ投稿に複数回通知可
     notification = self.active_notifications.new(
-      visited_id: visited_id, # コメント先の投稿ユーザー
-      post_id: post.id,       # コメント先の投稿
-      comment_id: comment_id, # コメントid
-      action: 'comment'
+      visited_id: visited_id, # レビュー先の投稿ユーザー
+      post_id: post.id,       # レビュー先の投稿
+      review_id: review_id, # レビューid
+      action: 'review'
     )
-    # 無効な通知 or 自分の投稿へのコメントは除く
+    # 無効な通知 or 自分の投稿へのレビューは除く
     return if notification.invalid? || notification.visitor_id == notification.visited_id
     # 通知
     notification.save
   end
 
   # ----------------------------------------------
-  # userがcommentを高評価する
-  def good(comment) # (C)
-    goods.create(comment_id: comment.id)
+  # userがreviewを高評価する
+  def good(review) # (C)
+    goods.create(review_id: review.id)
   end
   # 高評価を解除
-  def ungood(comment)
-    goods.find_by(comment_id: comment.id).destroy
+  def ungood(review)
+    goods.find_by(review_id: review.id).destroy
   end
-  # selfがcommentを高評価してたらtrue
-  def good?(comment) # (goods/good)
-    good_comments.include?(comment)
+  # selfがreviewを高評価してたらtrue
+  def good?(review) # (goods/good)
+    good_reviews.include?(review)
   end
   # ----------------------------------------------
-  # userがcommentを低評価
-  def bad(comment) # bads(C)
-    bads.create(comment_id: comment.id)
+  # userがreviewを低評価
+  def bad(review) # bads(C)
+    bads.create(review_id: review.id)
   end
   # 低評価を解除
-  def unbad(comment)
-    bads.find_by(comment_id: comment.id).destroy
+  def unbad(review)
+    bads.find_by(review_id: review.id).destroy
   end
-  # selfがcommentを低評価してたらtrue
-  def bad?(comment) # (bads/bad)
-    bad_comments.include?(comment)
+  # selfがreviewを低評価してたらtrue
+  def bad?(review) # (bads/bad)
+    bad_reviews.include?(review)
   end
 
   # ----------------------------------------------
-  # selfがcomment.userへ高評価を通知
-  def notify_to_good!(comment) # Goods(C)
+  # selfがreview.userへ高評価を通知
+  def notify_to_good!(review) # Goods(C)
     # 既に高評価されているか検索 「ボタン連打」に備える
     temp = Notification.where([
       "visitor_id = ? and visited_id = ?
-      and comment_id = ? and action = ? ",
+      and review_id = ? and action = ? ",
       id,           # 高評価したユーザー
-      comment.user_id, # 高評価されるユーザー
-      comment.id,      # 高評価した投稿id
+      review.user_id, # 高評価されるユーザー
+      review.id,      # 高評価した投稿id
       'good'
     ])
     # 通知されていない場合
     if temp.blank?
       notification = self.active_notifications.new(
-        visited_id: comment.user_id,
-        comment_id: comment.id,
+        visited_id: review.user_id,
+        review_id: review.id,
         action: 'good'
       )
       # 無効な通知 or 自分の投稿への高評価は除く
