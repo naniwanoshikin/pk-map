@@ -5,10 +5,11 @@
 ```
 
 ## 公開ページ
-ページは[こちら](https://pk-map.herokuapp.com/)です。※表示まで少し時間がかかります。<br>
-本ページからだと読み込めない場合があるので、何度かタブを閉じて再度お願いします。サーバーが停止していたり、Application errorになる場合はリロードをお願いします。
+ページは[こちら](https://pk-map.herokuapp.com/)です。<br>
+※表示まで時間がかかります。80秒程。<br>
+サーバーが停止していたり、Application errorになる場合はリロードをお願いします。
 
-|一覧画面|詳細画面|
+|スポット一覧|スポット詳細|
 |---|---|
 |![map1-2](https://user-images.githubusercontent.com/67915047/158372178-f114d3a2-51a9-4719-8618-ad869ae6a670.jpg)|![map2-2](https://user-images.githubusercontent.com/67915047/159012821-92dee965-7d5c-4892-b2d0-cbc16d7b5c10.jpg)|
 
@@ -30,8 +31,7 @@
   <!-- APIを叩く Post(M) -->
   * 住所の表示
   <!-- JavaScript, (comments/destroy)_ajax -->
-  * 口コミの投稿
-    * 口コミの評価
+  * レビュー、評価
 
 ### その他
 * フォロー通知
@@ -42,10 +42,11 @@
   * HTML/CSS/Sass
   <!-- slimによるコード量削減 -->
   * Slim
-  * webpack/JavaScript
-  * Bootstrap 4.6.1
-  <!-- ajax, ドロップダウン, flash[x], ローディング -->
-  * jQuery 3.6.0
+  * JavaScript
+  * webpack
+    * Bootstrap 4.6.1
+    <!-- ajax, ドロップダウン, flash[x], ローディング -->
+    * jQuery 3.6.0
 * バックエンド
   * Ruby 2.6.5
   * Rails 6.1.4
@@ -56,8 +57,8 @@
   <!-- ストリートビュー -->
   <!-- * Street View Static API -->
 * インフラ
-  * Docker 20.10.12
-  * docker-compose 2.2.3
+  * Docker 20.10.13
+  * docker-compose 2.3.3
   <!-- * Puma -->
   * MySQL 8.0
   * RSpec 3.10

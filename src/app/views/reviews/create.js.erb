@@ -1,10 +1,10 @@
 <%# (posts/show) %>
-$("#comments").html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>");
+$("#reviews").html("<%= escape_javascript(render 'reviews/review', reviews: @reviews) %>");
 
 <%# フラッシュメッセージ %>
-$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', comments: @comments) %>");
+$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', reviews: @reviews) %>");
 
-<%# (comments/form)_モーダル %>
+<%# (reviews/form)_モーダル %>
 $("textarea").val("");
 <%# 画面 %>
 $('#exampleModal').hide();

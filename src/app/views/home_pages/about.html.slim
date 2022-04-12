@@ -20,11 +20,11 @@ h2 本アプリについて
               = Post.all.length
               | 個
             li
-              | コメント数:
-              = Comment.all.length
+              | レビュー数:
+              = Review.all.length
               | 個
               | /通知
-              = Notification.where("action=?", 'comment').all.length
+              = Notification.where("action=?", 'review').all.length
               | 件
             li
               | 高評価数:

@@ -1,19 +1,19 @@
-class CommentsController < ApplicationController
+class ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy, :good_users]
   before_action :correct_user,     only: :destroy
-  # コメントのない画面は表示できない
-  before_action :correct_comment,  only: [:show, :good_users]
+  # レビューのない画面は表示できない
+  before_action :correct_review,  only: [:show, :good_users]
 
-  # コメントする
+  # レビューする
   def create
-    @comment = current_user.comments.build(comment_params)
-    @post = @comment.post
-    @comments = @post.comments
-    if @comment.save
+    @review = current_user.reviews.build(review_params)
+    @post = @review.post
+    @reviews = @post.reviews
+    if @review.save
       # 通知
-      current_user.notify_to_comment!(@post, @comment.id)
+      current_user.notify_to_review!(@post, @review.id)
 
-      # (comments/form)
+      # (reviews/form)
       respond_to do |format|
         format.html { redirect_to @post, notice: 'レビューを追加しました' }
         # format.js { flash.now[:notice] = "レビューを追加しました" }
@@ -29,32 +29,32 @@ class CommentsController < ApplicationController
     end
   end
 
-  # コメント削除
+  # レビュー削除
   def destroy
-    # @comment
-    @post = @comment.post
-    @comments = Comment.where(post_id: @post.id)
-    @comment.destroy
+    # @review
+    @post = @review.post
+    @reviews = Review.where(post_id: @post.id)
+    @review.destroy
     respond_to do |format|
       format.html { redirect_to @post, alert: 'レビューを削除しました' }
       format.js { flash.now[:alert] = "レビューを削除しました" }
     end
   end
 
-  # コメント詳細
+  # レビュー詳細
   def show
   end
 
   # 高評価したユーザー一覧
   def good_users
-    # @comment
-    @comment_good_users = @comment.good_users.page(params[:page]).per(10)
+    # @review
+    @review_good_users = @review.good_users.page(params[:page]).per(10)
   end
 
   private
-    def comment_params
+    def review_params
       # (posts/show)
-      params.require(:comment).permit(
+      params.require(:review).permit(
         :post_id,
         :score,
         :content,
@@ -62,12 +62,12 @@ class CommentsController < ApplicationController
     end
 
     def correct_user # destroy
-      @comment = current_user.comments.find_by(id: params[:comment_id]) # (comments/comment)
-      redirect_to root_url if @comment.nil?
+      @review = current_user.reviews.find_by(id: params[:review_id]) # (reviews/review)
+      redirect_to root_url if @review.nil?
     end
 
-    def correct_comment # show, good_users
-      @comment = Comment.find_by(id: params[:id])
-      redirect_to root_url if @comment.nil?
+    def correct_review # show, good_users
+      @review = Review.find_by(id: params[:id])
+      redirect_to root_url if @review.nil?
     end
 end

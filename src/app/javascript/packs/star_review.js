@@ -1,12 +1,12 @@
 'use strict'; {
-  // (comments/form)
+  // (reviews/form)
   // (★★☆☆☆)
   // (posts/show)
   const btn_stars = document.querySelector('.btn_ratings').children;
   // モーダル
   const stars = document.querySelector('.ratings').children;
 
-  // '2'/5 hidden_field で Comments(C)に送る
+  // '2'/5 hidden_field で Reviews(C)に送る
   const hiddenScore = document.getElementById("hidden_score");
   // '2' 値書き換え用
   const ratingValue = document.getElementById("rating_value");

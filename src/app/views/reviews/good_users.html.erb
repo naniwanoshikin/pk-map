@@ -1,10 +1,10 @@
 <% provide(:title, '高評価したユーザー') %>
 <h2>高評価したユーザー</h2>
 
-<% if @comment_good_users.any? %>
+<% if @review_good_users.any? %>
   <div id="">
     <ul class="users">
-      <%= render @comment_good_users  %>
+      <%= render @review_good_users  %>
       <%# (users/_user) %>
     </ul>
   </div>
