@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%# (application_helper) %>
+    <%# (helper) %>
     <title><%= full_title(yield(:title)) %></title>
     <%= render 'layouts/z_head' %>
     <%= render 'layouts/shim' %>
@@ -9,7 +9,7 @@
   <body>
     <%= render 'layouts/header' %>
     <div class="container">
-      <%# id: (comment/destroy)_ajax %>
+      <%# id: (review/destroy)_ajax %>
       <div id="flash_messages">
         <%= render 'layouts/flash' %>
       </div>

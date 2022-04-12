@@ -21,11 +21,11 @@ span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleMod
             | ×
       .modal-body
         - if user_signed_in?
-          = render 'shared/error_messages', object: comment
+          = render 'shared/error_messages', object: review
         / フォーム
         .rating-box
           / , local: false でやったけどできず終い...
-          = form_with model: comment, url: post_comments_path(@post) do |f|
+          = form_with model: review, url: post_reviews_path(@post) do |f|
 
             .form-group.main-rating
               .ratings.mr-2
@@ -39,7 +39,7 @@ span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleMod
                 span#rating_value
                   | 0
                 | /5
-            / → Comments(C) post_id に入る
+            / → Reviews(C) post_id に入る
             = f.hidden_field :post_id, value: @post.id
 
             / 星の個数 js

@@ -1,5 +1,0 @@
-<%# (posts/show) %>
-$("#comments").html("<%= escape_javascript(render 'comments/comment', comments: @comments) %>");
-
-<%# フラッシュメッセージ %>
-$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', comments: @comments) %>");

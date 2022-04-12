@@ -16,7 +16,7 @@ div id="post-#{post.id}"
       .average_score
         // ★★☆☆☆
         .star_rating
-          div class="star_front" style="width: #{post.comment_score_percentage}%"
+          div class="star_front" style="width: #{post.review_score_percentage}%"
             | ★★★★★
           .star_back
             | ★★★★★
@@ -25,7 +25,7 @@ div id="post-#{post.id}"
           .average_number
             = post.avg_score
             |  (
-            = post.comments.count
+            = post.reviews.count
             | )
       / 画像
       = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{post.latitude},#{post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"

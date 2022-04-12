@@ -145,27 +145,27 @@ user8 = users[7]
     [user3, 4, "スロープもうないんだな...", [user2, user5]],
     [user7, 5, "改装されて綺麗になったよね、cafeがある", []],
   ]],
-].each do |user, quality, address, content, comments|
+].each do |user, quality, address, content, reviews|
   # userがpostする
   post = user.posts.create!(
     content: content, # 投稿内容
     address: address, # 住所
     spot_quality: quality, # 質
   )
-  comments.each do |other_user, score, his_content, good_users|
-    # 複数のother_userがそのpostにコメントする
-    comment = other_user.comments.create!(
-      post_id: post.id, # コメント先の投稿
+  reviews.each do |other_user, score, his_content, good_users|
+    # 複数のother_userがそのpostにレビューする
+    review = other_user.reviews.create!(
+      post_id: post.id, # レビュー先の投稿
       score: score,     # 投稿の点数
-      content: his_content, # コメント文
+      content: his_content, # レビュー文
     )
     # 通知
-    other_user.notify_to_comment!(post, comment.id)
+    other_user.notify_to_review!(post, review.id)
 
-    # good_userがそのcommentを高評価 + 通知する
+    # good_userがそのreviewを高評価 + 通知する
     good_users.each do |good_user|
-      good_user.good(comment)
-      good_user.notify_to_good!(comment)
+      good_user.good(review)
+      good_user.notify_to_good!(review)
     end
   end
 end

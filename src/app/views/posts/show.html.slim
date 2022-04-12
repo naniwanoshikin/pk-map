@@ -40,15 +40,15 @@ h2
               = @post.spot_quality
 
       .show_reviews.mb-4
-        h2.text-left.mb-3.pl-2 口コミを投稿しましょう
-        / コメントフォーム
+        h2.text-left.mb-3.pl-2 レビューを投稿しましょう
+        / レビューフォーム
         - if user_signed_in?
-          = render "comments/form", comment: @comment
+          = render "reviews/form", review: @review
 
-      / コメント一覧 destroy_ajax
-      #comments
-        = render @comment
-        / (comments/_comment) @commentsだと複製
+      / レビュー一覧 destroy_ajax
+      #reviews
+        = render @review
+        / (reviews/_review) @reviewsだと複製
 
 
 - google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe

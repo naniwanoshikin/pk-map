@@ -10,13 +10,13 @@ class PostsController < ApplicationController
     # @post
     # map JS用
     gon.post = @post
-    # 投稿に対するコメント集
-    @comments = @post.comments
-    # コメントを新規作成
+    # 投稿に対するレビュー集
+    @reviews = @post.reviews
+    # レビューを新規作成
     if user_signed_in?
-      @comment = current_user.comments.build
+      @review = current_user.reviews.build
     else
-      @comment = @post.user.comments.build
+      @review = @post.user.reviews.build
     end
   end
 

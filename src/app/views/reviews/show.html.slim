@@ -1,6 +1,6 @@
-/ コメント詳細 Comments(C)
+/ レビュー詳細 Reviews(C)
 h2
-  = @comment.post.address
+  = @review.post.address
 
 .container
   .row
@@ -11,22 +11,22 @@ h2
         = link_to 'javascript:history.back()' do
           i.fas.fa-long-arrow-alt-left.fa-lg
 
-      / コメント詳細
-      .show_comments.ml-4
-        / (comments/comment)と共通
-        .comment_user.d-flex
+      / レビュー詳細
+      .show_reviews.ml-3
+        / (reviews/review)と共通
+        .review_user.d-flex
           / 画像
-          = link_to gravatar_for(@comment.user, size: 30), @comment.user
+          = link_to gravatar_for(@review.user, size: 30), @review.user
           .name_review
             / 名前
             strong
-              = link_to @comment.user.name, @comment.user
+              = link_to @review.user.name, @review.user
             br
             / ５件の口コミ
             span.review_number
-              = link_to show_comments_user_path(@comment.user) do
+              = link_to show_reviews_user_path(@review.user) do
                 | 口コミ 
-                = @comment.user.comments.count
+                = @review.user.reviews.count
                 | 件
 
         main.mb-0
@@ -35,15 +35,15 @@ h2
             // ★★☆☆☆
             .star_rating
               div class="star_front"
-                - @comment.score.times do
+                - @review.score.times do
                   | ★
               / ☆☆☆☆☆
               .star_back
                 | ★★★★★
             / 時間
             .small.text-muted.ml-1
-              = time_ago_in_words(@comment.created_at).upcase
+              = time_ago_in_words(@review.created_at).upcase
               | 前
-          / コメント 改行あり
-          .comment_content.ml-1
-            = simple_format @comment.content
+          / レビュー 改行あり
+          .review_content.ml-1
+            = simple_format @review.content

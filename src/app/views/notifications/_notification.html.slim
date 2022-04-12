@@ -1,5 +1,6 @@
 - visitor = notification.visitor
 - visited = notification.visited
+
 li
   .f_inline.d-flex
     / マーク
@@ -9,7 +10,7 @@ li
         i.fas.fa-user.fa-lg
       - when 'good'
         i.fas.fa-heart.fa-lg
-      - when 'comment'
+      - when 'review'
         i.far.fa-comment.fa-lg
 
     / アイコン
@@ -25,14 +26,14 @@ li
         - when 'follow'
           | にフォローされました
         - when 'good'
-          | がコメントを評価しました
+          | がレビューを評価しました
           p.good_notify
-            = link_to notification.comment.content, notification.comment.post
-        - when 'comment'
-          | がコメントしました
-          p.comment_notify
-            / 相手のコメント, リンク先
-            = link_to notification.comment.content, notification.post
+            = link_to notification.review.content, notification.review.post
+        - when 'review'
+          | がレビューしました
+          p.review_notify
+            / 相手のレビュー, リンク先
+            = link_to notification.review.content, notification.post
 
   .small.text-muted.text-right.mr-2
     = time_ago_in_words(notification.created_at).upcase

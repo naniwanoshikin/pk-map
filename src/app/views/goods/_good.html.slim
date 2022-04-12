@@ -1,21 +1,21 @@
-/ (comments/_comment)
+/ (reviews/_review)
 
 / 高評価している場合
-- if current_user&.good?(comment)
-  = link_to good_path(current_user.goods.find_by(comment: comment)), method: :delete, class: 'link', remote: true do
+- if current_user&.good?(review)
+  = link_to good_path(current_user.goods.find_by(review: review)), method: :delete, class: 'link', remote: true do
     / Good
     i.fas.fa-thumbs-up.fa-lg
 
 / 高評価していない場合
 - else
-  = link_to goods_path(comment: comment),
+  = link_to goods_path(review: review),
   method: :post, class: 'link', remote: true do
     / 未Good
     i.far.fa-thumbs-up.fa-lg
 
 / 高評価数
-- if comment.goods.any?
+- if review.goods.any?
   span
     / (posts/good_users)
-    = link_to good_users_comment_path(comment), class: 'ev_count' do
-      = comment.goods.count
+    = link_to good_users_review_path(review), class: 'ev_count' do
+      = review.goods.count
