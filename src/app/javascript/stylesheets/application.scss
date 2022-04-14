@@ -1,29 +1,9 @@
-// webpack 先に書かないと他が反映されない
-@import '~bootstrap/scss/bootstrap';
+/* bootstrap */
 
-
-/* universal */
-
-body {
-  padding-top: 60px;
-}
-
-section {
-  overflow: auto;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.center {
-  text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
-}
+@import "~bootstrap/scss/bootstrap";
 
 /* typography */
+// bootstrapのデフォルトが優先されないようここに載せた
 
 h1,
 h2,
@@ -56,14 +36,10 @@ p {
   line-height: 1.7em;
 }
 
-
-// (home)
-// ログイン前
+// (home)_ログイン前
 .jumbotron {
-  // webpack では url('../images/mie.JPG')
-  // ⇄ Sprockets では image-url('mie.JPG')
-  background: center/cover url('../images/mie.JPG')
-  rgba(255,255,255,0.7);
+  // Sprockets では image-url('mie.JPG')
+  background: center/cover url("../images/mie.JPG") rgba(255, 255, 255, 0.7); // webpack
   background-blend-mode: lighten;
   height: 55vh;
   margin-top: 10px;
@@ -76,7 +52,9 @@ p {
   }
 }
 
-// div エラー箇所
+/* forms */
+
+// div エラー 線で囲われた部分
 .field_with_errors {
   .form-control {
     @extend .is-invalid !optional; // bootstrap4

@@ -49,7 +49,6 @@
         }
       }
     }
-    // 画像
     img {
       margin: 5px 0;
       width: 100%;
@@ -76,7 +75,7 @@
     }
     .timestamp {
       color: gray;
-      margin-left: auto; // 右よせ
+      margin-left: auto; // 右寄せ
     }
   }
 }
@@ -102,14 +101,9 @@
 
 // (post/new)
 .post_form {
-  // .field_with_errors {
-  //   max-width: 100px;
-  // }
-  // ラジオボタン
   input[type="radio"] {
     max-width: 30px;
   }
-  // チェックボックス
   input[type="checkbox"] {
     max-width: 30px;
   }

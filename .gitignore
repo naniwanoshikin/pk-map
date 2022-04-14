@@ -7,11 +7,14 @@
 # Ignore bundler config.
 src/.bundle
 
-# 追加 rspec用
-src/vendor/bundle
-
+# 追加
 .DS_Store
 src/.env
+# rspec用
+src/vendor/bundle
+# メモ用
+src/app/views/home_pages/aa.html.erb
+
 
 # Ignore all logfiles and tempfiles.
 src/log/*

@@ -1,93 +1,96 @@
 <%# Home_ログイン後 %>
 <div id='pkmap'></div>
 
-<style>
-  #pkmap {
-    height: 350px;
-    border-radius: 10px;
-    margin: 20px 0;
-  }
-</style>
-
 <script>
 
-  let map
+  let map; // 地図は1つなので不要だが一応
+  let marker; // 複数マーカー なくてもなぜかエラーなし
+  let infowindow; // 吹き出し
 
   // 初期
   function initMap(){
-    // 地図
-    const target = document.getElementById('pkmap')
     // 検索入力用
-    geocoder = new google.maps.Geocoder()
-
-    // 自身の住所: 緯度, 経度
-    user_address = {
-      lat: <%= current_user.latitude %>,
-      lng: <%= current_user.longitude %>
+    geocoder = new google.maps.Geocoder();
+    // 自身の住所
+    user_LatLng = {
+      lat: <%= current_user.latitude %>, // 緯度
+      lng: <%= current_user.longitude %> // 経度
     }
-    // 最新フィードの住所があれば 条件演算子
-    latest_feed_address = (gon.feed[0]) ? {
-      lat: gon.feed[0].latitude,
-      lng: gon.feed[0].longitude
+    // 最新フィードの住所 あれば
+    latest_feed_address = (gon.feeds[0]) ? { // 条件演算子
+      lat: gon.feeds[0].latitude,
+      lng: gon.feeds[0].longitude
     } : null
 
+
     // 中心位置を表示
-    map = new google.maps.Map(target, {
-      // フィードがなければ自身の住所 論理和
-      center: latest_feed_address || user_address,
-      zoom: 13,
+    map = new google.maps.Map(document.getElementById('pkmap'), {
+      // フィード/なければ自身の住所
+      center: latest_feed_address || user_LatLng, // 論理和
+      zoom: 12,
       mapTypeControl: false, // 地図|写真
       streetViewControl: false, // ストリートビューマーク
-      // mapTypeId: 'roadmap' // 地図の種類
+      // mapTypeId: 'roadmap', // 地図の種類
       styles: [{
         // 全てのラベルを非表示
         // featureType: 'all',
+        // 住所名も全て非表示
         // elementType: 'labels',
         // stylers: [
         //   {visibility: 'off'},
         // ],
       }],
     });
-    // 自身の住所のマーカー
+
+    // 自身の住所マーカー フィードがなくても必須
     marker = new google.maps.Marker({
       map: map,
-      position: user_address,
-      // 一覧と重なるため、以下のアイコンを表示できず、、
+      position: user_LatLng,
+      // 色つける いい画像ないか...?
       icon: {
         url: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
-        // サイズ
-        scaledSize: new google.maps.Size(40, 40), // defalut 65px × 65px
+        // サイズ defalut: 65px × 65px
+        scaledSize: new google.maps.Size(40, 40),
+        // ?
         anchor: new google.maps.Point(20, 40)
       }
     });
 
-    // 投稿一覧
-    gon.posts.forEach(post => {
-      // マーカー: 繰り返しなので let 入れないとエラー
-      let marker = new google.maps.Marker({
-        map: map,
-        position: {
-          // 高精度な位置情報がないとエラー
-          lat: post.latitude,
-          lng: post.longitude
-        },
-        // title: contentString
-      });
-      // 吹き出し
-      let infowindow = new google.maps.InfoWindow();
-      marker.addListener('click', function() {
-        infowindow.setContent(
-          // リンク + 画像
-          '<div class="infowindow">'
-          + `<a href='/posts/${post.id}'>${post.address}</a>`
-          + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${post.latitude},${post.longitude}&sensor=true&key=<%= ENV['GOOGLE_MAP_API'] %>' >`
-          + '</div>'
-        );
-        infowindow.open(map, marker);
-      });
+    // フィードの個々のマーカー
+    gon.feeds.forEach(feed => {
+      // 自身の住所/フィードが重複しないよう条件分岐
+      if (feed.address !== "<%= current_user.address %>") {
+        // 自身の住所とフィードが被らない場合
+        marker = new google.maps.Marker({
+          map: map,
+          position: { // 高精度な位置情報がないとエラー
+            lat: feed.latitude,
+            lng: feed.longitude
+          },
+          // title: contentString
+        });
+        hukidasi(marker); // 吹き出し
+      } else {
+        // 住所が被る場合、そのフィードは不要
+        hukidasi(marker); // 吹き出し
+      }
+
+      // 吹き出し表示
+      function hukidasi(the_marker) {
+        infowindow = new google.maps.InfoWindow();
+        the_marker.addListener('click', function() {
+          infowindow.setContent(
+            // リンク + 画像
+            '<div class="infowindow">'
+            + `<a href='/posts/${feed.id}'>${feed.address}</a>`
+            + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${feed.latitude},${feed.longitude}&sensor=true&key=<%= ENV['GOOGLE_MAP_API'] %>' >`
+            + '</div>'
+          );
+          infowindow.open(map, the_marker); // 表示
+        });
+      }
     });
   }
-
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap" async defer></script>

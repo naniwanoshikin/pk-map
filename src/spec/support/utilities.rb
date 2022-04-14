@@ -4,7 +4,7 @@ def sign_in(user)
   visit new_user_session_path
   fill_in "Eメール",    with: user.email
   fill_in "パスワード", with: user.password
-  click_on "ログイン"
+  find('#hoge').click # (devise/sessions/new)_ログインの重複
   # Capybaraを使用していない場合にもサインインする。
   # cookies[:remember_token] = user.remember_token
 end

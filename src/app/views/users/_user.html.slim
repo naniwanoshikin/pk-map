@@ -1,0 +1,13 @@
+/ 一人一人のuser (users/index)
+li
+  = gravatar_for user, size: 50
+  = link_to user.name, user
+  - if current_user&.admin? && !current_user?(user)
+    |  | 
+    = link_to "delete", user, method: :delete, data: { confirm: "You sure?" }
+  .text-muted
+    = user.address
+    |  勢
+  / [follow] ボタン できず... ユーザーid 文脈が違う
+  / フォローされるユーザーが自分になっている為
+  / = render 'follow_form', user: user if user_signed_in?

@@ -1,61 +1,76 @@
-<header class="navbar navbar-expand-lg navbar-light bg-dark">
-  <%# タイトル %>
-  <%= link_to "PK map", root_path, id: "logo", class: 'navbar-brand' %>
-  <%# ボタン %>
-  <button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <nav class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ml-auto mr-4">
-      <%# ログイン時 %>
-      <% if user_signed_in? %>
-        <%# PCのみ %>
-        <%# ホーム %>
-        <li class="nav-item only_pc">
-          <%= link_to root_path, class: "nav-link #{'active' if request.path == root_path}" do %>
-            <i class="fa fa-home fa-lg"></i>
-            <span class="sr-only">(current)</span>
-          <% end %>
-        </li>
-        <%# 通知 %>
-        <li class="nav-item only_pc">
-          <%= link_to notifications_path, class: "nav-link notice #{"active" if request.path == notifications_path}" do %>
-            <i class="far fa-bell fa-lg">
-              <%= render 'layouts/circle' %>
-            </i>
-          <% end %>
-        </li>
-        <%# 投稿 %>
-        <li class="nav-item only_pc">
-          <%= link_to new_post_path, class: "nav-link #{"active" if request.path == new_post_path}" do %>
-          <i class="fas fa-pencil-alt fa-lg"></i>
-        <% end %></li>
-        <%# マイページ %>
-        <li class="nav-item only_pc"><%= link_to current_user, class: "nav-link #{"active" if request.path == user_path(current_user)}" do %>
-          <i class="fas fa-user fa-lg"></i>
-        <% end %></li>
-        <%# スマホ, PC 共通 %>
-        <%# ドロップダウン %>
-        <li class="nav-item dropdown">
-          <%# About %>
-          <%= link_to "About", about_path, class: "dropdown-item only_phone" %>
-          <%# 歯車 %>
-          <a class="nav-link dropdown-toggle pl-4 pl-md-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-cog fa-lg"></i>
-          </a>
-          <%# 一覧 %>
-          <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="navbarDropdownMenuLink">
-            <%= link_to "ユーザー一覧", users_path, class: "dropdown-item" %>
-            <%= link_to "ログアウト", destroy_user_session_path, class: "dropdown-item", method: :delete %>
-          </div>
-        </li>
-      <% else %>
-      <%# 未ログイン時 %>
-        <li class="nav-item only_pc not_signed_in"><%= link_to "Home", root_path, class: 'nav-link mr-2' %></li>
-        <li class="nav-item"><%= link_to "About", about_path, class: 'nav-link mr-2' %></li>
-        <li class="nav-item"><%= link_to "Sign up", new_user_registration_path, class: 'nav-link mr-2' %></li>
-        <li class="nav-item"><%= link_to "Log in", user_session_path, class: 'nav-link' %></li>
-      <% end %>
-    </ul>
-  </nav>
+<header role="banner" class="bg-dark drawer-navbar drawer-navbar--fixed">
+  <div class="drawer-container">
+    <%# ヘッダー %>
+    <div class="drawer-navbar-header bg-dark">
+      <%# タイトル %>
+      <%= link_to "PK map", root_path, id: "logo", class: 'drawer-brand' %>
+      <button type="button" class="drawer-toggle drawer-hamburger">
+        <span class="sr-only">toggle navigation</span>
+        <span class="drawer-hamburger-icon"></span>
+      </button>
+    </div>
+
+    <%# サイドバー %>
+    <nav class="drawer-nav" role="navigation">
+      <ul class="drawer-menu drawer-menu--right">
+        <%# ログイン時 %>
+        <% if user_signed_in? %>
+          <%# PCのみ %>
+          <%# ホーム %>
+          <li class="only_pc">
+            <%= link_to root_path, class: "drawer-menu-item #{'active' if request.path == root_path}" do %>
+              <i class="fa fa-home fa-lg"></i>
+            <% end %>
+          </li>
+          <%# 通知 %>
+          <li class="only_pc">
+            <%= link_to notifications_path, class: "drawer-menu-item notice #{"active" if request.path == notifications_path}" do %>
+              <i class="far fa-bell fa-lg">
+                <%= render 'layouts/circle' %>
+              </i>
+            <% end %>
+          </li>
+          <%# 投稿 %>
+          <li class="only_pc">
+            <%= link_to new_post_path, class: "drawer-menu-item #{"active" if request.path == new_post_path}" do %>
+            <i class="fas fa-pencil-alt fa-lg"></i>
+          <% end %></li>
+          <%# マイページ %>
+          <li class="only_pc"><%= link_to current_user, class: "drawer-menu-item #{"active" if request.path == user_path(current_user)}" do %>
+            <i class="fas fa-user fa-lg"></i>
+          <% end %></li>
+          <%# 歯車 <li>要素の重複を避けるため、bootstrapやめて、drawerのdropdownにした方がいいかも... %>
+          <li class="only_pc">
+            <a class="dropdown-toggle drawer-menu-item" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-cog fa-lg"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to "PKmapとは", about_path, class: "dropdown-item" %>
+              <%= link_to "ユーザー一覧", users_path, class: "dropdown-item" %>
+              <%= link_to "ログアウト", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+            </div>
+          </li>
+          <%# ---------------------------------- %>
+          <%# スマホのみ 上記と重複している... %>
+          <li><%= link_to "PKmapとは", about_path, class: "drawer-menu-item only_phone" %></li>
+          <li><%= link_to "ユーザー一覧", users_path, class: "drawer-menu-item only_phone" %></li>
+          <%# 'ログアウト'が重複していてrspecで引っかかった %>
+          <li><%= link_to "ログアウト", destroy_user_session_path, class: "drawer-menu-item only_phone", method: :delete %></li>
+        <% else %>
+          <%# 未ログイン時 %>
+          <li class="only_pc not_signed_in mr-0"><%= link_to "Home", root_path, class: 'drawer-menu-item' %></li>
+          <li><%= link_to "PKmapとは", about_path, class: 'drawer-menu-item' %></li>
+          <li><%= link_to "新規登録", new_user_registration_path, class: 'drawer-menu-item' %></li>
+          <li><%= link_to "ログイン", user_session_path, class: 'drawer-menu-item' %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
 </header>
+
+
+<script>
+  $(document).ready(function() {
+    $('.drawer').drawer();
+  });
+</script>

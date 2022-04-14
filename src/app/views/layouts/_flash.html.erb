@@ -6,27 +6,3 @@
     <button type="button" class="close">&times;</button>
   </div>
 <% end %>
-
-<%# flash 消滅 %>
-<script>
-  // (review/destroy)_ajax時 letだとエラー...
-  // 'alert' has already been declared
-  var alert = document.querySelector('.alert');
-  var close = document.querySelector('.close');
-  if (alert && close) {
-    // - 上へ上がる
-    alert.classList.add('hidden_up');
-    // (review/destroy)_ajax時 すぐdestroyするとすぐ消滅...
-    // setTimeout(function () {
-    //   alert.remove(); // 消滅
-    // }, 7000);
-    // - ふわっと消える
-    close.addEventListener('click', () => {
-      alert.classList.add('hidden_fadeout');
-      setTimeout(function () {
-        alert.style.display = "none" // css
-        alert.remove();
-      }, 1000); // 1秒で CSS共通
-    }, false)
-  }
-</script>
