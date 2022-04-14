@@ -1,8 +1,3 @@
-// 吹き出し
-// (home/map), (posts/show)
-.infowindow > img {
-  width: 100%;
-}
 
 // ログイン後
 // 検索
@@ -17,4 +12,17 @@
   button {
     border-radius: 0 5px 5px 0;
   }
+}
+
+// 地図
+#pkmap {
+  height: 350px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+// 吹き出し
+// (home/map), (posts/show)
+.infowindow > img {
+  width: 100%;
 }

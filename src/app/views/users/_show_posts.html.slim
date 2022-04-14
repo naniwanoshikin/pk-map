@@ -10,3 +10,7 @@
     = render @posts
     / (posts/post)
   = paginate @posts, remote: true
+- else
+  p まだ投稿していません
+  p
+    = link_to '投稿する', new_post_path

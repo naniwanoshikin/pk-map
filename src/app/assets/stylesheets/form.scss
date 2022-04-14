@@ -1,0 +1,149 @@
+// 7
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* flash */
+
+// (layouts/flash) ログイン/アウト, Post, Review
+#flash_messages {
+  position: fixed;
+  width: 95%;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  .alert {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #696969;
+    &-alert {
+      background: rgba(255, 208, 208, 0.9);
+    }
+    &-notice {
+      background: rgba(179, 230, 174, 0.9);
+    }
+    // [x]ボタン
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+    }
+  }
+}
+// 上へ上がる
+.hidden_up {
+  animation: move 1.5s ease-in 5s forwards;
+  @keyframes move {
+    0% {
+      transform: translate(-50%, 0px);
+    }
+    100% {
+      transform: translate(-50%, -170px);
+    }
+  }
+}
+// ふわっと消える animationが上書きされない様 .hidden_upより下
+.hidden_fadeout {
+  animation: fadeout 1s both;
+  @keyframes fadeout {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/* forms */
+
+// (registrations/new), (posts/new), (reviews/form)
+#error_explanation {
+  span {
+    color: #696969;
+  }
+  ul {
+    color: red;
+    list-style: square;
+    text-align: left; // (posts/show)_レビュー時
+    // margin: 0 0 30px 0;
+  }
+}
+
+// field_with_errors: → webpack
+
+input,
+textarea,
+select,
+.uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+textarea {
+  resize: vertical;
+}
+
+// (sessions/new) (posts/new)
+.checkbox {
+  display: inline; // ずれ修正
+}
+
+// (sessions/new)
+#user_remember_me {
+  width: auto;
+  margin-left: 0;
+}
+
+
+// ----------------------------------------
+/* pagination */
+#ajax_feed,
+#ajax_users_show,
+#ajax_users_index,
+#ajax_users_show_reviews {
+  nav {
+    // ul
+    .pagination {
+      margin: 16px 0;
+      justify-content: center;
+      li > a {
+        border: none;
+        color: #696969;
+        &:hover {
+          border-radius: 15px;
+        }
+        &:active {
+          color: #b0e7d7;
+        }
+      }
+      /* 表示しているページ番号 */
+      .active > a {
+        background: #93c9ff;
+        border-radius: 15px;
+      }
+    }
+  }
+}
+
+/* miscellaneous */
+
+.debug_dump {
+  // clear: both;
+  // float: left;
+  width: 100%;
+  margin-top: 35px;
+  padding: 10px;
+  border: 1px solid #696969;
+  border-radius: 5px;
+  @include box_sizing;
+}

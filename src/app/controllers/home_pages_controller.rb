@@ -15,10 +15,8 @@ class HomePagesController < ApplicationController
       end
       @url = root_path
 
-      # 住所一覧 (home/map, shared/feed)
-      gon.posts = Post.all
       # (home/map)
-      gon.feed = @feed_items
+      gon.feeds = @feed_items
 
       respond_to do |format|
         format.html
