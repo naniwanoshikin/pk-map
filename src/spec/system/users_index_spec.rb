@@ -9,5 +9,4 @@ describe 'ユーザ一覧', type: :system do # 10
     click_link 'Settings'
   end
 
-  
 end

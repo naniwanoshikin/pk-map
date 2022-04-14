@@ -6,18 +6,41 @@
     <%= render 'layouts/z_head' %>
     <%= render 'layouts/shim' %>
   </head>
-  <body>
+  <body class="drawer drawer--right drawer--navbarTopGutter">
     <%= render 'layouts/header' %>
     <div class="container">
       <%# id: (review/destroy)_ajax %>
       <div id="flash_messages">
         <%= render 'layouts/flash' %>
       </div>
-      <main>
+      <main role="main">
         <%= yield %>
         <%= debug(params) if Rails.env.development? %>
       </main>
       <%= render 'layouts/footer' %>
     </div>
+
+    <script>
+      // flash 消滅
+      // (review/destroy)_ajax時 letだとエラー??
+      let flash = document.getElementById('flash_messages');
+      let close = document.querySelector('.close');
+      if (close) {
+        // - 上へ上がる 5秒後
+        flash.classList.add('hidden_up');
+        setTimeout(function () {
+          flash.remove(); // 消滅
+        }, 7000);
+        // - ふわっと消える
+        close.addEventListener('click', () => {
+          flash.classList.add('hidden_fadeout');
+          setTimeout(function () {
+            flash.remove();
+          }, 1000); // 1秒で CSS共通
+        }, false)
+      } else {
+        flash.style.display = "none" // 初期状態
+      }
+    </script>
   </body>
 </html>

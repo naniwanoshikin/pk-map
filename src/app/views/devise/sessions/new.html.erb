@@ -26,7 +26,8 @@
         <% end %>
 
         <div class="">
-          <%= f.submit t('.sign_in'), class: "btn btn-primary" %>
+          <%# id: rspec用_ログインが重複する為 utitlities %>
+          <%= f.submit t('.sign_in'), class: "btn btn-primary", id: 'hoge' %>
         </div>
       <% end %>
 

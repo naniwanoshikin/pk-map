@@ -37,7 +37,8 @@ class ReviewsController < ApplicationController
     @review.destroy
     respond_to do |format|
       format.html { redirect_to @post, alert: 'レビューを削除しました' }
-      format.js { flash.now[:alert] = "レビューを削除しました" }
+      # ajaxの場合、flash か flash.now...どちら?
+      format.js { flash[:alert] = "レビューを削除しました" }
     end
   end
 
