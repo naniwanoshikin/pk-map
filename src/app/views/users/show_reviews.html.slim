@@ -17,7 +17,7 @@
     - else
       / [follow] ボタン
       section.profile_follow
-        = render 'follow_form' if user_signed_in?
+        = render 'follow_form', user: @user  if user_signed_in?
 
   / レビュー一覧 pagination
   .col-md-7

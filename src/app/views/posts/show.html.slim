@@ -39,6 +39,12 @@ h2
               | 芝生: 
               = @post.spot_quality
 
+        / Twitter
+        .ml-5
+          = link_to "http://twitter.com/share?text=#{@post.address}%20の口コミ&hashtags=パルクール,pkmap&url=#{post_url}&via=power_of_shikin", title: 'Twitter', target: '_blank' do
+            i.fab.fa-twitter.fa-lg
+
+
       .show_reviews.mb-4
         h2.text-left.mb-3.pl-2 レビューを投稿しましょう
         / レビューフォーム
