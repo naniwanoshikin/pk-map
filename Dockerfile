@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.0.4
 
 # デプロイ時につける: testができなくなる + SSL化される
 ENV RAILS_ENV=production

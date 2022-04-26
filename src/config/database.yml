@@ -17,10 +17,9 @@ test:
   database: app_test # (.circleci/config.yml)
   host: <%= ENV.fetch("APP_DATABASE_HOST") { 'db' } %>
 
-#   production:
-#     url: <%= ENV['MY_APP_DATABASE_URL'] %>
 
 production: # (herokuに接続)
+  # url: <%= ENV['MY_APP_DATABASE_URL'] %>
   <<: *default
   database: <%= ENV['APP_DATABASE'] %>
   username: <%= ENV['APP_DATABASE_USERNAME'] %>
