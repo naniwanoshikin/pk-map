@@ -5,7 +5,7 @@
 ```
 
 ## 公開ページ
-ページは[こちら](https://pk-map.herokuapp.com/)です。※表示まで1分程時間がかかります。<br>
+ページは[こちら](https://pk-map.herokuapp.com/)です。※表示に1分程かかります。<br>
 サーバーが停止していたり、Application errorになる場合は再度リロードをお願いします。
 
 |スポット一覧|スポット詳細|
@@ -29,6 +29,7 @@
 * 詳細画面
   <!-- APIを叩く Post(M) -->
   * 住所の表示
+  * Twitterシェア
   <!-- JavaScript, (comments/destroy)_ajax -->
   * 口コミ、評価
 
@@ -39,7 +40,6 @@
 ## 使用技術
 * フロントエンド
   * HTML/CSS/Sass
-  <!-- slimによるコード量削減 -->
   * Slim
   * JavaScript
   <!-- drawer.js -->
@@ -48,7 +48,7 @@
     <!-- ajax, ドロップダウン, flash[x], ローディング -->
     * jQuery 3.6.0
 * バックエンド
-  * Ruby 2.6.5
+  * Ruby 3.0.4
   * Rails 6.1.4
   <!-- 地図を表示 -->
   * Maps JavaScript API
@@ -73,8 +73,7 @@
   <!-- * drawio -->
 
 ## 今後の課題
-* 詳細画面
+* SPA構築: Rails API
+* スポット詳細
   - 住所の適切な変換
   - 住所の日本語化
-* ラジオボタン検索
-* レビューに対する返信

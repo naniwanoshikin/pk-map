@@ -1,6 +1,6 @@
 / (users/show) pagination ajax
 .spot_list.d-flex.justify-content-around
-  h2.text-dark スポット投稿一覧
+  h2.text-dark 投稿一覧
   - if @user.reviews.present?
     = link_to show_reviews_user_path(@user) do
       h2 レビュー一覧
@@ -11,6 +11,7 @@
     / (posts/post)
   = paginate @posts, remote: true
 - else
-  p まだ投稿していません
-  p
-    = link_to '投稿する', new_post_path
+  .text-center
+    p まだ投稿していません
+    p
+      = link_to '投稿する', new_post_path
