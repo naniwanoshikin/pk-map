@@ -71,9 +71,14 @@
   * Git, Github
   <!-- インフラ構成図 -->
   <!-- * drawio -->
+  <!-- ファビコン -->
+  <!-- * Adobe Fresco -->
 
 ## 今後の課題
-* SPA構築: Rails API
+* Youtube マニュアル動画作成
 * スポット詳細
   - 住所の適切な変換
   - 住所の日本語化
+
+## やっていないこと
+* SPA構築: Rails API
