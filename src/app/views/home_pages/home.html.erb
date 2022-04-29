@@ -1,7 +1,7 @@
 <% if user_signed_in? %>
   <%# ログイン後 %>
-  <%= render 'home_pages/home_login' %>
+  <%= render 'home_login' %>
 <% else %>
   <%# 未ログイン時 ローディング %>
-  <%= render 'home_pages/home' %>
+  <%= render 'home' %>
 <% end %>
