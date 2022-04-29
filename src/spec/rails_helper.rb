@@ -9,11 +9,15 @@ require 'rspec/rails'
 # Webアプリのブラウザ操作をシミュレーション (5.3)
 require 'capybara/rspec'
 
+# spec/support/ およびそのサブディレクトリにある、カスタムマッチャーやマクロなどを含むサポート用 Ruby ファイルが必要です。spec/**/*_spec.rb` にマッチするファイルは、デフォルトで spec ファイルとして実行されます。つまり、spec/supportにある_spec.rbで終わるファイルは、specとして要求され、実行されるので、specが2度実行されることになります。このグロブにマッチするファイル名を_spec.rbで終わらないようにすることをお勧めします。このパターンはコマンドラインの--patternオプション、または~/.rspec、.rspec、`.rspec-local`で設定することができます。
+
+# 便宜上、以下のような行程を設けています。サポートディレクトリにあるすべてのファイルを自動で要求するため、起動時間が長くなるという欠点があります。代わりに、個々の `*_spec.rb` ファイルで、必要なサポートファイルのみを手動で要求することもできます。
+
 # support/配下のファイルを読み込む (5)
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 
-# Checks for pending migrations and applies them before tests are run.
-# If you are not using ActiveRecord, you can remove these lines.
+# 保留中のマイグレーションをチェックし、テスト実行前に適用します。
+# ActiveRecordを使用しない場合は、これらの行を削除してください。
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -24,11 +28,11 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # Factory_bot
+  # 省略記法を使う create(:user)
   config.include FactoryBot::Syntax::Methods # 5
-  # ヘルパーメソッド使用するため
+  # ヘルパーメソッドを使用
   config.include TestHelper
-  config.include ApplicationHelper # 5
+  config.include ApplicationHelper
   config.include SystemHelper # 10
 
   config.use_transactional_fixtures = true

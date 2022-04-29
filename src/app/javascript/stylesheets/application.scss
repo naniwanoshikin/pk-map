@@ -36,7 +36,7 @@ p {
   line-height: 1.7em;
 }
 
-// (home)_ログイン前
+// (home/ログイン前)
 .jumbotron {
   // Sprockets では image-url('mie.JPG')
   background: center/cover url("../images/mie.JPG") rgba(255, 255, 255, 0.7); // webpack
@@ -50,6 +50,13 @@ p {
   h2 {
     margin-bottom: 50px;
   }
+}
+
+// (home/about)
+.rails_svg {
+  background: center/cover url("../images/rails.svg") no-repeat  rgba(255, 255, 255, 0.93); // webpack
+  background-blend-mode: lighten;
+  background-size: 75% auto;
 }
 
 /* forms */
