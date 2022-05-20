@@ -5,59 +5,6 @@
   box-sizing: border-box;
 }
 
-/* flash */
-
-// (layouts/flash) ログイン/アウト, Post, Review
-#flash_messages {
-  position: fixed;
-  width: 95%;
-  top: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  .alert {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #696969;
-    &-alert {
-      background: rgba(255, 208, 208, 0.9);
-    }
-    &-notice {
-      background: rgba(179, 230, 174, 0.9);
-    }
-    // [x]ボタン
-    .close {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-    }
-  }
-}
-// 上へ上がる
-.hidden_up {
-  animation: move 1.5s ease-in 5s forwards;
-  @keyframes move {
-    0% {
-      transform: translate(-50%, 0px);
-    }
-    100% {
-      transform: translate(-50%, -170px);
-    }
-  }
-}
-// ふわっと消える animationが上書きされない様 .hidden_upより下
-.hidden_fadeout {
-  animation: fadeout 1s both;
-  @keyframes fadeout {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-}
-
 /* forms */
 
 // (registrations/new), (posts/new), (reviews/form)
@@ -103,7 +50,6 @@ textarea {
   width: auto;
   margin-left: 0;
 }
-
 
 // ----------------------------------------
 /* pagination */

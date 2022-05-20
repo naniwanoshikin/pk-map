@@ -32,12 +32,9 @@ class User < ApplicationRecord
   has_many :passive_notifications, class_name: 'Notification',
   foreign_key: 'visited_id', dependent: :destroy
 
-  # modules
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :validatable
   # :confirmable
-  # その他
-  # :lockable, :timeoutable, :trackable and :omniauthable
 
   # 6
   validates :name, presence: true, length: { maximum: 50 }
@@ -127,7 +124,7 @@ class User < ApplicationRecord
   end
 
   # ----------------------------------------------
-  # selfがpostユーザーにreviewを通知
+  # selfがpostユーザーにreviewを通知する
   def notify_to_review!(post, review_id) # Reviews(C), seed
     # 自分以外にレビューしている人の投稿集id
     temp_ids = Review.select(:user_id, :created_at).where(post_id: post.id).where.not(user_id: id).distinct
@@ -136,7 +133,7 @@ class User < ApplicationRecord
     if temp_ids.blank?
       save_notify_review!(post, review_id, post.user_id)
     else
-      # 既にレビューしている人がいる場合
+      # 既に誰かがレビューしている場合
       temp_ids.each do |temp_id|
         save_notify_review!(post, review_id, temp_id['user_id'])
       end
@@ -149,10 +146,10 @@ class User < ApplicationRecord
     notification = self.active_notifications.new(
       visited_id: visited_id, # レビュー先の投稿ユーザー
       post_id: post.id,       # レビュー先の投稿
-      review_id: review_id, # レビューid
+      review_id: review_id,   # レビューid
       action: 'review'
     )
-    # 無効な通知 or 自分の投稿へのレビューは除く
+    # 無効な通知 or 自身の投稿へのレビューは除く
     return if notification.invalid? || notification.visitor_id == notification.visited_id
     # 通知
     notification.save
@@ -172,8 +169,8 @@ class User < ApplicationRecord
     good_reviews.include?(review)
   end
   # ----------------------------------------------
-  # userがreviewを低評価
-  def bad(review) # bads(C)
+  # userがreviewを低評価する
+  def bad(review) # (C)
     bads.create(review_id: review.id)
   end
   # 低評価を解除
@@ -186,15 +183,15 @@ class User < ApplicationRecord
   end
 
   # ----------------------------------------------
-  # selfがreview.userへ高評価を通知
+  # selfがreview.userへの高評価を通知する
   def notify_to_good!(review) # Goods(C)
-    # 既に高評価されているか検索 「ボタン連打」に備える
+    # 既に評価されているか検索 「ボタン連打」対策
     temp = Notification.where([
       "visitor_id = ? and visited_id = ?
       and review_id = ? and action = ? ",
-      id,           # 高評価したユーザー
-      review.user_id, # 高評価されるユーザー
-      review.id,      # 高評価した投稿id
+      id,             # 評価したユーザーid
+      review.user_id, # 評価されるユーザーid
+      review.id,      # 評価したレビューid
       'good'
     ])
     # 通知されていない場合
@@ -204,9 +201,9 @@ class User < ApplicationRecord
         review_id: review.id,
         action: 'good'
       )
-      # 無効な通知 or 自分の投稿への高評価は除く
+      # 無効な通知 or 自身のレビューへの評価は除く
       return if notification.invalid? || notification.visitor_id == notification.visited_id
-      # 通知する
+      # 通知
       notification.save
     end
   end

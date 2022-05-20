@@ -21,7 +21,8 @@ gem 'kaminari'    # 10
 gem 'ransack'     # 検索
 gem 'geocoder'    # 緯度経度
 gem 'dotenv-rails' # 環境変数
-gem 'gon'         # JS内で@インスタンス変数使える
+gem 'gon'         # JSで@インスタンス変数使える
+# gem 'rails_same_site_cookie' # Youtube iframe SameSite=None; Secure属性を追加 ちょっとまだわからない...
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

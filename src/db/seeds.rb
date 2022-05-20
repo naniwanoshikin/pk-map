@@ -40,7 +40,7 @@ user6 = users[5]
 user7 = users[6]
 user8 = users[7]
 
-# _______________________________________________________
+# -----------------------------------------------
 # followersがuserをフォロー
 [
   [users[2..14].sample(10), user1], # (3~15) 10人
@@ -64,7 +64,7 @@ user8 = users[7]
   }
 }
 
-# _______________________________________________________
+# -----------------------------------------------
 # 投稿
 # ヒットせず: クラフトパーク, MAXATTACK, 石が辻公園, 矢場町
 [
@@ -136,8 +136,7 @@ user8 = users[7]
   ]],
   [user2, '良い', '学びの森', '良い芝生だった', [
     [user4, 3, "まぁまぁな壁", []],
-    [user3, 4, "トリッキングバトルできる", [
-      user3, user5, user6, user8]],
+    [user3, 4, "トリッキングバトルできる", [user1, user5, user6, user8]],
     [user7, 4, "とてもやりやすい^_^", []],
   ]],
   [user1, '普通', '久屋大通公園', '旧ロサンゼルス広場', [
@@ -148,23 +147,24 @@ user8 = users[7]
 ].each do |user, quality, address, content, reviews|
   # userがpostする
   post = user.posts.create!(
-    content: content, # 投稿内容
+    content: content, # 投稿文
     address: address, # 住所
     spot_quality: quality, # 質
   )
   reviews.each do |other_user, score, his_content, good_users|
-    # 複数のother_userがそのpostにレビューする
+    # 複数のother_userがそのpostにreviewする
     review = other_user.reviews.create!(
-      post_id: post.id, # レビュー先の投稿
-      score: score,     # 投稿の点数
+      post_id: post.id,     # レビュー先の投稿
       content: his_content, # レビュー文
+      score: score,         # 点数
     )
     # 通知
     other_user.notify_to_review!(post, review.id)
 
-    # good_userがそのreviewを高評価 + 通知する
+    # good_userがそのreviewを高評価
     good_users.each do |good_user|
       good_user.good(review)
+      # 通知
       good_user.notify_to_good!(review)
     end
   end

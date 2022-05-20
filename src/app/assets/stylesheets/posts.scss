@@ -21,9 +21,9 @@
     }
   }
   main {
-    margin-bottom: 20px;
-    height: 240px; // ずれをなくすため仮設定
-    // aタグ
+    margin-bottom: 20px; // ⇄ (layouts/footer)
+    // height: 240px; // ずれをなくすため仮設定
+    // <a>
     .link {
       color: inherit;
       // text-decoration : none;
@@ -67,8 +67,6 @@
     display: flex;
     align-items: flex-end;
     .user_image {
-      display: flex;
-      align-items: center;
       .gravatar {
         margin-right: 10px;
       }
