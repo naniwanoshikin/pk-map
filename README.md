@@ -5,8 +5,8 @@
 ```
 
 ## 公開ページ
-ページは[こちら](https://pk-map.herokuapp.com/)です。※表示に1分程かかります。<br>
-サーバーが停止していたり、Application errorになる場合は再度リロードをお願いします。
+[公開ページ](https://pk-map.herokuapp.com/)です。表示に1分程かかります。<br>
+サーバーが停止していたりApplication errorになる場合は、リロードをお願いします。
 
 |スポット一覧|スポット詳細|
 |---|---|
@@ -65,7 +65,7 @@
     <!-- * System spec -->
     <!-- * Request spec -->
   * CircleCI
-  * Heroku 7.60.1
+  * Heroku 7.60.2
 * その他
   <!-- * Visual Studio Code -->
   * Git, Github
@@ -79,6 +79,4 @@
 * スポット詳細
   - 住所の適切な変換
   - 住所の日本語化
-
-## やっていないこと
-* SPA構築: Rails API
+<!-- * SPA構築 -->

@@ -4,43 +4,69 @@ h2 本アプリについて
 .container
   .row
     .col-md-9.mx-auto
-      div
-        p 外で動けそうなスポットを地図で探す中で、そこの情報や口コミを事前に知れるといいなと思い、本アプリを作成しました。
-        hr
       - if user_signed_in?
         div
-          h2 アプリ集計
-          ul
-            li
-              | 登録者数:
-              = User.all.length
-              | 人
-            li
-              | 投稿数:
-              = Post.all.length
-              | 個
-            li
-              | レビュー数:
-              = Review.all.length
-              | 個
-              | /通知
-              = Notification.where("action=?", 'review').all.length
-              | 件
-            li
-              | 高評価数:
-              = Good.all.length
-              | 個
-              | /通知
-              = Notification.where("action=?", 'good').all.length
-              | 件
-            li
-              | リレーションシップ:
-              = Relationship.all.length
-              | 個
-              | /通知
-              = Notification.where("action=?", 'follow').all.length
-              | 件
+          h2 データ集計
+          table.table.table-striped
+            thead
+              tr
+                th[scope="col"]
+                  |
+                th[scope="col"]
+                  | 件数
+                th[scope="col"]
+                  | 通知
+            tbody
+              tr
+                th[scope="row"]
+                  | 登録者数
+                td
+                  = User.all.length
+                  | 人
+                td
+                  | -
+              tr
+                th[scope="row"]
+                  | スポット投稿数
+                td
+                  = Post.all.length
+                  | 件
+                td
+                  | -
+              tr
+                th[scope="row"]
+                  | レビュー数
+                td
+                  = Review.all.length
+                  | 件
+                td
+                  = Notification.where("action=?", 'review').all.length
+                  | 件
+              - if Rails.env.development?
+                tr
+                  th[scope="row"]
+                    | 高評価数
+                    / なぜか乖離がある
+                  td
+                    = Good.all.length
+                    | 件
+                  td
+                    = Notification.where("action=?", 'good').all.length
+                    | 件
+                tr
+                  th[scope="row"]
+                    | リレーションシップ
+                  td
+                    = Relationship.all.length
+                    | 件
+                  td
+                    = Notification.where("action=?", 'follow').all.length
+                    | 件
           hr
+      div
+        h2 経緯
+        p 外で動けそうなスポットを地図で探す中で、そこの情報や口コミを事前に知れるといいなと思い、本アプリを作成しました。
+        hr
       div
         h2 対象者
         ul
@@ -55,7 +81,7 @@ h2 本アプリについて
         hr
       div
         h2 パルクールは誰にでもできる
-        p 私の思うパルクールの特徴を挙げます。
+        p パルクールは近年人気となりつつあるアーバンスポーツであり、トレーニングの１つです。以下に私の思う特徴を挙げます。
         ul
           li 年齢関係なく子供から大人までできる
           li 特別な道具なしで、手軽に始められる
@@ -66,27 +92,29 @@ h2 本アプリについて
         hr
       div
         h2 自分の能力を知る
-        p.mb-0 自身の能力の限界を知らずに無茶なことをすると怪我のリスクが付き纏います。よくイメージされるのは、建物の屋上から飛んだり、宙返りなどです。これらの行為は初心者には決しておすすめできないものでしょう。当然、筆者もできないし怖くてしようとも思いません。これらの行為は一見無謀とも捉えられがちですが、実は練習を積みに積み重ねた熟練者だけが年月をかけて成し得たものであったりするのです。
-        p 低リスクで自分のできることを探し、徐々に磨いていくのが得策でしょう。
-        hr
-      div
-        h2 初心者はまず教室を探そう
-        p 周囲の環境や安全を配慮することが大事です。まずは地元で教室を探してみましょう。講師に正しい動き方を教わればリスクを低減する方法を学べますし、施設など安全な場所で技を磨けば上達は早いです。
+        p.mb-0 自身の能力の限界を知らずに無茶なことをすると怪我のリスクが付き纏います。建物の屋上から飛んだり、宙返りなどは最たる例です。これらの行為は、一般人からすると無謀と捉えられがちでありますし、初心者には決しておすすめできないものです。当然、筆者も到底できる類のものではありません。一方、練習を積みに積み重ねた熟練者だけが年月をかけて成し得たものであったりするのです。
+        p 自分のレベルに適した低リスクでできることを探し、徐々に磨いていくのが得策でしょう。
         hr
       div.rails_svg
-        h2 おすすめのスポット
-        p 近場に施設がない人もいると思います。本アプリはそのような方々を想定して作成しました。本アプリでおすすめしているスポットを、ざっくりですが挙げます。
+        h2 おすすめのスポットと練習方法
+        p 近場に教室や施設がない人もいると思います。本アプリはそのような方々を想定して作成しました。本アプリでおすすめしているスポットを、ざっくりですが挙げます。
         ul.mr-5
           li 公園
           li 鉄棒
           li スロープ
           li 壁
-        / Youtube動画 埋め込み エラー出たので...
-        / iframe width="100%" height="300" src="https://www.youtube-nocookie.com/embed/qb_QhSlq0W4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+        p これらは公のものであり、子供が遊んでいたり、他の利用者に迷惑のかからないよう十分配慮する必要があります。
+        p
+          | 具体的な技は
+          = link_to 'こちら', "https://www.traceurs.info/vocabulary/", target: :_blank, rel: "noopener noreferrer"
+          | にまとめられています。初めは基礎を一通り触れるのがいいと思います。たくさんあるので、その後は自分の興味あるものを取り組んでいくといいと思います。やっていく内に自身の向き不向きが見つかるかもしれません。
+        p もし地元に教室があれば一度行ってみるのもいいかもしれません。講師から正しい動き方を教わればリスクを低減する方法を学べますし、施設など安全な場所で技を磨けば上達は早いです。
+        / Youtube動画 リンクより埋め込み エラー出た...
+        / iframe width="100%" height="300" src="https://www.youtube-nocookie.com/embed/qb_QhSlq0W4" title="YouTube video player"
         hr
       div
         h2 本アプリを活用しよう
-        p.mb-0 本アプリには他にもたくさんのスポットが投稿されています。皆さんが一度行ったことのあるスポットもあるかもしれません。そして筆者を含め、まだ誰も知らないスポットもたくさん隠れていることでしょう。
-        p 自身の限界を知り、周囲の環境や安全を配慮し、自身に見合ったスポットを探してみましょう。一緒にパルクールできるといいですね。本アプリが、外に出るきっかけになれば幸いです。
+        p.mb-0 本アプリには他にもたくさんのスポットが投稿されています。皆さんが一度行ったことのあるスポットもあるかもしれません。誰も知らないスポットもまだまだ隠れていることでしょう。
+        p 自身の能力を知り、安全や周囲の環境を配慮し、自身に見合ったスポットを探してみましょう。一緒に動けるといいですね。本アプリが、外に出るきっかけになれば幸いです。
         p.text-right.text-muted.font-weight-light
           | 2022.4 SHIKITTI

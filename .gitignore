@@ -5,6 +5,8 @@ src/.env
 src/vendor/bundle
 # メモ
 src/app/views/home_pages/aa.html.erb
+# DBデータ (docker-compose.yml volumes)
+src/db/mysql_data
 
 
 # Ignore bundler config.
@@ -37,6 +39,3 @@ src/node_modules
 src/yarn-error.log
 src/yarn-debug.log*
 src/.yarn-integrity
-
-# (docker-compose.yml volumes)
-src/db/mysql_data

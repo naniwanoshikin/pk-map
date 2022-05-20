@@ -21,22 +21,20 @@
     </div>
 
     <script>
-      // flash 消滅
-      // (review/destroy)_ajax時 letだとエラー??
+      // flash: (review/destroy)_ajax時 letだとエラー?
       let flash = document.getElementById('flash_messages');
+      // [x]
       let close = document.querySelector('.close');
       if (close) {
-        // - 上へ上がる 5秒後
-        flash.classList.add('hidden_up');
+        flash.classList.add('hidden_up'); // CSS上がる
         setTimeout(function () {
-          flash.remove(); // 消滅
+          flash.remove(); // 7秒後 HTML消滅
         }, 7000);
-        // - ふわっと消える
         close.addEventListener('click', () => {
-          flash.classList.add('hidden_fadeout');
+          flash.classList.add('hidden_out'); // CSS消える
           setTimeout(function () {
-            flash.remove();
-          }, 1000); // 1秒で CSS共通
+            flash.remove(); // 0.5秒後 HTML消滅
+          }, 500);
         }, false)
       } else {
         flash.style.display = "none" // 初期状態
