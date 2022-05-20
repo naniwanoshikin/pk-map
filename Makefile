@@ -22,7 +22,7 @@ pr:
 # シェル
 bash:
 	docker-compose run --rm web bash
-# コンソール ⇄ cntrl + d
+# コンソール
 c:
 	docker-compose exec web rails c
 cs:
@@ -35,7 +35,7 @@ routeu:
 routep:
 	docker-compose exec web rails routes | grep posts
 # Rubocop
-rbo:
+rb:
 	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
 # Rspec
 r:
@@ -54,26 +54,27 @@ m:
 	docker-compose exec web rails db:migrate
 mr:
 	docker-compose exec web rails db:migrate:reset
-seed:
-	docker-compose exec web rails db:seed
 md:
 	docker-compose exec web rails db:migrate:down VERSION=20220309035728
-st:
+ms:
 	docker-compose exec web rails db:migrate:status
+seed:
+	docker-compose exec web rails db:seed
 
-# デプロイ
-de:
+# -----------------------------------------------
+# プッシュ
+p:
 	git add .
-	git commit -m "about_css"
+	git commit -m "about_table"
 	git push origin map
+# マージ
+me:
+	git co main
+	git merge map
+	git branch -d map
+	git switch -c map
 
-
+# -----------------------------------------------
 # slim に変換 src/は消す erbは削除(バックアップ不可)
 slim:
 	docker-compose exec web bundle exec erb2slim app/views/home_pages/aa.html.erb app/views/home_pages/aa.html.slim -d
-# 特定の相対パス, 特定の拡張子のファイルを削除
-filed:
-	find src/app/views -type f -name "*.slim" -delete
-# 直前のコミットに戻る 特定のファイル
-co:
-	git checkout src/app/javascript/stylesheets
