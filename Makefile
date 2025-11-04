@@ -27,6 +27,10 @@ c:
 	docker-compose exec web rails c
 cs:
 	docker-compose exec web rails c --sandbox
+# mysql起動
+db:
+	docker-compose exec web rails db
+
 # ルーティング
 route:
 	docker-compose exec web rails routes
