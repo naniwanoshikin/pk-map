@@ -1,29 +1,26 @@
 # MySQL. Versions 5.5.8 and up are supported.
-#
+
 default: &default
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
   adapter: mysql2
   encoding: utf8mb4 # 5
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: password # (docker-compose.yml)
   host: db # (docker-compose.yml depends_on)
-
-development:
-  <<: *default
   database: app_development
 
 test:
-  <<: *default
+  adapter: mysql2
+  encoding: utf8mb4 # 5
+  username: root
+  password: password
+  host: db
   database: app_test # (.circleci/config.yml)
-  host: <%= ENV.fetch("APP_DATABASE_HOST") { 'db' } %>
-
 
 production: # (renderに接続)
-  <<: *default
   adapter: postgresql
   encoding: unicode
   database: <%= ENV['DATABASE_URL'] %>
   url: <%= ENV['DATABASE_URL'] %>
-  # username: <%= ENV['APP_DATABASE_USERNAME'] %>
-  # password: <%= ENV['APP_DATABASE_PASSWORD'] %>
-  # host: <%= ENV['APP_DATABASE_HOST'] %>

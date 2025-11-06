@@ -71,7 +71,7 @@ p:
 	git add .
 	git commit -m "render deploy"
 	git push origin map
-# ▶︎GitHub上で手動操作 プルリク&マージ
+# ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
 	git co main
 	git merge map
