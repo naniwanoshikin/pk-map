@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export RAILS_ENV=${RAILS_ENV:-development}
+
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
