@@ -13,12 +13,20 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor \
 WORKDIR /app
 COPY ./src /app
 
-# Production のみ bundle install
-RUN bundle config set without 'development test' \
-  && bundle install
+# ここが重要！ 環境変数に応じて bundle を切り替える
+ARG RAILS_ENV=development
+ENV RAILS_ENV=${RAILS_ENV}
+
+
+# 本番のときのみ dev/test を除外
+RUN if [ "$RAILS_ENV" = "production" ] ; then \
+      bundle config set without 'development test' ; \
+    fi && \
+    bundle install
 # bundle install しないとwebコンテナが起動しない
 
 COPY start.sh /start.sh
+# 実行権限
 RUN chmod +x /start.sh
 # Web サーバー起動は start.sh に任せる
 CMD ["sh", "/start.sh"]
