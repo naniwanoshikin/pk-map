@@ -69,9 +69,9 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "about_table"
+	git commit -m "render deploy"
 	git push origin map
-# マージ
+# ▶︎GitHub上で手動操作 プルリク&マージ
 me:
 	git co main
 	git merge map
