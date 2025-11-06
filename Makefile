@@ -77,6 +77,7 @@ me:
 	git merge map
 	git branch -d map
 	git switch -c map
+# ▶︎:wq 完了
 
 # -----------------------------------------------
 # slim に変換 src/は消す erbは削除(バックアップ不可)
