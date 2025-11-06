@@ -10,4 +10,4 @@ fi
 rm -f tmp/pids/server.pid
 
 # サーバ起動
-bundle exec rails s -p ${PORT:-3000} -b 0.0.0.0
+bundle exec rails s -b 0.0.0.0 -p ${PORT:-3000}
