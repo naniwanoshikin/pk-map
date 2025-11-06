@@ -6,6 +6,7 @@ export RAILS_ENV=${RAILS_ENV:-development}
 if [ "${RAILS_ENV}" = "production" ]
 then
   bundle exec rails assets:precompile
+  bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
 
 # server.pid 削除してから起動（Docker 再起動時のエラー防止）
