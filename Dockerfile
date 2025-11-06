@@ -2,11 +2,11 @@ FROM ruby:3.0.4
 
 # ENV RAILS_ENV=production (これはRender 側で渡す)
 
+# Node / Yarn / MariaDB client（DBコンソール用）
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
   && apt-get update -qq \
   && apt-get install -y nodejs yarn mariadb-client
-# DBコンソール使う場合: mariadb-client
 
 WORKDIR /app
 COPY ./src /app
