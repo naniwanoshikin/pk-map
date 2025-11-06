@@ -3,6 +3,7 @@ max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 port        ENV.fetch("PORT") { 3000 }
+bind "tcp://0.0.0.0:#{ENV.fetch('PORT') { 3000 }}"  # Render で追加
 environment ENV.fetch("RAILS_ENV") { ENV['RACK_ENV'] || "production" } # 7
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 workers ENV.fetch("WEB_CONCURRENCY") { 2 }
