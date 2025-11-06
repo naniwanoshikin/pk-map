@@ -10,7 +10,8 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 WORKDIR /app
 COPY ./src /app
-RUN bundle install --without development test
+RUN bundle config --local set without 'development test' \
+  && bundle install
 # bundle install しないとwebコンテナが起動しない
 
 COPY start.sh /start.sh
