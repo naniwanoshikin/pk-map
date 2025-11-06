@@ -2,7 +2,7 @@
 #
 default: &default
   adapter: mysql2
-  encoding: utf8 # 5 utf8mb4から変更
+  encoding: utf8mb4 # 5
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: password # (docker-compose.yml)
@@ -18,10 +18,12 @@ test:
   host: <%= ENV.fetch("APP_DATABASE_HOST") { 'db' } %>
 
 
-production: # (herokuに接続)
-  # url: <%= ENV['MY_APP_DATABASE_URL'] %>
+production: # (renderに接続)
   <<: *default
-  database: <%= ENV['APP_DATABASE'] %>
-  username: <%= ENV['APP_DATABASE_USERNAME'] %>
-  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
-  host: <%= ENV['APP_DATABASE_HOST'] %>
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV['DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  # username: <%= ENV['APP_DATABASE_USERNAME'] %>
+  # password: <%= ENV['APP_DATABASE_PASSWORD'] %>
+  # host: <%= ENV['APP_DATABASE_HOST'] %>
