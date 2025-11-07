@@ -23,6 +23,11 @@ gem 'dotenv-rails' # 環境変数
 gem 'gon'         # JSで@インスタンス変数使える
 # gem 'rails_same_site_cookie' # Youtube iframe SameSite=None; Secure属性を追加 ちょっとまだわからない...
 
+# Docker 3.1系で必須
+gem 'net-smtp', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+
 group :development, :test do
   gem 'mysql2', '~> 0.5' # renderに変更した為こちらへ
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
