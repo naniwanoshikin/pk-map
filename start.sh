@@ -1,10 +1,14 @@
 #!/bin/sh
 
+# 途中でエラーが出たら止まる
+set -o errexit
+
 export RAILS_ENV=${RAILS_ENV:-development}
 
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
+  echo "Precompiling assets and migrating database..."
   bundle exec rails assets:precompile
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
