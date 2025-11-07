@@ -48,7 +48,7 @@
     <!-- ajax, ドロップダウン, flash[x], ローディング -->
     * jQuery 3.6.0
 * バックエンド
-  * Ruby 3.0.4
+  * Ruby 3.0.8
   * Rails 6.1.4
   <!-- 地図を表示 -->
   * Maps JavaScript API
