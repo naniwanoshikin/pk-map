@@ -1,4 +1,4 @@
-FROM ruby:3.1.6
+FROM ruby:3.0.8
 
 # ENV RAILS_ENV=production (これはRender 側で渡す)
 
