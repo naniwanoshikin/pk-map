@@ -11,10 +11,14 @@
 <%= include_gon %>
 <%# pagination アイコン %>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-<%# これがないと本番環境でなぜかエラー %>
+<%# CSSを読み込み Sprocketsで管理 %>
 <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-<%# これがないと本番環境でwebpack以下が読み込めない %>
-<%# <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<%# CSSを読み込み Webpackerで管理 開発環境だけ %>
+<% if Rails.env.development? %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
 <%# 全ファイルでJSを読み込む %>
 <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
