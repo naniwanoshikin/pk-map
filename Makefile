@@ -19,7 +19,7 @@ down:
 pr:
 	docker system prune
 
-# シェル
+# シェル 出る時: exit
 bash:
 	docker-compose run --rm web bash
 # コンソール
