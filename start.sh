@@ -8,7 +8,8 @@ export RAILS_ENV=${RAILS_ENV:-development}
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
-  echo "Precompiling assets and migrating database..."
+  yarn install # 追加
+  bundle exec rails webpacker:compile # 追加
   bundle exec rails assets:precompile
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
