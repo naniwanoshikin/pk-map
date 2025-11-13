@@ -4,6 +4,8 @@
 set -o errexit
 
 export RAILS_ENV=${RAILS_ENV:-development}
+export NODE_OPTIONS=--openssl-legacy-provider  # Webpack 4とNode.js 18の互換性
+
 
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
