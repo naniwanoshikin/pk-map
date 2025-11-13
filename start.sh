@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 途中でエラーが出たら止まる
 set -o errexit
