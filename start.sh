@@ -17,7 +17,7 @@ then
 fi
 
 # server.pid 削除してから起動（Docker 再起動時のエラー防止）
-rm -f tmp/pids/server.pid
+rm -f src/tmp/pids/server.pid
 
 # サーバ起動
 bundle exec rails s -b 0.0.0.0 -p ${PORT:-3000}
