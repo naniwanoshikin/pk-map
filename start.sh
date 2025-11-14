@@ -10,10 +10,10 @@ export RAILS_ENV=${RAILS_ENV:-development}
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
-  echo "=== pkmap production...zzz ==="
-  # yarn install --check-files # Renderではメモリ不足エラーなる為コメントアウト
-  # bundle exec rails webpacker:compile # 追加 Renderではメモリ不足エラーなる為コメントアウト
-  # bundle exec rails assets:precompile # エラー出るのでコメントアウト
+  echo "=== start.sh production なう zzz ==="
+  # yarn install --check-files # Renderでエラー メモリ不足
+  bundle exec rails webpacker:compile # Renderでエラー メモリ不足
+  # bundle exec rails assets:precompile # Renderでエラー
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
 
