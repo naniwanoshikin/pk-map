@@ -4,7 +4,7 @@
 set -o errexit
 
 export RAILS_ENV=${RAILS_ENV:-development}
-export NODE_OPTIONS=--openssl-legacy-provider  # Webpack 4とNode.js 18の互換性
+export NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=460"  # Webpack 4とNode.js 18の互換性 / メモリ制限
 
 
 # 本番環境の時だけ実行
@@ -17,7 +17,7 @@ then
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
 
-# server.pid 削除してから起動（Docker 再起動時のエラー防止）
+# server.pid 削除 （Docker 再起動時のエラー防止）
 rm -f tmp/pids/server.pid
 
 # サーバ起動
