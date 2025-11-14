@@ -4,16 +4,16 @@
 set -o errexit
 
 export RAILS_ENV=${RAILS_ENV:-development}
-export NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=460"  # Webpack 4とNode.js 18の互換性 / メモリ制限
+# export NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=460"  # Webpack 4とNode.js 18の互換性 / メモリ制限
 
 
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
-  echo "=== Installing and compiling assets ==="
-  # yarn install --check-files # Renderではメモリ不足でエラーなる為コメントアウト
-  # bundle exec rails webpacker:compile # 追加 Renderではメモリ不足でエラーなる為コメントアウト
-  bundle exec rails assets:precompile
+  echo "=== pkmap production...zzz ==="
+  # yarn install --check-files # Renderではメモリ不足エラーなる為コメントアウト
+  # bundle exec rails webpacker:compile # 追加 Renderではメモリ不足エラーなる為コメントアウト
+  # bundle exec rails assets:precompile # エラー出るのでコメントアウト
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
 
