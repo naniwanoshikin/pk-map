@@ -14,7 +14,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'      # 5
 gem 'devise-i18n' # 5
 gem 'slim-rails'  # 6
-gem 'html2slim'   # 6
+# gem 'html2slim'   # 6 Slim変換
 gem 'faker'       # 10
 gem 'kaminari'    # 10
 gem 'ransack'     # 検索
