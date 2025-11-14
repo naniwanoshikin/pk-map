@@ -17,7 +17,6 @@ then
   # bundle exec rails assets:precompile # Renderでエラー
   echo "=== 今からマイグレーション実行するお ==="
   bundle exec rails db:migrate
-  bundle exec rails db:seed
 fi
 
 # server.pid 削除 （Docker 再起動時のエラー防止）
