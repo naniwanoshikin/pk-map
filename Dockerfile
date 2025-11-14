@@ -18,12 +18,19 @@ ARG RAILS_ENV=development
 ENV RAILS_ENV=${RAILS_ENV}
 
 
-# 本番のときのみ dev/test を除外
+# 本番のみ dev/test を除外
 RUN if [ "$RAILS_ENV" = "production" ] ; then \
       bundle config set without 'development test' ; \
     fi && \
     bundle install
 # bundle install しないとwebコンテナが起動しない
+
+# 本番のみ アセットビルド start.sh で記述するとエラー出た為
+RUN if [ "$RAILS_ENV" = "production" ] ; then \
+      yarn install --check-files && \
+      bundle exec rails webpacker:compile && \
+      bundle exec rails assets:precompile ; \
+    fi
 
 COPY start.sh /start.sh
 # 実行権限
