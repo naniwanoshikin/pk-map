@@ -12,8 +12,9 @@ if [ "${RAILS_ENV}" = "production" ]
 then
   echo "=== start.sh production なう zzz ==="
   # yarn install --check-files # Renderでエラー メモリ不足
-  bundle exec rails webpacker:compile # Renderでエラー メモリ不足
-  # bundle exec rails assets:precompile # Renderでエラー
+  # bundle exec rails webpacker:compile # Renderでエラー メモリ不足
+  bundle exec rails assets:precompile # Renderでエラー
+  echo "=== マイグレーション実行するお zzz ==="
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
 
