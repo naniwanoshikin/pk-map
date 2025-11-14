@@ -11,11 +11,11 @@ export RUBYOPT="-W0"  # 全ての警告を抑制（追加）
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
-  echo "=== start.sh production のみな zzz ==="
+  echo "=== 今からstart.sh production のみ ==="
   # yarn install --check-files # Renderでエラー メモリ不足
   # bundle exec rails webpacker:compile # Renderでエラー メモリ不足
   # bundle exec rails assets:precompile # Renderでエラー
-  echo "=== マイグレーション実行するお ==="
+  echo "=== 今からマイグレーション実行するお ==="
   bundle exec rails db:migrate
 fi
 
