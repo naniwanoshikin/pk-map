@@ -4,6 +4,7 @@
 set -o errexit
 
 export RAILS_ENV=${RAILS_ENV:-development}
+export RUBYOPT="-W0"  # 全ての警告を抑制（追加）
 # export NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=460"  # Webpack 4とNode.js 18の互換性 / メモリ制限
 
 
@@ -13,7 +14,7 @@ then
   echo "=== start.sh production のみな zzz ==="
   # yarn install --check-files # Renderでエラー メモリ不足
   # bundle exec rails webpacker:compile # Renderでエラー メモリ不足
-  bundle exec rails assets:precompile # Renderでエラー
+  # bundle exec rails assets:precompile # Renderでエラー
   echo "=== マイグレーション実行するお ==="
   bundle exec rails db:migrate
 fi
