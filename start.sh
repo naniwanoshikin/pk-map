@@ -14,11 +14,10 @@ rm -f tmp/pids/server.pid
 echo "=== 今からマイグレーション実行するお ==="
 bundle exec rails db:migrate
 
-# 本番環境の時だけ実行
-if [ "${RAILS_ENV}" = "production" ]
-then
-  echo "=== 今から本番でコンパイルするお ==="
+# まだ pack がないときだけコンパイルする
+if [ ! -d "public/packs" ]; then
   yarn install --check-files # Renderでエラー メモリ不足
+  echo "=== 今からコンパイルするお ==="
   bundle exec rails webpacker:compile # Renderでエラー メモリ不足
   bundle exec rails assets:precompile # Renderでエラー
 fi
