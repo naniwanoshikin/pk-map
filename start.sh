@@ -11,8 +11,8 @@ export NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=460"  # Webp
 if [ "${RAILS_ENV}" = "production" ]
 then
   echo "=== Installing and compiling assets ==="
-  yarn install --check-files # 追加
-  bundle exec rails webpacker:compile # 追加
+  # yarn install --check-files # Renderではメモリ不足でエラーなる為コメントアウト
+  # bundle exec rails webpacker:compile # 追加 Renderではメモリ不足でエラーなる為コメントアウト
   bundle exec rails assets:precompile
   bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
 fi
