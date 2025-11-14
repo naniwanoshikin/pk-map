@@ -10,12 +10,12 @@ export RAILS_ENV=${RAILS_ENV:-development}
 # 本番環境の時だけ実行
 if [ "${RAILS_ENV}" = "production" ]
 then
-  echo "=== start.sh production なう zzz ==="
+  echo "=== start.sh production のみな zzz ==="
   # yarn install --check-files # Renderでエラー メモリ不足
   # bundle exec rails webpacker:compile # Renderでエラー メモリ不足
   bundle exec rails assets:precompile # Renderでエラー
-  echo "=== マイグレーション実行するお zzz ==="
-  bundle exec rails db:migrate # Render側に入れると有料になる為こちらに入れた
+  echo "=== マイグレーション実行するお ==="
+  bundle exec rails db:migrate
 fi
 
 # server.pid 削除 （Docker 再起動時のエラー防止）

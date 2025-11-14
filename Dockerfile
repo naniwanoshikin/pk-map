@@ -13,7 +13,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor \
 WORKDIR /app
 COPY ./src /app
 
-# ここが重要！ 環境変数に応じて bundle を切り替える
+# 環境変数に応じて bundle を切り替える！
 ARG RAILS_ENV=development
 ENV RAILS_ENV=${RAILS_ENV}
 
