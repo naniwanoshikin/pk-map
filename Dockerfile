@@ -17,6 +17,8 @@ COPY ./src /app
 ARG RAILS_ENV=development
 ENV RAILS_ENV=${RAILS_ENV}
 
+# bundler を lockfile のバージョンに揃える
+RUN gem install bundler -v 2.2.33
 
 # 本番のときのみ dev/test を除外
 RUN if [ "$RAILS_ENV" = "production" ] ; then \
