@@ -27,6 +27,11 @@ RUN if [ "$RAILS_ENV" = "production" ] ; then \
     bundle install
 # bundle install しないとwebコンテナが起動しない
 
+# 👇 本番環境（production）のときだけCSS/JSをビルドする設定
+RUN if [ "$RAILS_ENV" = "production" ] ; then \
+      SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile ; \
+    fi
+
 COPY start.sh /start.sh
 # 実行権限
 RUN chmod +x /start.sh
