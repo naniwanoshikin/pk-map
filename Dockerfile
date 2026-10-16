@@ -27,9 +27,12 @@ RUN if [ "$RAILS_ENV" = "production" ] ; then \
     bundle install
 # bundle install しないとwebコンテナが起動しない
 
-# 👇 本番環境（production）のときだけCSS/JSをビルドする設定
+# 👇 【超重要】Railsのルート（/app）の直下で、必要な環境変数をすべて揃えてCSSをビルドする
 RUN if [ "$RAILS_ENV" = "production" ] ; then \
-      NODE_OPTIONS="--openssl-legacy-provider" SECRET_KEY_BASE=1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef bundle exec rails assets:precompile ; \
+      NODE_OPTIONS="--openssl-legacy-provider" \
+      RAILS_ENV=production \
+      SECRET_KEY_BASE=1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef \
+      bundle exec rails assets:precompile ; \
     fi
 
 COPY start.sh /start.sh
