@@ -5,7 +5,7 @@
 ```
 
 ## 公開ページ
-[公開ページ](https://pk-map.herokuapp.com/)です。表示に1分程かかります。<br>
+[公開ページ](https://pkmap.onrender.com)です。表示に1分程かかります。<br>
 サーバーが停止していたりApplication errorになる場合は、リロードをお願いします。
 
 |スポット一覧|スポット詳細|
@@ -65,7 +65,7 @@
     <!-- * System spec -->
     <!-- * Request spec -->
   * CircleCI
-  * Heroku 7.60.2
+  <!-- * Heroku 7.60.2 -->
 * その他
   <!-- * Visual Studio Code -->
   * Git, Github
