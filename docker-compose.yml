@@ -7,13 +7,13 @@ services:
     volumes:
       - ./src/db/mysql_data:/var/lib/mysql
     environment:
-      # TZ: Asia/Tokyo # ログに反映されない? webがexitedになる?
       MYSQL_ROOT_PASSWORD: password # (config/database.yml)
+      TZ: Asia/Tokyo # 日本時間に統一
   web:
     build:
       context: .
       args:
-        RAILS_ENV: development   # ← 開発用を明示
+        RAILS_ENV: development   # 明示的につけておく
     command: /start.sh
     volumes:
       - ./src:/app
@@ -24,10 +24,15 @@ services:
     depends_on:
       - db # (config/database.yml)
     environment: # Rspec用
-      - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
-      - "RAILS_ENV=development" # つけた方がいい？
+      RAILS_ENV: development
+      TZ: Asia/Tokyo
+      SELENIUM_DRIVER_UR: "http://chrome:4444/wd/hub"
 
-  chrome: # テスト実行用コンテナ できず
+  chrome: # テスト実行用コンテナ
     image: selenium/standalone-chrome-debug
     ports:
       - '4444:4444'
+      - '5900:5900' # 💡 VNCViewerなどでブラウザの動きを画面で確認したい場合に便利
+    depends_on:
+      - web
+
