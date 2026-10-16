@@ -29,7 +29,7 @@ RUN if [ "$RAILS_ENV" = "production" ] ; then \
 
 # 👇 本番環境（production）のときだけCSS/JSをビルドする設定
 RUN if [ "$RAILS_ENV" = "production" ] ; then \
-      SECRET_KEY_BASE=1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef bundle exec rails assets:precompile ; \
+      NODE_OPTIONS="--openssl-legacy-provider" SECRET_KEY_BASE=1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef bundle exec rails assets:precompile ; \
     fi
 
 COPY start.sh /start.sh
