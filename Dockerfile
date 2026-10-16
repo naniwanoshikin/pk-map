@@ -1,4 +1,4 @@
-FROM ruby:3.1.10
+FROM ruby:3.1.6
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor \
   | tee /usr/share/keyrings/yarn-archive-keyring.gpg > /dev/null \
