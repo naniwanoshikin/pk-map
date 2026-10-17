@@ -1,6 +1,5 @@
 / 投稿詳細 Posts(C)
-h2
-  = @post.address
+h2 = @post.address
 
 .container
   .row
@@ -17,20 +16,18 @@ h2
       / 地図
       #detail_map
 
-
       .post_state.pl-4.my-4
         / 戻る
         = link_to 'javascript:history.back()' do
           i.fas.fa-long-arrow-alt-left.fa-lg
         / 情報
         .ml-4
-          .text-muted
-            = @post.content
-          / 住所 Post(M)
+          .text-muted = @post.content
+          / Post(M)
           .text-muted.mt-2
-            | 住所:
+            | 場所:
             = @post.munic
-          / 芝生の質
+          /
           - if @post.spot_quality.present?
             .text-muted.mt-2
               | 芝生:
@@ -38,7 +35,8 @@ h2
 
         / Twitter
         .ml-5
-          = link_to "http://twitter.com/share?text=#{@post.address}%20の口コミ&hashtags=パルクール,pkmap&url=#{post_url}&via=power_of_shikin", title: 'Twitter', target: '_blank' do
+          - twitter_url = "http://twitter.com/share?text=#{u(@post.address)} の口コミ&hashtags=パルクール,pkmap&url=#{u(request.original_url)}&via=power_of_shikin"
+          = link_to twitter_url, title: 'Twitter', target: '_blank', rel: 'noopener' do
             i.fab.fa-twitter.fa-lg
 
 
@@ -53,45 +51,54 @@ h2
         = render @review
         / (reviews/_review) @reviewsだと複製
 
+/ Google Maps APIのスクリプト読み込み
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap&libraries=marker".html_safe
 
-- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap".html_safe
-script{ async src=google_api }
+script(async=true defer=true src=google_api)
 
 javascript:
 
   let show_map;
 
   function initMap() {
-    geocoder = new google.maps.Geocoder()
-
     const target = document.getElementById('detail_map')
+    if (!target) return;
+
+    // Rubyの変数から直接数値を取得し、nilの場合は0（またはデフォルト値）
+    const lat = parseFloat(#{@post.latitude || 0});
+    const lng = parseFloat(#{@post.longitude || 0});
+    const content = "#{j @post.content}";
+
+    // もし座標が取れていなければデバッグ
+    if (lat === 0 && lng === 0) {
+      console.warn("警告: 投稿の座標（緯度・経度）が取得できていません。");
+    }
 
     show_map = new google.maps.Map(target, {
-      center: {
-        lat: gon.post.latitude,
-        lng: gon.post.longitude
-      },
+      center: { lat: lat, lng: lng },
       zoom: 15,
       mapTypeControl: false, // 地図|航空写真
+      mapId: 'DEMO_MAP_ID' // AdvancedMarker に必須の記述
     });
 
-    marker = new google.maps.Marker({
-      position: {
-        lat: gon.post.latitude,
-        lng: gon.post.longitude
-      },
-      map: show_map
+    const marker = new google.maps.marker.AdvancedMarkerElement({
+      position: { lat: lat, lng: lng },
+      map: show_map,
+      title: content
     });
     // 吹き出し
-    infowindow = new google.maps.InfoWindow();
-    marker.addListener('click', function() {
+    const infowindow = new google.maps.InfoWindow();
+    marker.addEventListener('gmp-click', function() {
       infowindow.setContent(
         // 画像
         '<div class="infowindow">'
-        + `<span class="">${gon.post.content}</span>`
-        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${gon.post.latitude},${gon.post.longitude}&key=#{ ENV['GOOGLE_MAP_API'] }' >`
+        + `<span class="">${content}</span>`
+        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${lat},${lng}&key=#{ ENV['GOOGLE_MAP_API'] }' >`
         + '</div>'
       );
       infowindow.open(show_map, marker);
     });
   }
+
+  // ページを戻った時にもしっかり再描画させる
+  document.addEventListener('turbolinks:load', initMap);
