@@ -5,7 +5,7 @@
 ```
 
 ## 公開ページ
-[公開ページ](https://pkmap.onrender.com)です。表示に1分程かかります。<br>
+[公開ページ](https://pkmap.onrender.com)です。表示に時間がかかります。<br>
 
 |スポット一覧|スポット詳細|
 |---|---|
@@ -55,15 +55,17 @@
   <!-- * Geocoding API -->
   <!-- ストリートビュー -->
   <!-- * Street View Static API -->
-* インフラ
-  * Docker 20.10.13
+* インフラ 開発環境
+  * Docker 20.10.17
   * docker-compose 2.3.3
-  <!-- * Puma -->
   * MySQL 8.0
   * RSpec 3.10
     <!-- * System spec -->
     <!-- * Request spec -->
   * CircleCI
+* インフラ 本番環境
+  * Render (Docker Web Service)
+  * Neon (サーバーレス PostgreSQL)
   <!-- * Heroku 7.60.2 -->
 * その他
   <!-- * Visual Studio Code -->
