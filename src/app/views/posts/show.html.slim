@@ -11,15 +11,12 @@ h2
         / 投稿削除
         .float-right
           - if current_user?(@post.user)
-            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" }
+            = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" } do
               i.fas.fa-trash-alt.fa-lg
 
       / 地図
       #detail_map
 
-      / 画像
-      / .show_img
-      /  = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{@post.latitude},#{@post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
 
       .post_state.pl-4.my-4
         / 戻る
@@ -31,12 +28,12 @@ h2
             = @post.content
           / 住所 Post(M)
           .text-muted.mt-2
-            | 住所: 
+            | 住所:
             = @post.munic
           / 芝生の質
           - if @post.spot_quality.present?
             .text-muted.mt-2
-              | 芝生: 
+              | 芝生:
               = @post.spot_quality
 
         / Twitter
@@ -92,7 +89,7 @@ javascript:
         // 画像
         '<div class="infowindow">'
         + `<span class="">${gon.post.content}</span>`
-        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${gon.post.latitude},${gon.post.longitude}&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }' >`
+        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${gon.post.latitude},${gon.post.longitude}&key=#{ ENV['GOOGLE_MAP_API'] }' >`
         + '</div>'
       );
       infowindow.open(show_map, marker);
