@@ -56,6 +56,7 @@ rh:
 # migrate
 m:
 	docker-compose exec web rails db:migrate
+# データ削除
 mr:
 	docker-compose exec web rails db:migrate:reset
 md:
