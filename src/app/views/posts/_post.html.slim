@@ -25,14 +25,14 @@ div id="post-#{post.id}"
           .average_number
             = post.avg_score
             |  (
-            = post.reviews.count
+            = post.reviews.size
             | )
       / 画像
-      = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480" + "&heading=160&fov=120" + "&location=#{post.latitude},#{post.longitude}" + "&sensor=true&key=#{ ENV['GOOGLE_MAP_API'] }"
+      = image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=#{post.latitude},#{post.longitude}&key=#{ENV['GOOGLE_MAP_API']}"
 
       / 投稿文
       .content
-          = simple_format post.content
+        = simple_format post.content
 
   footer
     .user_image
