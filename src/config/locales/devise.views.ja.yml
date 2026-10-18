@@ -30,11 +30,20 @@ ja:
         updated_at: 更新日
       post:
         address: スポット名
+        spot_quality: スポットの質
         spot_type: タイプ
         content: スポット詳細
       comment:
         score: 星レビュー
         content: コメント
+
+    # 新規投稿画面用
+    errors:
+      models:
+        post:
+          attributes:
+            spot_quality:
+              blank: "を選択してください"
     models:
       user: ユーザー
   devise:

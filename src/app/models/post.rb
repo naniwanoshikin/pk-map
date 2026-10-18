@@ -8,9 +8,9 @@ class Post < ApplicationRecord
   has_many :notifications, dependent: :destroy
 
   validates :user_id, presence: true
-  validates :content, presence: true, length: { maximum: 140 }
   validates :address, presence: true
-  # validates :spot_type, presence: true # seedで引っかかるため
+  validates :spot_quality, presence: true
+  # validates :content, presence: true, length: { maximum: 140 }
 
   # addressが登録されたら, 緯度経度も自動登録
   geocoded_by :address
@@ -38,7 +38,7 @@ class Post < ApplicationRecord
   def munic # (posts/show)
     spot_name = URI.encode_www_form({
       address: self.address,
-      language: 'ja', # 住所を日本語化 海外のサーバー対策
+      language: 'ja', # 住所を日本語化
       components: 'country:JP' # 検索結果を日本に限定
     })
     # APIを叩く

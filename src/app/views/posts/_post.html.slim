@@ -3,7 +3,7 @@
 div id="post-#{post.id}"
   / スポット名 JS_検索用id (shared/feed)_エラー出るため停止
   header id="post_header#{post.id}"
-    = post.address
+    h5.m-0 = post.address
     / = post.latitude
     / | ,
     / = post.longitude
@@ -32,12 +32,12 @@ div id="post-#{post.id}"
 
       / 投稿文
       .content
-        = simple_format post.content
+        = simple_format post.content, {}, wrapper_tag: :span
 
-  footer
+  footer.card-footer.p-1.bg-white
     .user_image
       / 画像
-      = link_to gravatar_for(post.user, size: 20), post.user
+      = link_to gravatar_for(post.user, size: 30), post.user
     / 3分前
     .timestamp
       = time_ago_in_words(post.created_at)
