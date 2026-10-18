@@ -83,7 +83,7 @@
             // リンク + 画像
             '<div class="infowindow">'
             + `<a href='/posts/${feed.id}'>${feed.address}</a>`
-            + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${feed.latitude},${feed.longitude}&sensor=true&key=<%= ENV['GOOGLE_MAP_API'] %>' >`
+            + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${feed.latitude},${feed.longitude}&key=<%= ENV['GOOGLE_MAP_API'] %>' >`
             + '</div>'
           );
           infowindow.open(map, the_marker); // 表示
@@ -93,4 +93,4 @@
   }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&callback=initMap&libraries=marker" async defer></script>

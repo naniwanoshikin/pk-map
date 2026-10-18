@@ -30,5 +30,9 @@ module App
 
     # 認証トークンをremoteフォームに埋め込む 14
     config.action_view.embed_authenticity_token_in_remote_forms = true
+
+
+    # バリデーションエラー時の class="field_with_errors" 生成をしない
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag.html_safe }
   end
 end
