@@ -1,22 +1,19 @@
 # MySQL. Versions 5.5.8 and up are supported.
 
 default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db           # (docker-compose.yml)depends_on
+  username: root     # (docker-compose.yml)POSTGRES_USER
+  password: password # (docker-compose.yml)POSTGRES_PASSWORD
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  adapter: mysql2
-  encoding: utf8mb4 # 5
-  username: root
-  password: password # (docker-compose.yml)
-  host: db # (docker-compose.yml depends_on)
+  <<: *default
   database: app_development
 
 test:
-  adapter: mysql2
-  encoding: utf8mb4 # 5
-  username: root
-  password: password
-  host: db
+  <<: *default
   database: app_test # (.circleci/config.yml)
 
 production: # (renderに接続)

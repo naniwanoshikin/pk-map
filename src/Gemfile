@@ -28,8 +28,10 @@ gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false
 
+
+gem 'pg', '~> 1.5' # すべての環境でPostgreSQLを使用
+
 group :development, :test do
-  gem 'mysql2', '~> 0.5' # renderに変更した為こちらへ
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.1.0'
   gem 'hirb'              # 5
@@ -55,4 +57,3 @@ group :test do
   gem 'webdrivers'
 end
 
-gem 'pg', '~> 1.5', group: :production # renderで使用 本番用

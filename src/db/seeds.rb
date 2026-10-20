@@ -1,35 +1,31 @@
 # 管理ユーザー
-user1 = User.create!(
-  name:  "Jason Pole",
-  email: "example@railstutorial.org",
-  password:              "foobar", # spec
-  password_confirmation: "foobar",
-  admin: true,
-  address: '大阪城公園'
-)
+user1 = User.find_or_create_by!(email: "example@railstutorial.org") do |user|
+  user.name                  = "Jason Pole"
+  user.password              = "foobar" # spec
+  user.password_confirmation = "foobar"
+  user.admin                 = true
+  user.address               = '大阪城公園'
+end
 
 # ゲストユーザー
-user2 = User.create!(
-  name:  "ゲスト鈴木",
-  email: "example-1@railstutorial.org",
-  password:              "foobar",
-  password_confirmation: "foobar",
-  address: '上汐町公園'
-)
+user2 = User.find_or_create_by!(email: "example-1@railstutorial.org") do |user|
+  user.name                  = "ゲスト鈴木"
+  user.password              = "foobar"
+  user.password_confirmation = "foobar"
+  user.address               = '上汐町公園'
+end
 
 # 一般ユーザー n=0
 28.times do |n|
-  name  = Faker::Name.name
   email = "example-#{n+2}@railstutorial.org"
-  password = "password"
-  User.create!(
-    name:  name,
-    email: email,
-    password:              password,
-    password_confirmation: password,
-    address: Faker::Address.city
+
+  User.find_or_create_by!(email: email) do |user|
+    user.name                  = Faker::Name.name
+    user.password              = "password"
+    user.password_confirmation = "password"
+    user.address               = Faker::Address.city
     # https://github.com/faker-ruby/faker
-  )
+  end
 end
 
 users = User.all
