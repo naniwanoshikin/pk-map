@@ -2,18 +2,20 @@ version: '3.8'
 
 services:
   db:
-    image: mysql:8.0
-    command: --authentication_policy=mysql_native_password
+    image: postgres:17-alpine # 本番環境に合わせる
     volumes:
-      - ./src/db/mysql_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data #保存先
     environment:
-      MYSQL_ROOT_PASSWORD: password # (config/database.yml)
+      POSTGRES_USER: root # (config/database.yml)
+      POSTGRES_PASSWORD: password # (config/database.yml)
       TZ: Asia/Tokyo # 日本時間に統一
+    ports:
+      - "5432:5432"
   web:
     build:
       context: .
       args:
-        RAILS_ENV: development   # 明示的につけておく
+        RAILS_ENV: development # 明示的につけておく
     command: /start.sh
     volumes:
       - ./src:/app
@@ -26,7 +28,7 @@ services:
     environment: # Rspec用
       RAILS_ENV: development
       TZ: Asia/Tokyo
-      SELENIUM_DRIVER_UR: "http://chrome:4444/wd/hub"
+      SELENIUM_DRIVER_URL: "http://chrome:4444/wd/hub"
 
   chrome: # テスト実行用コンテナ
     image: selenium/standalone-chrome-debug
@@ -36,3 +38,6 @@ services:
     depends_on:
       - web
 
+# ボリュームの定義
+volumes:
+  db_data:
