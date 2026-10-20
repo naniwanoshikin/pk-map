@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 6.1.7', '>= 6.1.7.10'
 gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 gem 'webpacker', '~> 5.0'
@@ -30,6 +30,7 @@ gem 'net-pop', require: false
 
 
 gem 'pg', '~> 1.5' # すべての環境でPostgreSQLを使用
+gem 'logger', '< 1.6.0' # 💡 Rails 6.1のLoggerクラッシュ問題を回避するための固定設定
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

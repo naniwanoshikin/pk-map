@@ -52,7 +52,7 @@
 <!-- * Street View Static API -->
 ### バックエンド
 * **言語**: Ruby 3.1.6
-* **フレームワーク**: Ruby on Rails 6.1.4
+* **フレームワーク**: Ruby on Rails 6.1.7 / Devise
 * **テスト**: RSpec 3.10
     <!-- * System spec -->
     <!-- * Request spec -->

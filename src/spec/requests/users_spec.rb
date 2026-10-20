@@ -3,42 +3,40 @@ require 'rails_helper'
 describe 'Users', type: :request do
   let(:user) { FactoryBot.create(:user) }
 
-  it 'POST /users' do
-    post login_path, params: { session: {
+  it 'POST /users (ログイン)' do
+    post user_session_path, params: { user: {
       email: user.email,
       password: user.password,
     } }
-    # expect(response).to redirect_to user_path(User.last)
-    # expect(response).to have_http_status(302) # なぜできない?logには302出ているのに
-    # expect(is_logged_in?).to be true # なぜfalseに?
+    expect(response).to have_http_status(302) # 302リダイレクトの検証
   end
 
-  # ログアウト
-  it 'DELETE #destroy' do
-    delete logout_path
-    expect(response).to redirect_to root_path
-    expect(is_logged_in?).to be false
+  describe "DELETE #destroy (ユーザー削除)" do
+    let!(:admin_user) { FactoryBot.create(:user, admin: true) } # 管理者
+    let!(:other_user) { FactoryBot.create(:user) }
+
+    it "削除するとユーザー一覧画面にリダイレクトされる" do
+      sign_in admin_user # 管理者としてログイン Devise
+      expect {
+        delete user_path(other_user)
+      }.to change(User, :count).by(-1)
+      expect(response).to redirect_to users_path
+    end
   end
 
   # 編集
   describe "PATCH /users/:id" do
-    before { log_in_as(user) }
+    let(:user) { FactoryBot.create(:user) }
+
     it 'ユーザー情報編集' do
-      patch user_registration_path(user), params: { user: {
+      sign_in user # 編集する本人
+      patch user_registration_path, params: { user: {
+        current_password: user.password,
         name: "Foo Bar",
-        email: "foo@bar.com",
-        password: "",
-        password_confirmation: "",
+        email: "foo@bar.com"
       } }
-      # expect(response).to redirect_to user_path(user) # なぜエラー?
+      expect(response).to have_http_status(302)
     end
   end
 
-  # リダイレクト
-  # describe "GET /users" do
-  #   it "redirects login when not logged in" do
-  #     get users_path
-  #     expect(response).to redirect_to login_url
-  #   end
-  # end
 end
