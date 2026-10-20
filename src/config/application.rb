@@ -1,5 +1,7 @@
 require_relative "boot"
 
+require "logger" # rspec Loggerクラスを強制的に先読みさせる
+
 require "rails/all"
 
 Bundler.require(*Rails.groups)

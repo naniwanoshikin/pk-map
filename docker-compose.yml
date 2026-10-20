@@ -25,8 +25,9 @@ services:
     stdin_open: true # -i
     depends_on:
       - db # (config/database.yml)
-    environment: # Rspec用
-      RAILS_ENV: development
+    environment: # Rspecの実行時
+      RAILS_ENV: test
+      RACK_ENV: test # Rack middlewareの403保護を解除するため
       TZ: Asia/Tokyo
       SELENIUM_DRIVER_URL: "http://chrome:4444/wd/hub"
 
