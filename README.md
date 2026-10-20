@@ -37,46 +37,42 @@
 * ページネーション kaminari
 
 ## 使用技術
-* フロントエンド
-  * HTML/CSS/Sass
-  * Slim
-  * JavaScript
-  <!-- drawer.js -->
-  * webpack
-    * Bootstrap 4.6.1
-    <!-- ajax, ドロップダウン, flash[x], ローディング -->
-    * jQuery 3.6.0
-* バックエンド
-  * Ruby 3.1.6
-  * Rails 6.1.4
-  <!-- 地図を表示 -->
-  * Maps JavaScript API
-  <!-- 高精度で緯度経度を算出 -->
-  <!-- * Geocoding API -->
-  <!-- ストリートビュー -->
-  <!-- * Street View Static API -->
-* インフラ 開発環境
-  * Docker 20.10.17
-  * docker-compose 2.3.3
-  * MySQL 8.0
-  * RSpec 3.10
+### フロントエンド
+* HTML/CSS/Sass
+* Slim
+* Bootstrap 4.6.1
+* **スクリプト**: JavaScript / jQuery 3.6.0
+* webpack
+* **外部API**: Maps JavaScript API (Google Maps)
+<!-- drawer.js -->
+<!-- ajax, ドロップダウン, flash[x], ローディング -->
+<!-- 高精度で緯度経度を算出 -->
+<!-- * Geocoding API -->
+<!-- ストリートビュー -->
+<!-- * Street View Static API -->
+### バックエンド
+* **言語**: Ruby 3.1.6
+* **フレームワーク**: Ruby on Rails 6.1.4
+* **テスト**: RSpec 3.10
     <!-- * System spec -->
     <!-- * Request spec -->
-  * CircleCI
-* インフラ 本番環境
-  * Render (Docker Web Service)
-  * Neon (サーバーレス PostgreSQL)
+### データベース & インフラ
+* **データベース**: PostgreSQL 17 / Neon (Serverless PostgreSQL)
+* **開発環境**: Docker 20.10.17 / docker-compose 2.3.3
+* **本番環境**: Render (Docker Web Service)
+* **バージョン管理**: Git / GitHub
+  <!-- * CircleCI -->
   <!-- * Heroku 7.60.2 -->
-* その他
+<!-- * その他 -->
   <!-- * Visual Studio Code -->
-  * Git, Github
   <!-- インフラ構成図 -->
   <!-- * drawio -->
   <!-- ファビコン -->
   <!-- * Adobe Fresco -->
 
 ## 今後の課題
-* Rails7への移行
-* テストの記述
+* Rails7.0, 7.1, 7.2へ移行 非推奨警告の修正
+* Rspecの記述
+* AWSコンテナへの移行
 
 <!-- * SPA構築 -->

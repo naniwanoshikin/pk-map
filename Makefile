@@ -42,15 +42,15 @@ routep:
 rb:
 	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
 # Rspec
-r:
+spec:
 	docker-compose exec web bundle exec rspec
-rr:
+specr:
 	docker-compose exec web bundle exec rspec spec/requests
-rs:
+specs:
 	docker-compose exec web bundle exec rspec spec/system
-rm:
+specm:
 	docker-compose exec web bundle exec rspec spec/models
-rh:
+spech:
 	docker-compose exec web bundle exec rspec spec/helpers
 
 # migrate
