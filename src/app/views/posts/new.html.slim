@@ -14,7 +14,7 @@ h2 どんなスポット？
             = f.label :address, 'スポット名', class: "form-label #{@post.errors[:address].any? ? 'fw-bolder text-danger' : 'fw-bold'}"
             small.text-danger.fw-normal ＊必須
             br
-            = f.text_field :address, placeholder: "鶴見緑地", class: "form-control #{@post.errors[:address].any? ? 'is-invalid' : ''}"
+            = f.text_field :address, placeholder: "例: 鶴見緑地", autocomplete: "off",class: "form-control #{@post.errors[:address].any? ? 'is-invalid' : ''}"
 
           / 2. スポットの質（ラジオボタン）
           .form-group.mb-3
@@ -27,11 +27,11 @@ h2 どんなスポット？
 
           / 3. タイプ（チェックボックス）
           .form-group.mb-3
-            = f.label :spot_type, 'タイプ'
+            = f.label :spot_type, 'タイプ', class: "fw-bold form-label"
             br
             - %w(公園 スロープ 鉄棒).each do |spot|
               = f.check_box :spot_type, {multiple: true}, spot, false
-              = f.label :spot_type, spot, value: spot
+              = f.label :spot_type, spot, value: spot, class: "form-check-label me-3"
 
           / 4. スポット詳細（テキストエリア）
           .form-group.mb-3

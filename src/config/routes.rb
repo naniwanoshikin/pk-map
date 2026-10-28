@@ -18,11 +18,11 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     passwords: 'users/passwords'
   }
-  # deviseにルーティングを追加
   devise_scope :user do
+    # 普通のリンクを踏んでログアウト
+    get '/users/sign_out', to: 'users/sessions#destroy', as: 'logout'
     # テスト用で名前付きルート名のみ変更 9
     post '/users/sign_in', to: 'users/sessions#create', as: 'login'
-    delete '/users/sign_out', to: 'users/sessions#destroy', as: 'logout'
     # ゲストログイン home(V) to Sesssions(C)
     post '/users/guest1', to: 'users/sessions#guest_in1'
     post '/users/guest2', to: 'users/sessions#guest_in2'

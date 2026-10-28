@@ -16,6 +16,11 @@ class Post < ApplicationRecord
   geocoded_by :address
   after_validation :geocode
 
+  # Ransackでの検索を許可するカラムを宣言 Rails7に伴い
+  def self.ransackable_attributes(auth_object = nil)
+    ["address", "content", "created_at", "id", "latitude", "longitude", "spot_quality", "spot_type", "updated_at", "user_id"]
+  end
+
   # 平均評価 3.2
   def avg_score # (posts/post)
     unless self.reviews.empty?

@@ -10,16 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_06_222732) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_04_06_222732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bads", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "review_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_bads_on_review_id"
     t.index ["user_id", "review_id"], name: "index_bads_on_user_id_and_review_id", unique: true
     t.index ["user_id"], name: "index_bads_on_user_id"
@@ -28,8 +27,8 @@ ActiveRecord::Schema.define(version: 2022_04_06_222732) do
   create_table "goods", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "review_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_goods_on_review_id"
     t.index ["user_id", "review_id"], name: "index_goods_on_user_id_and_review_id", unique: true
     t.index ["user_id"], name: "index_goods_on_user_id"
@@ -42,8 +41,8 @@ ActiveRecord::Schema.define(version: 2022_04_06_222732) do
     t.integer "review_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_notifications_on_post_id"
     t.index ["review_id"], name: "index_notifications_on_review_id"
     t.index ["visited_id"], name: "index_notifications_on_visited_id"
@@ -53,8 +52,8 @@ ActiveRecord::Schema.define(version: 2022_04_06_222732) do
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "address"
     t.float "latitude"
     t.float "longitude"
@@ -67,8 +66,8 @@ ActiveRecord::Schema.define(version: 2022_04_06_222732) do
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
@@ -79,8 +78,8 @@ ActiveRecord::Schema.define(version: 2022_04_06_222732) do
     t.bigint "post_id", null: false
     t.string "content"
     t.integer "score"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_reviews_on_post_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
@@ -90,10 +89,10 @@ ActiveRecord::Schema.define(version: 2022_04_06_222732) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "admin", default: false
     t.string "address", default: "鶴見緑地"
     t.float "latitude", default: 34.711

@@ -1,15 +1,25 @@
-'use strict'; {
-  // (reviews/form)
-  // (★★☆☆☆)
-  // (posts/show)
-  const btn_stars = document.querySelector('.btn_ratings').children;
-  // モーダル
-  const stars = document.querySelector('.ratings').children;
+// (★★☆☆☆) を操作
+const initStarReview = () => {
+  // ★★☆☆☆ モーダル開く前
+  const btnRatingsContainer = document.querySelector('.btn_ratings');
+  // ★★☆☆☆ モーダル画面上 フォーム (reviews/form)
+  const ratingsContainer = document.querySelector('.ratings');
+  // 現在のページに無いなら処理終了（ガード）
+  if (!btnRatingsContainer || !ratingsContainer) return;
 
-  // '2'/5 hidden_field で Reviews(C)に送る
+  // ⭐︎ モーダル開く前
+  const btn_stars = btnRatingsContainer.children;
+  // ⭐︎ モーダル画面上
+  const stars = ratingsContainer.children;
+
+  // '2'/5 hidden_field ▶︎ Reviews(C)
   const hiddenScore = document.getElementById("hidden_score");
   // '2' 値書き換え用
   const ratingValue = document.getElementById("rating_value");
+
+  // 万が一無い場合も想定してガード
+  if (!hiddenScore || !ratingValue) return;
+
 
   // クリックした星の数
   let index;
@@ -61,4 +71,35 @@
       }
     })
   }
+
+  // =======================================================
+  // ブラウザのアクセシビリティ警告（aria-hidden）を解決
+  // 1. モーダルを閉じるときは、([×]or[閉じる])のフォーカスを外して、
+  // 2. 閉じ終わったら、元の画面★★☆☆☆にフォーカスを戻してあげる
+  // =======================================================
+  // ⭐︎⭐︎⭐︎⭐︎⭐︎ ブラウザ
+  const modalElement = document.getElementById('exampleModal');
+  if (modalElement && typeof $ !== 'undefined') {
+    // BootstrapのイベントをjQuery経由でキャッチ
+
+    // 1. モーダルが閉じ始める瞬間（hide）
+    $(modalElement).off('hide.bs.modal').on('hide.bs.modal', function () {
+      // 現在ブラウザでフォーカスが当たっている要素([×]or[閉じる])
+      const activeEl = document.activeElement;
+      // このモーダル内部の要素があれば
+      if (activeEl && this.contains(activeEl)) {
+        // <button.close> や <button.btn-secondary> など、どれであっても強制解除(blur)
+        activeEl.blur();
+      }
+    });
+    // 2. モーダルが閉じ終わった瞬間（hidden）、
+    $(modalElement).off('hidden.bs.modal').on('hidden.bs.modal', function () {
+      // フォーカスを戻す
+      btnRatingsContainer.focus();
+    });
+  }
 }
+
+// ページ読み込み・Turbo遷移の両方で発火させる
+document.addEventListener('DOMContentLoaded', initStarReview);
+document.addEventListener('turbo:load', initStarReview);

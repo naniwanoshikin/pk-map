@@ -1,21 +1,35 @@
 <%# (posts/show) %>
-$("#reviews").html("<%= escape_javascript(render 'reviews/review', reviews: @reviews) %>");
 
-<%# フラッシュメッセージ %>
-$("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', reviews: @reviews) %>");
+<%# バリデーションエラーがあれば %>
+<% if @review.errors.any? %>
+  <%# 出てきたエラー表示の中身を一旦綺麗に空(empty)にしてから、エラー文を中に追加(append)。これによりエラーの箱が消滅することなく差し替える %>
+  <%# モーダルは閉じない %>
+  $("#modal_errors").empty().append("<%= escape_javascript(render 'shared/error_messages', object: @review) %>");
 
-<%# (reviews/form)_モーダル %>
-$("textarea").val("");
-<%# 画面 %>
-$('#exampleModal').hide();
-<%# マスク %>
-$("body").removeClass("modal-open");
-$(".modal-backdrop").remove();
+<% else %>
+  <%# 投稿成功のとき %>
+  <%# 前回の失敗時に出ていたエラーが、成功後モーダルを開いたとき残っていないように、エラーの箱の中身だけを空っぽにする %>
+  $("#modal_errors").empty();
 
-<%# つけてみた ? %>
-$('#exampleModal').removeClass("show");
+  <%# レビュー一覧を最新に書き換え %>
+  $("#reviews").html("<%= escape_javascript(render 'reviews/review', reviews: @reviews) %>");
 
-<%# 星をくり抜く + 評価0 %>
-$(".fa-star").removeClass("fas");
-$(".fa-star").addClass("far");
-$("#rating_value").text("0");
+  <%# (reviews/form)_モーダル %>
+  $("textarea").val("");
+
+  <%# 星の見た目: 未選択状態にリセット %>
+  $(".fa-star").removeClass("fas").addClass("far");
+  <%# 星の値: 評価0 %>
+  $("#rating_value").text("0");
+  <%# 隠しフォームの値(前回送信用の星の値)も残らない様: 空(0)にリセット %>
+  $("#hidden_score").val("");
+
+  <%# モーダル画面を完全に閉じる Bootstrap公式のお片付け命令 %>
+  $('#exampleModal').modal('hide');
+
+  <%# モーダルが【完全に閉じ終わった瞬間】をキャッチして、時間差でフラッシュメッセージ(C)を %>
+  $('#exampleModal').off('hidden.bs.modal').on('hidden.bs.modal', function () {
+    $("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', reviews: @reviews) %>");
+  });
+
+<% end %>

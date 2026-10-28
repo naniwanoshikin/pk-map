@@ -33,8 +33,8 @@ ja:
         spot_quality: スポットの質
         spot_type: タイプ
         content: スポット詳細
-      comment:
-        score: 星レビュー
+      review:
+        score: 星
         content: コメント
 
     # 新規投稿画面用
@@ -44,6 +44,11 @@ ja:
           attributes:
             spot_quality:
               blank: "を選択してください"
+        review:
+          attributes:
+              score:
+                not_a_number: "をクリックしてください"
+                greater_than_or_equal_to: "をクリックしてください"
     models:
       user: ユーザー
   devise:
