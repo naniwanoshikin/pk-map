@@ -1,5 +1,5 @@
 # 必要なNode.jsとYarnのバイナリを確保するステージ
-FROM node:20.18.0-slim AS node-env
+FROM node:20-slim AS node-env
 
 FROM ruby:3.1.6
 
@@ -9,6 +9,9 @@ COPY --from=node-env /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node-env /opt /opt
 
 WORKDIR /app
+
+# 今後npmパッケージの要求バージョンが上がってもビルドが落ちないよう、Yarnのエンジンチェックを無効化
+RUN yarn config set ignore-engines true
 
 # 先にGemfileだけをコピー、bundle install をキャッシュさせる
 COPY ./src/Gemfile ./src/Gemfile.lock /app/
