@@ -1,16 +1,11 @@
+# 必要なNode.jsとYarnのバイナリを確保するステージ
+FROM node:20.18.0-slim AS node-env
+
 FROM ruby:3.1.6
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor \
-  | tee /usr/share/keyrings/yarn-archive-keyring.gpg > /dev/null \
-  && echo "deb [signed-by=/usr/share/keyrings/yarn-archive-keyring.gpg] https://dl.yarnpkg.com/debian/ stable main" \
-  | tee /etc/apt/sources.list.d/yarn.list \
-  # Node / Yarn インストール
-  # 【対策】OSパッケージを最新に更新
-  && apt-get update -qq \
-  && apt-get upgrade -y \
-  && apt-get install -y nodejs yarn \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+# Node.jsイメージから node, npm, yarn を直接コピーして格納
+COPY --from=node-env /usr/local/bin /usr/local/bin
+COPY --from=node-env /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 WORKDIR /app
 
@@ -31,10 +26,10 @@ RUN if [ "$RAILS_ENV" = "production" ] ; then \
     bundle install
 # bundle install しないとwebコンテナが起動しない
 
-# ここで初めてRailsの全ソースコードをコピー（これで2回目以降のデプロイが超高速になる）
+# ここで初めてRailsの全ソースコードをコピー（これで2回目以降のデプロイが超高速に）
 COPY ./src /app
 
-# Railsのルート（/app）の直下で、必要な環境変数をすべて揃えてCSSをビルドする
+# Railsのルート（/app）の直下で、必要な環境変数をすべて揃えてCSSをビルド
 RUN if [ "$RAILS_ENV" = "production" ] ; then \
       NODE_OPTIONS="--openssl-legacy-provider" \
       RAILS_ENV=production \
