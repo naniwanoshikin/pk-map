@@ -1,6 +1,7 @@
 / (posts/show)
 
-span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleModal"
+/ ⭐︎⭐︎⭐︎⭐︎⭐︎ モーダル開く前 ▶︎ クリックするとモーダル画面に
+span#openModalBtn.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleModal" tabindex="0"
   / くり抜き状態 js
   .far.fa-star.fa-2x
   .far.fa-star.fa-2x
@@ -8,7 +9,7 @@ span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleMod
   .far.fa-star.fa-2x
   .far.fa-star.fa-2x
 
-/ モーダル画面
+/ モーダル画面 全体
 #exampleModal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"]
   .modal-dialog role="document"
     .modal-content
@@ -20,21 +21,21 @@ span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleMod
           span[aria-hidden="true"]
             | ×
       .modal-body
-        - if user_signed_in?
-          = render 'shared/error_messages', object: review
+        #modal_errors
+          - if user_signed_in? && defined?(review) && review.errors.any?
+            = render 'shared/error_messages', object: review
         / フォーム
         .rating-box
-          / , local: false でやったけどできず終い...
-          = form_with model: review, url: post_reviews_path(@post) do |f|
+          = form_with model: review, url: post_reviews_path(@post), local: false do |f|
 
             .form-group.main-rating
               .ratings.mr-2
                 / くり抜き状態
-                span#star.far.fa-star
-                span#star.far.fa-star
-                span#star.far.fa-star
-                span#star.far.fa-star
-                span#star.far.fa-star
+                span.star.far.fa-star data-value="1"
+                span.star.far.fa-star data-value="2"
+                span.star.far.fa-star data-value="3"
+                span.star.far.fa-star data-value="4"
+                span.star.far.fa-star data-value="5"
               .rating_value_display
                 span#rating_value
                   | 0
@@ -46,11 +47,10 @@ span.btn_ratings.py-2 type="button" data-toggle="modal" data-target="#exampleMod
             = f.hidden_field :score, id: "hidden_score"
 
             .form-group
-              = f.text_area :content, placeholder: "鉄棒が錆びている", class: "form-control"
+              = f.text_area :content, placeholder: "鉄棒がある", class: "form-control"
 
             .modal-footer
-              button.btn.btn-secondary type="button" data-dismiss="modal"
+              button.btn.btn-secondary type="button" id="submitReviewBtn" data-dismiss="modal"
                 | 閉じる
               = f.submit "投稿", class: "btn btn-primary"
 
-= javascript_pack_tag 'star_review.js'

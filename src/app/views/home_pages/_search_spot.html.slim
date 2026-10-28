@@ -3,16 +3,11 @@ section.map_search
   = form_with do |f|
     = f.label :address, 'スポット名'
     .input-group
-      = f.text_field :address, placeholder: "鶴見緑地", class: 'form-control'
+      = f.text_field :address, placeholder: "例: 鶴見緑地", autocomplete: "off", class: 'form-control'
       / 検索
       .input-group-btn
         = f.button :type => "button", class: "btn btn-primary codeaddress" do
           i.fas.fa-search
-
-/ 住所検索 コンパイルエラー出る為コメントアウト
-/ = javascript_pack_tag 'search_add.js'
-
-
 
 
 / 投稿ワード
@@ -26,9 +21,6 @@ section.map_search
           i.fas.fa-search
 
 / ワード検索 ajax予定 未使用
-/ = javascript_pack_tag 'search_post.js'
-
-
 
 / ラジオボタン検索 未作成
 / section.radio_search

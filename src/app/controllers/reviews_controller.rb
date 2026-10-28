@@ -4,32 +4,36 @@ class ReviewsController < ApplicationController
   # レビューのない画面は表示できない
   before_action :correct_review,  only: [:show, :good_users]
 
-  # レビューする
+  # レビューを作成
   def create
     @review = current_user.reviews.build(review_params)
     @post = @review.post
-    @reviews = @post.reviews
+    # レビューが保存成功時
     if @review.save
       # 通知
       current_user.notify_to_review!(@post, @review.id)
-
+      # 最新のレビュー一覧 elseの@reviewsとは異なる
+      @reviews = @post.reviews
       # (reviews/form)
       respond_to do |format|
         format.html { redirect_to @post, notice: 'レビューを追加しました' }
-        # format.js { flash.now[:notice] = "レビューを追加しました" }
+        format.js { flash.now[:notice] = "レビューを追加しました" }
       end
     else
+      # レビューの保存失敗時（星0のとき）
+      # 実際のレビュー一覧
+      @reviews = Review.where(post_id: @post.id)
+
       gon.post = @post # map js
       flash.now[:alert] = "星レビューを入力してください"
       respond_to do |format|
-        # 失敗時のajaxできず...
         format.html { render 'posts/show' }
-        # format.js { flash.now[:alert] = "星レビューを入力してください" }
+        format.js # create.js.erb呼び出し
       end
     end
   end
 
-  # レビュー削除
+  # レビューを削除
   def destroy
     # @review
     @post = @review.post
@@ -37,8 +41,8 @@ class ReviewsController < ApplicationController
     @review.destroy
     respond_to do |format|
       format.html { redirect_to @post, alert: 'レビューを削除しました' }
-      # ajaxの場合、flash か flash.now...どちら?
-      format.js { flash[:alert] = "レビューを削除しました" }
+      # ajaxの場合、次ページに持ち越さない
+      format.js { flash.now[:alert] = "レビューを削除しました" }
     end
   end
 
