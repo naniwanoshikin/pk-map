@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# エラーが発生したら即座にスクリプトを終了させる（安全策）
+set -e
+
 export RAILS_ENV=${RAILS_ENV:-development}
 # export RUBYOPT="-W0"  # 全ての警告を抑制
 
@@ -11,7 +14,6 @@ then
 fi
 
 # server.pid 削除 （Docker 再起動時のエラー防止）
-# 万が一ファイルがなくても、エラーを無視して次に進む
 rm -f tmp/pids/server.pid
 
 # 開発環境のビルド監視
@@ -23,4 +25,4 @@ then
 fi
 
 # サーバ起動
-bundle exec rails s -b 0.0.0.0 -p ${PORT:-3000}
+bundle exec exec rails s -b 0.0.0.0 -p ${PORT:-3000}
