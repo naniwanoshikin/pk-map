@@ -25,4 +25,4 @@ then
 fi
 
 # サーバ起動
-bundle exec exec rails s -b 0.0.0.0 -p ${PORT:-3000}
+bundle exec rails s -b 0.0.0.0 -p ${PORT:-3000}

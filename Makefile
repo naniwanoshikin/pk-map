@@ -70,7 +70,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "update rails6.1.7"
+	git commit -m "update rails7.0.8"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
