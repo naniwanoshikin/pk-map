@@ -18,16 +18,16 @@ services:
         RAILS_ENV: development # 明示的につけておく
     command: /start.sh
     volumes:
-      - ./src:/app
+      - ./src:/app:cached # 末尾に「:cached」を追加▶︎ファイル同期を強制＆高速化
     ports:
       - "3000:3000"
     tty: true # -t
     stdin_open: true # -i
     depends_on:
       - db # (config/database.yml)
-    environment: # Rspecの実行時
-      RAILS_ENV: test
-      RACK_ENV: test # Rack middlewareの403保護を解除するため
+    environment:
+      RAILS_ENV: development
+      RACK_ENV: development
       TZ: Asia/Tokyo
       SELENIUM_DRIVER_URL: "http://chrome:4444/wd/hub"
 

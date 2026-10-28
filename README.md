@@ -42,7 +42,7 @@
 * Slim
 * Bootstrap 4.6.1
 * **スクリプト**: JavaScript / jQuery 3.6.0
-* webpack
+* **ビルドツール**: webpack
 * **外部API**: Maps JavaScript API (Google Maps)
 <!-- drawer.js -->
 <!-- ajax, ドロップダウン, flash[x], ローディング -->
@@ -52,7 +52,8 @@
 <!-- * Street View Static API -->
 ### バックエンド
 * **言語**: Ruby 3.1.6
-* **フレームワーク**: Ruby on Rails 6.1.7 / Devise
+* **フレームワーク**: Ruby on Rails 7.0.8
+* **認証**: Devise
 * **テスト**: RSpec 3.10
     <!-- * System spec -->
     <!-- * Request spec -->
@@ -71,8 +72,13 @@
   <!-- * Adobe Fresco -->
 
 ## 今後の課題
-* Rails7.0, 7.1, 7.2へ移行 非推奨警告の修正
-* Rspecの記述
-* AWSコンテナへの移行
+* Rails 6.1.4より、7.0(現在ここ) とバージョンを上げる 非推奨警告の修正 & RSpec拡充 & 7.1への移行
+* AWS (ECS / ECR) への移行
+
+
+| 項目 | 旧 | 現在 | 移行理由 |
+| :--- | :--- | :--- | :--- |
+| **本番** | heroku | Render | 無料枠の廃止および仕様変更 |
+| **Rails** | 6.1.4 | **7.0.8** | バージョンアップ |
 
 <!-- * SPA構築 -->

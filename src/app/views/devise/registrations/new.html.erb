@@ -3,23 +3,26 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-md-offset-3 mx-auto">
-      <%= form_with(model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true) do |f| %>
+    <div class="col-md-6 mx-auto">
+      <%= form_with(model: @user, url: user_registration_path, id: 'new_user', class: 'new_user') do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
+        <%# 名前 %>
         <div class="form-group">
           <%= f.label :name %><br />
           <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
         </div>
 
+        <%# Eメール %>
         <div class="form-group">
           <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control' %>
+          <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
         </div>
 
+        <%# 住所 %>
         <div class="form-group">
           <%= f.label :address %><br />
-          <%= f.text_field :address, autofocus: true, autocomplete: "address", class: 'form-control' %>
+          <%= f.text_field :address, autocomplete: "address", class: 'form-control' %>
         </div>
 
         <div class="form-group">

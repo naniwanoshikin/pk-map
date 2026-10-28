@@ -3,18 +3,18 @@
   <h1 class="mb-2">外に出よう</h1>
   <h2 class="">動ける場所は見つかる</h2>
   <%# Registrations(C) %>
-  <%= link_to "簡単ログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success guest_btn" %>
-  <p class="small text-dark mt-2">登録なしでログインできます</p>
+  <%= button_to "簡単ログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success guest_btn w-auto" %>
+  <p class="text-dark mt-2">登録なしでログインできます</p>
   <% if Rails.env.development? %>
-    <br>
-    <%= link_to "ログイン1", users_guest1_path, method: :post, class: "btn btn-danger" %>
-    <%= link_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-warning" %>
+    <div class="d-flex justify-content-center align-items-center">
+      <%= button_to "管理者ログイン", users_guest1_path, method: :post, class: "btn btn-danger w-auto mr-2" %>
+      <%= button_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-warning w-auto" %>
+    </div>
   <% end %>
 </div>
 
 <%# ローディング --------------------- %>
-
-<%# JavaScriptで設定 %>
+<%# JavaScript %>
 <div id="" class="first_load">
   <div id="" class="second_load">
     <%# <div class="loading-one animation_loading">
@@ -23,22 +23,32 @@
   </div>
 </div>
 
+<%# ゲストログイン %>
 <script>
-  const guest_btn = document.querySelector('.guest_btn');
-  guest_btn.addEventListener('click', () => {
-    // console.log('guest login');
-    const div1 = document.querySelector(".first_load");
-    div1.setAttribute('id', 'loading')
-    const div2 = document.querySelector(".second_load");
-    div2.setAttribute('id', 'loading_box');
-    const div3 = document.createElement("div");
-    div3.classList.add('loading-one', 'animation_loading');
-    div2.appendChild(div3);
-    const p1 = document.createElement("p");
-    p1.classList.add('loading-txt');
-    p1.textContent = 'Loading';
-    div3.appendChild(p1);
-  });
+  // HTMLの読み込みが完了した瞬間にブラウザが無条件で発火
+  document.addEventListener('DOMContentLoaded', () => {
+    const guest_btn = document.querySelector('.guest_btn');
+    if (!guest_btn) return;
+
+    guest_btn.addEventListener('click', () => {
+      console.log('ゲストログイン');
+      const div1 = document.querySelector(".first_load");
+      if (div1) div1.setAttribute('id', 'loading')
+
+      const div2 = document.querySelector(".second_load");
+      if (div2) {
+        div2.setAttribute('id', 'loading_box');
+
+        const div3 = document.createElement("div");
+        div3.classList.add('loading-one', 'animation_loading');
+        div2.appendChild(div3);
+
+        const p1 = document.createElement("p");
+        p1.classList.add('loading-txt');
+        p1.textContent = 'Loading';
+        div3.appendChild(p1);
+        }
+    });
 
   // jQuery
   // $(window).on('load',function(){
@@ -48,4 +58,5 @@
   //   // ローディングテキスト
   //   $("#loading_box").delay(50).fadeOut('slow');
   // });
+  });
 </script>

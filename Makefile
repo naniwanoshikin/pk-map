@@ -4,7 +4,7 @@ ps:
 # ログ
 log:
 	docker-compose logs
-# 起動
+# 起動 時間がだいぶかかる時がある
 build:
 	docker-compose up --build -d
 up:
@@ -42,15 +42,15 @@ routep:
 rb:
 	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
 # Rspec
-spec:
+rspec:
 	docker-compose exec web bundle exec rspec
-specr:
-	docker-compose exec web bundle exec rspec spec/requests
-specs:
+rspecr:
+	docker-compose exec web bundle exec rspec spec/requests/home_pages_spec.rb
+rspecs:
 	docker-compose exec web bundle exec rspec spec/system
-specm:
+rspecm:
 	docker-compose exec web bundle exec rspec spec/models
-spech:
+rspech:
 	docker-compose exec web bundle exec rspec spec/helpers
 
 # migrate

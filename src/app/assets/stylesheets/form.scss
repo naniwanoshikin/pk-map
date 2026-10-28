@@ -6,8 +6,8 @@
 }
 
 /* forms */
-
 // (registrations/new), (posts/new), (reviews/form)
+
 #error_explanation {
   span {
     color: #696969;
@@ -20,7 +20,14 @@
   }
 }
 
-// field_with_errors: → webpack
+
+// div エラー 線で囲われた部分
+.field_with_errors {
+  .form-control {
+    @extend .is-invalid !optional; // bootstrap4
+    color: rgb(255, 93, 93);
+  }
+}
 
 input,
 textarea,

@@ -3,21 +3,29 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+// jQueryのグローバル登録（Bootstrap 4やGoogle Maps API, スクリプトのために維持）
+import jQuery from 'jquery';
+window.$ = window.jQuery = global.jQuery = jQuery;
+import IScroll from 'iscroll';
+window.IScroll = global.IScroll = IScroll;
+import 'jquery-drawer';
+
+
 import Rails from "@rails/ujs"
-// import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 // 起動
 Rails.start()
 ActiveStorage.start()
-// Turbolinks.start() // googlemap api script再読み込み防止
 
 // webpack
 import 'bootstrap'
 import '../stylesheets/application.scss'
+import './detail_map'
+import './star_review'
 
-// (V)で画像を読み込む (home/about)_image_pack_tag
+// 画像の読み込み (home/about)
 require.context("../images", true);
 
-// console.log('a')
+console.log('application.js 読み込み完了')

@@ -59,12 +59,14 @@ p {
   background-size: 75% auto;
 }
 
-/* forms */
 
-// div エラー 線で囲われた部分
-.field_with_errors {
-  .form-control {
-    @extend .is-invalid !optional; // bootstrap4
-    color: rgb(255, 93, 93);
-  }
-}
+// 古いフォルダ（../../assets/stylesheets/）より
+@import "../../assets/stylesheets/custom";
+@import "../../assets/stylesheets/form";
+@import "../../assets/stylesheets/goods";
+@import "../../assets/stylesheets/home_pages";
+@import "../../assets/stylesheets/loading";
+@import "../../assets/stylesheets/notifications";
+@import "../../assets/stylesheets/posts";
+@import "../../assets/stylesheets/reviews";
+@import "../../assets/stylesheets/users";

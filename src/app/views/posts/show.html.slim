@@ -13,8 +13,13 @@ h2 = @post.address
             = link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" } do
               i.fas.fa-trash-alt.fa-lg
 
-      / 地図
-      #detail_map
+      / 地図 railsのデータ属性 -> (datail_map.js)
+      #detail_map[
+        data-lat="#{@post.latitude}"
+        data-lng="#{@post.longitude}"
+        data-content="#{j @post.content}"
+        data-api-key="#{ENV['GOOGLE_MAP_API']}"
+      ]
 
       .post_state.pl-4.my-4
         / 戻る
@@ -41,7 +46,7 @@ h2 = @post.address
 
 
       .show_reviews.mb-4
-        h2.text-left.mb-3.pl-2 レビューを投稿しましょう
+        h2.text-left.mb-3.pl-2 レビューをしよう
         / レビューフォーム
         - if user_signed_in?
           = render "reviews/form", review: @review
@@ -52,53 +57,6 @@ h2 = @post.address
         / (reviews/_review) @reviewsだと複製
 
 / Google Maps APIのスクリプト読み込み
-- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }&callback=initMap&libraries=marker".html_safe
+- google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }\u0026callback=initMap&libraries=marker&loading=async".html_safe
 
-script(async=true defer=true src=google_api)
-
-javascript:
-
-  let show_map;
-
-  function initMap() {
-    const target = document.getElementById('detail_map')
-    if (!target) return;
-
-    // Rubyの変数から直接数値を取得し、nilの場合は0（またはデフォルト値）
-    const lat = parseFloat(#{@post.latitude || 0});
-    const lng = parseFloat(#{@post.longitude || 0});
-    const content = "#{j @post.content}";
-
-    // もし座標が取れていなければデバッグ
-    if (lat === 0 && lng === 0) {
-      console.warn("警告: 投稿の座標（緯度・経度）が取得できていません。");
-    }
-
-    show_map = new google.maps.Map(target, {
-      center: { lat: lat, lng: lng },
-      zoom: 15,
-      mapTypeControl: false, // 地図|航空写真
-      mapId: 'DEMO_MAP_ID' // AdvancedMarker に必須の記述
-    });
-
-    const marker = new google.maps.marker.AdvancedMarkerElement({
-      position: { lat: lat, lng: lng },
-      map: show_map,
-      title: content
-    });
-    // 吹き出し
-    const infowindow = new google.maps.InfoWindow();
-    marker.addEventListener('gmp-click', function() {
-      infowindow.setContent(
-        // 画像
-        '<div class="infowindow">'
-        + `<span class="">${content}</span>`
-        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${lat},${lng}&key=#{ ENV['GOOGLE_MAP_API'] }' >`
-        + '</div>'
-      );
-      infowindow.open(show_map, marker);
-    });
-  }
-
-  // ページを戻った時にもしっかり再描画させる
-  document.addEventListener('turbolinks:load', initMap);
+script src=google_api defer=true
