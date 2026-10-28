@@ -3,9 +3,10 @@ FROM node:20.18.0-slim AS node-env
 
 FROM ruby:3.1.6
 
-# Node.jsイメージから node, npm, yarn を直接コピーして格納
+# Node.jsのバイナリ一式と、コアパック・Yarnの実体を正しくコピー
 COPY --from=node-env /usr/local/bin /usr/local/bin
 COPY --from=node-env /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node-env /opt /opt
 
 WORKDIR /app
 
