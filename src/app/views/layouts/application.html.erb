@@ -9,7 +9,7 @@
   <body class="drawer drawer--right drawer--navbarTopGutter">
     <%= render 'layouts/header' %>
     <div class="container">
-      <%# id: (review/destroy)_ajax %>
+      <%# id: (review/_js.erb_ajax) %>
       <div id="flash_messages">
         <%= render 'layouts/flash' %>
       </div>
@@ -21,24 +21,58 @@
     </div>
 
     <script>
-      // flash: (review/destroy)_ajax時 letだとエラー?
-      let flash = document.getElementById('flash_messages');
-      // [x]
-      let close = document.querySelector('.close');
-      if (close) {
-        flash.classList.add('hidden_up'); // CSS上がる
-        setTimeout(function () {
-          flash.remove(); // 7秒後 HTML消滅
-        }, 7000);
-        close.addEventListener('click', () => {
-          flash.classList.add('hidden_out'); // CSS消える
-          setTimeout(function () {
-            flash.remove(); // 0.5秒後 HTML消滅
-          }, 500);
-        }, false)
-      } else {
-        flash.style.display = "none" // 初期状態
-      }
+      // 即時関数で囲むことで、重複宣言エラー(Ajax時など)を防ぐ
+      (() => {
+        // グローバル（window）に登録して、外部(ajax_（reviews/create/destroy.js.erb）)からも呼び出せるようにする
+        window.refreshFlashBehavior = function() {
+
+          const flash = document.getElementById('flash_messages');
+          console.log("Flash グローバル関数実行");
+          if (!flash) return;
+          console.log("Flash idあり");
+
+          // 過去に付与されたCSSクラスをリセット
+          flash.classList.remove('hidden_up', 'hidden_out');
+
+          // if (!flash.innerText.trim()) {
+          //   console.log("Flash 中身は空");
+          //   flash.style.display = "none"; // 非表示にする
+          //   return;
+          // }
+
+          // Flashメッセージがある場合は表示 ajax2回目以降も表示させる為
+          flash.style.display = "block";
+
+          // [x] 閉じるボタン
+          const close = flash.querySelector('.close');
+          if (close) {
+            console.log("[x]ボタンあり");
+
+            const autoDeleteTimer = setTimeout(() => {
+              console.log("7秒経過");
+              flash.classList.add('hidden_up'); // CSS 上がる
+            }, 7000);
+
+            // [x]を押したとき
+            close.addEventListener('click', () => {
+              console.log("[x]が押されました");
+              flash.classList.add('hidden_out'); // CSS 消える
+              clearTimeout(autoDeleteTimer); // 7秒タイマーをキャンセル
+
+              setTimeout(() => {
+                if (flash.classList.contains('hidden_out')) {
+                  // console.log("0.5秒後にメッセージ削除");
+                  flash.style.display = "none"; // CSSよりも優先される
+                }
+              }, 500); // CSSのアニメーション時間に合わせる
+
+            }, { once: true }); // 1回だけ処理を実行
+          }
+        };
+
+        // 初回画面表示時に実行
+        window.refreshFlashBehavior();
+      })();
     </script>
   </body>
 </html>
