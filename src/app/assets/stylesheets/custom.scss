@@ -93,7 +93,7 @@ section {
     }
   }
 }
-//  5秒後に1秒で上がる
+// 5秒後に1秒で上がる
 .hidden_up {
   animation: move 1s ease 5s forwards;
   @keyframes move {

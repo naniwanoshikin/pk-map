@@ -1,7 +1,7 @@
 / レビュー (posts/show)
 - if @reviews.any?
   ul
-    / destroy_ajax用にeach
+    / each: destroy_ajax用
     - @reviews.each do |review|
       li
         / 削除ボタン post_id: 必須, review_id: (C)に渡すparams
