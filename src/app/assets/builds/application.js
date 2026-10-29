@@ -22018,7 +22018,7 @@ _rails_activestorage__WEBPACK_IMPORTED_MODULE_4__.start()
 // 画像の読み込み (home/about)
 __webpack_require__("./app/javascript/images sync recursive ^\\.\\/.*$");
 
-console.log('application.js 読み込み完了')
+// console.log('application.js 読み込みok')
 
 }();
 /******/ })()

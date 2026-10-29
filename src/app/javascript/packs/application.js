@@ -28,4 +28,4 @@ import './star_review'
 // 画像の読み込み (home/about)
 require.context("../images", true);
 
-console.log('application.js 読み込み完了')
+// console.log('application.js 読み込みok')

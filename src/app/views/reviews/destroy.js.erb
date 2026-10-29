@@ -1,6 +1,9 @@
-<%# (posts/show) %>
+<%# (posts/show)_レビューを削除 %>
 
 $("#reviews").html("<%= escape_javascript(render 'reviews/review', reviews: @reviews) %>");
 
 <%# フラッシュメッセージ %>
 $("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', reviews: @reviews) %>");
+if (typeof window.refreshFlashBehavior === 'function') {
+  window.refreshFlashBehavior();
+}

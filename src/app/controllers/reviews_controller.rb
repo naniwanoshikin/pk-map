@@ -20,12 +20,12 @@ class ReviewsController < ApplicationController
         format.js { flash.now[:notice] = "レビューを追加しました" }
       end
     else
-      # レビューの保存失敗時（星0のとき）
+      # レビューの保存失敗（星0のとき）
       # 実際のレビュー一覧
       @reviews = Review.where(post_id: @post.id)
 
       gon.post = @post # map js
-      flash.now[:alert] = "星レビューを入力してください"
+      flash.now[:alert] = "レビュー投稿に失敗しました"
       respond_to do |format|
         format.html { render 'posts/show' }
         format.js # create.js.erb呼び出し
