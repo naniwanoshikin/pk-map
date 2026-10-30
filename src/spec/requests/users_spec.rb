@@ -1,22 +1,27 @@
 require 'rails_helper'
 
 describe 'Users', type: :request do
+  # FactoryBotの定義に合わせて指定
+  let(:password) { "foobar" }
   let(:user) { FactoryBot.create(:user) }
 
   it 'POST /users (ログイン)' do
-    post user_session_path, params: { user: {
+    # (routes.rb) 独自の名前付きルートに生のパスワードを送信
+    post login_path, params: { user: {
       email: user.email,
-      password: user.password,
+      password: password,
     } }
-    expect(response).to have_http_status(302) # 302リダイレクトの検証
+    expect(response).to have_http_status(302) # 成功してリダイレクト
   end
 
   describe "DELETE #destroy (ユーザー削除)" do
-    let!(:admin_user) { FactoryBot.create(:user, admin: true) } # 管理者
+    let!(:admin_user) { FactoryBot.create(:user, :admin) } # 管理者
     let!(:other_user) { FactoryBot.create(:user) }
 
     it "削除するとユーザー一覧画面にリダイレクトされる" do
-      sign_in admin_user # 管理者としてログイン Devise
+      # Wardenヘルパー経由でカスタムコントローラーにログインを認識
+      login_as(admin_user, scope: :user)
+
       expect {
         delete user_path(other_user)
       }.to change(User, :count).by(-1)
@@ -24,12 +29,14 @@ describe 'Users', type: :request do
     end
   end
 
-  # 編集
   describe "PATCH /users/:id" do
     let(:user) { FactoryBot.create(:user) }
 
     it 'ユーザー情報編集' do
-      sign_in user # 編集する本人
+      # 同様にログイン状態をモック
+      login_as(user, scope: :user)
+
+      # カスタムコントローラー（users/registrations）への更新リクエスト
       patch user_registration_path, params: { user: {
         current_password: user.password,
         name: "Foo Bar",

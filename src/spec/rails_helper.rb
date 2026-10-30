@@ -37,13 +37,14 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :system
 
-
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
+
+  # 自動でテストデータが掃除されます
   config.use_transactional_fixtures = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
@@ -72,27 +73,10 @@ RSpec.configure do |config|
   # FactoryBotの省略表記を有効化 (create(:user) と書けるようにする)
   config.include FactoryBot::Syntax::Methods
 
-
-  # DatabaseCleanerの設定
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
   config.before(:each, type: :feature) do
     DatabaseCleaner.strategy = :truncation
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
 end
 
 Shoulda::Matchers.configure do |config|

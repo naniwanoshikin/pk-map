@@ -17,7 +17,7 @@ const initStarReview = () => {
   // '2' 値書き換え用
   const ratingValue = document.getElementById("rating_value");
 
-  // 万が一無い場合も想定してガード
+  // 万が一無い場合も想定
   if (!hiddenScore || !ratingValue) return;
 
 
