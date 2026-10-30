@@ -9,6 +9,9 @@ build:
 	docker-compose up --build -d
 up:
 	docker-compose up -d
+# webpackを更新したらこれだけでいい
+re:
+	docker-compose restart
 # 停止
 stop:
 	docker-compose stop
@@ -45,7 +48,7 @@ rb:
 rspec:
 	docker-compose exec web bundle exec rspec
 rspecr:
-	docker-compose exec web bundle exec rspec spec/requests/home_pages_spec.rb
+	docker-compose exec web bundle exec rspec spec/requests/users_spec.rb
 rspecs:
 	docker-compose exec web bundle exec rspec spec/system
 rspecm:
@@ -70,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "review_flash"
+	git commit -m "ruby 3.3.13 updated"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

@@ -1,7 +1,7 @@
 # 必要なNode.jsとYarnのバイナリを確保するステージ
 FROM node:20-slim AS node-env
 
-FROM ruby:3.1.6
+FROM ruby:3.3
 
 # Node.jsのバイナリ一式と、コアパック・Yarnの実体を正しくコピー
 COPY --from=node-env /usr/local/bin /usr/local/bin
