@@ -21,15 +21,14 @@
     </div>
 
     <script>
-      // 即時関数で囲むことで、重複宣言エラー(Ajax時など)を防ぐ
+      // 即時関数で囲み、重複宣言エラー(Ajaxなど)を防ぐ
       (() => {
-        // グローバル（window）に登録して、外部(ajax_（reviews/create/destroy.js.erb）)からも呼び出せるようにする
+        // ajaxしている外部ページ（reviews/create.js.erb）からもflashを呼び出せるよう、グローバル（window）に登録
         window.refreshFlashBehavior = function() {
 
           const flash = document.getElementById('flash_messages');
-          console.log("Flash グローバル関数実行");
+          // console.log("Flash グローバル関数実行");
           if (!flash) return;
-          console.log("Flash idあり");
 
           // 過去に付与されたCSSクラスをリセット
           flash.classList.remove('hidden_up', 'hidden_out');
@@ -40,14 +39,13 @@
           //   return;
           // }
 
-          // Flashメッセージがある場合は表示 ajax2回目以降も表示させる為
+          // Flashメッセージを表示させる review_ajax2回目以降も
           flash.style.display = "block";
 
           // [x] 閉じるボタン
           const close = flash.querySelector('.close');
           if (close) {
-            console.log("[x]ボタンあり");
-
+            // console.log("[x]ボタンあり");
             const autoDeleteTimer = setTimeout(() => {
               console.log("7秒経過");
               flash.classList.add('hidden_up'); // CSS 上がる

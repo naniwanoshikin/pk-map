@@ -67,10 +67,47 @@ webpackContext.id = "./app/javascript/images sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./app/javascript/packs/detail_map.js":
-/*!********************************************!*\
-  !*** ./app/javascript/packs/detail_map.js ***!
-  \********************************************/
+/***/ "./app/javascript/packs/src/guest_login.js":
+/*!*************************************************!*\
+  !*** ./app/javascript/packs/src/guest_login.js ***!
+  \*************************************************/
+/***/ (function() {
+
+// ゲストログイン (home_pages/_home.html.erb)
+
+// 通常環境（Turboなし）であれば、
+document.addEventListener('click', (event) => {
+  // クリックされた要素（またはその親）に data-guest-login-btn があるかチェック
+  const guestBtn = event.target.closest('[data-guest-login-btn]');
+  if (!guestBtn) return;
+
+  console.log('ゲストログイン ローディング');
+
+  const div1 = document.querySelector(".first_load");
+  if (div1) div1.id = 'loading';
+
+  const div2 = document.querySelector(".second_load");
+  if (div2) {
+    div2.id = 'loading_box';
+
+    const div3 = document.createElement("div");
+    div3.classList.add('loading-one', 'animation_loading');
+    div2.appendChild(div3);
+
+    const p1 = document.createElement("p");
+    p1.classList.add('loading-txt');
+    p1.textContent = 'Loading';
+    div3.appendChild(p1);
+  }
+});
+
+
+/***/ }),
+
+/***/ "./app/javascript/packs/src/show_map.js":
+/*!**********************************************!*\
+  !*** ./app/javascript/packs/src/show_map.js ***!
+  \**********************************************/
 /***/ (function() {
 
 // (posts/show)
@@ -131,10 +168,10 @@ document.addEventListener('turbo:load', () => {
 
 /***/ }),
 
-/***/ "./app/javascript/packs/star_review.js":
-/*!*********************************************!*\
-  !*** ./app/javascript/packs/star_review.js ***!
-  \*********************************************/
+/***/ "./app/javascript/packs/src/star_review.js":
+/*!*************************************************!*\
+  !*** ./app/javascript/packs/src/star_review.js ***!
+  \*************************************************/
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
@@ -157,7 +194,7 @@ const initStarReview = () => {
   // '2' 値書き換え用
   const ratingValue = document.getElementById("rating_value");
 
-  // 万が一無い場合も想定してガード
+  // 万が一無い場合も想定
   if (!hiddenScore || !ratingValue) return;
 
 
@@ -21983,10 +22020,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _stylesheets_application_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../stylesheets/application.scss */ "./app/javascript/stylesheets/application.scss");
-/* harmony import */ var _detail_map__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./detail_map */ "./app/javascript/packs/detail_map.js");
-/* harmony import */ var _detail_map__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_detail_map__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _star_review__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./star_review */ "./app/javascript/packs/star_review.js");
-/* harmony import */ var _star_review__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_star_review__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/guest_login */ "./app/javascript/packs/src/guest_login.js");
+/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_src_guest_login__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _src_show_map__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/show_map */ "./app/javascript/packs/src/show_map.js");
+/* harmony import */ var _src_show_map__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_src_show_map__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/star_review */ "./app/javascript/packs/src/star_review.js");
+/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_src_star_review__WEBPACK_IMPORTED_MODULE_10__);
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
@@ -22011,6 +22050,7 @@ _rails_activestorage__WEBPACK_IMPORTED_MODULE_4__.start()
 
 // webpack
 ;
+
 
 
 

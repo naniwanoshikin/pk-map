@@ -22,8 +22,9 @@ ActiveStorage.start()
 // webpack
 import 'bootstrap'
 import '../stylesheets/application.scss'
-import './detail_map'
-import './star_review'
+import './src/guest_login'
+import './src/show_map'
+import './src/star_review'
 
 // 画像の読み込み (home/about)
 require.context("../images", true);
