@@ -9480,47 +9480,6 @@ textarea {
   margin-left: 0;
 }
 
-/* pagination */
-#ajax_feed nav .pagination,
-#ajax_users_show nav .pagination,
-#ajax_users_index nav .pagination,
-#ajax_users_show_reviews nav .pagination {
-  margin: 16px 0;
-  justify-content: center;
-}
-#ajax_feed nav .pagination li > a,
-#ajax_users_show nav .pagination li > a,
-#ajax_users_index nav .pagination li > a,
-#ajax_users_show_reviews nav .pagination li > a {
-  border: none;
-  color: #696969;
-}
-#ajax_feed nav .pagination li > a:hover,
-#ajax_users_show nav .pagination li > a:hover,
-#ajax_users_index nav .pagination li > a:hover,
-#ajax_users_show_reviews nav .pagination li > a:hover {
-  border-radius: 15px;
-}
-#ajax_feed nav .pagination li > a:active,
-#ajax_users_show nav .pagination li > a:active,
-#ajax_users_index nav .pagination li > a:active,
-#ajax_users_show_reviews nav .pagination li > a:active {
-  color: #b0e7d7;
-}
-#ajax_feed nav .pagination,
-#ajax_users_show nav .pagination,
-#ajax_users_index nav .pagination,
-#ajax_users_show_reviews nav .pagination {
-  /* 表示しているページ番号 */
-}
-#ajax_feed nav .pagination .active > a,
-#ajax_users_show nav .pagination .active > a,
-#ajax_users_index nav .pagination .active > a,
-#ajax_users_show_reviews nav .pagination .active > a {
-  background: #93c9ff;
-  border-radius: 15px;
-}
-
 /* miscellaneous */
 .debug_dump {
   width: 100%;
@@ -9568,6 +9527,47 @@ textarea {
 
 .infowindow > img {
   width: 100%;
+}
+
+/* pagination */
+#home_feed nav .pagination,
+#ajax_users_show nav .pagination,
+#ajax_users_index nav .pagination,
+#ajax_users_show_reviews nav .pagination {
+  margin: 16px 0;
+  justify-content: center;
+}
+#home_feed nav .pagination li > a,
+#ajax_users_show nav .pagination li > a,
+#ajax_users_index nav .pagination li > a,
+#ajax_users_show_reviews nav .pagination li > a {
+  border: none;
+  color: #696969;
+}
+#home_feed nav .pagination li > a:hover,
+#ajax_users_show nav .pagination li > a:hover,
+#ajax_users_index nav .pagination li > a:hover,
+#ajax_users_show_reviews nav .pagination li > a:hover {
+  border-radius: 15px;
+}
+#home_feed nav .pagination li > a:active,
+#ajax_users_show nav .pagination li > a:active,
+#ajax_users_index nav .pagination li > a:active,
+#ajax_users_show_reviews nav .pagination li > a:active {
+  color: #b0e7d7;
+}
+#home_feed nav .pagination,
+#ajax_users_show nav .pagination,
+#ajax_users_index nav .pagination,
+#ajax_users_show_reviews nav .pagination {
+  /* 表示しているページ番号 */
+}
+#home_feed nav .pagination .active > a,
+#ajax_users_show nav .pagination .active > a,
+#ajax_users_index nav .pagination .active > a,
+#ajax_users_show_reviews nav .pagination .active > a {
+  background: #93c9ff;
+  border-radius: 15px;
 }
 
 #loading {

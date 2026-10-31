@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "Google MapsのJS分離とjs-api-loader v2対応による表示高速化"
+	git commit -m "2026年11月なりました"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

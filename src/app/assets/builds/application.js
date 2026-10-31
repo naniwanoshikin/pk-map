@@ -357,7 +357,7 @@ window.initMap = function () {
   const target = document.getElementById('detail_map')
   if (!target) return;
 
-  // (show.html.slim) データ属性から座標を取得
+  // (show.html.erb) データ属性から座標を取得
   const lat = parseFloat(target.dataset.lat || 0);
   const lng = parseFloat(target.dataset.lng || 0);
   const content = target.dataset.content || "";
@@ -385,7 +385,7 @@ window.initMap = function () {
     gmpClickable: true, // gmp-click が反応する
   });
 
-  // 吹き出し（InfoWindow）
+  // 吹き出し
   const infowindow = new google.maps.InfoWindow();
 
   marker.element.addEventListener('gmp-click', function () {
