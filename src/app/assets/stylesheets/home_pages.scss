@@ -21,7 +21,37 @@
 }
 
 // 吹き出し
-// (home/map), (posts/show)
+// (home/home_map), (posts/show)
 .infowindow > img {
   width: 100%;
+}
+
+
+/* pagination */
+#home_feed,
+#ajax_users_show,
+#ajax_users_index,
+#ajax_users_show_reviews {
+  nav {
+    // ul
+    .pagination {
+      margin: 16px 0;
+      justify-content: center;
+      li > a {
+        border: none;
+        color: #696969;
+        &:hover {
+          border-radius: 15px;
+        }
+        &:active {
+          color: #b0e7d7;
+        }
+      }
+      /* 表示しているページ番号 */
+      .active > a {
+        background: #93c9ff;
+        border-radius: 15px;
+      }
+    }
+  }
 }

@@ -1,7 +1,7 @@
 <%# (home_pages/home_login) %>
 
 <% if @feed_items.any? %>
-  <div id="ajax_feed">
+  <div id="home_feed">
     <div class="posts">
       <%= render @feed_items %>
       <%# (posts/_post) %>
@@ -18,6 +18,3 @@
     <p><%= link_to "ユーザーを探す", users_path %></p>
   </div>
 <% end %>
-
-<%# 住所をクリックするとマップ表示 エラーのため未使用 %>
-<%# <%= javascript_pack_tag 'search_name.js' %>
