@@ -67,6 +67,34 @@ webpackContext.id = "./app/javascript/images sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
+/***/ "./app/javascript/packs/src/drawer.js":
+/*!********************************************!*\
+  !*** ./app/javascript/packs/src/drawer.js ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+// (layouts/header)
+// ドロワー初期化
+const initDrawer = () => {
+  if (window.$ && typeof window.$.fn.drawer !== 'undefined') {
+    // 起動
+    $('.drawer').drawer();
+
+    // 背景の薄暗くなった部分をクリックするとドロワーが閉じる
+    // 変数を使わず、直接呼び出す（off/onで二重登録を防止）
+    $(document).off('click', '.drawer-overlay').on('click', '.drawer-overlay', function () {
+      // 毎回直接 $('.drawer') を指定することで、スコープによるエラーを防止
+      $('.drawer').drawer('close');
+    });
+  }
+};
+document.addEventListener('DOMContentLoaded', initDrawer);
+document.addEventListener('turbo:load', initDrawer);
+
+
+/***/ }),
+
 /***/ "./app/javascript/packs/src/flash.js":
 /*!*******************************************!*\
   !*** ./app/javascript/packs/src/flash.js ***!
@@ -22457,15 +22485,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _stylesheets_application_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../stylesheets/application.scss */ "./app/javascript/stylesheets/application.scss");
-/* harmony import */ var _src_flash__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/flash */ "./app/javascript/packs/src/flash.js");
-/* harmony import */ var _src_flash__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_src_flash__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/guest_login */ "./app/javascript/packs/src/guest_login.js");
-/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_src_guest_login__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _src_map_home__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/map_home */ "./app/javascript/packs/src/map_home.js");
-/* harmony import */ var _src_map_show__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./src/map_show */ "./app/javascript/packs/src/map_show.js");
-/* harmony import */ var _src_map_show__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_src_map_show__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./src/star_review */ "./app/javascript/packs/src/star_review.js");
-/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_src_star_review__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _src_drawer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/drawer */ "./app/javascript/packs/src/drawer.js");
+/* harmony import */ var _src_drawer__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_src_drawer__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _src_flash__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/flash */ "./app/javascript/packs/src/flash.js");
+/* harmony import */ var _src_flash__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_src_flash__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/guest_login */ "./app/javascript/packs/src/guest_login.js");
+/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_src_guest_login__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _src_map_home__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./src/map_home */ "./app/javascript/packs/src/map_home.js");
+/* harmony import */ var _src_map_show__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./src/map_show */ "./app/javascript/packs/src/map_show.js");
+/* harmony import */ var _src_map_show__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_src_map_show__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./src/star_review */ "./app/javascript/packs/src/star_review.js");
+/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_src_star_review__WEBPACK_IMPORTED_MODULE_13__);
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
@@ -22490,6 +22520,7 @@ _rails_activestorage__WEBPACK_IMPORTED_MODULE_4__.start()
 
 // webpack
 ;
+
 
 
 

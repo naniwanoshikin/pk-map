@@ -22,6 +22,7 @@ ActiveStorage.start()
 // webpack
 import 'bootstrap'
 import '../stylesheets/application.scss'
+import './src/drawer'
 import './src/flash'
 import './src/guest_login'
 import './src/map_home'
