@@ -24,16 +24,18 @@ window.initMap = function () {
     mapId: 'DEMO_MAP_ID' // AdvancedMarkerElement に必須
   });
 
-  // ピン（AdvancedMarker）の設置
+  // ピンの設置
   const marker = new google.maps.marker.AdvancedMarkerElement({
-    position: { lat: lat, lng: lng },
     map: show_map,
-    title: content
+    position: { lat: lat, lng: lng },
+    title: content,
+    gmpClickable: true, // gmp-click が反応する
   });
 
-  // 吹き出し（InfoWindow）の制御
+  // 吹き出し（InfoWindow）
   const infowindow = new google.maps.InfoWindow();
-  marker.addEventListener('gmp-click', function () {
+
+  marker.element.addEventListener('gmp-click', function () {
     infowindow.setContent(
       // 画像
       '<div class="infowindow">'
@@ -41,14 +43,22 @@ window.initMap = function () {
       + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${lat},${lng}&key=${apiKey}' >`
       + '</div>'
     );
-    infowindow.open(show_map, marker);
+    infowindow.open({
+      anchor: marker,
+      map: show_map,
+    });
   });
 }
 
 
 // ページ遷移時や戻った時にもしっかり同期させる
 document.addEventListener('turbo:load', () => {
-  if (typeof window.initMap === 'function') {
-    window.initMap();
+  // 要素が存在するときだけクリア＆再初期化
+  const target = document.getElementById('detail_map');
+  if (target) {
+    target.dataset.rendered = "false"; // 遷移時はフラグをリセット
+    if (typeof window.initMap === 'function' && window.google && window.google.maps) {
+      window.initMap();
+    }
   }
 });

@@ -6,6 +6,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^2.1.3",
     "@rails/actioncable": "^7.0.0",
     "@rails/activestorage": "^7.0.0",
     "@rails/ujs": "^7.0.0",

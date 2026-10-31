@@ -1,0 +1,9 @@
+<%# ホーム画面 ログイン後 (map_home.js) %>
+<div id='pkmap'
+  data-user-lat="<%= current_user.latitude %>"
+  data-user-lng="<%= current_user.longitude %>"
+  data-user-address="<%= current_user.address %>"
+  data-api-key="<%= ENV['GOOGLE_MAP_API'] %>"
+  <%# home_pages(C) %>
+  data-feeds="<%= @feed_items ? @feed_items.to_json : '[]' %>"
+></div>

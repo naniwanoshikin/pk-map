@@ -22,8 +22,10 @@ ActiveStorage.start()
 // webpack
 import 'bootstrap'
 import '../stylesheets/application.scss'
+import './src/flash'
 import './src/guest_login'
-import './src/show_map'
+import './src/map_home'
+import './src/map_show'
 import './src/star_review'
 
 // 画像の読み込み (home/about)

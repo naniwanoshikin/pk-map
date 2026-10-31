@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "ruby 3.3.13 updated"
+	git commit -m "Google MapsのJS分離とjs-api-loader v2対応による表示高速化"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

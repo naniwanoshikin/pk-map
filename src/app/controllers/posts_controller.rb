@@ -8,8 +8,6 @@ class PostsController < ApplicationController
   # 投稿詳細
   def show
     # @post
-    # map JS用
-    gon.post = @post
     # 投稿に対するレビュー集
     @reviews = @post.reviews
     # レビューを新規作成
