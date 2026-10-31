@@ -67,6 +67,59 @@ webpackContext.id = "./app/javascript/images sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
+/***/ "./app/javascript/packs/src/flash.js":
+/*!*******************************************!*\
+  !*** ./app/javascript/packs/src/flash.js ***!
+  \*******************************************/
+/***/ (function() {
+
+// (layouts/application)
+// ajaxしている外部ページ（reviews/create.js.erb）からもflashを呼び出せるよう、グローバル（window）に登録
+window.refreshFlashBehavior = function () {
+
+  const flash = document.getElementById('flash_messages');
+  // console.log("Flash グローバル関数実行");
+  if (!flash) return;
+
+  // 過去に付与されたCSSクラスをリセット
+  flash.classList.remove('hidden_up', 'hidden_out');
+  // Flashメッセージを表示 review_ajax2回目以降も
+  flash.style.display = "block";
+
+  // [x] 閉じるボタン
+  const close = flash.querySelector('.close');
+  if (close) {
+    // console.log("[x]ボタンあり");
+    const autoDeleteTimer = setTimeout(() => {
+      console.log("7秒経過");
+      flash.classList.add('hidden_up'); // CSS 上がる
+    }, 7000);
+
+    // [x]を押したとき
+    close.addEventListener('click', () => {
+      console.log("[x]が押されました");
+      flash.classList.add('hidden_out'); // CSS 消える
+      clearTimeout(autoDeleteTimer); // 7秒タイマーをキャンセル
+
+      setTimeout(() => {
+        if (flash.classList.contains('hidden_out')) {
+          // console.log("0.5秒後にメッセージ削除");
+          flash.style.display = "none"; // CSSよりも優先される
+        }
+      }, 500); // CSSのアニメーション時間に合わせる
+
+    }, { once: true }); // 1回だけ実行
+  }
+};
+
+// 初回画面表示（DOM構築完了時）に実行
+document.addEventListener('DOMContentLoaded', () => {
+  window.refreshFlashBehavior();
+});
+
+
+/***/ }),
+
 /***/ "./app/javascript/packs/src/guest_login.js":
 /*!*************************************************!*\
   !*** ./app/javascript/packs/src/guest_login.js ***!
@@ -104,9 +157,169 @@ document.addEventListener('click', (event) => {
 
 /***/ }),
 
-/***/ "./app/javascript/packs/src/show_map.js":
+/***/ "./app/javascript/packs/src/map_home.js":
 /*!**********************************************!*\
-  !*** ./app/javascript/packs/src/show_map.js ***!
+  !*** ./app/javascript/packs/src/map_home.js ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @googlemaps/js-api-loader */ "./node_modules/@googlemaps/js-api-loader/dist/index.js");
+
+
+let map;
+let infowindow; // 吹き出し
+
+// 地図の初期化
+async function initMap(mapElement) {
+  console.log('Google Mapsの読み込み開始');
+  // 検索入力用 エラー
+  // const geocoder = new google.maps.Geocoder();
+
+  // data属性: (home_pages/home_map)
+  // 自身の住所 (緯度: 経度:)
+  const user_LatLng = {
+    lat: parseFloat(mapElement.dataset.userLat),
+    lng: parseFloat(mapElement.dataset.userLng)
+  }
+  const userAddress = mapElement.dataset.userAddress;
+  const apiKey = mapElement.dataset.apiKey;
+  const feeds = JSON.parse(mapElement.dataset.feeds || '[]');
+
+  // 1. 新しいAPIの書き方：オプションをセットする
+  (0,_googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__.setOptions)({
+    key: apiKey,
+    v: "weekly" // バージョン指定
+  });
+
+
+  try {
+    // mapsライブラリと markerライブラリを非同期でインポート
+    const { Map, InfoWindow } = await (0,_googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__.importLibrary)("maps");
+    const { AdvancedMarkerElement, PinElement } = await (0,_googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__.importLibrary)("marker");
+
+    // 最新フィードの住所 あれば(条件演算子)
+    const latest_feed_address = feeds[0] ? {
+      lat: parseFloat(feeds[0].latitude),
+      lng: parseFloat(feeds[0].longitude)
+    } : null
+
+    // 地図の生成 中心位置を表示
+    map = new Map(mapElement, {
+      // 最新フィード なければ自身の住所
+      center: latest_feed_address || user_LatLng,
+      zoom: 12,
+      mapTypeControl: false, // 地図|写真
+      streetViewControl: false, // ストリートビューマーク
+      mapId: 'DEMO_MAP_ID', // AdvancedMarkerElement に必要
+      // mapTypeId: 'hybrid', // 航空写真とか..
+    });
+
+    // 吹き出しインスタンスの生成
+    infowindow = new InfoWindow();
+
+    // 新しいピン要素を作成 背景色をデザイン
+    const pinGreen = new PinElement({
+      background: "#34A853", // マップ公式の鮮やかなグリーン
+      borderColor: "#137333", // 枠線のディープグリーン
+      glyphColor: "#ffffff",  // ピンの中央のドットの色（白）
+    });
+
+    // 自身の住所マーカー（緑のピン）
+    const userMarker = new AdvancedMarkerElement({
+      map: map,
+      position: user_LatLng,
+      title: "自身の位置",
+      content: pinGreen,
+      gmpClickable: true, // gmp-click を機能させる為
+    });
+
+    // 自身の住所の吹き出しを作成
+    userMarker.addEventListener('gmp-click', (event) => {
+      // 他のフィードのクリックイベントと衝突・相殺するのを防ぐ
+      event.stopPropagation();
+      // 自身の位置と全く同じ座標、もしくは同じ住所のフィードを1つ特定
+      const matchedFeed = feeds.find(feed => feed.address === userAddress);
+
+      if (matchedFeed) {
+        // フィード情報付きの吹き出しを出す
+        openBalloon(userMarker, matchedFeed, apiKey);
+      } else {
+        // 投稿データがまだ無い場合は、current_userから安全に住所を表示する（クラッシュを防止）
+        infowindow.setContent(
+          `<div class="infowindow">`
+          + `<span>${userAddress}</span>`
+          + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${user_LatLng.lat},${user_LatLng.lng}&key=${apiKey}' >`
+          + '</div>'
+        );
+        // 吹き出しを表示
+        infowindow.open({ anchor: userMarker, map: map });
+      }
+    });
+
+
+    // フィードの個々のマーカーを配置
+    feeds.forEach(feed => {
+      console.log(feed.address);
+      // 自身の住所/フィードが重複しないよう
+      if (feed.address !== userAddress) {
+        const targetMarker = new google.maps.marker.AdvancedMarkerElement({
+          map: map,
+          position: {
+            lat: parseFloat(feed.latitude),
+            lng: parseFloat(feed.longitude)
+          },
+          title: feed.address,
+          gmpClickable: true,
+        });
+        // 吹き出しを表示
+        targetMarker.addEventListener('gmp-click', (event) => {
+          event.stopPropagation();
+          openBalloon(targetMarker, feed, apiKey);
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Google Mapsの読み込み中にエラーが発生:", error);
+  }
+
+  // 吹き出しを表示する
+  function openBalloon(targetMarker, feedData, apiKey) {
+    console.log(feedData.address + 'をクリック')
+    infowindow.setContent(
+      // リンク + 画像
+      '<div class="infowindow">'
+      + `<a href='/posts/${feedData.id}'>${feedData.address}</a>`
+      + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${feedData.latitude},${feedData.longitude}&key=${apiKey}' >`
+      + '</div>'
+    );
+    // 吹き出しを表示
+    infowindow.open({
+      anchor: targetMarker,
+      map: map,
+    });
+  };
+}
+
+// 1. 地図要素が存在するかチェックして初期化を呼ぶ関数を「定義」
+function initMapOnLoad() {
+  const mapElement = document.getElementById('pkmap');
+  if (mapElement) {
+    initMap(mapElement);
+  }
+}
+
+// 画面遷移時（Turbo）と初回読み込み（DOMContentLoaded）の両方
+document.addEventListener("turbo:load", initMapOnLoad);
+document.addEventListener("DOMContentLoaded", initMapOnLoad);
+
+
+/***/ }),
+
+/***/ "./app/javascript/packs/src/map_show.js":
+/*!**********************************************!*\
+  !*** ./app/javascript/packs/src/map_show.js ***!
   \**********************************************/
 /***/ (function() {
 
@@ -136,16 +349,18 @@ window.initMap = function () {
     mapId: 'DEMO_MAP_ID' // AdvancedMarkerElement に必須
   });
 
-  // ピン（AdvancedMarker）の設置
+  // ピンの設置
   const marker = new google.maps.marker.AdvancedMarkerElement({
-    position: { lat: lat, lng: lng },
     map: show_map,
-    title: content
+    position: { lat: lat, lng: lng },
+    title: content,
+    gmpClickable: true, // gmp-click が反応する
   });
 
-  // 吹き出し（InfoWindow）の制御
+  // 吹き出し（InfoWindow）
   const infowindow = new google.maps.InfoWindow();
-  marker.addEventListener('gmp-click', function () {
+
+  marker.element.addEventListener('gmp-click', function () {
     infowindow.setContent(
       // 画像
       '<div class="infowindow">'
@@ -153,15 +368,23 @@ window.initMap = function () {
       + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${lat},${lng}&key=${apiKey}' >`
       + '</div>'
     );
-    infowindow.open(show_map, marker);
+    infowindow.open({
+      anchor: marker,
+      map: show_map,
+    });
   });
 }
 
 
 // ページ遷移時や戻った時にもしっかり同期させる
 document.addEventListener('turbo:load', () => {
-  if (typeof window.initMap === 'function') {
-    window.initMap();
+  // 要素が存在するときだけクリア＆再初期化
+  const target = document.getElementById('detail_map');
+  if (target) {
+    target.dataset.rendered = "false"; // 遷移時はフラグをリセット
+    if (typeof window.initMap === 'function' && window.google && window.google.maps) {
+      window.initMap();
+    }
   }
 });
 
@@ -21898,6 +22121,220 @@ module.exports = __webpack_require__.p + "images/mie.JPG";
 "use strict";
 module.exports = __webpack_require__.p + "images/rails.svg";
 
+/***/ }),
+
+/***/ "./node_modules/@googlemaps/js-api-loader/dist/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@googlemaps/js-api-loader/dist/index.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Loader: function() { return /* binding */ Loader; },
+/* harmony export */   importLibrary: function() { return /* binding */ importLibrary; },
+/* harmony export */   setOptions: function() { return /* binding */ setOptions; }
+/* harmony export */ });
+const MSG_DEPRECATED_LOADER = "The Loader class is no longer available in this version." +
+    "\nPlease use the new functional API: setOptions() and importLibrary()." +
+    "\nFor more information, see the updated documentation at: " +
+    "https://github.com/googlemaps/js-api-loader/blob/main/README.md";
+const MSG_REPEATED_SET_OPTIONS = (options) => `The setOptions() function should only be called once. The options passed ` +
+    `to the additional call (${JSON.stringify(options)}) will be ignored.`;
+const MSG_IMPORT_LIBRARY_EXISTS = (options) => `The google.maps.importLibrary() function is already defined, and ` +
+    `@googlemaps/js-api-loader will use the existing function instead of ` +
+    `overwriting it. The options passed to setOptions ` +
+    `(${JSON.stringify(options)}) will be ignored.`;
+const MSG_SET_OPTIONS_NOT_CALLED = "No options were set before calling importLibrary. Make sure to configure " +
+    "the loader using setOptions().";
+const MSG_SCRIPT_ELEMENT_EXISTS = "There already is a script loading the Google Maps JavaScript " +
+    "API, and no google.maps.importLibrary function is defined. " +
+    "@googlemaps/js-api-loader will proceed to bootstrap the API " +
+    "with the specified options, but the existing script might cause " +
+    "problems using the API. Make sure to remove the script " +
+    "loading the API.";
+const MSG_API_KEY_USED = "The 'apiKey' parameter was used in setOptions(), but 'key' is the correct " +
+    "parameter name. Please update your configuration.";
+const MSG_TRUSTED_TYPES_POLICY_FAILED = (policyName, error) => `Failed to create Trusted Types policy "${policyName}": ${error instanceof Error ? error.message : String(error)}.\n\n` +
+    `If your Content Security Policy uses "require-trusted-types-for 'script'", ` +
+    `allow this policy with "trusted-types ${policyName} google-maps-api-loader google-maps-api#html lit-html". ` +
+    `The "google-maps-api-loader", "lit-html", and "google-maps-api#html" policies are required for full Maps JavaScript API execution. ` +
+    `Falling back to a string script URL.`;
+const __DEV__$1 = "development" !== 'production';
+const logDevWarning = __DEV__$1
+    ? (message) => {
+        console.warn(`[@googlemaps/js-api-loader] ${message}`);
+    }
+    : () => { };
+const logDevNotice = __DEV__$1
+    ? (message) => {
+        console.info(`[@googlemaps/js-api-loader] ${message}`);
+    }
+    : () => { };
+
+/*
+ * Copyright 2025 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+const TRUSTED_TYPES_POLICY_NAME = "@googlemaps/js-api-loader";
+const fallbackPolicy = { createScriptURL: (url) => url };
+let policy;
+/*
+ * Tries to create a Trusted Types policy when supported. Falls back to a string passthrough
+ * when Trusted Types is unsupported, blocked by CSP, or already registered.
+ */
+function getPolicy() {
+    if (policy) {
+        return policy;
+    }
+    const trustedTypes = globalThis.trustedTypes;
+    if (!trustedTypes) {
+        policy = fallbackPolicy;
+        return policy;
+    }
+    try {
+        policy = trustedTypes.createPolicy(TRUSTED_TYPES_POLICY_NAME, {
+            createScriptURL: (url) => url,
+        });
+    }
+    catch (e) {
+        logDevWarning(MSG_TRUSTED_TYPES_POLICY_FAILED(TRUSTED_TYPES_POLICY_NAME, e));
+        policy = fallbackPolicy;
+    }
+    return policy;
+}
+function setScriptSrc(script, src) {
+    script.src = getPolicy().createScriptURL(src);
+}
+
+/*
+ * Copyright 2025 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+const bootstrap = bootstrapParams => {
+  var bootstrapPromise;
+  var script;
+  var bootstrapParamsKey;
+  var PRODUCT_NAME = "The Google Maps JavaScript API";
+  var GOOGLE = "google";
+  var IMPORT_API_NAME = "importLibrary";
+  var PENDING_BOOTSTRAP_KEY = "__ib__";
+  var doc = document;
+  var global_ = window;
+  var google_ = global_[GOOGLE] || (global_[GOOGLE] = {});
+  var namespace = google_.maps || (google_.maps = {});
+  var libraries = new Set();
+  var searchParams = new URLSearchParams();
+  var triggerBootstrap = () => bootstrapPromise || (bootstrapPromise = new Promise(async(resolve, reject) => {
+    await (script = doc.createElement("script"));
+    searchParams.set("libraries", [...libraries] + "");
+    for (bootstrapParamsKey in bootstrapParams) {
+      searchParams.set(bootstrapParamsKey.replace(/[A-Z]/g, g => "_" + g[0].toLowerCase()), bootstrapParams[bootstrapParamsKey]);
+    }
+    searchParams.set("callback", GOOGLE + ".maps." + PENDING_BOOTSTRAP_KEY);
+    setScriptSrc(script, "https://maps.googleapis.com/maps/api/js?" + searchParams);
+    namespace[PENDING_BOOTSTRAP_KEY] = resolve;
+    script.onerror = () => bootstrapPromise = reject(Error(PRODUCT_NAME + " could not load."));
+    script.nonce = doc.querySelector("script[nonce]")?.nonce || "";
+    doc.head.append(script);
+  }));
+  namespace[IMPORT_API_NAME] ? console.warn(PRODUCT_NAME + " only loads once. Ignoring:", bootstrapParams) : namespace[IMPORT_API_NAME] = (libraryName, ...args) => libraries.add(libraryName) && triggerBootstrap().then(() => namespace[IMPORT_API_NAME](libraryName, ...args));
+};
+
+/*
+ * Copyright 2025 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
+/**
+ * @deprecated Use the new functional API: `setOptions()` and `importLibrary()`.
+ * See the migration guide for more details: MIGRATION.md
+ */
+class Loader {
+    constructor(...args) {
+        throw new Error(`[@googlemaps/js-api-loader]: ${MSG_DEPRECATED_LOADER}`);
+    }
+}
+
+/*
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+const __DEV__ = "development" !== "production";
+let setOptionsWasCalled_ = false;
+/**
+ * Sets the options for the Maps JavaScript API.
+ *
+ * Has to be called before any library is loaded.
+ *
+ * See https://developers.google.com/maps/documentation/javascript/load-maps-js-api#required_parameters
+ * for the full documentation of available options.
+ *
+ * @param options The options to set.
+ */
+function setOptions(options) {
+    if (setOptionsWasCalled_) {
+        logDevWarning(MSG_REPEATED_SET_OPTIONS(options));
+        return;
+    }
+    if (options.apiKey) {
+        logDevWarning(MSG_API_KEY_USED);
+        if (!options.key) {
+            options.key = options.apiKey;
+        }
+    }
+    installImportLibrary_(options);
+    setOptionsWasCalled_ = true;
+}
+async function importLibrary(libraryName) {
+    if (!setOptionsWasCalled_) {
+        logDevWarning(MSG_SET_OPTIONS_NOT_CALLED);
+    }
+    if (!window?.google?.maps?.importLibrary) {
+        throw new Error("google.maps.importLibrary is not installed.");
+    }
+    return (await google.maps.importLibrary(libraryName));
+}
+/**
+ * The installImportLibrary_ function makes sure that a usable version of the
+ * `google.maps.importLibrary` function exists.
+ */
+function installImportLibrary_(options) {
+    const importLibraryExists = Boolean(window.google?.maps?.importLibrary);
+    if (importLibraryExists) {
+        logDevNotice(MSG_IMPORT_LIBRARY_EXISTS(options));
+    }
+    else if (__DEV__) {
+        const scriptEl = document.querySelector('script[src*="maps.googleapis.com/maps/api/js"]');
+        if (scriptEl) {
+            logDevWarning(MSG_SCRIPT_ELEMENT_EXISTS);
+        }
+    }
+    // If the google.maps.importLibrary function already exists, bootstrap()
+    // won't do anything, so we won't call it
+    if (!importLibraryExists) {
+        bootstrap(options);
+    }
+}
+
+
+//# sourceMappingURL=index.js.map
+
+
 /***/ })
 
 /******/ 	});
@@ -22020,12 +22457,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _stylesheets_application_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../stylesheets/application.scss */ "./app/javascript/stylesheets/application.scss");
-/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/guest_login */ "./app/javascript/packs/src/guest_login.js");
-/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_src_guest_login__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _src_show_map__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/show_map */ "./app/javascript/packs/src/show_map.js");
-/* harmony import */ var _src_show_map__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_src_show_map__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/star_review */ "./app/javascript/packs/src/star_review.js");
-/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_src_star_review__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _src_flash__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/flash */ "./app/javascript/packs/src/flash.js");
+/* harmony import */ var _src_flash__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_src_flash__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/guest_login */ "./app/javascript/packs/src/guest_login.js");
+/* harmony import */ var _src_guest_login__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_src_guest_login__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _src_map_home__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/map_home */ "./app/javascript/packs/src/map_home.js");
+/* harmony import */ var _src_map_show__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./src/map_show */ "./app/javascript/packs/src/map_show.js");
+/* harmony import */ var _src_map_show__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_src_map_show__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./src/star_review */ "./app/javascript/packs/src/star_review.js");
+/* harmony import */ var _src_star_review__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_src_star_review__WEBPACK_IMPORTED_MODULE_12__);
 /* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
@@ -22050,6 +22490,8 @@ _rails_activestorage__WEBPACK_IMPORTED_MODULE_4__.start()
 
 // webpack
 ;
+
+
 
 
 

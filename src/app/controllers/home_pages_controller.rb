@@ -15,8 +15,7 @@ class HomePagesController < ApplicationController
       end
       @url = root_path
 
-      # (home/map)
-      gon.feeds = @feed_items
+      # (home/home_map)
 
       respond_to do |format|
         format.html

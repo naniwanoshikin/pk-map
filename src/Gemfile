@@ -24,7 +24,7 @@ gem 'kaminari'    # 10
 gem 'ransack'     # 検索
 gem 'geocoder'    # 緯度経度
 gem 'dotenv-rails' # 環境変数
-gem 'gon'         # JSで@インスタンス変数使える
+# gem 'gon'         # JSで@変数使える 使ってない
 
 # Docker 3.1系・Rails7で必須のメール関連Gem
 gem 'net-smtp', require: false

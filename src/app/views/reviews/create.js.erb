@@ -28,9 +28,9 @@
 
   <%# フラッシュメッセージ %>
   $("#flash_messages").html("<%= escape_javascript(render 'layouts/flash', reviews: @reviews) %>");
-  <%# (#flash_messages)を更新のため、js(application.js.erb)を再実行 %>
+  <%# (flash.js) 再実行し、(#flash_messages)を更新 %>
   if (typeof window.refreshFlashBehavior === 'function') {
-  console.log('reviews/create.js.erbよりflash起動')
+  <%# console.log('reviews/create.js.erbよりflash') %>
     window.refreshFlashBehavior();
   }
 

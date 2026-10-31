@@ -24,7 +24,6 @@ class ReviewsController < ApplicationController
       # 実際のレビュー一覧
       @reviews = Review.where(post_id: @post.id)
 
-      gon.post = @post # map js
       flash.now[:alert] = "レビュー投稿に失敗しました"
       respond_to do |format|
         format.html { render 'posts/show' }
