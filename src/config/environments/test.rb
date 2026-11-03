@@ -24,9 +24,9 @@ Rails.application.configure do
   config.cache_store = :null_store
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = :none
 
-  # Disable request forgery protection in test environment.
+  # CSRF トークンの検証（Originチェック含む）を無効化
   config.action_controller.allow_forgery_protection = false
 
   # Store uploaded files on the local file system in a temporary directory.
@@ -54,6 +54,7 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
   #
-  ## ⭕ テスト環境でのホストチェックを一律で無効化し、403を回避する
-config.hosts.clear
+
+  # ホスト検証（HostAuthorization）の制限を完全に無効化
+  config.hosts = nil
 end

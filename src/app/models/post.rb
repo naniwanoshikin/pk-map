@@ -14,7 +14,7 @@ class Post < ApplicationRecord
 
   # addressが登録されたら, 緯度経度も自動登録
   geocoded_by :address
-  after_validation :geocode
+  after_validation :geocode, if: ->(obj){ obj.address.present? && obj.address_changed? && obj.errors.blank? }
 
   # Ransackでの検索を許可するカラムを宣言 Rails7に伴い
   def self.ransackable_attributes(auth_object = nil)

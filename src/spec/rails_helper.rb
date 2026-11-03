@@ -38,7 +38,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :system
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -77,6 +77,29 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation
   end
 
+  # Rails7.1 RequestSpecが走る前に、デフォルトのOriginヘッダーを設定
+  config.before(:each, type: :request) do
+    host! "localhost"
+    # Railsのデフォルトテストホストである 'localhost' または 'example.org' を明示
+    default_url_options[:host] = "localhost"
+  end
+
+  config.before(:suite) do
+    # Geocoderをテストモードにする
+    Geocoder.configure(lookup: :test, ip_lookup: :test)
+
+    # 「梅田」や「東京駅」などの住所が指定されたときに返す擬似データを登録しておく
+    Geocoder::Lookup::Test.add_stub(
+      "梅田", [
+        {
+          'coordinates'  => [34.7024, 135.4959], # 緯度, 経度
+          'address'      => '大阪府大阪市北区梅田',
+          'state'        => '大阪府',
+          'country'      => '日本'
+        }
+      ]
+    )
+  end
 end
 
 Shoulda::Matchers.configure do |config|

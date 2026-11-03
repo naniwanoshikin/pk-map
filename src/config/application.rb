@@ -8,8 +8,11 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
+    # Rails 7.1 オートロード設定を追加
+    config.autoload_lib(ignore: %w(assets tasks))
+
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.1
 
     config.time_zone = "Tokyo"
     # Active Recordのタイムゾーン

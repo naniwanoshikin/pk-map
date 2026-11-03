@@ -59,9 +59,9 @@ rspech:
 # migrate
 m:
 	docker-compose exec web rails db:migrate
-# データ削除
+# データの中身（テーブル）を削除
 mr:
-	docker-compose exec web rails db:migrate:reset
+	docker-compose exec web rails db:schema:load
 md:
 	docker-compose exec web rails db:migrate:down VERSION=20220309035728
 ms:
@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "2026年11月なりました"
+	git commit -m "became_rails7.1"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

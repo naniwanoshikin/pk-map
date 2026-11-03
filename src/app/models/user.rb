@@ -48,7 +48,8 @@ class User < ApplicationRecord
 
   # addressが登録されたら, 緯度経度も自動登録
   geocoded_by :address # 緯度経度を算出
-  after_validation :geocode # 住所変更時に緯度経度も変更
+  # 住所変更時に緯度経度も変更
+  after_validation :geocode, if: ->(obj){ obj.address.present? && obj.address_changed? && obj.errors.blank? } # addressが変更されたときのみ、かつ他のバリデーションに失敗していない場合のみ
 
   # ----------------------------------------------
   # ゲストログイン
@@ -108,12 +109,8 @@ class User < ApplicationRecord
   # selfがuserにフォローを通知する
   def notify_to_follow!(user) # Relationships(C)
     # レコードを検索 「ボタン連打」に備える
-    temp = Notification.where([
-      "visitor_id = ? and visited_id = ? and action = ? ",
-      id,      # フォローする
-      user.id, # フォローされる
-      'follow'
-    ])
+    temp = Notification.where(visitor_id: id, visited_id: user.id, action: 'follow') # (フォローする, フォローされる, 'follow')
+
     if temp.blank?
       notification = self.active_notifications.new(
         visited_id: user.id,
