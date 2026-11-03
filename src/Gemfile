@@ -1,13 +1,12 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 7.0.8', '>= 7.0.8.7'
+gem 'rails', '~> 7.1.0'
 gem 'puma', '>= 5.0'
 gem 'json', '< 3.0.0'
 
 gem 'jsbundling-rails'    # JSのバンドル用
 gem 'sprockets-rails'     # アセットパイプライン用
-# gem 'webpacker', '~> 5.0' # 廃止
 
 gem 'sass-rails', '>= 6'
 gem 'jbuilder', '~> 2.11'   # Rails 7.0に対応
@@ -24,7 +23,6 @@ gem 'kaminari'    # 10
 gem 'ransack'     # 検索
 gem 'geocoder'    # 緯度経度
 gem 'dotenv-rails' # 環境変数
-# gem 'gon'         # JSで@変数使える 使ってない
 
 # Docker 3.1系・Rails7で必須のメール関連Gem
 gem 'net-smtp', require: false
