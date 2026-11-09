@@ -1,12 +1,12 @@
-<%# 10 %>
+
 <% provide(:title, 'ユーザー一覧') %>
+
 <h2>ユーザー一覧</h2>
 
-<%# ajax %>
-<div id="ajax_users_index">
+<div id="users_index">
   <ul class="users">
     <%= render @users %>
     <%# (users/_user) %>
   </ul>
-  <%= paginate @users, remote: true %>
+  <%= paginate @users %>
 </div>

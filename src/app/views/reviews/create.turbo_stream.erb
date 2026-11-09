@@ -1,0 +1,26 @@
+<%# (posts/show)_レビューを投稿 %>
+
+<% if @review.errors.any? %>
+  <%# ❌ 投稿失敗（バリデーションエラー） %>
+  <%# エラー表示エリアだけをエラーメッセージで上書き モーダルは閉じない %>
+  <%= turbo_stream.update "modal_errors" do %>
+    <%= render 'shared/error_messages', object: @review %>
+  <% end %>
+
+<% else %>
+  <%# ⭕️ 投稿成功時 %>
+  <%# 1. レビュー一覧を更新 %>
+  <%= turbo_stream.update "reviews" do %>
+    <%= render 'reviews/review', reviews: @reviews %>
+  <% end %>
+
+  <%# 2. フラッシュメッセージを表示 %>
+  <%= turbo_stream.update "flash_messages" do %>
+    <%= render 'layouts/flash' %>
+  <% end %>
+
+  <%# 3. モーダル内のお片付け %>
+  <%# Stimulus (app/javascript/controllers/modal_closer_controller.js) %>
+  <div data-controller="modal-closer" data-modal-id="#exampleModal"></div>
+
+<% end %>

@@ -1,0 +1,24 @@
+<%# (users/show) %>
+<div class="spot_list d-flex justify-content-around">
+  <h2 class="text-dark">投稿一覧</h2>
+  <% if @user.reviews.any? %>
+    <%= link_to show_reviews_user_path(@user) do %>
+      <h2>レビュー一覧</h2>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @posts.any? %>
+  <div class="posts">
+    <%# (posts/post) %>
+    <%= render @posts %>
+  </div>
+  <%= paginate @posts %>
+<% else %>
+  <div class="text-center">
+    <p>まだ投稿していません</p>
+    <p>
+      <%= link_to '投稿する', new_post_path %>
+    </p>
+  </div>
+<% end %>

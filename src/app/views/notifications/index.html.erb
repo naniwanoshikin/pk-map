@@ -1,0 +1,23 @@
+<% provide(:title, '通知') %>
+
+<h2>通知</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 col-md-offset-2 mx-auto">
+      <% if @notifications.exists? %>
+        <ul id="notify_lists">
+          <%= render @notifications %>
+        </ul>
+
+        <%# ボタンエリア ajax %>
+        <div id="view_more_container" class="text-center mt-4">
+          <%= render 'view_more_button', notifications: @notifications %>
+        </div>
+
+      <% else %>
+        <h2>通知はまだありません</h2>
+      <% end %>
+    </div>
+  </div>
+</div>

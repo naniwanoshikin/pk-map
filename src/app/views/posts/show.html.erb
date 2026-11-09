@@ -14,18 +14,19 @@
       <!-- 投稿削除 -->
       <div class="float-right">
         <% if current_user?(@post.user) %>
-          <%= link_to @post, class: "text-danger", method: :delete, data: { confirm: "You sure?" } do %>
+          <%= link_to @post, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "投稿を削除しますか？" } do %>
             <i class="fas fa-trash-alt fa-lg"></i>
           <% end %>
         <% end %>
       </div>
 
-      <%# 地図 railsのデータ属性 -> (datail_map.js) %>
-      <div id="detail_map"
-        data-lat="<%= @post.latitude %>"
-        data-lng="<%= @post.longitude %>"
-        data-content="<%= j @post.content %>"
-        data-api-key="<%= ENV['GOOGLE_MAP_API'] %>"
+      <%# 地図 (map_show_controller.js) %>
+      <div id="map_show"
+        data-controller="map-show"
+        data-map-show-lat-value="<%= @post.latitude %>"
+        data-map-show-lng-value="<%= @post.longitude %>"
+        data-map-show-content-value="<%= j @post.content %>"
+        data-map-show-api-key-value="<%= ENV['GOOGLE_MAP_API'] %>"
       ></div>
 
       <div class="post_state pl-4 my-4">
@@ -79,9 +80,3 @@
     </div>
   </div>
 </div>
-
-<%# Google Maps APIのスクリプト読み込み %>
-<%
-  google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV['GOOGLE_MAP_API'] }\u0026callback=initMap&libraries=marker&loading=async".html_safe
-%>
-<script src="<%= google_api %>" defer="true"></script>

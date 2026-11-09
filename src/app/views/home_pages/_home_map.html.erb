@@ -1,9 +1,12 @@
-<%# ホーム画面 ログイン後 (map_home.js) %>
+<%# ホーム画面 ログイン後 (map_home_controller.js) %>
 <div id='pkmap'
-  data-user-lat="<%= current_user.latitude %>"
-  data-user-lng="<%= current_user.longitude %>"
-  data-user-address="<%= current_user.address %>"
-  data-api-key="<%= ENV['GOOGLE_MAP_API'] %>"
-  <%# home_pages(C) %>
-  data-feeds="<%= @feed_items ? @feed_items.to_json : '[]' %>"
+  data-controller="map-home"
+  <%# data-コントローラー名-属性名-value %>
+  <%# ① あなた自身の座標と住所 %>
+  data-map-home-user-lat-value="<%= current_user.latitude %>"
+  data-map-home-user-lng-value="<%= current_user.longitude %>"
+  data-map-home-user-address-value="<%= current_user.address %>"
+  data-map-home-api-key-value="<%= ENV['GOOGLE_MAP_API'] %>"
+  <%# ② みんながこれまでに投稿した「すべてのタイムライン（フィード）」home_pages(C) %>
+  data-map-home-feeds-value="<%= @feed_items ? @feed_items.to_json : '[]' %>"
 ></div>

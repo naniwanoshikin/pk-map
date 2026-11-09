@@ -17,17 +17,17 @@ class ReviewsController < ApplicationController
       # (reviews/form)
       respond_to do |format|
         format.html { redirect_to @post, notice: 'レビューを追加しました' }
-        format.js { flash.now[:notice] = "レビューを追加しました" }
+        format.turbo_stream { flash.now[:notice] = "レビューを追加しました" }
       end
     else
       # レビューの保存失敗（星0のとき）
       # 実際のレビュー一覧
       @reviews = Review.where(post_id: @post.id)
-
       flash.now[:alert] = "レビュー投稿に失敗しました"
+
       respond_to do |format|
-        format.html { render 'posts/show' }
-        format.js # create.js.erb呼び出し
+        format.html { render 'posts/show', status: :unprocessable_entity }
+        format.turbo_stream { render status: :unprocessable_entity }
       end
     end
   end
@@ -36,12 +36,14 @@ class ReviewsController < ApplicationController
   def destroy
     # @review
     @post = @review.post
-    @reviews = Review.where(post_id: @post.id)
     @review.destroy
+    @reviews = Review.where(post_id: @post.id)
+
     respond_to do |format|
-      format.html { redirect_to @post, alert: 'レビューを削除しました' }
-      # ajaxの場合、次ページに持ち越さない
-      format.js { flash.now[:alert] = "レビューを削除しました" }
+      # Rails 7 移行のフォーム/ボタン送信リダイレクト
+      format.html { redirect_to @post, alert: 'レビューを削除しました', status: :see_other }
+      # JSを介さず、直感的なHTML断片で非同期処理を行う
+      format.turbo_stream { flash.now[:alert] = "レビューを削除しました" }
     end
   end
 

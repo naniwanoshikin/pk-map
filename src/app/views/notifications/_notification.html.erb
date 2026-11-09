@@ -1,0 +1,47 @@
+<% visitor = notification.visitor %>
+<% visited = notification.visited %>
+
+<li>
+  <div class="f_inline d-flex">
+    <%# 1. マークの表示 %>
+    <div class="action_mark mr-2">
+      <% case notification.action %>
+      <% when 'follow' %>
+        <i class="fas fa-user fa-lg"></i>
+      <% when 'good' %>
+        <i class="fas fa-heart fa-lg"></i>
+      <% when 'review' %>
+        <i class="far fa-comment fa-lg"></i>
+      <% end %>
+    </div>
+
+    <%# 2. アバターアイコン %>
+    <%= link_to gravatar_for(visitor, size: 30), visitor %>
+
+    <%# 3. 通知の文章コンテンツ %>
+    <div class="notify_content">
+      <strong><%= link_to visitor.name, visitor %></strong>
+      <span class="text-black">さん
+        <% case notification.action %>
+        <% when 'follow' %>
+          にフォローされました
+        <% when 'good' %>
+          がレビューを評価しました
+          <p class="good_notify">
+            <%= link_to notification.review.content, notification.review.post %>
+          </p>
+        <% when 'review' %>
+          がレビューしました
+          <p class="review_notify">
+            <%= link_to notification.review.content, notification.post %>
+          </p>
+        <% end %>
+      </span>
+    </div>
+  </div>
+
+  <%# 4. タイムスタンプ（右寄せ） %>
+  <div class="small text-muted text-right mr-2">
+    <%= time_ago_in_words(notification.created_at).upcase %>前
+  </div>
+</li>

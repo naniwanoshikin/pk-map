@@ -1,0 +1,6 @@
+<%# 次のページがなければ、何も出力しないのでボタンが消える %>
+<% if notifications.next_page %>
+  <%= link_to_next_page notifications, 'もっと見る',
+        class: 'btn btn-border',
+        data: { turbo_stream: true } %>
+<% end %>

@@ -3,10 +3,11 @@
   ul
     / each: destroy_ajax用
     - @reviews.each do |review|
-      li
-        / 削除ボタン post_id: 必須, review_id: (C)に渡すparams
+      / Rails7 各レビュー要素を特定できるようにDOM IDを付与（Turbo Streamで狙い撃ちして削除・更新するため）
+      li id="review-#{review.id}"
+        / 削除ボタン post_id: 必須, review_id: (C)に渡す params
         - if current_user?(review.user)
-          = link_to post_reviews_path(post_id: review.post, review_id: review.id), class: "text-danger float-right", method: :delete, data: { confirm: "レビューを削除しますか?" }, remote: true do
+          = link_to post_reviews_path(post_id: review.post, review_id: review.id), class: "text-danger float-right", data: { turbo_method: :delete, turbo_confirm: "レビューを削除しますか?" } do
             i.fas.fa-trash-alt
 
         .review_user.d-flex

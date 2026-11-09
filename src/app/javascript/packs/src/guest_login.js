@@ -1,16 +1,21 @@
 // ゲストログイン (home_pages/_home.html.erb)
+// Stimulus化する必要はなし
 
-// 通常環境（Turboなし）であれば、
-document.addEventListener('click', (event) => {
-  // クリックされた要素（またはその親）に data-guest-login-btn があるかチェック
-  const guestBtn = event.target.closest('[data-guest-login-btn]');
-  if (!guestBtn) return;
+// Rails7 Turboの送信開始イベントをグローバルに監視
+document.addEventListener('turbo:submit-start', (event) => {
+  // 送信されたターゲット（form要素）
+  const form = event.target;
+  // 送信されたフォームの中に [data-guest-login-btn] を持つボタンがあるか判定
+  const isGuestLogin = form.querySelector('[data-guest-login-btn]');
+  if (!isGuestLogin) return;
 
-  console.log('ゲストログイン ローディング');
+  // console.log('ゲストログイン ローディング');
 
+  // 1. 背景の暗転レイヤーを表示
   const div1 = document.querySelector(".first_load");
   if (div1) div1.id = 'loading';
 
+  // 2. ローディングボックスを表示
   const div2 = document.querySelector(".second_load");
   if (div2) {
     div2.id = 'loading_box';

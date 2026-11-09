@@ -1,0 +1,25 @@
+<%# 統計情報 (users/show, show_reviews, show_follow) %>
+<% @user = local_assigns[:user] || @user || current_user %>
+
+<div id="user_stats_<%= @user.id %>" class="user_stats_box">
+  <%= link_to @user do %>
+    <strong class="stat">
+      <%= @user.posts.count %>
+    </strong>
+    投稿数
+  <% end %>
+
+  <%= link_to followers_user_path(@user) do %>
+    <strong id="followers" class="stat">
+      <%= @user.followers.count %>
+    </strong>
+    フォロワー
+  <% end %>
+
+  <%= link_to following_user_path(@user) do %>
+    <strong id="following" class="stat">
+      <%= @user.following.count %>
+    </strong>
+    フォロー中
+  <% end %>
+</div>
