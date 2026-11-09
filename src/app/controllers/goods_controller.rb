@@ -4,29 +4,31 @@ class GoodsController < ApplicationController
   # 高評価する
   def create
     @review = Review.find(params[:review])
-    # @reviewを高評価する
+    # @reviewを高評価 / @review の作者に通知
     current_user.good(@review)
-    # @review.userに通知する
     current_user.notify_to_good!(@review)
-    # 既に低評価していれば低評価を解除
-    if Bad.find_by(user_id: current_user.id, review_id: @review.id)
-      current_user.unbad(@review)
-    end
+    # @reviewを既に低評価していれば自動解除
+    current_user.bads.find_by(review_id: @review.id)&.destroy
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
-      format.js
+      format.turbo_stream
     end
   end
 
   # 高評価を解除
   def destroy
-    @review = Good.find(params[:id]).review
-    current_user.ungood(@review)
+    # 1. 連打対策
+    good = Good.find_by(id: params[:id])
+    @review = good&.review
+    # 2. 連打対策
+    if @review
+      current_user.ungood(@review)
+    end
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
-      format.js
+      format.turbo_stream
     end
   end
 end

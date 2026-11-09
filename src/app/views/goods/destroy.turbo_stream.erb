@@ -1,0 +1,4 @@
+<%# Goodボタン %>
+<%= turbo_stream.update "good-#{@review.id}" do %>
+  <%= render "goods/good", review: @review %>
+<% end %>

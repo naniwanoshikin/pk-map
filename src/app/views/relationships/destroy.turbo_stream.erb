@@ -1,0 +1,4 @@
+
+<%= turbo_stream.replace "follow_form_#{@user.id}", partial: "users/follow_form", locals: { user: @user } %>
+
+<%= turbo_stream.replace "user_stats_#{@user.id}", partial: "shared/stats" %>

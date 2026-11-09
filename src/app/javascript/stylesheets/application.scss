@@ -1,16 +1,28 @@
 /* bootstrap */
 
-@import "~bootstrap/scss/bootstrap";
+/* ====================================================
+   1.【最上部】全ての外部ライブラリ & サブファイルの読み込み（@use と @forward）
+   ==================================================== */
+// Bootstrapを全サブファイルに安全に転送（forward）し、ここでも利用できるようにする
+@forward "bootstrap/scss/bootstrap";
+@use "bootstrap/scss/bootstrap";
+
+// サブファイル（../../assets/stylesheets/） 最上部でまとめて読み込むルール
+@use "../../assets/stylesheets/custom";
+@use "../../assets/stylesheets/form";
+@use "../../assets/stylesheets/goods";
+@use "../../assets/stylesheets/home_pages";
+@use "../../assets/stylesheets/loading";
+@use "../../assets/stylesheets/notifications";
+@use "../../assets/stylesheets/posts";
+@use "../../assets/stylesheets/reviews";
+@use "../../assets/stylesheets/users";
+
 
 /* typography */
 // bootstrapのデフォルトが優先されないようここに載せた
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   line-height: 1;
 }
 
@@ -58,15 +70,3 @@ p {
   background-blend-mode: lighten;
   background-size: 75% auto;
 }
-
-
-// 古いフォルダ（../../assets/stylesheets/）より
-@import "../../assets/stylesheets/custom";
-@import "../../assets/stylesheets/form";
-@import "../../assets/stylesheets/goods";
-@import "../../assets/stylesheets/home_pages";
-@import "../../assets/stylesheets/loading";
-@import "../../assets/stylesheets/notifications";
-@import "../../assets/stylesheets/posts";
-@import "../../assets/stylesheets/reviews";
-@import "../../assets/stylesheets/users";

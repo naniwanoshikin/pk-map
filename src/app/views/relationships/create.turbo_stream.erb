@@ -1,0 +1,4 @@
+<%# ボタンを切り替える 他のユーザー %>
+<%= turbo_stream.replace "follow_form_#{@user.id}", partial: "users/follow_form", locals: { user: @user } %>
+<%# フォロー数/フォロー数の更新 %>
+<%= turbo_stream.replace "user_stats_#{@user.id}", partial: "shared/stats" %>

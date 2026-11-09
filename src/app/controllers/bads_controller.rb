@@ -7,26 +7,28 @@ class BadsController < ApplicationController
 
     current_user.bad(@review)
 
-
-    # 高評価を解除
-    if Good.find_by(user_id: current_user.id, review_id: @review.id)
-      current_user.ungood(@review)
-    end
+    # @reviewを既に高評価していれば自動解除
+    current_user.goods.find_by(review_id: @review.id)&.destroy
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
-      format.js
+      format.turbo_stream
     end
   end
 
   # 低評価を解除
   def destroy
-    @review = Bad.find(params[:id]).review
-    current_user.unbad(@review)
+
+    bad = Bad.find_by(id: params[:id])
+    @review = bad&.review
+
+    if @review
+      current_user.unbad(@review)
+    end
 
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_url) }
-      format.js
+      format.turbo_stream
     end
   end
 end

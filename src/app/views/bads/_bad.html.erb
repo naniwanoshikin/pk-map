@@ -1,0 +1,25 @@
+<%# (reviews/_review) %>
+
+<% if current_user&.bad?(review) %>
+  <%# 低評価している場合 (解除ボタン) %>
+  <%= link_to bad_path(current_user.bads.find_by(review: review)),
+        data: { turbo_method: :delete },
+        class: 'link' do %>
+    <i class="fas fa-thumbs-down fa-lg"></i>
+  <% end %>
+
+<% else %>
+  <%# 低評価していない場合 %>
+  <%= link_to bads_path(review: review),
+        data: { turbo_method: :post },
+        class: 'link' do %>
+    <i class="far fa-thumbs-down fa-lg"></i>
+  <% end %>
+<% end %>
+
+<%# 低評価数（自身のレビューには表示） %>
+<% if review.bads.present? && review.user == current_user %>
+  <span class="ev_count">
+    <%= review.bads.size %>
+  </span>
+<% end %>

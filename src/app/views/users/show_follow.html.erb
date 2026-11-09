@@ -3,13 +3,16 @@
 
 <div class="row">
   <aside class="col-md-5">
+
     <section class="user_info">
       <%= render 'shared/user_info', user: @user %>
     </section>
+
     <%# 統計情報 %>
-    <section class="stats">
-      <%= render 'shared/stats' %>
+    <section>
+      <%= render 'shared/stats', user: @user %>
     </section>
+
     <%# アイコン一覧 %>
     <% if @users.any? %>
       <div class="user_avatars">
@@ -19,13 +22,16 @@
       </div>
     <% end %>
   </aside>
+
   <div class="col-md-7">
     <h2><%= @title %></h2>
     <% if @users.any? %>
-      <ul class="users follow">
-        <%= render @users %>
-      </ul>
-      <%= paginate @users %>
+      <div id="users_follow">
+        <ul class="users follow">
+          <%= render @users %>
+        </ul>
+        <%= paginate @users %>
+      </div>
     <% else %>
       <p>ユーザーをフォローしましょう</p>
     <% end %>

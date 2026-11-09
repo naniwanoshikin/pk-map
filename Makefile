@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "became_rails7.1"
+	git commit -m "Modernizing a Rails app"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
@@ -84,6 +84,6 @@ me:
 # ▶︎:wq 完了
 
 # -----------------------------------------------
-# slim に変換 src/は消す erbは削除(バックアップ不可)
+# slim に変換 erbは削除(バックアップ不可)
 slim:
 	docker-compose exec web bundle exec erb2slim app/views/home_pages/aa.html.erb app/views/home_pages/aa.html.slim -d

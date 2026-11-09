@@ -19,7 +19,20 @@ module.exports = {
       // 💡 Sass (.scss) をビルドして CSS として抽出する設定
       {
         test: /\.(scss|css)$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              api: "modern", // モダンAPIを使用
+              sassOptions: {
+                quietDeps: true, // node_modules内の非推奨警告をすべて黙らせる
+                loadPaths: [path.resolve(__dirname, "node_modules")],
+              },
+            },
+          },
+        ],
       },
       // 💡 application.js内の require.context で画像をアセットとして処理する設定
       {

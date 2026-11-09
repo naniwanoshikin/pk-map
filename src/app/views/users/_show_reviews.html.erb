@@ -1,0 +1,21 @@
+<%# (users/show_reviews) %>
+<div class="spot_list d-flex justify-content-around">
+
+  <%= link_to @user do %>
+    <h2>投稿一覧</h2>
+  <% end %>
+  <h2 class="text-dark">レビュー一覧</h2>
+</div>
+
+
+<% if @user_review_posts.any? %>
+  <div class="posts">
+    <%# (posts/post) %>
+    <%= render @user_review_posts %>
+  </div>
+  <%= paginate @user_review_posts %>
+<% else %>
+  <div class="text-center">
+    <p>まだレビューしていません</p>
+  </div>
+<% end %>
