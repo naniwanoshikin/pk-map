@@ -21,7 +21,7 @@
 }
 
 // 吹き出し
-// (home/home_map), (posts/show)
+// (home_pages/home_map), (posts/show)
 .infowindow > img {
   width: 100%;
 }
@@ -29,9 +29,10 @@
 
 /* pagination */
 #home_feed,
-#ajax_users_show,
-#ajax_users_index,
-#ajax_users_show_reviews {
+#users_show,
+#users_index,
+#users_follow,
+#users_show_reviews {
   nav {
     // ul
     .pagination {

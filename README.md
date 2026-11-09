@@ -21,18 +21,20 @@
 
 ### スポット関連
 * 一覧画面
-  * Googleマップ  ピン 吹き出しの表示
-  <!-- (map_home.js, map_show.js) -->
+  <!-- (map_home.js) -->
+  * Googleマップ  ピン 吹き出し
   * ストリートビュー
 * 詳細画面
-  <!-- APIを叩く Post(M) -->
+  <!-- (map_show.js) -->
   * 国内の住所の抽出
   * Twitterシェア
-  * レビューの投稿、削除 flash ajax
+  * モーダル画面 Stimulus化
+  * レビューの投稿/削除 ajax(TurboStrems)
 
 ### その他
-* フォロー通知
+* フラッシュ Stimulus化
 * ページネーション kaminari
+* フォロー通知
 
 ## 使用技術
 ### フロントエンド
@@ -40,6 +42,7 @@
 * Slim
 * Bootstrap 4.6.1
 * **スクリプト**: JavaScript / jQuery 3.6.0
+* **フレームワーク**: Stimulus
 * **ビルドツール**: webpack
 * **外部API**: Maps JavaScript API (Google Maps)
 <!-- drawer.js -->
@@ -70,7 +73,8 @@
   <!-- * Adobe Fresco -->
 
 ## 今後の課題
-* Railsのバージョン上げ & 非推奨警告の修正
+* 非推奨警告の修正 & Railsのバージョン上げ
+* jQuery の廃止 & Turbo へ移行
 
 |  | 旧 | 今ここ | 将来 |
 | :--- | :--- | :--- | :--- |

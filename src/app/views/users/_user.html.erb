@@ -1,0 +1,23 @@
+<%# (users/index), (users/show_follow) 個々のユーザー %>
+<li>
+  <%= link_to gravatar_for(user, size: 50), user %>
+  <%= link_to user.name, user %>
+
+  <% if current_user&.admin? && !current_user?(user) %>
+    | 
+    <%= link_to "delete", user, data: { turbo_method: :delete, turbo_confirm: "ユーザーを削除しますか？" } %>
+  <% end %>
+
+  <div class="text-muted">
+    <%= user.address %> 勢
+  </div>
+
+  <%# [follow]ボタン 文脈が違う(sharedからusersへ) Relationship(M) 自身は表示されない %>
+  <% if user_signed_in? && !current_user?(user) %>
+  <aside class="col-md-5">
+    <div class="profile_follow">
+      <%= render 'follow_form', user: user %>
+    </div>
+  </aside>
+  <% end %>
+</li>

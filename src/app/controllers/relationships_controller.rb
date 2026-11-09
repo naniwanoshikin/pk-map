@@ -6,12 +6,12 @@ class RelationshipsController < ApplicationController
     @user = User.find(params[:followed_id])
     # @userをフォロー
     current_user.follow(@user)
-    # @userに通知
+    # @userにフォロー通知
     current_user.notify_to_follow!(@user)
 
     respond_to do |format|
       format.html { redirect_to @user }
-      format.js # Ajaxリクエスト
+      format.turbo_stream
     end
   end
 
@@ -20,7 +20,7 @@ class RelationshipsController < ApplicationController
     current_user.unfollow(@user)
     respond_to do |format|
       format.html { redirect_to @user }
-      format.js
+      format.turbo_stream
     end
   end
 end

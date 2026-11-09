@@ -1,20 +1,18 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy, :new]
-  # 投稿のない詳細画面は表示できない
-  before_action :correct_post,  only: :show
-  # 自分以外のユーザーの投稿は削除できない
-  before_action :correct_user,  only: :destroy
+  before_action :set_post_and_correct_post,  only: :show
+  before_action :set_user_post_and_correct_user,  only: :destroy
 
   # 投稿詳細
   def show
-    # @post
+    # @post 下記
     # 投稿に対するレビュー集
     @reviews = @post.reviews
     # レビューを新規作成
     if user_signed_in?
       @review = current_user.reviews.build
     else
-      @review = @post.user.reviews.build
+      @review = Review.new
     end
   end
 
@@ -31,14 +29,15 @@ class PostsController < ApplicationController
     else
       # (shared/feed)
       # @feed_items = current_user.feed.page(params[:page]).per(10)
-      render 'posts/new'
+      # Rails 7(Turbo)
+      render :new, status: :unprocessable_entity # 422エラー
     end
   end
 
   def destroy
-    @post = current_user.posts.find_by(id: params[:id])
+    # @post 下記
     @post.destroy
-    redirect_to request.referrer || root_url, alert: '投稿を削除しました'
+    redirect_to request.referrer || root_url, alert: '投稿を削除しました', status: :see_other
   end
 
   private
@@ -48,16 +47,18 @@ class PostsController < ApplicationController
       :content,
       :address,
       :spot_quality, # radio
-      :checkbox, spot_type: []
+      spot_type: [] # checkbox
     )
   end
 
-  def correct_post # show
+  # 投稿のない詳細画面は表示できない show
+  def set_post_and_correct_post
     @post = Post.find_by(id: params[:id])
     redirect_to root_url if @post.nil?
   end
 
-  def correct_user # destroy
+  # 自分以外のユーザーの投稿は削除できない destroy
+  def set_user_post_and_correct_user
     @post = current_user.posts.find_by(id: params[:id])
     redirect_to root_url if @post.nil?
   end

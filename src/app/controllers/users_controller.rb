@@ -7,26 +7,26 @@ class UsersController < ApplicationController
   def show
     # @user
     @posts = @user.posts.page(params[:page]).per(6) # 13
-    # pagination ajax
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   # レビュー一覧
   def show_reviews
     # @user
-    # @userのレビュー集
-    @user_review_posts = @user.review_posts.page(params[:page]).per(4)
+    # @userがレビューした投稿集
+    @user_review_posts = @user.review_posts
+    .select("posts.*, reviews.created_at AS reviewed_at") # エラー回避
+    .joins(:reviews) # レビューの日付を持ってくる
+    .unscope(:order) # レビューモデルの自動ソートを無効化
+    .order("reviews.created_at DESC") # レビュー順に時系列ソート
+    .page(params[:page]).per(6)
   end
 
-  # フォロー/フォロワー 一覧
+  # フォロー/フォロワー 一覧 render 共用
   def following
     @title = "フォロー中"
     # @user
     @users = @user.following.page(params[:page]).per(10)
-    render 'show_follow' # (users/show_follow)_共用
+    render 'show_follow'
   end
   def followers
     @title = "フォロワー"
@@ -38,11 +38,6 @@ class UsersController < ApplicationController
   # ユーザー一覧
   def index
     @users = User.page(params[:page]).per(10)
-    # pagination
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   # ユーザー削除 管理者のみ
@@ -54,13 +49,13 @@ class UsersController < ApplicationController
   private
 
   # 正しいユーザーを要求
-  def correct_user # show, show_reviews, following/followers
+  def correct_user
     @user = User.find_by(id: params[:id])
     redirect_to root_url if @user.nil?
   end
 
   # 管理者かどうか確認
-  def admin_user # destroy
+  def admin_user
     redirect_to(root_url) unless current_user.admin?
   end
 

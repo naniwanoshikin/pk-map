@@ -7,7 +7,6 @@
       <%# (posts/_post) %>
     </div>
     <%= paginate @feed_items,
-      remote: true, # ajax
       params: { controller: :home_pages, action: :home }
     %>
   </div>

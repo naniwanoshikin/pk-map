@@ -14,13 +14,7 @@ class HomePagesController < ApplicationController
         @feed_items = current_user.feed.page(params[:page]).per(6)
       end
       @url = root_path
-
-      # (home/home_map)
-
-      respond_to do |format|
-        format.html
-        format.js
-      end
+      # (home_map)
     end
   end
 

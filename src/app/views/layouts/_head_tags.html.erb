@@ -15,4 +15,8 @@
 <%# Rails 7 / WebpackのJavascriptとCSSを読み込む %>
 <%# (app/javascript/packs/application.js) %>
 <%= stylesheet_link_tag 'application', "data-turbo-track": "reload" %>
+
+<%# Rails7 GoogleMapsAPIスクリプトの読み込みを1回だけに固定 %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&libraries=marker&loading=async" defer></script>
+
 <%= javascript_include_tag 'application', "data-turbo-track": "reload", defer: true %>

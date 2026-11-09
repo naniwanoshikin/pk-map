@@ -1,4 +1,0 @@
-<%# 高評価 %>
-$("#good-<%= @review.id %>").html("<%= escape_javascript(render "goods/good", review: @review) %>");
-<%# 低評価 %>
-$("#bad-<%= @review.id %>").html("<%= escape_javascript(render "bads/bad", review: @review) %>");

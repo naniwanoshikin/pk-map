@@ -1,0 +1,4 @@
+<%# Badボタン %>
+<%= turbo_stream.update "bad-#{@review.id}" do %>
+  <%= render "bads/bad", review: @review %>
+<% end %>

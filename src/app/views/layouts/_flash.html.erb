@@ -1,6 +1,6 @@
 <%# (layouts/application) ログイン/アウト, Post, Review %>
 <% flash.each do |type, message| %>
-  <div class="alert alert-<%= type %>">
+  <div class="alert alert-<%= type %>" data-controller="flash-behavior">
     <%= message %>
     <%# [×] ボタン %>
     <button type="button" class="close">&times;</button>

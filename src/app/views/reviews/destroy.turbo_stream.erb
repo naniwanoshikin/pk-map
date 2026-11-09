@@ -1,0 +1,14 @@
+<%# (posts/show)_レビューを削除 %>
+
+<%# 1. レビュー一覧エリア（#reviews）の中身を更新 %>
+<%= turbo_stream.update "reviews" do %>
+  <%= render 'reviews/review', reviews: @reviews %>
+<% end %>
+
+<%# 2. フラッシュメッセージエリア（#flash_messages）を更新 %>
+<%= turbo_stream.update "flash_messages" do %>
+  <%= render 'layouts/flash', reviews: @reviews %>
+<% end %>
+
+<%# 3. Stimulus (app/javascript/controllers/flash_behavior_controller.js) %>
+<div data-controller="flash-behavior"></div>
