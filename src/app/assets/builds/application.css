@@ -9733,10 +9733,20 @@ footer .n-circle {
 }
 .posts main .link {
   color: inherit;
+  text-decoration: none;
 }
 .posts main .link:hover {
   color: inherit;
   text-decoration: none;
+}
+.posts main .link .content {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 .posts main .average_score {
   font-size: 1rem;
@@ -9898,7 +9908,7 @@ aside section h1 {
   margin-bottom: 3px;
   margin-top: 0px;
 }
-aside .user_stats_box {
+aside section .user_stats_box {
   overflow: auto;
   display: flex;
   justify-content: center;
@@ -9906,19 +9916,19 @@ aside .user_stats_box {
   padding: 0;
   margin-bottom: 10px;
 }
-aside .user_stats_box a {
+aside section .user_stats_box a {
   padding: 0 10px;
   border-left: 1px solid gainsboro;
   color: gray;
   text-decoration: none;
 }
-aside .user_stats_box a:first-child {
+aside section .user_stats_box a:first-child {
   border: 0;
 }
-aside .user_stats_box a:hover {
+aside section .user_stats_box a:hover {
   text-decoration: none;
 }
-aside .user_stats_box strong {
+aside section .user_stats_box strong {
   display: block;
   color: black;
 }

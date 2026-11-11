@@ -1,3 +1,14 @@
+// 1行で収まらない場合に「...」にする設定
+@mixin keep_single_line {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; // 1行で制限
+  line-clamp: 1; // （互換性と将来の安全性を確保）
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all; // 英語の長い単語やURLなどでも強制的に折り返して崩れを防ぐ
+}
+
 // (posts/_post)
 .posts {
   list-style: none;
@@ -19,15 +30,8 @@
       margin-top: 5em;
       padding-top: 0;
     }
-    // 1行で収まらない場合に「...」にする設定
     .text-truncate-1 {
-      display: -webkit-box;
-      -webkit-line-clamp: 1; // 1行で制限
-      line-clamp: 1; // （互換性と将来の安全性を確保）
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-break: break-all; // 英語の長い単語やURLなどでも強制的に折り返して崩れを防ぐ
+      @include keep_single_line;
     }
   }
   main {
@@ -36,10 +40,13 @@
     // <a>
     .link {
       color: inherit;
-      // text-decoration : none;
+      text-decoration : none;
       &:hover {
         color: inherit; // なぜリンクは青くなる?
         text-decoration: none;
+      }
+      .content {
+        @include keep_single_line;
       }
     }
     // 3.0 (3)

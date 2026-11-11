@@ -28,30 +28,30 @@ aside {
       margin-bottom: 3px;
       margin-top: 0px;
     }
-  }
-  // 投稿数|フォロワ|フォロ中
-  .user_stats_box {
-    overflow: auto;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    padding: 0;
-    margin-bottom: 10px;
-    a {
-      padding: 0 10px;
-      border-left: 1px solid gainsboro;
-      color: gray;
-      text-decoration: none; // bootstrap5 対策
-      &:first-child {
-        border: 0;
+    // 投稿数|フォロワ|フォロー中
+    .user_stats_box {
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      padding: 0;
+      margin-bottom: 10px;
+      a {
+        padding: 0 10px;
+        border-left: 1px solid gainsboro;
+        color: gray;
+        text-decoration: none; // bootstrap5 対策
+        &:first-child {
+          border: 0;
+        }
+        &:hover {
+          text-decoration: none;
+        }
       }
-      &:hover {
-        text-decoration: none;
+      strong {
+        display: block;
+        color: black;
       }
-    }
-    strong {
-      display: block;
-      color: black;
     }
   }
 }
