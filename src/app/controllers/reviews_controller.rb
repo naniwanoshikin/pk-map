@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     if @review.save
       # 通知
       current_user.notify_to_review!(@post, @review.id)
-      # 最新のレビュー一覧 elseの@reviewsとは異なる
+      # 最新のレビュー一覧 elseのものとは異なる
       @reviews = @post.reviews
       # (reviews/form)
       respond_to do |format|
@@ -74,6 +74,6 @@ class ReviewsController < ApplicationController
 
     def correct_review # show, good_users
       @review = Review.find_by(id: params[:id])
-      redirect_to root_url if @review.nil?
+      redirect_to root_url, status: :see_other if @review.nil?
     end
 end

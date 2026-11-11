@@ -1,14 +1,57 @@
 <%# ホーム画面 ログイン後 %>
-<div class="row">
+<div class="row"
+  id="home_dashboard_container"
+  data-controller="map-home"
+  <%# data-コントローラー名-属性名-value %>
+  <%# ① あなた自身の座標と住所 %>
+  data-map-home-user-lat-value="<%= current_user.latitude %>"
+  data-map-home-user-lng-value="<%= current_user.longitude %>"
+  data-map-home-user-address-value="<%= current_user.address %>"
+  data-map-home-api-key-value="<%= ENV['GOOGLE_MAP_API'] %>"
+  <%# ② みんなの投稿フィード「すべてのタイムライン」 %>
+  data-map-home-feeds-value="<%= @feed_items ? @feed_items.to_json : '[]' %>"
+>
   <aside class="col-md-4">
     <h2>スポットを調べる</h2>
-    <%= render 'search_spot' %>
+    <%# 住所・スポット名入力 (home_login) %>
+    <section class="map_search mb-2">
+      <%= label_tag :map_search_address, '', class: "form-label font-weight-bold d-block text-center" %>
+
+      <%# 検索 %>
+      <div class="input-group mx-auto" data-action="keydown.enter->map-home#preventSubmit">
+
+        <%# ⚠️ ここにサジェストが自動で生えてきます %>
+        <gmp-place-autocomplete
+          class="flex-grow-1"
+          style="position: relative;"
+          data-map-home-target="autocomplete"
+          data-action="gmp-placechange->map-home#handlePlaceChange">
+          <input type="text"
+            placeholder="例:大阪城"
+            class='form-control'
+            autocomplete="off">
+        </gmp-place-autocomplete>
+
+        <%= button_tag type: "button", 
+                      class: "btn btn-primary", 
+                      data: { action: "click->map-home#search" } do %>
+          <i class="fas fa-search"></i>
+        <% end %>
+      </div>
+    </section>
   </aside>
+
   <main class="col-md-8">
     <h2>スポット一覧</h2>
-    <%# 地図 %>
-    <%= render 'home_map' %>
+    <%# 地図 (map_home_controller.js) %>
+    <div id='pkmap'
+        class="w-100 home-map-canvas"
+        data-map-home-target="canvas">
+    </div>
+
     <%# 一覧 %>
-    <%= render 'shared/feed' %>
+    <div id="timeline_feed">
+      <%= render 'shared/feed' %>
+    </div>
   </main>
 </div>

@@ -1,0 +1,9 @@
+<%# 地図を包む大元コンテナ（ピン情報）を更新 %>
+<%= turbo_stream.set_attribute "home_dashboard_container", "data-map-home-feeds-value", (@feed_items ? @feed_items.to_json : '[]') %>
+
+<%# 右下のタイムラインフィード一覧を最新の検索結果に丸ごと置換 %>
+<%= turbo_stream.replace "timeline_feed" do %>
+  <div id="timeline_feed">
+    <%= render 'shared/feed' %>
+  </div>
+<% end %>

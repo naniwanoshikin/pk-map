@@ -9,18 +9,26 @@
 
 <% else %>
   <%# ⭕️ 投稿成功時 %>
-  <%# 1. レビュー一覧を更新 %>
-  <%= turbo_stream.update "reviews" do %>
-    <%= render 'reviews/review', reviews: @reviews %>
+  <%# 1. レビュー一覧 %>
+  <%# 初レビュー時はulのみ描画 %>
+  <% if @reviews.size == 1 %>
+    <%= turbo_stream.update "reviews" do %>
+      <ul id="reviews_list">
+        <%= render @review %>
+      </ul>
+    <% end %>
+  <% else %>
+    <%# 2件目以降は既存のul先頭に1件だけ追加 %>
+    <%= turbo_stream.prepend "reviews_list" do %>
+      <%= render @review %>
+    <% end %>
   <% end %>
 
   <%# 2. フラッシュメッセージを表示 %>
   <%= turbo_stream.update "flash_messages" do %>
     <%= render 'layouts/flash' %>
+    <%# モーダル内のお片付け Stimulus (modal_closer_controller.js) %>
+    <div data-controller="modal-closer" data-modal-id="#exampleModal"></div>
   <% end %>
-
-  <%# 3. モーダル内のお片付け %>
-  <%# Stimulus (app/javascript/controllers/modal_closer_controller.js) %>
-  <div data-controller="modal-closer" data-modal-id="#exampleModal"></div>
 
 <% end %>

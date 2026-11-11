@@ -62,13 +62,15 @@ user8 = users[7]
 
 # -----------------------------------------------
 # 投稿
-# ヒットせず: クラフトパーク, 石が辻公園, 矢場町
 [
   [user4, '普通', '真田山公園', 'いろんな遊具がある。子供が多い。', [
     [user1, 4, "行きたくなる", []],
   ]],
   [user4, '普通', '天王寺公園', 'アクセスしやすい', [
     [user1, 3, "アクセスがしやすい", []],
+  ]],
+  [user4, '普通', '石が辻公園', 'グライダーで木の枝に止まりたい', [
+    [user4, 3, "自重トレもよさげ", [user4]],
   ]],
   [user5, '悪い', '長居公園', 'かなり走れる', [
     [user1, 1, "スロープ硬いよ..", []],
@@ -110,6 +112,13 @@ user8 = users[7]
     [user7, 5, "段差が多い", []],
     [user1, 4, "景色もいい", [user5]],
   ]],
+  [user3, '普通', 'クラフトパーク', '高い壁がある', [
+    [user1, 4, "トリックしたい", [user2]],
+  ]],
+  [user2, '良い', 'パルクール・アクロバット施設 PK Guild 鶴見店', '安全なマットがあるよ', [
+    [user1, 4, "久しぶりにダブルゲイナーしたい!!", []],
+    [user3, 5, "スクートトリプルがんばるぞ", []],
+  ]],
   [user2, '普通', '鶴見緑地', '各国の土地がある', [
     [user3, 1, "歩くのがしんどすぎる..", []],
     [user1, 1, "夕方になると中の門が閉まるので要注意..", []],
@@ -124,6 +133,9 @@ user8 = users[7]
   [user2, '良い', '岐阜公園', '滝や橋がある', [
     [user4, 4, "柵ができたらしい", []],
     [user3, 3, "ここは山の麓", [user1, user2]],
+  ]],
+  [user2, '普通', '矢場町', 'スロープ最高', [
+    [user5, 5, "レールフロー教えて下さい", []],
   ]],
   [user2, '普通', 'エディオン久屋広場', '大きいパイプ', [
     [user7, 1, "歩くのしんどい...", [user4]],
@@ -143,7 +155,7 @@ user8 = users[7]
   [user1, '普通', '久屋大通公園', 'ロサンゼルス広場があったんだ', [
     [user5, 4, "枝もないんだよね...", [user3]],
     [user3, 4, "スロープもうないんだな...", [user2, user5]],
-    [user7, 5, "改装されて綺麗になったよね、cafeがある", []],
+    [user7, 5, "改装されて綺麗になったよね、cafeがある", [user7]],
   ]],
 ].each do |user, quality, address, content, reviews|
   # userがpostする
@@ -159,14 +171,12 @@ user8 = users[7]
       content: his_content, # レビュー文
       score: score,         # 点数
     )
-    # 通知
-    other_user.notify_to_review!(post, review.id)
+    other_user.notify_to_review!(post, review.id) # 通知
 
     # good_userがそのreviewを高評価
     good_users.each do |good_user|
       good_user.good(review)
-      # 通知
-      good_user.notify_to_good!(review)
+      good_user.notify_to_good!(review) # 通知
     end
   end
 end

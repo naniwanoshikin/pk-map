@@ -1,6 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+
+  // 検索① ターゲット
+  static targets = ["canvas", "autocomplete"]
+
   // 型変換 HTMLの data-map-home-xxx-value から自動的に型変換
   static values = {
     userLat: Number,
@@ -12,6 +16,7 @@ export default class extends Controller {
 
   connect() {
     // console.log('map_home_controller 接続成功');
+    // this.markers = []; // 検索入力用 既存の配列を管理するための空のマーカーリストを用意
     this.initMapOnLoad();
   }
   // this: このコントローラー自身 letの代わり
@@ -22,16 +27,15 @@ export default class extends Controller {
       setTimeout(() => this.initMapOnLoad(), 100);
       return;
     }
+    // 地図初期化
     this.initMap();
+
+    // 検索② 自動補完
+    this.initAutocompleteElement();
   }
 
-  // 地図の初期化
   initMap() {
     // console.log('home 地図の初期化');
-
-    // 検索入力用 エラー
-    // const geocoder = new google.maps.Geocoder();
-
     // (home_pages/home_map)_data-map-home-xxx-value
     // static values から安全に値を取得 (this.userLatValue のようにアクセス)
     // 自身の住所
@@ -72,7 +76,7 @@ export default class extends Controller {
     const PinElement = google.maps.marker.PinElement;
 
     // 地図の生成 中心位置を表示
-    this.map = new Map(this.element, {
+    this.map = new Map(this.canvasTarget, {
       // 最新フィード なければあなた自身の住所
       center: latest_feed_address || user_LatLng,
       zoom: 12,
@@ -149,6 +153,60 @@ export default class extends Controller {
         });
       }
     });
+  }
+
+  // ★ Places API (New) オートコンプリートの初期化
+  async initAutocompleteElement() {
+    // ターゲットが存在しない画面の場合はスキップ
+    if (!this.hasAutocompleteTarget) return;
+
+    console.log('cccccc')
+    // places ライブラリをロード
+    await google.maps.importLibrary("places");
+
+    // 🌟【最重要】PC画面でも強制的にスマホ用の真っ白全画面が暴発するのを永久に停止する設定。
+    // これにより、画面幅に関わらず「常にインプットの直下にドロップダウン（POPUP）」を出します。
+    this.autocompleteTarget.forceDisplayMode = "POPUP";
+
+
+    // 必要最小限のフィールドに制限（従量課金対策）
+    this.autocompleteTarget.requestedFields = ["geometry", "displayName"];
+  }
+
+
+  // (search_spot.html)
+  // ★ 場所が選択されたときに地図を移動させる (gmp-placechange)
+  handlePlaceChange() {
+    // 新型のコンポーネントから直接選択された「Placeインスタンス」を引っこ抜く
+    const place = this.autocompleteTarget.place;
+
+    // place.geometry が存在するか、ロードが完了しているか安全にチェック
+    if (place && place.geometry && this.map) {
+      // 選択された位置へスムース移動＆ズーム
+      this.map.panTo(place.geometry);
+      this.map.setZoom(15);
+    }
+  }
+
+
+  // ★ 検索窓でのEnterキーによる暴発リロードを完全にブロック
+  preventSubmit(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
+  // ★ 虫眼鏡ボタンが直接クリックされた際の処理
+  search() {
+    if (!this.hasAutocompleteTarget) return;
+    // 新型コンポーネント（gmp-place-autocomplete）の内包するinputから安全に文字列を取得
+    const inputElement = this.autocompleteTarget.querySelector('input');
+    const query = inputElement ? inputElement.value : "";
+
+    console.log('虫眼鏡')
+    if (!query) return;
+    console.log('入力されたワードで検索を実行:', query);
+    // 必要に応じてジオコーディング（住所文字列→緯度経度）をここに追記可能です
   }
 
   // 吹き出しを表示する共通メソッド

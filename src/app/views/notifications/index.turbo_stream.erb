@@ -1,5 +1,5 @@
-<%# ul（#notify_lists）の末尾に、新しい通知 li を追加 %>
-<%= turbo_stream.append "notify_lists" do %>
+<%# ul(#notifications_list)の末尾に、新しい li を追加 %>
+<%= turbo_stream.append "notifications_list" do %>
   <%= render @notifications %>
 <% end %>
 

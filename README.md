@@ -21,15 +21,14 @@
 
 ### スポット関連
 * 一覧画面
-  <!-- (map_home.js) -->
+  <!-- (map_home(C).js) -->
   * Googleマップ  ピン 吹き出し
   * ストリートビュー
 * 詳細画面
-  <!-- (map_show.js) -->
+  <!-- (map_show(C).js) -->
   * 国内の住所の抽出
-  * Twitterシェア
-  * モーダル画面 Stimulus化
-  * レビューの投稿/削除 ajax(TurboStrems)
+  * モーダル画面
+  * レビューの投稿/削除 ajax
 
 ### その他
 * フラッシュ Stimulus化
@@ -73,12 +72,13 @@
   <!-- * Adobe Fresco -->
 
 ## 今後の課題
-* 非推奨警告の修正 & Railsのバージョン上げ
-* jQuery の廃止 & Turbo へ移行
+* 非推奨警告の修正
+* Rails バージョン上げ
+* jQuery 廃止 & Bootstrap5 へ上げる
 
 |  | 旧 | 今ここ | 将来 |
 | :--- | :--- | :--- | :--- |
 | **Ruby** | 3.1.6 | 3.3.13 | -  |
 | **Rails** | 6.1.4 | **7.1.0** | 7.2 |
-| **本番環境** | heroku | Render | AWS (ECS / ECR)  |
+| **本番環境** | heroku | Render | AWS (ECS)  |
 <!-- | **Rspec** | 3.10 | 6.1.5 | 7.x  | -->

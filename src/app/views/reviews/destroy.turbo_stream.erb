@@ -1,14 +1,23 @@
 <%# (posts/show)_レビューを削除 %>
 
-<%# 1. レビュー一覧エリア（#reviews）の中身を更新 %>
-<%= turbo_stream.update "reviews" do %>
-  <%= render 'reviews/review', reviews: @reviews %>
+<%# 1. レビュー一覧エリア %>
+<%# レビューが1件以上残っているか？ %>
+<% if @reviews.any? %>
+  <%# 削除した1件のliだけをDOMから消す %>
+  <%= turbo_stream.remove @review %>
+<% else %>
+  <%# 最後の1件を削除した場合 %>
+  <%= turbo_stream.update "reviews" do %>
+    <h2 class="text-center">
+      レビューがまだありません
+    </h2>
+  <% end %>
 <% end %>
 
-<%# 2. フラッシュメッセージエリア（#flash_messages）を更新 %>
+
+<%# 2. フラッシュメッセージエリアを更新 %>
 <%= turbo_stream.update "flash_messages" do %>
-  <%= render 'layouts/flash', reviews: @reviews %>
+  <%= render 'layouts/flash' %>
+  <%# Stimulus (flash_behavior_controller.js) %>
+  <div data-controller="flash-behavior"></div>
 <% end %>
-
-<%# 3. Stimulus (app/javascript/controllers/flash_behavior_controller.js) %>
-<div data-controller="flash-behavior"></div>

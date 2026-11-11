@@ -8,8 +8,9 @@ section {
   overflow: auto;
 }
 
-// ----------------------------------------------
-// body > header
+/* ---------------------------------------------- */
+/* body > header (Drawer) */
+/* ---------------------------------------------- */
 .drawer > .drawer-navbar {
   // div
   .drawer-navbar-header {
@@ -69,20 +70,23 @@ section {
 #flash_messages {
   position: fixed;
   width: 95%;
+  max-width: 900px;
   top: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  left: 0;
+  right: 0;
+  margin: 0 auto; // 左右中央揃え
+  z-index: 1050; // ナビバー(1030)より手前、モーダル(1055)より奥に調整
   .alert {
-    padding: 12px 14px;
+    position: relative; // .close の absolute 基準
+    padding: 12px 36px 12px 14px;
     text-align: center;
     margin-bottom: 10px;
     color: #696969;
-    &-alert {
-      background: rgba(255, 208, 208, 0.9);
-    }
     &-notice {
       background: rgba(179, 230, 174, 0.9);
+    }
+    &-alert {
+      background: rgba(255, 208, 208, 0.9);
     }
     // [x]ボタン
     .close {
@@ -93,34 +97,40 @@ section {
     }
   }
 }
+
 // 5秒後に1秒で上がる
 .hidden_up {
   animation: move 1s ease 5s forwards;
-  @keyframes move {
-    0% {
-      transform: translate(-50%, 0px);
-    }
-    100% {
-      transform: translate(-50%, -170px);
-    }
+}
+@keyframes move {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-170px); // 真上にだけ移動
   }
 }
+
 // ふわっと消える animationが上書き防止用に.hidden_up より下
 .hidden_out {
-  animation: fadeout 0.5s ease-in;
-  @keyframes fadeout {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
+  animation: fadeout 0.5s ease-in forwards;
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
+
+/* ---------------------------------------------- */
+/* layouts_container (Main & Footer) */
+/* ---------------------------------------------- */
 .container {
-  // main: (posts/post)
+  // (posts/post)
   & > main {
-    margin-bottom: 70px; // footerナビに重ならないよう
+    margin-bottom: 75px; // footerナビに重ならないよう
   }
 
   & > footer {
@@ -135,50 +145,46 @@ section {
       padding: 0;
       list-style: none;
     }
-    // ログイン後 スマホ
-    .signed_in {
-      // アイコンの色
-      .active {
-        color: green;
-      }
-    }
+
     // 未ログイン
     .not_signed_in {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       border-top: 1px solid #eaeaea;
-      margin-top: 45px;
-      padding-top: 5px;
+      margin-top: 30px;
+      padding-top: 10px;
       padding-bottom: 50px;
-      small {
-        float: left;
-      }
+
       ul {
-        float: right;
-        margin: 0;
-        li {
-          float: left;
-          margin-left: 15px;
-        }
+        display: flex;
+        gap: 15px;
       }
     }
     // ログイン後 レスポンシブ スマホのみ
     .signed_in {
-      // 下端に固定
+      // 下端固定
       position: fixed;
       bottom: 0;
-      background: #b0e7d7;
-      width: 100%;
-      height: 60px;
-      line-height: 60px; // 高さ中央揃え
       left: 0;
-      z-index: 5;
+      width: 100%;
+      height: 70px; // 高さ
+      background: #b0e7d7;
+      z-index: 1030;
+
       ul {
         display: flex;
-        float: none;
+        height: 100%;
+        align-items: center;
+
         li {
           width: 50%;
           text-align: center;
-          margin-top: 5px;
         }
+      }
+      // アイコンの色
+      .active {
+        color: green;
       }
     }
   }
