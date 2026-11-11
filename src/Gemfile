@@ -1,46 +1,48 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 7.1.0'
+# コア・サーバー・DB
+gem 'rails', '~> 7.2.0'
 gem 'puma', '>= 5.0'
+gem 'pg', '~> 1.5' # PostgreSQLを使用
+gem 'bootsnap', '>= 1.4.4', require: false
+gem 'jbuilder', '~> 2.11'   # Rails 7.0に対応
 gem 'json', '< 3.0.0'
 
+# フロントエンド・アセット
 gem 'jsbundling-rails'    # JSのバンドル用
 gem 'sprockets-rails'     # アセットパイプライン用
-
 gem 'sass-rails', '>= 6'
-gem 'jbuilder', '~> 2.11'   # Rails 7.0に対応
-gem 'slim-rails', '~> 3.5'  # Rails 7.0に対応
-# gem 'redis', '~> 4.0'
-# gem 'bcrypt', '~> 3.1.7'
-# gem 'image_processing', '~> 1.2'
-gem 'bootsnap', '>= 1.4.4', require: false
 gem 'turbo-rails' # Rails7 Hotwire
 gem 'stimulus-rails' # Rails7 Stimulusのコマンド用
+gem 'slim-rails', '~> 3.5'  # Rails 7.0に対応
+
+# 認証アプリ
 gem 'devise'      # 5
 gem 'devise-i18n' # 5
-# gem 'html2slim'   # 6 Slim変換
-gem 'faker'       # 10
 gem 'kaminari'    # 10
 gem 'ransack'     # 検索
 gem 'geocoder'    # 緯度経度
-gem 'dotenv-rails' # 環境変数
 
-# Docker 3.1系・Rails7で必須のメール関連Gem
+# Ruby3.1系・Rails7で必須のメール関連
 gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false
 
-gem 'pg', '~> 1.5' # PostgreSQLを使用
+gem 'faker'       # 10
+gem 'dotenv-rails' # 環境変数
+# gem 'image_processing', '~> 1.2'
+# gem 'html2slim'   # 6 Slim変換
+
 
 group :development, :test do
   gem 'debug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails', '~> 6.1.0' # Rails 7.0 に対応
   gem 'pry-rails'         # 5
   gem 'pry-byebug'        # 7
-  gem 'rubocop-rails', require: false
+  gem 'rspec-rails', '~> 7.1' # Rails 7.0 に対応
   gem 'factory_bot_rails', '~> 6.4'
   gem 'shoulda-matchers', '~> 6.0'
+  gem 'rubocop-rails', require: false
 end
 
 group :development do

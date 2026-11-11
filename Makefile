@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "Turbo Stream 化"
+	git commit -m "update rails7.2"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
