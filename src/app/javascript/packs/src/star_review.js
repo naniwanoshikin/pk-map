@@ -24,9 +24,9 @@ const initStarReview = () => {
   // クリックした星の数
   let index;
 
-  // =======================================================
+  // ===========================================
   // モーダルを開く前後のクリックした星が連動
-  // =======================================================
+  // ===========================================
   btn_stars.forEach((btnStar, i) => {
     btnStar.addEventListener('click', () => {
       const selectedScore = i + 1; // 1〜5 の数値
@@ -121,34 +121,6 @@ const initStarReview = () => {
       }
     })
   }
-
-  // =======================================================
-  // ⭐︎⭐︎⭐︎⭐︎⭐︎ ブラウザのアクセシビリティ警告（aria-hidden）を解決
-  // ここちゃんと機能してなくね？
-  // =======================================================
-  // 1. モーダルが閉じ始める瞬間 hide
-  document.addEventListener('hide.bs.modal', (event) => {
-    // このモーダル内部にて
-    if (event.target.id === 'exampleModal') {
-      // 現在ブラウザでフォーカスが当たっている要素([×]or[閉じる])があれば
-      const activeEl = document.activeElement;
-      if (activeEl && event.target.contains(activeEl)) {
-        // そのフォーカスを解除
-        activeEl.blur();
-      }
-    }
-  });
-
-  // 2. モーダルが閉じ終わった瞬間 hidden
-  document.addEventListener('hidden.bs.modal', (event) => {
-    if (event.target.id === 'exampleModal') {
-      const btnRatingsContainer = document.getElementById('openModalBtn');
-      if (btnRatingsContainer) {
-        // 元の画面★★☆☆☆にフォーカスを戻す
-        btnRatingsContainer.focus();
-      }
-    }
-  });
 
 }
 

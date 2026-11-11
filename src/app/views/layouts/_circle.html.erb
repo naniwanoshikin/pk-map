@@ -1,0 +1,11 @@
+<%# 未確認通知がある時 ➓ (helper) (header/footer) %>
+
+<% if unchecked_notifications.any? %>
+  <%# ● %>
+  <i class="fas fa-circle fa-lg n-circle">
+    <%# 通知数 10 %>
+    <div class="counter">
+      <%= unchecked_notifications.count %>
+    </div>
+  </i>
+<% end %>

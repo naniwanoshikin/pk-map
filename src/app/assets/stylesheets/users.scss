@@ -1,9 +1,6 @@
-// 7
-
 /* universal */
 
 .gravatar {
-  float: left;
   margin-right: 10px;
 }
 
@@ -32,25 +29,19 @@ aside {
       margin-top: 0px;
     }
   }
-  // ユーザー情報
-  .user_info {
-    margin-top: 20px;
-    p {
-      color: gray;
-    }
-  }
-  // 統計情報
+  // 投稿数|フォロワ|フォロ中
   .user_stats_box {
     overflow: auto;
-    padding: 0;
-    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     text-align: center;
+    padding: 0;
+    margin-bottom: 10px;
     a {
       padding: 0 10px;
       border-left: 1px solid gainsboro;
       color: gray;
+      text-decoration: none; // bootstrap5 対策
       &:first-child {
         border: 0;
       }
@@ -63,38 +54,31 @@ aside {
       color: black;
     }
   }
-  // プロフィール編集、[follow] ボタン
-  .profile_edit,
-  .profile_follow {
-    margin: 5px 20px;
-    // [プロフィール編集]
-    a {
-      display: block;
-    }
-    // [follow] ボタン
-    .follow {
-      background: #487c38;
-    }
-    // [follow]/[unfollow]
-    input[type="submit"] {
-      margin: 0;
-    }
+}
+
+// [プロフィール編集], [follow] ボタン
+.profile_edit,
+.profile_follow {
+  margin: 3px 20px;
+  // [フォローする/フォロー中]ボタン共通
+  input[type="submit"] {
+    margin: 0;
+    padding: 6px 8px;
+    min-width: 120px; // ボタン幅（110px〜130px）
+  }
+  // [フォローする] ボタンのみ
+  .btn-follow {
+    background: #487c38;
   }
 }
 
 // (users/index)
-.users {
+.users_index {
   list-style: none;
   margin: 0;
-  padding: 0 20px;
+  padding: 0 10px;
   li {
-    overflow: auto;
-    padding: 10px 5px;
     border-bottom: 1px solid gainsboro;
-  }
-  // (users/show_follow)
-  .follow {
-    padding: 0;
   }
 }
 
@@ -103,8 +87,7 @@ aside {
   font-size: 1.0em;
 }
 
-// (users/show_follow)
-// 画像一覧
+// (フォロー/フォロワー一覧)
 .user_avatars {
   overflow: auto;
   margin-top: 15px;

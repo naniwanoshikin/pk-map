@@ -63,9 +63,20 @@ window.Stimulus   = application
 /*!*********************************************************!*\
   !*** ./app/javascript/controllers/drawer_controller.js ***!
   \*********************************************************/
-/***/ (function() {
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _hotwired_stimulus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @hotwired/stimulus */ "./node_modules/@hotwired/stimulus/dist/stimulus.js");
 // 「いつかBootstrap 5にする時に、Offcanvasに変えてからここは書く！」
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = { default: (class extends _hotwired_stimulus__WEBPACK_IMPORTED_MODULE_0__.Controller {
+  connect() {
+  }
+}) }.default;
+
 
 /***/ }),
 
@@ -162,7 +173,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _application__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./application */ "./app/javascript/controllers/application.js");
 /* harmony import */ var _drawer_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./drawer_controller */ "./app/javascript/controllers/drawer_controller.js");
-/* harmony import */ var _drawer_controller__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_drawer_controller__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _flash_behavior_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./flash_behavior_controller */ "./app/javascript/controllers/flash_behavior_controller.js");
 /* harmony import */ var _hello_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./hello_controller */ "./app/javascript/controllers/hello_controller.js");
 /* harmony import */ var _map_home_controller__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./map_home_controller */ "./app/javascript/controllers/map_home_controller.js");
@@ -175,7 +185,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_application__WEBPACK_IMPORTED_MODULE_0__.application.register("drawer", (_drawer_controller__WEBPACK_IMPORTED_MODULE_1___default()))
+_application__WEBPACK_IMPORTED_MODULE_0__.application.register("drawer", _drawer_controller__WEBPACK_IMPORTED_MODULE_1__["default"])
 
 ;
 _application__WEBPACK_IMPORTED_MODULE_0__.application.register("flash-behavior", _flash_behavior_controller__WEBPACK_IMPORTED_MODULE_2__["default"])
@@ -207,6 +217,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = { default: (class extends _hotwired_stimulus__WEBPACK_IMPORTED_MODULE_0__.Controller {
+
+  // 検索① ターゲット
+  static targets = ["canvas", "autocomplete"]
+
   // 型変換 HTMLの data-map-home-xxx-value から自動的に型変換
   static values = {
     userLat: Number,
@@ -218,6 +232,7 @@ __webpack_require__.r(__webpack_exports__);
 
   connect() {
     // console.log('map_home_controller 接続成功');
+    // this.markers = []; // 検索入力用 既存の配列を管理するための空のマーカーリストを用意
     this.initMapOnLoad();
   }
   // this: このコントローラー自身 letの代わり
@@ -228,16 +243,15 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(() => this.initMapOnLoad(), 100);
       return;
     }
+    // 地図初期化
     this.initMap();
+
+    // 検索② 自動補完
+    this.initAutocompleteElement();
   }
 
-  // 地図の初期化
   initMap() {
     // console.log('home 地図の初期化');
-
-    // 検索入力用 エラー
-    // const geocoder = new google.maps.Geocoder();
-
     // (home_pages/home_map)_data-map-home-xxx-value
     // static values から安全に値を取得 (this.userLatValue のようにアクセス)
     // 自身の住所
@@ -278,7 +292,7 @@ __webpack_require__.r(__webpack_exports__);
     const PinElement = google.maps.marker.PinElement;
 
     // 地図の生成 中心位置を表示
-    this.map = new Map(this.element, {
+    this.map = new Map(this.canvasTarget, {
       // 最新フィード なければあなた自身の住所
       center: latest_feed_address || user_LatLng,
       zoom: 12,
@@ -355,6 +369,60 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     });
+  }
+
+  // ★ Places API (New) オートコンプリートの初期化
+  async initAutocompleteElement() {
+    // ターゲットが存在しない画面の場合はスキップ
+    if (!this.hasAutocompleteTarget) return;
+
+    console.log('cccccc')
+    // places ライブラリをロード
+    await google.maps.importLibrary("places");
+
+    // 🌟【最重要】PC画面でも強制的にスマホ用の真っ白全画面が暴発するのを永久に停止する設定。
+    // これにより、画面幅に関わらず「常にインプットの直下にドロップダウン（POPUP）」を出します。
+    this.autocompleteTarget.forceDisplayMode = "POPUP";
+
+
+    // 必要最小限のフィールドに制限（従量課金対策）
+    this.autocompleteTarget.requestedFields = ["geometry", "displayName"];
+  }
+
+
+  // (search_spot.html)
+  // ★ 場所が選択されたときに地図を移動させる (gmp-placechange)
+  handlePlaceChange() {
+    // 新型のコンポーネントから直接選択された「Placeインスタンス」を引っこ抜く
+    const place = this.autocompleteTarget.place;
+
+    // place.geometry が存在するか、ロードが完了しているか安全にチェック
+    if (place && place.geometry && this.map) {
+      // 選択された位置へスムース移動＆ズーム
+      this.map.panTo(place.geometry);
+      this.map.setZoom(15);
+    }
+  }
+
+
+  // ★ 検索窓でのEnterキーによる暴発リロードを完全にブロック
+  preventSubmit(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
+  // ★ 虫眼鏡ボタンが直接クリックされた際の処理
+  search() {
+    if (!this.hasAutocompleteTarget) return;
+    // 新型コンポーネント（gmp-place-autocomplete）の内包するinputから安全に文字列を取得
+    const inputElement = this.autocompleteTarget.querySelector('input');
+    const query = inputElement ? inputElement.value : "";
+
+    console.log('虫眼鏡')
+    if (!query) return;
+    console.log('入力されたワードで検索を実行:', query);
+    // 必要に応じてジオコーディング（住所文字列→緯度経度）をここに追記可能です
   }
 
   // 吹き出しを表示する共通メソッド
@@ -653,9 +721,9 @@ const initStarReview = () => {
   // クリックした星の数
   let index;
 
-  // =======================================================
+  // ===========================================
   // モーダルを開く前後のクリックした星が連動
-  // =======================================================
+  // ===========================================
   btn_stars.forEach((btnStar, i) => {
     btnStar.addEventListener('click', () => {
       const selectedScore = i + 1; // 1〜5 の数値
@@ -750,34 +818,6 @@ const initStarReview = () => {
       }
     })
   }
-
-  // =======================================================
-  // ⭐︎⭐︎⭐︎⭐︎⭐︎ ブラウザのアクセシビリティ警告（aria-hidden）を解決
-  // ここちゃんと機能してなくね？
-  // =======================================================
-  // 1. モーダルが閉じ始める瞬間 hide
-  document.addEventListener('hide.bs.modal', (event) => {
-    // このモーダル内部にて
-    if (event.target.id === 'exampleModal') {
-      // 現在ブラウザでフォーカスが当たっている要素([×]or[閉じる])があれば
-      const activeEl = document.activeElement;
-      if (activeEl && event.target.contains(activeEl)) {
-        // そのフォーカスを解除
-        activeEl.blur();
-      }
-    }
-  });
-
-  // 2. モーダルが閉じ終わった瞬間 hidden
-  document.addEventListener('hidden.bs.modal', (event) => {
-    if (event.target.id === 'exampleModal') {
-      const btnRatingsContainer = document.getElementById('openModalBtn');
-      if (btnRatingsContainer) {
-        // 元の画面★★☆☆☆にフォーカスを戻す
-        btnRatingsContainer.focus();
-      }
-    }
-  });
 
 }
 

@@ -1,0 +1,44 @@
+<%# 投稿単体 (shared/_feed), (users/_show_posts) 引数: post %>
+
+<div id="<%= dom_id(post) %>">
+  <header id="<%= dom_id(post, :header) %>">
+    <h5 class="m-0 text-truncate-1" title="<%= post.address %>"><%= post.address %></h5>
+  </header>
+
+  <main>
+    <%= link_to post, class: "link" do %>
+      <%# 評価 %>
+      <div class="average_score d-flex align-items-center mt-1">
+        <%# ★★☆☆☆ %>
+        <div class="star_rating mr-2">
+          <div class="star_back">★★★★★</div>
+          <div class="star_front" style="width: <%= post.review_score_percentage %>%;">★★★★★</div>
+        </div>
+        <%# 平均点 %>
+        <div class="score_review small text-muted">
+          <span class="font-weight-bold text-dark mr-1"><%= post.avg_score %></span>
+          <span>(<%= post.reviews.size %>)</span>
+        </div>
+      </div>
+
+      <%# 画像 %>
+      <%= image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=#{post.latitude},#{post.longitude}&key=#{ENV['GOOGLE_MAP_API']}" %>
+
+      <%# 文章 %>
+      <div class="content">
+        <%= simple_format post.content, {}, wrapper_tag: :span %>
+      </div>
+    <% end %>
+  </main>
+
+  <footer class="card-footer p-1 bg-white">
+    <div class="user_image">
+      <%# 画像 %>
+      <%= link_to gravatar_for(post.user, size: 30), post.user %>
+    </div>
+    <%# 3分前 %>
+    <div class="timestamp">
+      <%= time_ago_in_words(post.created_at) %>前
+    </div>
+  </footer>
+</div>

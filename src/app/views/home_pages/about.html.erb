@@ -1,0 +1,126 @@
+<% provide(:title, "About") %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 mx-auto">
+      <h2 class="mb-4">PK mapとは</h2>
+
+      <% if user_signed_in? %>
+        <section class="mb-4">
+          <h2 class="h4">データ</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">件数</th>
+                <th scope="col">通知</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">登録者数</th>
+                <td><%= @stats[:users_count] %>人</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <th scope="row">スポット投稿数</th>
+                <td><%= @stats[:posts_count] %>件</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <th scope="row">レビュー数</th>
+                <td><%= @stats[:reviews_count] %>件</td>
+                <td><%= @stats[:review_notifications_count] %>件</td>
+              </tr>
+              <% if Rails.env.development? %>
+                <tr>
+                    <%# なぜか乖離がある %>
+                  <th scope="row">高評価数</th>
+                  <td><%= @stats[:goods_count] %>件</td>
+                  <td><%= @stats[:good_notifications_count] %>件</td>
+                </tr>
+                <tr>
+                  <th scope="row">リレーションシップ</th>
+                  <td><%= @stats[:relationships_count] %>件</td>
+                  <td><%= @stats[:follow_notifications_count] %>件</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+        <hr>
+      <% end %>
+
+      <section class="mb-4">
+        <h2 class="h4">経緯</h2>
+        <p>動きやすい公園や施設（以下、スポット）を地図で探す中で、そこの情報や口コミを事前に知れるといいなと思い、本アプリを作成しました。</p>
+      </section>
+      <hr>
+
+      <section class="mb-4">
+        <h2 class="h4">対象者</h2>
+        <ul>
+          <li>引きこもりを脱却したい</li>
+          <li>未知のスポットを開拓したい</li>
+          <li>人気のスポットを探したい</li>
+          <li>外で人と交流したい</li>
+          <li>外でトレーニングをしたい</li>
+          <li>
+            <%= link_to 'パルクール', "https://parkour.jp/about-parkour/", target: :_blank, rel: "noopener noreferrer" %>をやっている
+          </li>
+        </ul>
+      </section>
+      <hr>
+
+      <section class="mb-4">
+        <h2 class="h4">パルクールは誰にでもできる</h2>
+        <p>パルクールとは近年日本で人気となりつつあるアーバンスポーツの１つです。以下に私の思う特徴を挙げます。</p>
+        <ul>
+          <li>年齢関係なく子供から大人までできる</li>
+          <li>特別な道具なしで、手軽に始められる</li>
+          <li>自分だけの動きを開発できる可能性</li>
+          <li>時間や場所に縛られない</li>
+          <li>風を浴びながら動ける</li>
+          <li>極めると重力をあまり感じなくなる</li>
+        </ul>
+      </section>
+      <hr>
+
+      <section class="mb-4">
+        <h2 class="h4">自分の能力を知る</h2>
+        <p class="mb-0">自身の能力の限界を知らずに無茶なことをすると怪我のリスクが付き纏います。建物の屋上から飛んだり、宙返りなどは最たる例です。これらの行為は、一般人からすると無謀と捉えられがちでありますし、初心者には決しておすすめできないものです。当然、筆者も到底できる類のものではありません。一方、練習を積みに積み重ねた熟練者だけが年月をかけて成し得たものであったりするのです。</p>
+        <p>自分のレベルに適した低リスクでできることを探し、徐々に磨いていくのが得策でしょう。</p>
+      </section>
+      <hr>
+
+      <section class="rails_svg mb-4">
+        <h2 class="h4">おすすめのスポットと練習方法</h2>
+        <p>近場に教室や施設がない人もいると思います。本アプリはそのような方々を想定して作成しました。本アプリでおすすめしているスポットを、ざっくりですが挙げます。</p>
+        <ul class="me-5 mr-5">
+          <li>公園</li>
+          <li>鉄棒</li>
+          <li>スロープ</li>
+          <li>壁</li>
+        </ul>
+        <p>これらは公のものであり、子供が遊んでいたり、他の利用者に迷惑のかからないよう十分配慮する必要があります。</p>
+        <p>
+          具体的な技は<%= link_to 'こちら', "https://www.traceurs.info/vocabulary/", target: :_blank, rel: "noopener noreferrer" %>にまとめられています。初めは基礎を一通り触れるのがいいと思います。たくさんあるので、その後は自分の興味あるものを取り組んでいくといいと思います。やっていく内に自身の向き不向きが見つかるかもしれません。
+        </p>
+        <p>もし地元に教室があれば一度行ってみるのもいいかもしれません。講師から正しい動き方を教わればリスクを低減する方法を学べますし、施設など安全な場所で技を磨けば上達は早いです。</p>
+        <%# Youtube動画 リンクより埋め込み エラー出た... %>
+        <%# <iframe width="100%" height="300" src="https://www.youtube-nocookie.com/embed/qb_QhSlq0W4" title="YouTube video player"></iframe> %>
+      </section>
+      <hr>
+
+      <section class="mb-4">
+        <h2 class="h4">本アプリを活用しよう</h2>
+        <p class="mb-0">本アプリには他にもたくさんのスポットが投稿されています。皆さんが一度行ったことのあるスポットもあるかもしれません。誰も知らないスポットもまだまだ隠れていることでしょう。</p>
+        <p>自身の能力を知り、安全や周囲の環境を配慮し、自身に見合ったスポットを探してみましょう。一緒に動けるといいですね。本アプリが、外に出るきっかけになれば幸いです。</p>
+        <p class="text-end text-right text-muted fw-light font-weight-light">
+          2022.4 
+          <%= link_to 'SHIKITTI', "https://myfirstlp.web.app/", target: :_blank, rel: "noopener noreferrer" %>
+        </p>
+      </section>
+    </div>
+  </div>
+</div>

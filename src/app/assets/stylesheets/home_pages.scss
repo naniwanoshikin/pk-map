@@ -3,7 +3,6 @@
 // 検索
 .map_search {
   margin: 0;
-  margin-bottom: 5px;
   padding: 0;
   input {
     border-radius: 5px 0 0 5px;
@@ -13,11 +12,29 @@
   }
 }
 
+// 🌟【追記】親の input-group 側でドロップダウンがはみ出して綺麗に下に伸びるのを許可
+.input-group {
+  position: relative !important;
+  overflow: visible !important; /* 👈 超重要：サジェストが消えないようにする設定 */
+
+  // 新型GoogleコンポーネントがBootstrapのinput-groupを破壊するのを防ぐ
+  gmp-place-autocomplete {
+    flex: 1 1 auto; /* フレックスアイテムとして正しく伸縮させる */
+    width: 1%;      /* インプットグループ内で他の要素（ボタン）の幅を確保するためのBootstrapの常套句
+     */
+    position: relative !important;
+  }
+}
+
+
+
+
 // 地図
 #pkmap {
   height: 350px;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); // 軽い影
 }
 
 // 吹き出し
