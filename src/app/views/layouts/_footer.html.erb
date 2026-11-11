@@ -1,0 +1,54 @@
+<footer>
+  <% if user_signed_in? %>
+    <%# スマホのみ下端固定 %>
+    <div class="signed_in">
+      <ul>
+        <li>
+          <%= link_to root_path, class: ("active" if request.path == root_path) do %>
+            <i class="fa fa-home fa-2x"></i>
+          <% end %>
+        </li>
+        <%# 通知 %>
+        <li>
+          <%= link_to notifications_path, class: "notice #{"active" if request.path == notifications_path}" do %>
+            <i class="far fa-bell fa-2x">
+              <%= render 'layouts/circle' %>
+            </i>
+          <% end %>
+        </li>
+        <%# 新規投稿 %>
+        <li>
+          <%= link_to new_post_path, class: ("active" if request.path == new_post_path) do %>
+            <i class="fas fa-pencil-alt fa-2x"></i>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to current_user, class: ("active" if request.path == user_path(current_user)) do %>
+            <i class="fas fa-user fa-2x"></i>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  <% else %>
+    <div class="not_signed_in">
+      <nav>
+        <ul>
+          <% if Rails.env.development? %>
+            <li>
+              <%= link_to "Help", help_path %>
+            </li>
+            <li>
+              <%= link_to "Contact", contact_path %>
+            </li>
+          <% end %>
+          <li class="only_phone">
+            <%= link_to "Home", root_path %>
+          </li>
+          <li>
+            <%= link_to "About", about_path %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  <% end %>
+</footer>

@@ -1,0 +1,54 @@
+<% provide(:title, "Spot_Post") %>
+<h2>どんなスポット？</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 mx-auto">
+      <%# 投稿フォーム %>
+      <section class="post_form">
+        <%= form_with(model: @post, data: { turbo: false }) do |f| %>
+          <%#= render 'shared/error_messages', object: @post %>
+
+          <%# 1. スポット名（テキストフィールド） %>
+          <div class="form-group mb-3">
+            <%= f.label :address, 'スポット名', class: "form-label #{@post.errors[:address].any? ? 'fw-bolder text-danger' : 'fw-bold'}" %>
+            <small class="text-danger fw-normal">＊必須</small>
+            <br>
+            <%= f.text_field :address, placeholder: "例: 鶴見緑地", autocomplete: "off", class: "form-control #{@post.errors[:address].any? ? 'is-invalid' : ''}" %>
+          </div>
+
+          <%# 2. スポットの質（ラジオボタン） %>
+          <div class="form-group mb-3">
+            <%= f.label :spot_quality, 'スポットの質', class: "form-label #{@post.errors[:spot_quality].any? ? 'fw-bolder text-danger' : 'fw-bold'}" %>
+            <small class="text-danger fw-normal">＊必須</small>
+            <br>
+            <% %w(良い 普通 悪い).each do |spot| %>
+              <%= f.radio_button :spot_quality, spot %>
+              <%= f.label :spot_quality, spot, value: spot, class: "form-check-label me-2" %>
+            <% end %>
+          </div>
+
+          <%# 3. タイプ（チェックボックス） %>
+          <div class="form-group mb-3">
+            <%= f.label :spot_type, 'タイプ', class: "fw-bold form-label" %>
+            <br>
+            <% %w(公園 スロープ 鉄棒).each do |spot| %>
+              <%= f.check_box :spot_type, { multiple: true }, spot, false %>
+              <%= f.label :spot_type, spot, value: spot, class: "form-check-label me-3" %>
+            <% end %>
+          </div>
+
+          <%# 4. テキストエリア %>
+          <div class="form-group mb-3">
+            <%= f.label :content, 'スポット詳細' %>
+            <%= f.text_area :content, placeholder: "鉄棒がきれい", class: "form-control" %>
+          </div>
+
+          <div class="form-group mt-3 text-center">
+            <%= f.submit "投稿", class: "btn btn-primary w-100" %>
+          </div>
+        <% end %>
+      </section>
+    </div>
+  </div>
+</div>

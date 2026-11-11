@@ -1,0 +1,59 @@
+<%# レビュー詳細 %>
+<h2><%= @review.post.address %></h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 mx-auto px-0 d-flex align-items-center">
+
+      <%# 戻る %>
+      <span class="ml-4">
+        <%= link_to :back do %>
+          <i class="fas fa-long-arrow-alt-left fa-lg"></i>
+        <% end %>
+      </span>
+
+      <%# レビュー詳細 %>
+      <div class="show_reviews ml-3">
+        <%# (reviews/review)と共通 %>
+        <div class="review_user d-flex align-items-center mb-2">
+          <%# 画像 %>
+          <%= link_to gravatar_for(@review.user, size: 30), @review.user %>
+          <div class="name_review ml-2">
+            <%# 名前 %>
+            <strong>
+              <%= link_to @review.user.name, @review.user %>
+            </strong>
+            <br>
+            <%# 口コミ6件 %>
+            <span class="review_number small text-muted">
+              <%= link_to show_reviews_user_path(@review.user) do %>
+                口コミ<%= @review.user.reviews.size %>件
+              <% end %>
+            </span>
+          </div>
+        </div>
+
+        <main class="mb-0">
+          <%# ★★☆☆☆ + 4日前 %>
+          <div class="user_score d-flex align-items-center mt-1">
+            <%# ★★☆☆☆ (パーセンテージ制御の星評価) %>
+            <div class="star_rating">
+              <div class="star_back">★★★★★</div>
+              <div class="star_front" style="width: <%= (@review.score.to_f * 20).to_i %>%;">★★★★★</div>
+            </div>
+            <%# 4日前 %>
+            <div class="small text-muted ml-2">
+              <%= time_ago_in_words(@review.created_at).upcase %>前
+            </div>
+          </div>
+
+          <%# レビュー 改行あり %>
+          <div class="review_content mt-2 ml-1">
+            <%= simple_format @review.content %>
+          </div>
+        </main>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-// (posts/show)_ajax
+// (posts/show)
 #reviews > ul {
   list-style: none;
   padding: 0 10px;
@@ -8,7 +8,7 @@
   li {
     padding: 8px 0;
     border-top: 1px dotted #8c8b8b;
-    main > a:hover {
+    .user_score > a:hover {
       text-decoration: none;
     }
     // レビュー文
@@ -34,27 +34,23 @@
     font-size: 0.9em;
   }
 }
-// ★★ + ☆☆☆☆☆ 4日前
-.user_score {
-  display: flex;
-  align-items: center;
-}
 
 // 共通 (posts/show, /post)
 // ★★☆☆☆
 .star_rating {
   position: relative;
-  width: 5em;
-  // height: 1em;
+  display: inline-block;
   font-size: 18px;
+  letter-spacing: 2px;
+  line-height: 1;
   margin-right: 5px;
   // ★★
   .star_front {
     position: absolute;
     top: 0;
     left: 0;
-    overflow: hidden; // はみ出した部分を隠す
     color: #ffcc33;
+    overflow: hidden; // はみ出した部分を隠す
   }
   // ☆☆☆☆☆
   .star_back {
@@ -65,8 +61,6 @@
 // (reviews/form)
 .btn_ratings {
   color: #ffcc00;
-  display: flex;
-  justify-content: space-between;
   margin: 0 20%;
 }
 #exampleModal {

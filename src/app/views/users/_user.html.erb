@@ -1,23 +1,27 @@
 <%# (users/index), (users/show_follow) 個々のユーザー %>
-<li>
-  <%= link_to gravatar_for(user, size: 50), user %>
-  <%= link_to user.name, user %>
+<li class="d-flex align-items-center justify-content-between py-2 border-bottom">
+  <div class="d-flex align-items-center">
+    <%= link_to gravatar_for(user, size: 50), user %>
+    <div>
+      <div>
+        <%= link_to user.name, user, class: "text-decoration-none" %>
 
-  <% if current_user&.admin? && !current_user?(user) %>
-    | 
-    <%= link_to "delete", user, data: { turbo_method: :delete, turbo_confirm: "ユーザーを削除しますか？" } %>
-  <% end %>
+        <% if current_user&.admin? && !current_user?(user) %>
+          <span class="text-muted mx-1">|</span>
+          <%= link_to "delete", user, data: { turbo_method: :delete, turbo_confirm: "ユーザーを削除しますか？" } %>
+        <% end %>
+      </div>
 
-  <div class="text-muted">
-    <%= user.address %> 勢
+      <div class="text-muted">
+        <%= user.address %> 勢
+      </div>
+    </div>
   </div>
 
-  <%# [follow]ボタン 文脈が違う(sharedからusersへ) Relationship(M) 自身は表示されない %>
+  <%# [follow]ボタン Relationship(M) sharedへ (文脈が違う) 自身は表示しない %>
   <% if user_signed_in? && !current_user?(user) %>
-  <aside class="col-md-5">
-    <div class="profile_follow">
+    <div class="profile_follow mt-2 ml-2">
       <%= render 'follow_form', user: user %>
     </div>
-  </aside>
   <% end %>
 </li>

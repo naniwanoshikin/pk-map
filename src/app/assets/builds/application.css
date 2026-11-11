@@ -9217,6 +9217,9 @@ section {
   overflow: auto;
 }
 
+/* ---------------------------------------------- */
+/* body > header (Drawer) */
+/* ---------------------------------------------- */
 .drawer > .drawer-navbar .drawer-navbar-header {
   height: 59px;
 }
@@ -9259,22 +9262,25 @@ section {
 #flash_messages {
   position: fixed;
   width: 95%;
+  max-width: 900px;
   top: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 1050;
 }
 #flash_messages .alert {
-  padding: 12px 14px;
+  position: relative;
+  padding: 12px 36px 12px 14px;
   text-align: center;
   margin-bottom: 10px;
   color: #696969;
 }
-#flash_messages .alert-alert {
-  background: rgba(255, 208, 208, 0.9);
-}
 #flash_messages .alert-notice {
   background: rgba(179, 230, 174, 0.9);
+}
+#flash_messages .alert-alert {
+  background: rgba(255, 208, 208, 0.9);
 }
 #flash_messages .alert .close {
   position: absolute;
@@ -9286,18 +9292,19 @@ section {
 .hidden_up {
   animation: move 1s ease 5s forwards;
 }
+
 @keyframes move {
   0% {
-    transform: translate(-50%, 0px);
+    transform: translateY(0);
   }
   100% {
-    transform: translate(-50%, -170px);
+    transform: translateY(-170px);
   }
 }
-
 .hidden_out {
-  animation: fadeout 0.5s ease-in;
+  animation: fadeout 0.5s ease-in forwards;
 }
+
 @keyframes fadeout {
   0% {
     opacity: 1;
@@ -9306,9 +9313,11 @@ section {
     opacity: 0;
   }
 }
-
+/* ---------------------------------------------- */
+/* layouts_container (Main & Footer) */
+/* ---------------------------------------------- */
 .container > main {
-  margin-bottom: 70px;
+  margin-bottom: 75px;
 }
 .container > footer {
   color: lightgray;
@@ -9323,44 +9332,39 @@ section {
   padding: 0;
   list-style: none;
 }
-.container > footer .signed_in .active {
-  color: green;
-}
 .container > footer .not_signed_in {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   border-top: 1px solid #eaeaea;
-  margin-top: 45px;
-  padding-top: 5px;
+  margin-top: 30px;
+  padding-top: 10px;
   padding-bottom: 50px;
 }
-.container > footer .not_signed_in small {
-  float: left;
-}
 .container > footer .not_signed_in ul {
-  float: right;
-  margin: 0;
-}
-.container > footer .not_signed_in ul li {
-  float: left;
-  margin-left: 15px;
+  display: flex;
+  gap: 15px;
 }
 .container > footer .signed_in {
   position: fixed;
   bottom: 0;
-  background: #b0e7d7;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
   left: 0;
-  z-index: 5;
+  width: 100%;
+  height: 70px;
+  background: #b0e7d7;
+  z-index: 1030;
 }
 .container > footer .signed_in ul {
   display: flex;
-  float: none;
+  height: 100%;
+  align-items: center;
 }
 .container > footer .signed_in ul li {
   width: 50%;
   text-align: center;
-  margin-top: 5px;
+}
+.container > footer .signed_in .active {
+  color: green;
 }
 
 @media (min-width: 768px) {
@@ -9458,7 +9462,6 @@ textarea {
 
 .map_search {
   margin: 0;
-  margin-bottom: 5px;
   padding: 0;
 }
 .map_search input {
@@ -9468,10 +9471,22 @@ textarea {
   border-radius: 0 5px 5px 0;
 }
 
+.input-group {
+  position: relative !important;
+  overflow: visible !important; /* 👈 超重要：サジェストが消えないようにする設定 */
+}
+.input-group gmp-place-autocomplete {
+  flex: 1 1 auto; /* フレックスアイテムとして正しく伸縮させる */
+  width: 1%; /* インプットグループ内で他の要素（ボタン）の幅を確保するためのBootstrapの常套句
+*/
+  position: relative !important;
+}
+
 #pkmap {
   height: 350px;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .infowindow > img {
@@ -9637,41 +9652,41 @@ footer .n-circle {
   font-size: 0.9em;
 }
 
-#notify_lists {
+#notifications_list {
   list-style: none;
   padding-left: 0;
   margin-top: 5px;
   margin-bottom: 0;
 }
-#notify_lists li {
+#notifications_list li {
   border-top: 1px dotted #8c8b8b;
   padding: 10px 0;
   padding-bottom: 5px;
 }
-#notify_lists li:hover {
+#notifications_list li:hover {
   opacity: 0.8;
   background: rgb(243, 241, 241);
 }
-#notify_lists li .f_inline .action_mark .fa-user {
+#notifications_list li .f_inline .action_mark .fa-user {
   color: #00a1e9;
 }
-#notify_lists li .f_inline .action_mark .fa-heart {
+#notifications_list li .f_inline .action_mark .fa-heart {
   color: red;
 }
-#notify_lists li .f_inline .notify_content {
+#notifications_list li .f_inline .notify_content {
   width: 100%;
 }
-#notify_lists li .f_inline .notify_content strong > a {
+#notifications_list li .f_inline .notify_content strong > a {
   color: inherit;
 }
-#notify_lists li .f_inline .notify_content .good_notify a,
-#notify_lists li .f_inline .notify_content .review_notify a {
+#notifications_list li .f_inline .notify_content .good_notify a,
+#notifications_list li .f_inline .notify_content .review_notify a {
   font-size: 0.9em;
   color: gray;
   display: block;
 }
-#notify_lists li .f_inline .notify_content .good_notify a:hover,
-#notify_lists li .f_inline .notify_content .review_notify a:hover {
+#notifications_list li .f_inline .notify_content .good_notify a:hover,
+#notifications_list li .f_inline .notify_content .review_notify a:hover {
   color: inherit;
   text-decoration: none;
 }
@@ -9704,6 +9719,15 @@ footer .n-circle {
   margin-top: 5em;
   padding-top: 0;
 }
+.posts header .text-truncate-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
 .posts main {
   margin-bottom: 20px;
 }
@@ -9715,17 +9739,7 @@ footer .n-circle {
   text-decoration: none;
 }
 .posts main .average_score {
-  display: flex;
-  margin-bottom: 5px;
-}
-.posts main .average_score .star_rating {
-  height: 1em;
-}
-.posts main .average_score .score_review {
-  font-size: 16px;
-}
-.posts main .average_score .score_review .average_number {
-  color: gray;
+  font-size: 1rem;
 }
 .posts main img {
   margin: 5px 0;
@@ -9787,7 +9801,7 @@ footer .n-circle {
   padding: 8px 0;
   border-top: 1px dotted #8c8b8b;
 }
-#reviews > ul li main > a:hover {
+#reviews > ul li .user_score > a:hover {
   text-decoration: none;
 }
 #reviews > ul li .review_content p {
@@ -9808,23 +9822,20 @@ footer .n-circle {
   font-size: 0.9em;
 }
 
-.user_score {
-  display: flex;
-  align-items: center;
-}
-
 .star_rating {
   position: relative;
-  width: 5em;
+  display: inline-block;
   font-size: 18px;
+  letter-spacing: 2px;
+  line-height: 1;
   margin-right: 5px;
 }
 .star_rating .star_front {
   position: absolute;
   top: 0;
   left: 0;
-  overflow: hidden;
   color: #ffcc33;
+  overflow: hidden;
 }
 .star_rating .star_back {
   color: #ccc;
@@ -9832,8 +9843,6 @@ footer .n-circle {
 
 .btn_ratings {
   color: #ffcc00;
-  display: flex;
-  justify-content: space-between;
   margin: 0 20%;
 }
 
@@ -9865,7 +9874,6 @@ footer .n-circle {
 
 /* universal */
 .gravatar {
-  float: left;
   margin-right: 10px;
 }
 
@@ -9890,24 +9898,19 @@ aside section h1 {
   margin-bottom: 3px;
   margin-top: 0px;
 }
-aside .user_info {
-  margin-top: 20px;
-}
-aside .user_info p {
-  color: gray;
-}
 aside .user_stats_box {
   overflow: auto;
-  padding: 0;
-  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   text-align: center;
+  padding: 0;
+  margin-bottom: 10px;
 }
 aside .user_stats_box a {
   padding: 0 10px;
   border-left: 1px solid gainsboro;
   color: gray;
+  text-decoration: none;
 }
 aside .user_stats_box a:first-child {
   border: 0;
@@ -9919,35 +9922,29 @@ aside .user_stats_box strong {
   display: block;
   color: black;
 }
-aside .profile_edit,
-aside .profile_follow {
-  margin: 5px 20px;
+
+.profile_edit,
+.profile_follow {
+  margin: 3px 20px;
 }
-aside .profile_edit a,
-aside .profile_follow a {
-  display: block;
+.profile_edit input[type=submit],
+.profile_follow input[type=submit] {
+  margin: 0;
+  padding: 6px 8px;
+  min-width: 120px;
 }
-aside .profile_edit .follow,
-aside .profile_follow .follow {
+.profile_edit .btn-follow,
+.profile_follow .btn-follow {
   background: #487c38;
 }
-aside .profile_edit input[type=submit],
-aside .profile_follow input[type=submit] {
-  margin: 0;
-}
 
-.users {
+.users_index {
   list-style: none;
   margin: 0;
-  padding: 0 20px;
+  padding: 0 10px;
 }
-.users li {
-  overflow: auto;
-  padding: 10px 5px;
+.users_index li {
   border-bottom: 1px solid gainsboro;
-}
-.users .follow {
-  padding: 0;
 }
 
 .spot_list {

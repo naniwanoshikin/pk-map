@@ -1,0 +1,59 @@
+<%# レビュー (posts/show) %>
+<%# Rails7 TurboStream 向けにdom_IDを付与 %>
+<li id="<%= dom_id(review) %>">
+  <%# 削除ボタン review_id: (C)_private %>
+  <% if current_user?(review.user) %>
+    <%= link_to post_reviews_path(post_id: review.post, review_id: review.id), class: "text-danger float-right", data: { turbo_method: :delete, turbo_confirm: "レビューを削除しますか?" } do %>
+      <i class="fas fa-trash-alt"></i>
+    <% end %>
+  <% end %>
+
+  <div class="review_user d-flex align-items-center">
+    <%# 画像 %>
+    <%= link_to gravatar_for(review.user, size: 30), review.user %>
+    <div class="name_review">
+      <%# 名前 %>
+      <strong>
+        <%= link_to review.user.name, review.user %>
+      </strong>
+      <br>
+      <%# ５件の口コミ %>
+      <span class="review_number small text-muted">
+        <%= link_to show_reviews_user_path(review.user) do %>
+          口コミ<%= review.user.reviews.size %>件
+        <% end %>
+      </span>
+    </div>
+  </div>
+
+    <%# ★★☆☆☆ + 4日前 %>
+    <div class="user_score d-flex align-items-center mt-1">
+      <%= link_to review, class: 'd-flex' do %>
+        <%# ★★☆☆☆ %>
+        <div class="star_rating">
+          <div class="star_back">★★★★★</div>
+          <div class="star_front" style="width: <%= (review.score.to_f * 20).to_i %>%;">★★★★★</div>
+        </div>
+        <%# 4日前 %>
+        <div class="small text-muted ml-2">
+          <%= time_ago_in_words(review.created_at).upcase %>前
+        </div>
+      <% end %>
+    </div>
+
+    <%# レビュー 改行あり %>
+    <div class="review_content mt-2 ml-1">
+      <%= simple_format review.content %>
+    </div>
+
+  <div class="d-flex mt-2 mb-1">
+    <%# Goodボタン %>
+    <div id="good-<%= review.id %>" class="ev_btn ml-5">
+      <%= render "goods/good", review: review %>
+    </div>
+    <%# Badボタン %>
+    <div id="bad-<%= review.id %>" class="ev_btn ml-3">
+      <%= render "bads/bad", review: review %>
+    </div>
+  </div>
+</li>
