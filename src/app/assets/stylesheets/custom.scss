@@ -8,79 +8,17 @@ section {
   overflow: auto;
 }
 
-/* ---------------------------------------------- */
-/* body > header (Drawer) */
-/* ---------------------------------------------- */
-.drawer > .drawer-navbar {
-  // div
-  .drawer-navbar-header {
-    height: 59px; // = 60px - 1px
-    #logo {
-      height: 100%;
-      // text-transform: uppercase;
-      // font-weight: bold;
-      font-size: 1.6em;
-      letter-spacing: 2px;
-      font-family: monospace;
-      &:hover {
-        text-decoration: none;
-      }
-      color: #eaeaea;
-    }
-    // 線の色
-    .drawer-hamburger-icon,
-    .drawer-hamburger-icon:after,
-    .drawer-hamburger-icon:before {
-      background: #eaeaea;
-      height: 3px;
-    }
-  }
-  // nav
-  .drawer-nav {
-    height: 100%;
-    // ul
-    .drawer-menu {
-      // PCのみ
-      .only_pc {
-        display: none;
-        // アイコンの色
-        .active {
-          color: yellowgreen;
-        }
-      }
-    }
-  }
-}
-.drawer-open > .drawer-navbar {
-  .drawer-navbar-header {
-    // 線を消す
-    .drawer-hamburger-icon {
-      background: none;
-    }
-  }
-  // li
-  .drawer-menu-item {
-    font-size: 1.3em;
-  }
-}
-
 /* layouts_container */
 
 // ログイン/アウト, Post, Review 後
 #flash_messages {
-  position: fixed;
   width: 95%;
   max-width: 900px;
   top: 65px;
-  left: 0;
-  right: 0;
-  margin: 0 auto; // 左右中央揃え
   z-index: 1050; // ナビバー(1030)より手前、モーダル(1055)より奥に調整
   .alert {
-    position: relative; // .close の absolute 基準
+    position: relative; // .btn-close の absolute 基準
     padding: 12px 36px 12px 14px;
-    text-align: center;
-    margin-bottom: 10px;
     color: #696969;
     &-notice {
       background: rgba(179, 230, 174, 0.9);
@@ -89,11 +27,8 @@ section {
       background: rgba(255, 208, 208, 0.9);
     }
     // [x]ボタン
-    .close {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%); // 高さ中央揃え
-      right: 12px;
+    .btn-close {
+      font-size: 0.85rem;
     }
   }
 }
@@ -135,53 +70,19 @@ section {
 
   & > footer {
     color: lightgray;
+
     a {
       color: gray;
       &:hover {
         color: darkgray;
       }
     }
-    ul {
-      padding: 0;
-      list-style: none;
-    }
 
-    // 未ログイン
-    .not_signed_in {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      border-top: 1px solid #eaeaea;
-      margin-top: 30px;
-      padding-top: 10px;
-      padding-bottom: 50px;
-
-      ul {
-        display: flex;
-        gap: 15px;
-      }
-    }
     // ログイン後 レスポンシブ スマホのみ
     .signed_in {
-      // 下端固定
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
       height: 70px; // 高さ
       background: #b0e7d7;
-      z-index: 1030;
-
-      ul {
-        display: flex;
-        height: 100%;
-        align-items: center;
-
-        li {
-          width: 50%;
-          text-align: center;
-        }
-      }
+      padding-bottom: 10px; // ← ここで数値を調整（8px〜12px程度）
       // アイコンの色
       .active {
         color: green;
@@ -190,53 +91,85 @@ section {
   }
 }
 
-@media (min-width: 768px) {
-  // body > header
-  .drawer > .drawer-navbar {
-    // nav
-    .drawer-nav {
-      // ul
-      .drawer-menu {
-        // li
-        .only_pc {
-          display: block;
-        }
-        // PC画面では非表示
-        .only_phone {
-          display: none;
-        }
-      }
-    }
+#logo {
+  // text-transform: uppercase;
+  font-size: 1.6em;
+  letter-spacing: 2px;
+  font-family: monospace;
+  color: #eaeaea;
+  &:hover {
+    text-decoration: none;
   }
-  // ドロワー閉じてる時
-  .drawer-close {
-    // li
-    .only_pc {
-      margin-right: 10px;
-    }
-  }
-  // 非表示
-  footer {
-    // 未ログイン
-    .not_signed_in {
-      ul {
-        // li
-        .only_phone {
-          display: none;
-        }
-      }
-    }
-    // ログイン後
-    .signed_in {
-      display: none;
+}
+
+// アイコンの色
+header .navbar {
+  z-index: 1050; // Offcanvas(1045)より手前に固定して×ボタンを押せるようにする
+  .nav-link {
+    color: lightgray; // PCでは
+    &.active {
+      color: yellowgreen;
     }
   }
 }
 
-@media (min-width: 1024px) {
-  .drawer-menu {
-    li > a {
-      color: lightgray;
+
+// サイドバー
+#offcanvasNavbar {
+  --bs-offcanvas-width: 70%;
+  top: 64px; // ヘッダーの高さ(60px)に合わせる
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  // スマホで開いた時の文字サイズと色
+  @media (max-width: 767.98px) {
+    .nav-link {
+      font-size: 1.3em; // スマホメニューの文字サイズ
+      color: #222;
+
+      &:hover {
+        color: #555;
+      }
     }
+  }
+}
+
+// 背景の暗転（オーバーレイ）もヘッダーの下から適用
+.offcanvas-backdrop {
+  top: 64px;
+}
+
+// ハンバーガーボタンのスタイル
+.custom-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+
+  &:focus {
+    box-shadow: none; // クリック時の青い枠線を消す
+  }
+}
+
+// 3本線のデザインとアニメーション速度
+.toggler-icon {
+  display: block;
+  width: 30px;
+  height: 3px; // 線の太さ
+  background-color: #fff;
+  margin: 6px 0; // 線と線の隙間
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+
+// ボタンを押した時（aria-expanded="true"）に×印へ変形
+.custom-toggler[aria-expanded="true"] {
+  .top-bar {
+    // 移動距離: 線の太さ(3px) + 隙間(6px)
+    transform: translateY(9px) rotate(45deg);
+  }
+  .middle-bar {
+    opacity: 0;
+  }
+  .bottom-bar {
+    transform: translateY(-9px) rotate(-45deg);
   }
 }

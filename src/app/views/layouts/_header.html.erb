@@ -1,80 +1,82 @@
-<%# Bootstrap 5にする時に、Offcanvasに変えてからここは書く %>
-<%# (drawer.js) これもいずれはstimulus化する %>
-<header role="banner"
-data-controller="drawer"
-class="bg-dark drawer drawer--right drawer-navbar drawer-navbar--fixed">
-  <div class="drawer-container">
-    <%# ヘッダー %>
-    <div class="drawer-navbar-header bg-dark">
+<header role="banner">
+  <%# ヘッダーは常に最前面（z-index: 1050）に固定 %>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
       <%# タイトル %>
-      <%= link_to "PK map", root_path, id: "logo", class: 'drawer-brand' %>
-      <button type="button" class="drawer-toggle drawer-hamburger">
-        <span class="sr-only">toggle navigation</span>
-        <span class="drawer-hamburger-icon"></span>
+      <%= link_to "PK map", root_path, id: "logo", class: 'navbar-brand h-100 fw-bold ms-4' %>
+
+      <%# 3本線から×印に変形するボタン（そのままの位置で変形） %>
+      <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="toggler-icon top-bar"></span>
+        <span class="toggler-icon middle-bar"></span>
+        <span class="toggler-icon bottom-bar"></span>
       </button>
+
+      <%# サイドバー （PCでは通常の横並びメニュー、スマホでは右スライドドロワーになる） %>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 align-items-md-center">
+            <% if user_signed_in? %>
+              <%# ========================================== %>
+              <%# ログイン時 PCのみ表示されるアイコン群 %>
+              <%# （d-none d-md-block でPCサイズ以上のみ表示） %>
+              <%# ========================================== %>
+              <%# ホーム %>
+              <li class="nav-item d-none d-md-block me-3">
+                <%= link_to root_path, class: "nav-link #{'active' if request.path == root_path}" do %>
+                  <i class="fa fa-home fa-lg"></i>
+                <% end %>
+              </li>
+              <%# 通知 %>
+              <li class="nav-item d-none d-md-block me-3">
+                <%= link_to notifications_path, class: "nav-link notice #{"active" if request.path == notifications_path}" do %>
+                  <i class="far fa-bell fa-lg">
+                    <%= render 'layouts/circle' %>
+                  </i>
+                <% end %>
+              </li>
+              <%# 投稿 %>
+              <li class="nav-item d-none d-md-block me-3">
+                <%= link_to new_post_path, class: "nav-link #{"active" if request.path == new_post_path}" do %>
+                <i class="fas fa-pencil-alt fa-lg"></i>
+              <% end %></li>
+              <%# マイページ %>
+              <li class="nav-item d-none d-md-block me-3">
+                <%= link_to current_user, class: "nav-link #{"active" if request.path == user_path(current_user)}" do %>
+                <i class="fas fa-user fa-lg"></i>
+                <% end %>
+              </li>
+
+              <%# 歯車ドロップダウン PCのみ表示 %>
+              <li class="nav-item dropdown d-none d-md-block">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-cog fa-lg"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                  <li><%= link_to "PKmapとは", about_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "ユーザー一覧", users_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "ログアウト", logout_path, class: "dropdown-item", data: { turbo: false } %></li>
+                </ul>
+              </li>
+
+              <%# スマホのみ表示 上記と重複... %>
+              <li class="nav-item d-md-none"><%= link_to "PKmapとは", about_path, class: "nav-link" %></li>
+              <li class="nav-item d-md-none"><%= link_to "ユーザー一覧", users_path, class: "nav-link" %></li>
+              <%# 'ログアウト'が重複していてrspecで引っかかった %>
+              <li class="nav-item d-md-none"><%= link_to "ログアウト", logout_path, class: "nav-link", data: { turbo: false } %></li>
+
+            <% else %>
+              <%# =================================== %>
+              <%# 未ログイン時 %>
+              <%# =================================== %>
+              <li class="nav-item"><%= link_to "ホーム", root_path, class: 'nav-link' %></li>
+              <li class="nav-item"><%= link_to "PKmapとは", about_path, class: 'nav-link' %></li>
+              <li class="nav-item"><%= link_to "新規登録", new_user_registration_path, class: 'nav-link' %></li>
+              <li class="nav-item"><%= link_to "ログイン", user_session_path, class: 'nav-link' %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
-
-    <%# サイドバー %>
-    <nav class="drawer-nav" role="navigation">
-      <ul class="drawer-menu drawer-menu--right">
-        <% if user_signed_in? %>
-          <%# ========================================== %>
-          <%# ログイン時：PCのみ表示されるアイコンリンク群（スマホでは非表示） %>
-          <%# ========================================== %>
-          <%# ホーム %>
-          <li class="only_pc">
-            <%= link_to root_path, class: "drawer-menu-item #{'active' if request.path == root_path}" do %>
-              <i class="fa fa-home fa-lg"></i>
-            <% end %>
-          </li>
-          <%# 通知 %>
-          <li class="only_pc">
-            <%= link_to notifications_path, class: "drawer-menu-item notice #{"active" if request.path == notifications_path}" do %>
-              <i class="far fa-bell fa-lg">
-                <%= render 'layouts/circle' %>
-              </i>
-            <% end %>
-          </li>
-          <%# 投稿 %>
-          <li class="only_pc">
-            <%= link_to new_post_path, class: "drawer-menu-item #{"active" if request.path == new_post_path}" do %>
-            <i class="fas fa-pencil-alt fa-lg"></i>
-          <% end %></li>
-          <%# マイページ %>
-          <li class="only_pc">
-            <%= link_to current_user, class: "drawer-menu-item #{"active" if request.path == user_path(current_user)}" do %>
-            <i class="fas fa-user fa-lg"></i>
-            <% end %>
-          </li>
-
-          <%# 歯車 <li>要素の重複を避けるため、bootstrapやめて、drawerのdropdownにした方がいいかも... %>
-          <li class="only_pc">
-            <a class="dropdown-toggle drawer-menu-item" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-cog fa-lg"></i>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <%= link_to "PKmapとは", about_path, class: "dropdown-item" %>
-              <%= link_to "ユーザー一覧", users_path, class: "dropdown-item" %>
-              <%= link_to "ログアウト", logout_path, class: "dropdown-item", data: { turbo: false } %>
-            </div>
-          </li>
-          <%# =================================== %>
-          <%# スマホのみ 上記と重複... %>
-          <li><%= link_to "PKmapとは", about_path, class: "drawer-menu-item only_phone" %></li>
-          <li><%= link_to "ユーザー一覧", users_path, class: "drawer-menu-item only_phone" %></li>
-          <%# 'ログアウト'が重複していてrspecで引っかかった %>
-          <li><%= link_to "ログアウト", logout_path, class: "drawer-menu-item only_phone", data: { turbo: false } %></li>
-
-        <% else %>
-          <%# =================================== %>
-          <%# 未ログイン時 %>
-          <%# =================================== %>
-          <li><%= link_to "ホーム", root_path, class: 'drawer-menu-item' %></li>
-          <li><%= link_to "PKmapとは", about_path, class: 'drawer-menu-item' %></li>
-          <li><%= link_to "新規登録", new_user_registration_path, class: 'drawer-menu-item' %></li>
-          <li><%= link_to "ログイン", user_session_path, class: 'drawer-menu-item' %></li>
-        <% end %>
-      </ul>
-    </nav>
-  </div>
+  </nav>
 </header>

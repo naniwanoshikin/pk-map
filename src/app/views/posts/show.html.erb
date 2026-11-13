@@ -7,21 +7,17 @@
 
       <div class="d-flex justify-content-between align-items-center mb-1">
         <%# 投稿ユーザー %>
-        <div class="user_post">
-          <%= link_to @post.user.name, @post.user %>
-        </div>
+        <%= link_to @post.user.name, @post.user, class: "text-reset text-decoration-none" %>
         <!-- 投稿削除 -->
         <% if current_user?(@post.user) %>
-          <div class="">
-              <%= link_to @post, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "投稿を削除しますか？" } do %>
-                <i class="fas fa-trash-alt fa-lg"></i>
-              <% end %>
-          </div>
+          <%= link_to @post, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "投稿を削除しますか？" } do %>
+            <i class="fas fa-trash-alt fa-lg"></i>
+          <% end %>
         <% end %>
       </div>
 
       <%# 地図 (map_show_controller.js) %>
-      <div id="map_show"
+      <div id="map_show" class="mx-auto rounded mb-2"
         data-controller="map-show"
         data-map-show-lat-value="<%= @post.latitude %>"
         data-map-show-lng-value="<%= @post.longitude %>"
@@ -29,14 +25,14 @@
         data-map-show-api-key-value="<%= ENV['GOOGLE_MAP_API'] %>"
       ></div>
 
-      <div class="post_state pl-4 my-4">
+      <div class="d-flex align-items-center ps-2 my-4">
         <%# 戻る %>
         <%= link_to :back do %>
           <i class="fas fa-long-arrow-alt-left fa-lg"></i>
         <% end %>
 
         <%# 情報 %>
-        <div class="ml-4">
+        <div class="ms-4">
           <div class="text-muted">
             <%= @post.content %>
           </div>
@@ -53,9 +49,9 @@
           <% end %>
         </div>
 
-        <div class="ml-5">
+        <div class="ms-2 me-2">
           <%
-            twitter_url = "http://twitter.com/share?text=#{u(@post.address)} について &hashtags=パルクール,pkmap&url=#{u(request.original_url)}&via=power_of_shikin"
+            twitter_url = "https://twitter.com/share?text=#{u(@post.address)} について &hashtags=パルクール,pkmap&url=#{u(request.original_url)}&via=power_of_shikin"
           %>
           <%= link_to twitter_url, title: "Twitter", target: "_blank", rel: "noopener" do %>
             <i class="fab fa-twitter fa-lg"></i>
@@ -64,16 +60,16 @@
       </div>
 
       <div class="show_reviews mb-4">
-        <h2 class="text-left mb-3 pl-2">レビューをしよう</h2>
-        <%# レビューフォーム %>
+        <h2 class="mb-3">レビューをしよう</h2>
+        <%# レビューフォーム ⭐︎⭐︎⭐︎⭐︎⭐︎ %>
         <% if user_signed_in? %>
           <%= render "reviews/form", review: @review %>
         <% end %>
 
+        <%# レビュー一覧 %>
         <div id="reviews">
           <% if @reviews.any? %>
-            <%# レビュー一覧 destroy_ajax %>
-            <ul id="reviews_list">
+            <ul id="reviews_list" class="list-unstyled px-2 mx-auto">
             <%# (reviews/_review) %>
               <%= render @reviews %>
             </ul>

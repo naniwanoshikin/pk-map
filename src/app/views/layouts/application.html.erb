@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <%# (helper) %>
     <title><%= full_title(yield(:title)) %></title>
     <%= render 'layouts/head_tags' %>
   </head>
-  <body class="drawer drawer--right drawer--navbarTopGutter">
+  <body>
     <%= render 'layouts/header' %>
     <div class="container">
-      <%# id: (review/_ajax) %>
-      <div id="flash_messages">
+      <div id="flash_messages" class="fixed-top mx-auto">
         <%= render 'layouts/flash' %>
       </div>
-      <main role="main">
+      <main>
         <%= yield %>
         <% if Rails.env.development? %>
           <%# 投稿失敗時のデバッグの余計な文字群も考慮 %>
-          <code class="debug_dump"><%= params.inspect.gsub("#<ActionController::Parameters ", "").gsub("permitted: false>", "") %></code>
+          <code class="debug_dump d-block mt-4 p-2 border border-3 border-secondary rounded"><%= params.inspect.gsub("#<ActionController::Parameters ", "").gsub("permitted: false>", "") %></code>
         <% end %>
       </main>
       <%= render 'layouts/footer' %>

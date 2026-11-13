@@ -1,5 +1,5 @@
 // ゲストログイン (home_pages/_home.html.erb)
-// Stimulus化する必要はなし
+// Stimulus化はなし
 
 // Rails7 Turboの送信開始イベントをグローバルに監視
 document.addEventListener('turbo:submit-start', (event) => {

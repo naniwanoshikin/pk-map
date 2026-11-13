@@ -4,7 +4,7 @@
 <li>
   <div class="f_inline d-flex">
     <%# 1. マークの表示 %>
-    <div class="action_mark mr-2">
+    <div class="action_mark me-2">
       <% case notification.action %>
       <% when 'follow' %>
         <i class="fas fa-user fa-lg"></i>
@@ -41,7 +41,7 @@
   </div>
 
   <%# 4. タイムスタンプ（右寄せ） %>
-  <div class="small text-muted text-right mr-2">
+  <div class="small text-muted text-end me-2">
     <%= time_ago_in_words(notification.created_at).upcase %>前
   </div>
 </li>

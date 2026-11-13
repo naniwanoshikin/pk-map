@@ -4,7 +4,7 @@
   <%# 高評価している場合 (Good 解除ボタン) %>
   <%= link_to good_path(current_user.goods.find_by(review: review)),
         data: { turbo_method: :delete },
-        class: 'link' do %>
+        class: '' do %>
     <i class="fas fa-thumbs-up fa-lg"></i>
   <% end %>
 
@@ -12,7 +12,7 @@
   <%# 高評価していない場合 %>
   <%= link_to goods_path(review: review),
         data: { turbo_method: :post },
-        class: 'link' do %>
+        class: '' do %>
     <i class="far fa-thumbs-up fa-lg"></i>
   <% end %>
 <% end %>
@@ -21,7 +21,7 @@
 <% if review.goods.present? %>
   <span class="ev_count">
     <%# (reviews/good_users) 高評価したユーザー一覧 %>
-    <%= link_to good_users_review_path(review) do %>
+    <%= link_to good_users_review_path(review), class: "text-muted" do %>
       <%= review.goods.size %>
     <% end %>
   </span>

@@ -1,22 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-
+  // (review/form)
   static targets = [
-    "triggerContainer", // ⭐︎⭐︎⭐︎⭐︎⭐︎ 開く前 div箱（トリガー）
-    "triggerStar", // ⭐︎⭐︎⭐︎⭐︎⭐︎ 開く前 span
+    "triggerContainer", // ⭐︎⭐︎⭐︎⭐︎⭐︎ モーダル開く前 div
+    "triggerStar", // ⭐︎⭐︎⭐︎⭐︎⭐︎ モーダル開く前 span
     "modalStar", // ⭐︎⭐︎⭐︎⭐︎⭐︎ くり抜き状態 span
     "hiddenScore", // ★★☆☆☆ f.hidden_field
-    "ratingValue", // '2' 評価の数値 span
-    "modal", // モーダル本体 id="exampleModal"
-    "form" // フォーム自体 #exampleModal
+    "ratingValue", // '2' 評価値 span
+    "modal", // モーダル開いた後 全体 id="exampleModal"
+    "form" // モーダル開いた後 form_with
   ]
 
   connect() {
-    // this.hiddenScoreTarget: document.getElementById("hidden_score")の代わり
+    // this.hiddenScoreTargetとは document.getElementById("hidden_score")の代わり 上記にTargetをつける
     this.selectedScore = Number(this.hiddenScoreTarget.value) || 0
     this.updateStars(this.selectedScore)
-    this.setupModalFocusFix()
   }
 
   // 1. モーダルを開く前の星をクリックした時
@@ -32,7 +31,7 @@ export default class extends Controller {
   }
 
   // 3. モーダル内の星からマウスが離れた時（確定済みの星数に戻す）
-  reset() {
+  resetPreview() {
     this.updateStars(this.selectedScore)
   }
 
@@ -56,44 +55,49 @@ export default class extends Controller {
     this.renderStars(this.triggerStarTargets, score)
   }
 
-  // 指定されたスコアまで塗りつぶす共通処理
+  // 共通処理: 指定されたスコアまで塗りつぶす
   renderStars(starElements, score) {
     starElements.forEach((star, index) => {
-      if (index < score) {
-        star.classList.remove("far")
-        star.classList.add("fas")
-      } else {
-        star.classList.add("far")
-        star.classList.remove("fas")
-      }
+      const isFilled = index < score
+        star.classList.toggle("fas", isFilled)
+        star.classList.remove("far", isFilled)
     })
   }
 
+  // Turboのフォーム送信完了時の処理 成功時のみreset
+  onSubmitEnd(event) {
+    if (!event.detail.success) return
 
-  // =======================================================
-  // ⭐︎⭐︎⭐︎⭐︎⭐︎ ブラウザのアクセシビリティ警告（aria-hidden）
-  // =======================================================
-  setupModalFocusFix() {
-    // このモーダル内部にて
-    // まだBootstrap 4 (jQueryあり) の間は $() 経由でイベントを拾う必要がある
-    if (window.jQuery) {
-      // 1. モーダルが閉じ始める瞬間 hide
-      window.jQuery(this.modalTarget).on("hide.bs.modal", () => {
-        // 現在ブラウザでフォーカスが当たっている要素([×]or[閉じる])があれば
-        const activeEl = document.activeElement
-        if (activeEl && this.modalTarget.contains(activeEl)) {
-          // フォーカスを解除
-          activeEl.blur()
-        }
-      })
-
-      // 2. モーダルが閉じ終わった瞬間 hidden
-      window.jQuery(this.modalTarget).on("hidden.bs.modal", () => {
-        if (this.hasTriggerContainerTarget) {
-          // 元の画面★★☆☆☆にフォーカスを戻す
-          this.triggerContainerTarget.focus()
-        }
-      })
+    this.formTarget.reset()
+    this.applyScore(0)
+    if (this.hasErrorsTarget) {
+      this.errorsTarget.innerHTML = ""
     }
-  };
+  }
+
+
+
+
+  // ============================================
+  // ブラウザのアクセシビリティ警告（aria-hidden）
+  // ============================================
+  // モーダル内部にて
+  // 1. モーダルが閉じ始める瞬間 hide
+  onModalHide() {
+    // 現在ブラウザでフォーカスが当たっている要素([×]or[閉じる])
+    const activeEl = document.activeElement
+    if (activeEl && this.modalTarget.contains(activeEl)) {
+      // フォーカスを解除
+      activeEl.blur()
+    }
+  }
+
+  // 2. モーダルが閉じ終わった瞬間 hidden
+  onModalHidden() {
+    // 開く前 data-star-review-target="triggerContainer"
+    if (this.hasTriggerContainerTarget) {
+      // 元の画面★★☆☆☆にフォーカスを戻す
+      this.triggerContainerTarget.focus()
+    }
+  }
 }
