@@ -1,7 +1,7 @@
 <%# ホーム画面 ログイン前 %>
-<div class="jumbotron text-center">
-  <h1 class="mb-2">外に出よう</h1>
-  <h2 class="">動ける場所は見つかる</h2>
+<div class="sotonideyo p-5 mb-4 px-3 rounded-3 text-center">
+  <h1 class="mb-2 mt-4">外に出よう</h1>
+  <h2 class="mb-5">動ける場所は見つかる</h2>
 
   <%# Registrations(C), guest_login.js %>
   <%= button_to "簡単ログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success w-auto", data: { guest_login_btn: true } %>
@@ -9,7 +9,7 @@
 
   <% if Rails.env.development? %>
     <div class="d-flex justify-content-center align-items-center">
-      <%= button_to "管理者ログイン", users_guest1_path, method: :post, class: "btn btn-danger w-auto mr-2" %>
+      <%= button_to "管理者ログイン", users_guest1_path, method: :post, class: "btn btn-danger w-auto me-2" %>
       <%= button_to "ログイン3", users_guest3_path, method: :post, class: "btn btn-warning w-auto" %>
     </div>
   <% end %>

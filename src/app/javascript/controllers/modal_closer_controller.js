@@ -1,27 +1,30 @@
 import { Controller } from "@hotwired/stimulus"
-// (reviews/create.turbo_stream.erb)_投稿成功時
+import { Modal } from "bootstrap"
+
 export default class extends Controller {
   connect() {
-    const modalId = this.element.dataset.modalId;
-    if (window.$ && modalId) {
-      // console.log('モーダルお片づけ')
+    // modalId: (reviews/create.turbo_stream.erb) 投稿成功時_#exampleModal (reviews/form) モーダル画面のこと
+    const modal = document.querySelector(this.element.dataset.modalId)
+    if (!modal) return
 
-      // モーダルを閉じる Bootstrapのお片付け命令
-      $(modalId).modal('hide'); // #exampleModal
-      // Bootstrap 4 の薄暗い背景を消去
-      $('.modal-backdrop').remove();
+    // console.log('モーダルお片づけ')
+    // 1. モーダルを閉じる（Bootstrap 5 標準API）
+    // 薄暗い背景も消去
+    Modal.getOrCreateInstance(modal).hide()
 
-      // フォームのリセット
-      // (reviews/form)_モーダル
-      $("textarea").val("");
-      // 星の見た目を未選択状態に
-      $(".fa-star").removeClass("fas").addClass("far");
-      // 星の値を評価0に
-      $("#rating_value").text("0");
-      // 隠しフォームの値(前回送信用の星の値)も空(0)に
-      $("#hidden_score").val("");
-      // 直前の失敗で出たエラーが、成功後モーダルを開いたとき残っていない様、エラーの箱の中身だけを空にする
-      $("#modal_errors").empty();
-    }
+    // 2. フォームの入力値・隠しフォームを一括リセット
+    modal.querySelector("form")?.reset()
+
+    // 3. ★★★★☆ ▶︎ ☆☆☆☆☆にリセット
+    modal.querySelectorAll(".fa-star").forEach(star => star.classList.replace("fas", "far"))
+    // 評価値を0にする
+    const rating = modal.querySelector("#rating_value")
+    if (rating) rating.textContent = "0"
+    // 直前の失敗で出たエラーが、成功後モーダルを開いたとき残っていない様、エラーの箱の中身だけを空にする
+    const errors = modal.querySelector("#modal_errors")
+    if (errors) errors.innerHTML = ""
+
+    // 4. 役目を終えた自分自身（空のdiv）をDOMから削除して綺麗に保つ
+    this.element.remove()
   }
 }

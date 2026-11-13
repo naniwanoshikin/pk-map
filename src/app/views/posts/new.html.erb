@@ -1,4 +1,4 @@
-<% provide(:title, "Spot_Post") %>
+<% provide(:title, "スポット投稿") %>
 <h2>どんなスポット？</h2>
 
 <div class="container">
@@ -10,7 +10,7 @@
           <%#= render 'shared/error_messages', object: @post %>
 
           <%# 1. スポット名（テキストフィールド） %>
-          <div class="form-group mb-3">
+          <div class="mb-3">
             <%= f.label :address, 'スポット名', class: "form-label #{@post.errors[:address].any? ? 'fw-bolder text-danger' : 'fw-bold'}" %>
             <small class="text-danger fw-normal">＊必須</small>
             <br>
@@ -18,33 +18,37 @@
           </div>
 
           <%# 2. スポットの質（ラジオボタン） %>
-          <div class="form-group mb-3">
+          <div class="mb-3">
             <%= f.label :spot_quality, 'スポットの質', class: "form-label #{@post.errors[:spot_quality].any? ? 'fw-bolder text-danger' : 'fw-bold'}" %>
             <small class="text-danger fw-normal">＊必須</small>
             <br>
             <% %w(良い 普通 悪い).each do |spot| %>
-              <%= f.radio_button :spot_quality, spot %>
-              <%= f.label :spot_quality, spot, value: spot, class: "form-check-label me-2" %>
+              <div class="form-check form-check-inline">
+                <%= f.radio_button :spot_quality, spot, class: "form-check-input" %>
+                <%= f.label :spot_quality, spot, value: spot, class: "form-check-label" %>
+              </div>
             <% end %>
           </div>
 
           <%# 3. タイプ（チェックボックス） %>
-          <div class="form-group mb-3">
+          <div class="mb-3">
             <%= f.label :spot_type, 'タイプ', class: "fw-bold form-label" %>
             <br>
             <% %w(公園 スロープ 鉄棒).each do |spot| %>
-              <%= f.check_box :spot_type, { multiple: true }, spot, false %>
-              <%= f.label :spot_type, spot, value: spot, class: "form-check-label me-3" %>
+              <div class="form-check form-check-inline">
+                <%= f.check_box :spot_type, { multiple: true, class: "form-check-input" }, spot, false %>
+                <%= f.label :spot_type, spot, value: spot, class: "form-check-label" %>
+              </div>
             <% end %>
           </div>
 
           <%# 4. テキストエリア %>
-          <div class="form-group mb-3">
+          <div class="mb-3">
             <%= f.label :content, 'スポット詳細' %>
-            <%= f.text_area :content, placeholder: "鉄棒がきれい", class: "form-control" %>
+            <%= f.text_area :content, placeholder: "鉄棒がきれい", class: "form-control mb-2" %>
           </div>
 
-          <div class="form-group mt-3 text-center">
+          <div class="mt-4 text-center">
             <%= f.submit "投稿", class: "btn btn-primary w-100" %>
           </div>
         <% end %>

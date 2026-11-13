@@ -7,11 +7,14 @@ export default class extends Controller {
     this.initFlash()
   }
 
-  // このHTML要素が画面から消える瞬間に自動実行（タイマーの漏れ防止）
+  // HTML要素が画面から消える瞬間に自動実行（タイマーの漏れ防止）
   disconnect() {
     if (this.autoDeleteTimer) {
       clearTimeout(this.autoDeleteTimer)
       // console.log('clearTimeout');
+    }
+    if (this.fadeOutTimer) {
+      clearTimeout(this.fadeOutTimer)
     }
   }
 
@@ -29,22 +32,21 @@ export default class extends Controller {
       flash.classList.add('hidden_up'); // CSS 上がる
     }, 7000);
 
-    // [x] 閉じるボタン
-    const close = flash.querySelector('.close');
-    if (close) {
-      // [x]を押したとき
-      close.addEventListener('click', () => {
-        console.log("stimulus [x]が押されました");
-        flash.classList.add('hidden_out'); // CSS 消える
-        clearTimeout(this.autoDeleteTimer); // 7秒タイマーをキャンセル
+  }
 
-        setTimeout(() => {
-          if (flash.classList.contains('hidden_out')) {
-            // console.log("0.5秒後にメッセージ削除");
-            flash.style.display = "none"; // CSSよりも優先される
-          }
-        }, 500); // CSSのアニメーション時間に合わせる
-      }, { once: true }); // 1回だけ実行
-    }
+  // [×] ボタンが押されたときに実行（data-action="click->flash-behavior#close"）
+  close() {
+    const flash = this.element;
+    // [x]を押したとき
+    console.log("stimulus [x]が押されました");
+    flash.classList.add('hidden_out'); // CSS 消える
+    clearTimeout(this.autoDeleteTimer); // タイマーをキャンセル
+
+    this.fadeOutTimer = setTimeout(() => {
+      if (flash.classList.contains('hidden_out')) {
+        // console.log("0.5秒後にメッセージ削除");
+        flash.style.display = "none"; // CSSよりも優先される
+      }
+    }, 500); // CSSのアニメーション時間に合わせる
   }
 }

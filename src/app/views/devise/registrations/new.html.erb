@@ -8,38 +8,40 @@
         <%= render "devise/shared/error_messages", resource: resource %>
 
         <%# 名前 %>
-        <div class="form-group">
-          <%= f.label :name %><br />
+        <div class="mb-3">
+          <%= f.label :name, class: "form-label" %>
           <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
         </div>
 
         <%# Eメール %>
-        <div class="form-group">
-          <%= f.label :email %><br />
+        <div class="mb-3">
+          <%= f.label :email, class: "form-label" %>
           <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
         </div>
 
         <%# 住所 %>
-        <div class="form-group">
-          <%= f.label :address %><br />
+        <div class="mb-3">
+          <%= f.label :address, class: "form-label" %>
           <%= f.text_field :address, autocomplete: "address", class: 'form-control' %>
         </div>
 
-        <div class="form-group">
-          <%= f.label :password %>
+        <%# パスワード %>
+        <div class="mb-3">
+          <%= f.label :password, class: "form-label" %>
           <%# (config/initializers/devise.rb) %>
           <% if @minimum_password_length %>
-          <em><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em>
-          <% end %><br />
+          <em class="text-muted small"><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em>
+          <% end %>
           <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
         </div>
 
-        <div class="form-group">
-          <%= f.label :password_confirmation %><br />
+        <%# パスワード確認用 %>
+        <div class="mb-3">
+          <%= f.label :password_confirmation, class: "form-label" %>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
         </div>
 
-        <div>
+        <div class="mb-3">
           <%= f.submit t('.sign_up'), class: "btn btn-primary" %>
         </div>
       <% end %>

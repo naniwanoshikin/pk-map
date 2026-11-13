@@ -4,9 +4,6 @@
 
 import { application } from "./application"
 
-import DrawerController from "./drawer_controller"
-application.register("drawer", DrawerController)
-
 import FlashBehaviorController from "./flash_behavior_controller"
 application.register("flash-behavior", FlashBehaviorController)
 
@@ -21,3 +18,6 @@ application.register("map-show", MapShowController)
 
 import ModalCloserController from "./modal_closer_controller"
 application.register("modal-closer", ModalCloserController)
+
+import StarReviewController from "./star_review_controller"
+application.register("star-review", StarReviewController)

@@ -10,13 +10,13 @@
       <%# 評価 %>
       <div class="average_score d-flex align-items-center mt-1">
         <%# ★★☆☆☆ %>
-        <div class="star_rating mr-2">
+        <div class="star_rating me-1">
           <div class="star_back">★★★★★</div>
           <div class="star_front" style="width: <%= post.review_score_percentage %>%;">★★★★★</div>
         </div>
         <%# 平均点 %>
         <div class="small text-muted">
-          <span class="text-dark mr-0"><%= post.avg_score %></span>
+          <span class="text-dark me-0"><%= post.avg_score %></span>
           <span>(<%= post.reviews.size %>)</span>
         </div>
       </div>
@@ -37,7 +37,7 @@
       <%= link_to gravatar_for(post.user, size: 30), post.user %>
     </div>
     <%# 3分前 %>
-    <div class="timestamp">
+    <div class="timestamp ms-auto">
       <%= time_ago_in_words(post.created_at) %>前
     </div>
   </footer>

@@ -1,38 +1,38 @@
 <footer>
   <% if user_signed_in? %>
     <%# スマホのみ下端固定 %>
-    <div class="signed_in">
-      <ul>
-        <li>
-          <%= link_to root_path, class: ("active" if request.path == root_path) do %>
+    <div class="signed_in fixed-bottom d-md-none">
+      <ul class="d-flex h-100 align-items-center list-unstyled mb-0">
+        <li class="flex-fill text-center">
+          <%= link_to root_path, class: class_names(active: current_page?(root_path)) do %>
             <i class="fa fa-home fa-2x"></i>
           <% end %>
         </li>
         <%# 通知 %>
-        <li>
-          <%= link_to notifications_path, class: "notice #{"active" if request.path == notifications_path}" do %>
+        <li class="flex-fill text-center">
+          <%= link_to notifications_path, class: class_names("notice", active: current_page?(notifications_path)) do %>
             <i class="far fa-bell fa-2x">
               <%= render 'layouts/circle' %>
             </i>
           <% end %>
         </li>
         <%# 新規投稿 %>
-        <li>
-          <%= link_to new_post_path, class: ("active" if request.path == new_post_path) do %>
+        <li class="flex-fill text-center">
+          <%= link_to new_post_path, class: class_names(active: current_page?(new_post_path)) do %>
             <i class="fas fa-pencil-alt fa-2x"></i>
           <% end %>
         </li>
-        <li>
-          <%= link_to current_user, class: ("active" if request.path == user_path(current_user)) do %>
+        <li class="flex-fill text-center">
+          <%= link_to current_user, class: class_names(active: current_page?(user_path(current_user))) do %>
             <i class="fas fa-user fa-2x"></i>
           <% end %>
         </li>
       </ul>
     </div>
   <% else %>
-    <div class="not_signed_in">
+    <div class="d-flex justify-content-end align-items-center border-top mt-4 pt-2 pb-5">
       <nav>
-        <ul>
+        <ul class="list-unstyled d-flex gap-3 mb-0">
           <% if Rails.env.development? %>
             <li>
               <%= link_to "Help", help_path %>
@@ -41,7 +41,7 @@
               <%= link_to "Contact", contact_path %>
             </li>
           <% end %>
-          <li class="only_phone">
+          <li class="d-md-none">
             <%= link_to "Home", root_path %>
           </li>
           <li>

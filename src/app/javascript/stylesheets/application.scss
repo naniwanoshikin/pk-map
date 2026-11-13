@@ -1,16 +1,12 @@
-/* bootstrap */
 
-/* ====================================================
-   1.【最上部】全ての外部ライブラリ & サブファイルの読み込み（@use と @forward）
-   ==================================================== */
-// Bootstrapを全サブファイルに安全に転送（forward）し、ここでも利用できるようにする
-@forward "bootstrap/scss/bootstrap";
+/* =====================================
+   1.ファイルの読み込み 最上部でまとめて読み込む
+   ===================================== */
 @use "bootstrap/scss/bootstrap";
 
-// サブファイル（../../assets/stylesheets/） 最上部でまとめて読み込むルール
+// サブファイル（../../assets/stylesheets/）
 @use "../../assets/stylesheets/custom";
 @use "../../assets/stylesheets/form";
-@use "../../assets/stylesheets/goods";
 @use "../../assets/stylesheets/home_pages";
 @use "../../assets/stylesheets/loading";
 @use "../../assets/stylesheets/notifications";
@@ -49,18 +45,16 @@ p {
 }
 
 // (home/ログイン前)
-.jumbotron {
+.sotonideyo {
   // Sprockets では image-url('mie.JPG')
   background: center/cover url("../images/mie.JPG") rgba(255, 255, 255, 0.7); // webpack
   background-blend-mode: lighten;
   height: 55vh;
   margin-top: 10px;
   h1 {
-    font-family: "Yu Gothic", "游ゴシック";
-    margin-top: 30px;
-  }
-  h2 {
-    margin-bottom: 50px;
+    // font-family: "Yu Gothic", "游ゴシック";
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 600;
   }
 }
 

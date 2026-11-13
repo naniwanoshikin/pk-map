@@ -37,9 +37,9 @@
 
 ## 使用技術
 ### フロントエンド
-* HTML/CSS/Sass
 <!-- * Slim -->
-* Bootstrap 4.6.1
+* HTML/CSS/Sass
+* Bootstrap 5.3.8
 * **スクリプト**: JavaScript / jQuery 3.6.0
 * **フレームワーク**: Stimulus
 * **ビルドツール**: webpack
@@ -53,7 +53,7 @@
 ### バックエンド
 * **言語**: Ruby 3.3.13
 * **フレームワーク**: Ruby on Rails 7.2.4
-* **認証**: Devise
+* **認証**: Devise (5.0.4)
 * **テスト**: RSpec 6.1.5
     <!-- * System spec -->
     <!-- * Request spec -->
@@ -72,13 +72,13 @@
   <!-- * Adobe Fresco -->
 
 ## 今後の課題
-* 非推奨警告の修正
-* Bootstrap5 へ上げる
 * jQuery 廃止
+* 非推奨警告の修正
 
 |  | 旧 | 今ここ | 将来 |
 | :--- | :--- | :--- | :--- |
-| **Ruby** | 3.1.6 | 3.3.13 | -  |
+| **Ruby** | 3.1.6 | **3.3.13** | 3.4  |
 | **Rails** | 6.1.4 | **7.2.4** | 8.0 |
+| **Bootstrap** | 4.6.1 | **5.3.8** | - |
 | **本番環境** | heroku | Render | AWS (ECS)  |
 <!-- | **Rspec** | 3.10 | 6.1.5 | 7.x  | -->

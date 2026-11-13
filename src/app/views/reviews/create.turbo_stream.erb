@@ -27,7 +27,7 @@
   <%# 2. フラッシュメッセージを表示 %>
   <%= turbo_stream.update "flash_messages" do %>
     <%= render 'layouts/flash' %>
-    <%# モーダル内のお片付け Stimulus (modal_closer_controller.js) %>
+    <%# モーダル内のお片付け Stimulus %>
     <div data-controller="modal-closer" data-modal-id="#exampleModal"></div>
   <% end %>
 

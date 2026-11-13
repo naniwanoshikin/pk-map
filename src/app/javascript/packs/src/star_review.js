@@ -1,15 +1,15 @@
 // (★★☆☆☆) を操作 (reviews/form)
 const initStarReview = () => {
-  // ★★☆☆☆ モーダル開く前
+  // ★★☆☆☆ div モーダル開く前
   const btnRatingsContainer = document.getElementById('openModalBtn');
-  // ★★☆☆☆ モーダル開いた後 フォーム
+  // ★★☆☆☆ div モーダル開いた後 くり抜き状態
   const ratingsContainer = document.querySelector('.ratings');
-  // 現在のページに無いなら処理終了
+
   if (!btnRatingsContainer || !ratingsContainer) return;
 
-  // ★★☆☆☆ モーダル開く前
+  // ★★☆☆☆ モーダル開く前 span
   const btn_stars = btnRatingsContainer.querySelectorAll('.star_trigger');
-  // ★★☆☆☆ モーダル開いた後
+  // ★★☆☆☆ モーダル開いた後 span
   const stars = ratingsContainer.children;
 
   // '2'/5 hidden_field ▶︎ Reviews(C)
