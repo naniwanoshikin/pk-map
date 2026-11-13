@@ -28,7 +28,6 @@
     // ユーザー名
     .user {
       margin-top: 5em;
-      padding-top: 0;
     }
     .text-truncate-1 {
       @include keep_single_line;
@@ -36,7 +35,6 @@
   }
   main {
     margin-bottom: 20px; // ⇄ (layouts/footer)
-    // height: 240px; // ずれをなくすため仮設定
     // <a>
     .link {
       color: inherit;
@@ -77,40 +75,23 @@
     }
     .timestamp {
       color: gray;
-      margin-left: auto; // 右寄せ
     }
   }
 }
 
 // (posts/show)
 .posts_show {
-  .user_post > a {
-    color: inherit;
-  }
   // 地図
   #map_show {
     max-width: 700px;
     height: 300px;
-    margin: 0 auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  .post_state {
-    display: flex;
-    align-items: center;
   }
 }
 
 // (post/new)
 .post_form {
-  input[type="radio"] {
-    max-width: 30px;
-  }
+  input[type="radio"],
   input[type="checkbox"] {
     max-width: 30px;
-  }
-  textarea {
-    // height: 80px;
-    margin-bottom: 10px;
   }
 }

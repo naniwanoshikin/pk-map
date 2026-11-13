@@ -57,12 +57,11 @@ module.exports = {
   plugins: [
     new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin({ filename: "[name].css" }),
-    // 💡 jQuery / Bootstrap 4 を動作させるための自動インポート設定
+    // 💡 jQuery を動作させるための自動インポート設定（脱jQuery完了後に削除）
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
-      Popper: ["popper.js", "default"]
     })
   ],
   cache: {

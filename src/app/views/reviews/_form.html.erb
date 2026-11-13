@@ -1,16 +1,20 @@
 <%# (posts/show) %>
 <%# stimulus (star_review.js) 全体を囲む %>
-<div data-controller="star-review">
+<div data-controller="star-review" class="mb-4">
 
   <%# モーダル開く前 %>
-  <div id="openModalBtn" class="btn_ratings d-flex justify-content-between py-2" tabindex="0">
+  <div id="openModalBtn"
+      class="btn_ratings d-flex justify-content-between py-2"
+      tabindex="0"
+      <%# stimulus用 %>
+      data-star-review-target="triggerContainer">
     <%# ⭐︎⭐︎⭐︎⭐︎⭐︎ (モーダル起動トリガーを付与 ▶︎ クリックした星の数がモーダル内に引継ぎ) %>
     <% (1..5).each do |i| %>
       <span class="star_trigger far fa-star fa-2x"
             data-score="<%= i %>"
-            data-toggle="modal"
-            data-target="#exampleModal"
-            <%# stimulus用 追記 %>
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            <%# stimulus用 %>
             data-star-review-target="triggerStar"
             data-action="click->star-review#selectFromOutside">
       </span>
@@ -18,18 +22,24 @@
   </div>
 
   <%# モーダル画面 開いた後 %>
-  <div id="exampleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div id="exampleModal"
+        class="modal fade"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        <%# stimulus %>
+        data-star-review-target="modal"
+        data-action="hide.bs.modal->star-review#onModalHide hidden.bs.modal->star-review#onModalHidden"
+        >
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 id="exampleModalLabel" class="modal-title">
             <%= @post.address %>
           </h5>
 
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <%# × %>
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <%# [×]ボタン %>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div id="modal_errors">
@@ -37,37 +47,38 @@
               <%= render 'shared/error_messages', object: review %>
             <% end %>
           </div>
-          <%# Turbo %>
+
           <div class="rating-box">
-            <%= form_with model: review, url: post_reviews_path(@post) do |f| %>
-              <div class="form-group main-rating">
-                <div class="ratings mr-2">
+          <%# Turbo %>
+            <%= form_with model: review, url: post_reviews_path(@post), data: { star_review_target: "form" } do |f| %>
+              <div class="main-rating mb-3">
+                <div class="ratings me-2">
                   <%# ⭐︎⭐︎⭐︎⭐︎⭐︎ くり抜き状態 %>
                   <% (1..5).each do |i| %>
                     <span class="star far fa-star"
                           data-value="<%= i %>"
-                          <%# stimulus用に追記 %>
+                          <%# stimulus用 %>
                           data-star-review-target="modalStar"
                           data-action="mouseover->star-review#hover mouseout->star-review#reset click->star-review#selectInside">
                     </span>
                   <% end %>
                 </div>
                 <div class="rating_value_display">
-                  <span id="rating_value">0</span>/5
+                  <span id="rating_value" data-star-review-target="ratingValue">0</span>/5
                 </div>
               </div>
               <%# → Reviews(C) post_id に入る %>
               <%= f.hidden_field :post_id, value: @post.id %>
 
               <%# 星の個数 js %>
-              <%= f.hidden_field :score, id: "hidden_score" %>
+              <%= f.hidden_field :score, id: "hidden_score", data: { star_review_target: "hiddenScore" } %>
 
-              <div class="form-group">
+              <div class="mb-3">
                 <%= f.text_area :content, id: "review_content_textarea", placeholder: "動きやすかった", class: "form-control" %>
               </div>
 
               <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" id="submitReviewBtn" data-dismiss="modal">
+                <button class="btn btn-secondary" type="button" id="submitReviewBtn" data-bs-dismiss="modal">
                   閉じる
                 </button>
                 <%= f.submit "投稿", class: "btn btn-primary" %>

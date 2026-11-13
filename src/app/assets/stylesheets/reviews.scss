@@ -1,8 +1,5 @@
 // (posts/show)
 #reviews > ul {
-  list-style: none;
-  padding: 0 10px;
-  margin: 0 auto;
   max-width: 600px;
   // (reviews/review)
   li {
@@ -10,17 +7,6 @@
     border-top: 1px dotted #8c8b8b;
     .user_score > a:hover {
       text-decoration: none;
-    }
-    // レビュー文
-    .review_content {
-      p {
-        margin: 0;
-        font-size: 1em;
-        color: black;
-        &:hover {
-          text-decoration: none;
-        }
-      }
     }
   }
 }
@@ -31,9 +17,37 @@
   strong > a,
   .review_number > a {
     color: inherit;
+    text-decoration: none;
     font-size: 0.9em;
   }
 }
+
+// (reviews/review)
+// [Good/Bad]ボタン 親要素
+.ev_btn {
+  width: 25%;
+  // (goods/good, bads/bad)
+  a {
+    text-decoration: none;
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+  // 評価アイコン
+  .fa-thumbs-up,
+  .fa-thumbs-down {
+    color: #6699ff;
+  }
+  // 評価数
+  .ev_count {
+    font-size: 16px;
+    margin-left: 8px;
+    color: gray;
+  }
+}
+
 
 // 共通 (posts/show, /post)
 // ★★☆☆☆

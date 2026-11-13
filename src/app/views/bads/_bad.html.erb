@@ -4,7 +4,7 @@
   <%# 低評価している場合 (解除ボタン) %>
   <%= link_to bad_path(current_user.bads.find_by(review: review)),
         data: { turbo_method: :delete },
-        class: 'link' do %>
+        class: '' do %>
     <i class="fas fa-thumbs-down fa-lg"></i>
   <% end %>
 
@@ -12,7 +12,7 @@
   <%# 低評価していない場合 %>
   <%= link_to bads_path(review: review),
         data: { turbo_method: :post },
-        class: 'link' do %>
+        class: '' do %>
     <i class="far fa-thumbs-down fa-lg"></i>
   <% end %>
 <% end %>

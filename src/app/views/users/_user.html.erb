@@ -20,7 +20,7 @@
 
   <%# [follow]ボタン Relationship(M) sharedへ (文脈が違う) 自身は表示しない %>
   <% if user_signed_in? && !current_user?(user) %>
-    <div class="profile_follow mt-2 ml-2">
+    <div class="profile_follow mt-2 ms-2">
       <%= render 'follow_form', user: user %>
     </div>
   <% end %>
