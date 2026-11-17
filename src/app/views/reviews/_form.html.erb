@@ -6,7 +6,7 @@
   <div id="openModalBtn"
       class="btn_ratings d-flex justify-content-between py-2"
       tabindex="0"
-      <%# stimulus用 %>
+      <%# stimulus %>
       data-star-review-target="triggerContainer">
     <%# ⭐︎⭐︎⭐︎⭐︎⭐︎ (モーダル起動トリガーを付与 ▶︎ クリックした星の数がモーダル内に引継ぎ) %>
     <% (1..5).each do |i| %>
@@ -14,7 +14,7 @@
             data-score="<%= i %>"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
-            <%# stimulus用 %>
+            <%# stimulus %>
             data-star-review-target="triggerStar"
             data-action="click->star-review#selectFromOutside">
       </span>
@@ -37,19 +37,18 @@
           <h5 id="exampleModalLabel" class="modal-title">
             <%= @post.address %>
           </h5>
-
           <%# [×]ボタン %>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
-          <div id="modal_errors">
+          <div id="modal_errors" data-star-review-target="errors">
             <% if user_signed_in? && defined?(review) && review.errors.any? %>
               <%= render 'shared/error_messages', object: review %>
             <% end %>
           </div>
 
           <div class="rating-box">
-          <%# Turbo %>
             <%= form_with model: review, url: post_reviews_path(@post), data: { star_review_target: "form" } do |f| %>
               <div class="main-rating mb-3">
                 <div class="ratings me-2">
@@ -59,7 +58,7 @@
                           data-value="<%= i %>"
                           <%# stimulus用 %>
                           data-star-review-target="modalStar"
-                          data-action="mouseover->star-review#hover mouseout->star-review#reset click->star-review#selectInside">
+                          data-action="mouseover->star-review#hover mouseout->star-review#resetPreview click->star-review#selectInside">
                     </span>
                   <% end %>
                 </div>
@@ -70,11 +69,11 @@
               <%# → Reviews(C) post_id に入る %>
               <%= f.hidden_field :post_id, value: @post.id %>
 
-              <%# 星の個数 js %>
+              <%# 星の個数 %>
               <%= f.hidden_field :score, id: "hidden_score", data: { star_review_target: "hiddenScore" } %>
 
               <div class="mb-3">
-                <%= f.text_area :content, id: "review_content_textarea", placeholder: "動きやすかった", class: "form-control" %>
+                <%= f.text_area :content, id: "review_content_textarea", placeholder: "動きやすい", class: "form-control" %>
               </div>
 
               <div class="modal-footer">

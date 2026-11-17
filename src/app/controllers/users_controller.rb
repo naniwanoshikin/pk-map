@@ -25,19 +25,19 @@ class UsersController < ApplicationController
   def following
     @title = "フォロー中"
     # @user
-    @users = @user.following.page(params[:page]).per(10)
+    @users = @user.following.page(params[:page]).per(7)
     render 'show_follow'
   end
   def followers
     @title = "フォロワー"
     # @user
-    @users = @user.followers.page(params[:page]).per(10)
+    @users = @user.followers.page(params[:page]).per(7)
     render 'show_follow'
   end
 
   # ユーザー一覧
   def index
-    @users = User.page(params[:page]).per(10)
+    @users = User.page(params[:page]).per(12)
   end
 
   # ユーザー削除 管理者のみ

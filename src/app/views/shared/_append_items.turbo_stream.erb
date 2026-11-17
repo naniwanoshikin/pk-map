@@ -1,0 +1,11 @@
+<%# (users/index.turbo_stream, users/show_follow.turbo_stream, users/show.turbo_stream, users/show_reviews.turbo_stream) %>
+
+<%# ul (list_id) の末尾に、新しい li (items) を追加 %>
+<%= turbo_stream.append list_id do %>
+  <%= render items %>
+<% end %>
+
+<%# ボタンエリアを、次のページのボタンで置換 %>
+<%= turbo_stream.update "view_more_container" do %>
+  <%= render 'shared/view_more_button', items: items %>
+<% end %>

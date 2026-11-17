@@ -1,0 +1,26 @@
+<%# (/show, /show_reviews) %>
+<%# プロフィール サイド %>
+<aside class="col-md-5">
+  <%# ユーザー情報 %>
+  <section class="mt-3">
+    <%= render 'shared/user_info', user: @user %>
+  </section>
+
+  <%# 統計情報 %>
+  <section class="mt-0">
+    <%= render 'shared/stats', user: @user %>
+  </section>
+
+  <%# ボタン %>
+  <% if current_user?(@user) %>
+    <%# プロフィール編集 %>
+    <section class="profile_edit">
+      <%= link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-outline-secondary w-100" %>
+    </section>
+  <% else %>
+    <%# [follow] ボタン %>
+    <section class="profile_follow">
+      <%= render 'follow_form', user: @user if user_signed_in? %>
+    </section>
+  <% end %>
+</aside>

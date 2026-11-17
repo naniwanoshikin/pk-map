@@ -1,7 +1,8 @@
 <%# (home_pages/home_login) %>
 
 <% if @feed_items.any? %>
-  <div id="home_feed">
+  <%# 非同期処理 = Fetch API %>
+  <%= turbo_frame_tag "home_feed" do %>
     <div class="posts">
       <%= render @feed_items %>
       <%# (posts/_post) %>
@@ -9,7 +10,7 @@
     <%= paginate @feed_items,
       params: { controller: :home_pages, action: :home }
     %>
-  </div>
+  <% end %>
 <% else %>
   <h2 class="mt-5">あなたの知るスポット情報を投稿したり、<br>ユーザーをフォローしましょう</h2>
   <div class="text-center">

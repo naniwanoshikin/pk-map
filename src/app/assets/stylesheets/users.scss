@@ -73,7 +73,7 @@ aside {
 }
 
 // (users/index)
-.users_index {
+#users_list {
   list-style: none;
   margin: 0;
   padding: 0 10px;
@@ -87,15 +87,4 @@ aside {
   font-size: 1.0em;
 }
 
-// (フォロー/フォロワー一覧)
-.user_avatars {
-  overflow: auto;
-  margin-top: 15px;
-  margin-left: 5px;
-  .gravatar {
-    margin: 1px 1px;
-  }
-  a {
-    padding: 0;
-  }
-}
+

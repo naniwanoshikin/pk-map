@@ -10,13 +10,13 @@
           <%= render @notifications %>
         </ul>
 
-        <%# ボタンエリア ajax %>
+        <%# ボタンエリア %>
         <div id="view_more_container" class="text-center mt-4">
-          <%= render 'view_more_button', notifications: @notifications %>
+          <%= render 'shared/view_more_button', items: @notifications %>
         </div>
 
       <% else %>
-        <h2>通知はまだありません</h2>
+        <p class="text-muted text-center">通知はまだありません</p>
       <% end %>
     </div>
   </div>

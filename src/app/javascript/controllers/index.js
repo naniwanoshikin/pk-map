@@ -7,9 +7,6 @@ import { application } from "./application"
 import FlashBehaviorController from "./flash_behavior_controller"
 application.register("flash-behavior", FlashBehaviorController)
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
-
 import MapHomeController from "./map_home_controller"
 application.register("map-home", MapHomeController)
 

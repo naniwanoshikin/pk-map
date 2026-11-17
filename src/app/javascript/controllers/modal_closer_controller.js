@@ -2,29 +2,21 @@ import { Controller } from "@hotwired/stimulus"
 import { Modal } from "bootstrap"
 
 export default class extends Controller {
+  // (turbo_cleanup.js) とやっていることは同じ
+  // 違い1: タイミング (reviews/create.turbo_stream.erb)_レビュー成功時に実行
+  // 違い2: 閉じ方 ふわっとアニメーション付きで閉じる
   connect() {
-    // modalId: (reviews/create.turbo_stream.erb) 投稿成功時_#exampleModal (reviews/form) モーダル画面のこと
+    // this.element: <div data-controller="modal-closer" data-modal-id="#exampleModal"></div>のこと
+    // modalId: #exampleModalのこと ▶︎ (reviews/form)_モーダル内の大元のこと
     const modal = document.querySelector(this.element.dataset.modalId)
-    if (!modal) return
+    if (modal) {
+      // console.log('turbo_streamでモーダルを閉じた')
+      // モーダル本体や薄暗い背景やスクロール固定を一括で解除
+      // hide(): 同じページにいるまま閉じる時に使える
+      Modal.getOrCreateInstance(modal).hide()
+    }
 
-    // console.log('モーダルお片づけ')
-    // 1. モーダルを閉じる（Bootstrap 5 標準API）
-    // 薄暗い背景も消去
-    Modal.getOrCreateInstance(modal).hide()
-
-    // 2. フォームの入力値・隠しフォームを一括リセット
-    modal.querySelector("form")?.reset()
-
-    // 3. ★★★★☆ ▶︎ ☆☆☆☆☆にリセット
-    modal.querySelectorAll(".fa-star").forEach(star => star.classList.replace("fas", "far"))
-    // 評価値を0にする
-    const rating = modal.querySelector("#rating_value")
-    if (rating) rating.textContent = "0"
-    // 直前の失敗で出たエラーが、成功後モーダルを開いたとき残っていない様、エラーの箱の中身だけを空にする
-    const errors = modal.querySelector("#modal_errors")
-    if (errors) errors.innerHTML = ""
-
-    // 4. 役目を終えた自分自身（空のdiv）をDOMから削除して綺麗に保つ
+    // 役目を終えた自分自身をDOMから削除（使い捨ての指令役）
     this.element.remove()
   }
 }

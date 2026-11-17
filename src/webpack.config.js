@@ -1,5 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 
@@ -57,12 +56,6 @@ module.exports = {
   plugins: [
     new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin({ filename: "[name].css" }),
-    // 💡 jQuery を動作させるための自動インポート設定（脱jQuery完了後に削除）
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
-    })
   ],
   cache: {
     type: 'filesystem', // 旧 hard-source-webpack-plugin の代わりとなる高速キャッシュ
