@@ -3,10 +3,14 @@
 
 <h2>ユーザー一覧</h2>
 
-<div id="users_index">
-  <ul class="users_index">
+<div>
+  <ul id="users_list">
     <%= render @users %>
     <%# (users/_user) %>
   </ul>
-  <%= paginate @users %>
+
+  <%# ボタンエリア %>
+  <div id="view_more_container" class="text-center mt-4">
+    <%= render 'shared/view_more_button', items: @users %>
+  </div>
 </div>

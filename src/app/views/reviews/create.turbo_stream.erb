@@ -9,19 +9,9 @@
 
 <% else %>
   <%# ⭕️ 投稿成功時 %>
-  <%# 1. レビュー一覧 %>
-  <%# 初レビュー時はulのみ描画 %>
-  <% if @reviews.size == 1 %>
-    <%= turbo_stream.update "reviews" do %>
-      <ul id="reviews_list">
-        <%= render @review %>
-      </ul>
-    <% end %>
-  <% else %>
-    <%# 2件目以降は既存のul先頭に1件だけ追加 %>
-    <%= turbo_stream.prepend "reviews_list" do %>
-      <%= render @review %>
-    <% end %>
+  <%# 1. レビュー一覧 の先頭に1件追加 %>
+  <%= turbo_stream.prepend "reviews_list" do %>
+    <%= render @review %>
   <% end %>
 
   <%# 2. フラッシュメッセージを表示 %>

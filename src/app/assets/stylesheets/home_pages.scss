@@ -1,4 +1,3 @@
-
 // ログイン後
 // 検索
 .map_search {
@@ -20,14 +19,11 @@
   // 新型GoogleコンポーネントがBootstrapのinput-groupを破壊するのを防ぐ
   gmp-place-autocomplete {
     flex: 1 1 auto; /* フレックスアイテムとして正しく伸縮させる */
-    width: 1%;      /* インプットグループ内で他の要素（ボタン）の幅を確保するためのBootstrapの常套句
+    width: 1%; /* インプットグループ内で他の要素（ボタン）の幅を確保するためのBootstrapの常套句
      */
     position: relative !important;
   }
 }
-
-
-
 
 // 地図
 #pkmap {
@@ -43,13 +39,8 @@
   width: 100%;
 }
 
-
 /* pagination */
-#home_feed,
-#users_show,
-#users_index,
-#users_follow,
-#users_show_reviews {
+#home_feed {
   nav {
     // ul
     .pagination {

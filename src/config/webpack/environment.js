@@ -1,12 +1,5 @@
-const { environment } = require('@rails/webpacker')
+// 8 jQueryを有効化 ▶︎Rails 7 以降に削除済
 
-// 8 jQueryを有効にする ここないとajaxもできない
-const webpack = require('webpack')
-environment.plugins.prepend('Provide',
-  new webpack.ProvidePlugin({
-    $: 'jquery/src/jquery',
-    jQuery: 'jquery/src/jquery'
-  })
-)
+const { environment } = require('@rails/webpacker')
 
 module.exports = environment

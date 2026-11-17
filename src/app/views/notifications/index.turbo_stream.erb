@@ -1,11 +1,2 @@
-<%# ul(#notifications_list)の末尾に、新しい li を追加 %>
-<%= turbo_stream.append "notifications_list" do %>
-  <%= render @notifications %>
-<% end %>
 
-<%# ボタンエリアを、次のページのボタンで置換 %>
-<%= turbo_stream.replace "view_more_container" do %>
-  <div id="view_more_container" class="text-center mt-4">
-    <%= render 'view_more_button', notifications: @notifications %>
-  </div>
-<% end %>
+<%= render 'shared/append_items', list_id: "notifications_list", items: @notifications %>

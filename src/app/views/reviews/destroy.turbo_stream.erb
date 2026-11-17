@@ -1,19 +1,7 @@
 <%# (posts/show)_レビューを削除 %>
 
-<%# 1. レビュー一覧エリア %>
-<%# レビューが1件以上残っているか？ %>
-<% if @reviews.any? %>
-  <%# 削除した1件のliだけをDOMから消す %>
-  <%= turbo_stream.remove @review %>
-<% else %>
-  <%# 最後の1件を削除した場合 %>
-  <%= turbo_stream.update "reviews" do %>
-    <h2 class="text-center">
-      レビューがまだありません
-    </h2>
-  <% end %>
-<% end %>
-
+<%# 1. レビュー一覧 削除した1件のliだけをDOMから消す %>
+<%= turbo_stream.remove @review %>
 
 <%# 2. フラッシュメッセージエリアを更新 %>
 <%= turbo_stream.update "flash_messages" do %>

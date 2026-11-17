@@ -12027,6 +12027,18 @@ header .navbar .nav-link.active {
   transform: translateY(-9px) rotate(-45deg);
 }
 
+#view_more_container a.btn-border {
+  border: 2px solid #000;
+  border-radius: 0;
+  background: #fff;
+  -webkit-box-shadow: 4px 4px 0 #000;
+  box-shadow: 4px 4px 0 #000;
+}
+#view_more_container a.btn-border:hover {
+  -webkit-box-shadow: -4px -4px 0 #000;
+  box-shadow: -4px -4px 0 #000;
+}
+
 /* forms */
 #error_explanation span {
   color: #696969;
@@ -12092,48 +12104,24 @@ textarea {
 }
 
 /* pagination */
-#home_feed nav .pagination,
-#users_show nav .pagination,
-#users_index nav .pagination,
-#users_follow nav .pagination,
-#users_show_reviews nav .pagination {
+#home_feed nav .pagination {
   margin: 16px 0;
   justify-content: center;
 }
-#home_feed nav .pagination li > a,
-#users_show nav .pagination li > a,
-#users_index nav .pagination li > a,
-#users_follow nav .pagination li > a,
-#users_show_reviews nav .pagination li > a {
+#home_feed nav .pagination li > a {
   border: none;
   color: #696969;
 }
-#home_feed nav .pagination li > a:hover,
-#users_show nav .pagination li > a:hover,
-#users_index nav .pagination li > a:hover,
-#users_follow nav .pagination li > a:hover,
-#users_show_reviews nav .pagination li > a:hover {
+#home_feed nav .pagination li > a:hover {
   border-radius: 15px;
 }
-#home_feed nav .pagination li > a:active,
-#users_show nav .pagination li > a:active,
-#users_index nav .pagination li > a:active,
-#users_follow nav .pagination li > a:active,
-#users_show_reviews nav .pagination li > a:active {
+#home_feed nav .pagination li > a:active {
   color: #b0e7d7;
 }
-#home_feed nav .pagination,
-#users_show nav .pagination,
-#users_index nav .pagination,
-#users_follow nav .pagination,
-#users_show_reviews nav .pagination {
+#home_feed nav .pagination {
   /* 表示しているページ番号 */
 }
-#home_feed nav .pagination .active > a,
-#users_show nav .pagination .active > a,
-#users_index nav .pagination .active > a,
-#users_follow nav .pagination .active > a,
-#users_show_reviews nav .pagination .active > a {
+#home_feed nav .pagination .active > a {
   background: #93c9ff;
   border-radius: 15px;
 }
@@ -12289,18 +12277,6 @@ footer .n-circle {
   text-decoration: none;
 }
 
-#view_more_container a.btn-border {
-  border: 2px solid #000;
-  border-radius: 0;
-  background: #fff;
-  -webkit-box-shadow: 4px 4px 0 #000;
-  box-shadow: 4px 4px 0 #000;
-}
-#view_more_container a.btn-border:hover {
-  -webkit-box-shadow: -4px -4px 0 #000;
-  box-shadow: -4px -4px 0 #000;
-}
-
 .posts {
   list-style: none;
   margin-top: 20px;
@@ -12384,6 +12360,9 @@ footer .n-circle {
 
 #reviews > ul {
   max-width: 600px;
+}
+#reviews > ul:has(li) + .empty-reviews-message {
+  display: none;
 }
 #reviews > ul li {
   padding: 8px 0;
@@ -12538,29 +12517,17 @@ aside section .user_stats_box strong {
   background: #487c38;
 }
 
-.users_index {
+#users_list {
   list-style: none;
   margin: 0;
   padding: 0 10px;
 }
-.users_index li {
+#users_list li {
   border-bottom: 1px solid gainsboro;
 }
 
 .spot_list {
   font-size: 1em;
-}
-
-.user_avatars {
-  overflow: auto;
-  margin-top: 15px;
-  margin-left: 5px;
-}
-.user_avatars .gravatar {
-  margin: 1px 1px;
-}
-.user_avatars a {
-  padding: 0;
 }
 
 /* typography */

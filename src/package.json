@@ -11,10 +11,7 @@
     "@popperjs/core": "^2.11.8",
     "@rails/actioncable": "^7.0.0",
     "@rails/activestorage": "^7.0.0",
-    "bootstrap": "^5.3.8",
-    "iscroll": "^5.2.0",
-    "jquery": "^3.6.0",
-    "jquery-drawer": "^3.2.2"
+    "bootstrap": "^5.3.8"
   },
   "devDependencies": {
     "css-loader": "^6.8.1",

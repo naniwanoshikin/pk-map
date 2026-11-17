@@ -598,11 +598,6 @@ is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
-iscroll@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/iscroll/-/iscroll-5.2.0.tgz#d513307088b5b25a4f893af474804468481829c8"
-  integrity sha512-HyEu3cR8ulc0JONuQq6yht7s4iYgIPpYvy0h8IJflOUMDB95pwZ7e5FQtA6qfCESxhfxv7JZb9kIQe0JFPL05g==
-
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -621,16 +616,6 @@ jest-worker@^27.4.5:
     "@types/node" "*"
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
-
-jquery-drawer@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/jquery-drawer/-/jquery-drawer-3.2.2.tgz#2919b87232b91e7b5915a6b70da12e399ef032cb"
-  integrity sha512-o71xwnGyrPvLeeRRNtt1KxQeb7AHzCzd865YVXAxYdemK9FRsEi445NN6LDSQD4kz2ZNDc80EtiE2YXCzj6V2Q==
-
-jquery@^3.6.0:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.7.1.tgz#083ef98927c9a6a74d05a6af02806566d16274de"
-  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
 
 json-schema-traverse@^1.0.0:
   version "1.0.0"

@@ -7,7 +7,7 @@ export default class extends Controller {
     this.initFlash()
   }
 
-  // HTML要素が画面から消える瞬間に自動実行（タイマーの漏れ防止）
+  // 画面から消える瞬間に自動実行（タイマーの漏れ防止）
   disconnect() {
     if (this.autoDeleteTimer) {
       clearTimeout(this.autoDeleteTimer)

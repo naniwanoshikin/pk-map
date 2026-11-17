@@ -68,16 +68,10 @@
 
         <%# レビュー一覧 %>
         <div id="reviews">
-          <% if @reviews.any? %>
-            <ul id="reviews_list" class="list-unstyled px-2 mx-auto">
-            <%# (reviews/_review) %>
-              <%= render @reviews %>
-            </ul>
-          <% else %>
-            <h2 class="text-center">
-              レビューがまだありません
-            </h2>
-          <% end %>
+          <%# scssに条件分岐を持たせた %>
+          <ul id="reviews_list" class="list-unstyled px-2 mx-auto"><%= render @reviews %></ul>
+          <%# (reviews/_review) %>
+          <h2 class="text-center empty-reviews-message">レビューがまだありません</h2>
         </div>
       </div>
     </div>
