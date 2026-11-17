@@ -20,8 +20,8 @@
         <%= render @user_review_posts %>
       </div>
 
-      <%# ボタンエリア pagination %>
-      <div id="view_more_container" class="text-center mt-4">
+      <%# もっと見るボタン %>
+      <div id="view_more_container" class="text-center mt-4 mb-4">
         <%= render 'shared/view_more_button', items: @user_review_posts %>
       </div>
     <% else %>

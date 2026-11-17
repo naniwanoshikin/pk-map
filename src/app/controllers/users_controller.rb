@@ -7,6 +7,13 @@ class UsersController < ApplicationController
   def show
     # @user
     @posts = @user.posts.page(params[:page]).per(6) # 13
+
+    respond_to do |format|
+      format.html
+      # ログイン後のリダイレクトに、非同期ページネーション(users/show.turbo_stream.erb)を優先して返してしまい、#user_posts_listが存在せず、Turbo は「書き換える場所が見つからない！」と元の画面のままフリーズ ▶︎「もっと見る」のときだけ非同期処理するよう分岐。
+      format.turbo_stream if params[:page].present?
+    end
+
   end
 
   # レビュー一覧

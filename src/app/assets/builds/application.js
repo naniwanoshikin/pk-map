@@ -107,8 +107,7 @@ __webpack_require__.r(__webpack_exports__);
   // [×] ボタンが押されたときに実行（data-action="click->flash-behavior#close"）
   close() {
     const flash = this.element;
-    // [x]を押したとき
-    console.log("stimulus [x]が押されました");
+    // console.log("Stimulus [x]が押されました");
     flash.classList.add('hidden_out'); // CSS 消える
     clearTimeout(this.autoDeleteTimer); // タイマーをキャンセル
 
@@ -333,7 +332,7 @@ __webpack_require__.r(__webpack_exports__);
     // ターゲットが存在しない画面の場合はスキップ
     if (!this.hasAutocompleteTarget) return;
 
-    console.log('cccccc')
+    console.log('オートコンプリートの初期化')
     // places ライブラリをロード
     await google.maps.importLibrary("places");
 
@@ -727,37 +726,32 @@ document.addEventListener("hide.bs.offcanvas", (event) => {
   \*************************************************/
 /***/ (function() {
 
-// ゲストログイン (home_pages/_home.html.erb)
-// Stimulus化はなし
+// ゲストログイン (home_pages/_home) Stimulus なし
 
 // Rails7 Turboの送信開始イベントをグローバルに監視
-document.addEventListener('turbo:submit-start', (event) => {
-  // 送信されたターゲット（form要素）
+document.addEventListener('submit', (event) => {
+  // <form class="button_to">
   const form = event.target;
-  // 送信されたフォームの中に [data-guest-login-btn] を持つボタンがあるか判定
+  // <button data-guest-login-btn="true" type="submit">簡単ログイン</button>
   const isGuestLogin = form.querySelector('[data-guest-login-btn]');
   if (!isGuestLogin) return;
 
+  // 背景の暗転レイヤー / ローディングボックス
+  const overlay = document.querySelector(".first_load");
+  const box = document.querySelector(".second_load");
+  if (!overlay || !box) return;
+  overlay.id = 'loading';
+  box.id = 'loading_box';
+
+  const div3 = document.createElement("div");
+  div3.classList.add('loading-one', 'animation_loading');
+  box.appendChild(div3);
+
+  const p1 = document.createElement("p");
+  p1.classList.add('loading-txt');
+  p1.textContent = 'Loading';
+  div3.appendChild(p1);
   // console.log('ゲストログイン ローディング');
-
-  // 1. 背景の暗転レイヤーを表示
-  const div1 = document.querySelector(".first_load");
-  if (div1) div1.id = 'loading';
-
-  // 2. ローディングボックスを表示
-  const div2 = document.querySelector(".second_load");
-  if (div2) {
-    div2.id = 'loading_box';
-
-    const div3 = document.createElement("div");
-    div3.classList.add('loading-one', 'animation_loading');
-    div2.appendChild(div3);
-
-    const p1 = document.createElement("p");
-    p1.classList.add('loading-txt');
-    p1.textContent = 'Loading';
-    div3.appendChild(p1);
-  }
 });
 
 
