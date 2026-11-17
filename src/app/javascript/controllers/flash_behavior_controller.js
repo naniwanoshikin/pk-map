@@ -37,8 +37,7 @@ export default class extends Controller {
   // [×] ボタンが押されたときに実行（data-action="click->flash-behavior#close"）
   close() {
     const flash = this.element;
-    // [x]を押したとき
-    console.log("stimulus [x]が押されました");
+    // console.log("Stimulus [x]が押されました");
     flash.classList.add('hidden_out'); // CSS 消える
     clearTimeout(this.autoDeleteTimer); // タイマーをキャンセル
 
