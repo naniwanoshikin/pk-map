@@ -3,7 +3,7 @@
   <h1 class="mb-2 mt-4">外に出よう</h1>
   <h2 class="mb-5">動ける場所は見つかる</h2>
 
-  <%# Registrations(C), guest_login.js %>
+  <%# Sessions(C), ローディング ▶︎ guest_login.js %>
   <%= button_to "簡単ログイン", users_guest2_path, method: :post, class: "btn btn-lg btn-success w-auto", data: { guest_login_btn: true } %>
   <p class="text-dark mt-2">登録なしでログインできます</p>
 
@@ -15,8 +15,7 @@
   <% end %>
 </div>
 
-<%# ローディング --------------------- %>
-<%# guest_login.js %>
+<%# ローディング (guest_login.js) %>
 <div id="" class="first_load">
   <div id="" class="second_load">
     <%# <div class="loading-one animation_loading">

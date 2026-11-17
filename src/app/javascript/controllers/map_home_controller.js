@@ -160,7 +160,7 @@ export default class extends Controller {
     // ターゲットが存在しない画面の場合はスキップ
     if (!this.hasAutocompleteTarget) return;
 
-    console.log('cccccc')
+    console.log('オートコンプリートの初期化')
     // places ライブラリをロード
     await google.maps.importLibrary("places");
 
