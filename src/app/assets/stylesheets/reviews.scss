@@ -1,6 +1,13 @@
 // (posts/show)
 #reviews > ul {
   max-width: 600px;
+
+  // ul に li が1つでもあるとき、
+  &:has(li) + .empty-reviews-message {
+    // 「レビューがまだありません」を非表示に
+    display: none;
+  }
+
   // (reviews/review)
   li {
     padding: 8px 0;
@@ -47,7 +54,6 @@
     color: gray;
   }
 }
-
 
 // 共通 (posts/show, /post)
 // ★★☆☆☆

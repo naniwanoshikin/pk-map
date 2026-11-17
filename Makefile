@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "Bootstrap 5にアプデ"
+	git commit -m "jQuery廃止 & ページネーション非同期"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

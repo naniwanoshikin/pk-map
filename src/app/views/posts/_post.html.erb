@@ -6,7 +6,7 @@
   </header>
 
   <main>
-    <%= link_to post, class: "link" do %>
+    <%= link_to post, class: "link", data: { turbo_frame: "_top" } do %>
       <%# 評価 %>
       <div class="average_score d-flex align-items-center mt-1">
         <%# ★★☆☆☆ %>
@@ -34,7 +34,7 @@
   <footer class="card-footer p-1 bg-white">
     <div class="user_image">
       <%# 画像 %>
-      <%= link_to gravatar_for(post.user, size: 30), post.user %>
+      <%= link_to gravatar_for(post.user, size: 30), post.user, data: { turbo_frame: "_top" } %>
     </div>
     <%# 3分前 %>
     <div class="timestamp ms-auto">

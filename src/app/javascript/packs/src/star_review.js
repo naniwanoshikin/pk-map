@@ -5,20 +5,16 @@ const initStarReview = () => {
   // ★★☆☆☆ div モーダル開いた後 くり抜き状態
   const ratingsContainer = document.querySelector('.ratings');
 
-  if (!btnRatingsContainer || !ratingsContainer) return;
 
   // ★★☆☆☆ モーダル開く前 span
   const btn_stars = btnRatingsContainer.querySelectorAll('.star_trigger');
   // ★★☆☆☆ モーダル開いた後 span
   const stars = ratingsContainer.children;
 
-  // '2'/5 hidden_field ▶︎ Reviews(C)
-  const hiddenScore = document.getElementById("hidden_score");
   // '2' 値書き換え用
   const ratingValue = document.getElementById("rating_value");
-
-  // 万が一無い場合も終了
-  if (!hiddenScore || !ratingValue) return;
+  // '2'/5 hidden_field ▶︎ Reviews(C)
+  const hiddenScore = document.getElementById("hidden_score");
 
 
   // クリックした星の数
@@ -76,6 +72,27 @@ const initStarReview = () => {
       }
     })
 
+    // 3. その星からマウスが離れたとき
+    stars[i].addEventListener("mouseout", () => {
+      // 全ての星を
+      for (let j = 0; j < stars.length; j++) {
+        // モーダル開いた後の⭐︎
+        stars[j].classList.add("far"); // 一旦くり抜いて
+        stars[j].classList.remove("fas");
+        // モーダル開く前の⭐︎ 一旦くり抜く
+        btn_stars[j].classList.add("far");
+        btn_stars[j].classList.remove("fas");
+      }
+      // クリックした星までを
+      for (let j = 0; j <= index; j++) {
+        stars[j].classList.remove("far");
+        stars[j].classList.add("fas"); // 塗りつぶす
+        // モーダル開く前の⭐︎ 塗りつぶす
+        btn_stars[j].classList.remove("far");
+        btn_stars[j].classList.add("fas");
+      }
+    })
+
     // 2. その星をクリックした時
     stars[i].addEventListener("click", () => {
       hiddenScore.value = i + 1; // i = 0 - 4
@@ -98,32 +115,5 @@ const initStarReview = () => {
         }
       }
     })
-
-
-    // 3. その星からマウスが離れたとき
-    stars[i].addEventListener("mouseout", () => {
-      // 全ての星を
-      for (let j = 0; j < stars.length; j++) {
-        // モーダル開いた後の⭐︎
-        stars[j].classList.add("far"); // 一旦くり抜いて
-        stars[j].classList.remove("fas");
-        // モーダル開く前の⭐︎ 一旦くり抜く
-        btn_stars[j].classList.add("far");
-        btn_stars[j].classList.remove("fas");
-      }
-      // クリックした星までを
-      for (let j = 0; j <= index; j++) {
-        stars[j].classList.remove("far");
-        stars[j].classList.add("fas"); // 塗りつぶす
-        // モーダル開く前の⭐︎ 塗りつぶす
-        btn_stars[j].classList.remove("far");
-        btn_stars[j].classList.add("fas");
-      }
-    })
   }
-
 }
-
-// 初回ロード＋非同期遷移
-document.addEventListener('turbo:load', initStarReview);
-document.addEventListener('turbo:render', initStarReview); // 投稿失敗時など

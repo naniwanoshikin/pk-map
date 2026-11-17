@@ -1,36 +1,33 @@
-<%# プロフィール画面 %>
+<%# プロフィール + 投稿一覧 %>
 <% provide(:title, @user.name) %>
 
 <div class="row">
-  <aside class="col-md-5">
-    <%# ユーザー情報 %>
-    <section class="mt-3">
-      <%= render 'shared/user_info', user: @user %>
-    </section>
 
-    <%# 統計情報 %>
-    <section class="mt-0">
-      <%= render 'shared/stats', user: @user %>
-    </section>
+  <%= render 'profile_sidebar' %>
 
-    <%# ボタン %>
-    <% if current_user?(@user) %>
-      <%# プロフィール編集 %>
-      <section class="profile_edit">
-        <%= link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-outline-secondary w-100" %>
-      </section>
-    <% else %>
-      <%# [follow] ボタン %>
-      <section class="profile_follow">
-        <%= render 'follow_form', user: @user if user_signed_in? %>
-      </section>
-    <% end %>
-  </aside>
-
-  <%# 投稿一覧 & pagination %>
+  <%# 投稿一覧 %>
   <div class="col-md-7">
-    <div id="users_show">
-      <%= render 'users/show_posts' %>
+    <div class="spot_list d-flex justify-content-around">
+      <h2 class="text-dark">投稿一覧</h2>
+      <% if @user.reviews.any? %>
+        <%= link_to show_reviews_user_path(@user) do %>
+          <h2>レビュー一覧</h2>
+        <% end %>
+      <% end %>
     </div>
+
+    <% if @posts.any? %>
+      <div id="user_posts_list" class="posts">
+        <%# (posts/post) %>
+        <%= render @posts %>
+      </div>
+
+      <%# ボタンエリア pagination %>
+      <div id="view_more_container" class="text-center mt-4">
+        <%= render 'shared/view_more_button', items: @posts %>
+      </div>
+    <% else %>
+      <p class="text-muted text-center">まだ投稿していません</p>
+    <% end %>
   </div>
 </div>
