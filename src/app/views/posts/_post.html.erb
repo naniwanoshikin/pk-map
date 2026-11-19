@@ -2,7 +2,7 @@
 
 <div id="<%= dom_id(post) %>">
   <header id="<%= dom_id(post, :header) %>">
-    <h5 class="m-0 text-truncate-1" title="<%= post.address %>"><%= post.address %></h5>
+    <h5 class="m-0 text-truncate" title="<%= post.address %>"><%= post.address %></h5>
   </header>
 
   <main>
@@ -16,26 +16,22 @@
         </div>
         <%# 平均点 %>
         <div class="small text-muted">
-          <span class="text-dark me-0"><%= post.avg_score %></span>
+          <span class="text-dark"><%= post.avg_score %></span>
           <span>(<%= post.reviews.size %>)</span>
         </div>
       </div>
 
-      <%# 画像 %>
-      <%= image_tag "https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=#{post.latitude},#{post.longitude}&key=#{ENV['GOOGLE_MAP_API']}" %>
+      <%# 画像 遅延読み込み posts_helper %>
+      <%= image_tag streetview_image_ulr(post), alt: post.address, loading: "lazy" %>
 
       <%# 文章 %>
-      <div class="content">
-        <%= simple_format post.content, {}, wrapper_tag: :span %>
-      </div>
+      <div class="content text-truncate"><%= post.content %></div>
     <% end %>
   </main>
 
   <footer class="card-footer p-1 bg-white">
-    <div class="user_image">
       <%# 画像 %>
-      <%= link_to gravatar_for(post.user, size: 30), post.user, data: { turbo_frame: "_top" } %>
-    </div>
+    <div><%= link_to gravatar_for(post.user, size: 30), post.user, data: { turbo_frame: "_top" } %></div>
     <%# 3分前 %>
     <div class="timestamp ms-auto">
       <%= time_ago_in_words(post.created_at) %>前

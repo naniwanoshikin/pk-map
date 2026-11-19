@@ -35,9 +35,18 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    # @post 下記
+    # @post
     @post.destroy
-    redirect_to request.referrer || root_url, alert: '投稿を削除しました', status: :see_other
+
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "投稿を削除しました"
+        redirect_to root_url, status: :see_other
+      end
+      format.turbo_stream do
+        flash.now[:alert] = "投稿を削除しました"
+      end
+    end
   end
 
   private

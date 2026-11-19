@@ -1,15 +1,4 @@
-// 1行で収まらない場合に「...」にする設定
-@mixin keep_single_line {
-  display: -webkit-box;
-  -webkit-line-clamp: 1; // 1行で制限
-  line-clamp: 1; // （互換性と将来の安全性を確保）
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all; // 英語の長い単語やURLなどでも強制的に折り返して崩れを防ぐ
-}
-
-// (posts/_post), (users/show_posts)
+// (posts/_post), (users/show)
 .posts {
   list-style: none;
   margin-top: 20px;
@@ -21,30 +10,16 @@
     padding: 10px;
     border: 1px solid #e8e8e8;
     border-radius: 5px;
-    // width: 200px;
-    // height: 200px;
-  }
-  header {
-    // ユーザー名
-    .user {
-      margin-top: 5em;
-    }
-    .text-truncate-1 {
-      @include keep_single_line;
-    }
+    min-width: 0; // ★CSS Grid内で .text-truncate を効かせる為
   }
   main {
     margin-bottom: 20px; // ⇄ (layouts/footer)
     // <a>
     .link {
       color: inherit;
-      text-decoration : none;
+      text-decoration: none;
       &:hover {
         color: inherit; // なぜリンクは青くなる?
-        text-decoration: none;
-      }
-      .content {
-        @include keep_single_line;
       }
     }
     // 3.0 (3)
@@ -58,20 +33,13 @@
     }
     .content {
       color: gray;
-      display: block;
-      p {
-        margin-bottom: 0;
-        font-size: 1em;
-      }
     }
   }
   footer {
     display: flex;
     align-items: flex-end;
-    .user_image {
-      .gravatar {
-        margin-right: 10px;
-      }
+    .gravatar {
+      margin-right: 10px;
     }
     .timestamp {
       color: gray;
@@ -88,10 +56,25 @@
   }
 }
 
-// (post/new)
-.post_form {
-  input[type="radio"],
-  input[type="checkbox"] {
-    max-width: 30px;
+// 共通 (posts/show, /_post, /reviews/review)
+// ★★☆☆☆
+.star_rating {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-right: 5px;
+  // ★★
+  .star_front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fc3;
+    overflow: hidden; // はみ出した部分を隠す
+  }
+  // ☆☆☆☆☆
+  .star_back {
+    color: #ccc;
   }
 }

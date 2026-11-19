@@ -1,47 +1,30 @@
 <% visitor = notification.visitor %>
-<% visited = notification.visited %>
+<%# notifications_helper_3つ %>
 
-<li>
-  <div class="f_inline d-flex">
-    <%# 1. マークの表示 %>
-    <div class="action_mark me-2">
-      <% case notification.action %>
-      <% when 'follow' %>
-        <i class="fas fa-user fa-lg"></i>
-      <% when 'good' %>
-        <i class="fas fa-heart fa-lg"></i>
-      <% when 'review' %>
-        <i class="far fa-comment fa-lg"></i>
-      <% end %>
-    </div>
+<li class="d-flex align-items-start gap-2 mb-1">
+  <%# 1. マーク %>
+  <div class="action_mark me-2">
+    <i class="<%= notification_icon_class(notification.action) %> fa-lg"></i>
+  </div>
 
-    <%# 2. アバターアイコン %>
-    <%= link_to gravatar_for(visitor, size: 30), visitor %>
+  <%# 2. アバターアイコン %>
+  <%= link_to gravatar_for(visitor, size: 30), visitor %>
 
-    <%# 3. 通知の文章コンテンツ %>
-    <div class="notify_content">
-      <strong><%= link_to visitor.name, visitor %></strong>
-      <span class="text-black">さん
-        <% case notification.action %>
-        <% when 'follow' %>
-          にフォローされました
-        <% when 'good' %>
-          がレビューを評価しました
-          <p class="good_notify">
-            <%= link_to notification.review.content, notification.review.post %>
-          </p>
-        <% when 'review' %>
-          がレビューしました
-          <p class="review_notify">
-            <%= link_to notification.review.content, notification.post %>
-          </p>
-        <% end %>
-      </span>
-    </div>
+  <%# 3. 通知文コンテンツ %>
+  <div class="flex-grow-1">
+    <strong><%= link_to visitor.name, visitor %></strong>
+
+    <span class="text-black">さん<%= notification_action_text(notification.action) %></span>
+
+    <% if notification.review.present? %>
+      <p class="notify_quote mb-0">
+        <%= link_to notification.review.content, notification_target_post(notification) %>
+      </p>
+    <% end %>
   </div>
 
   <%# 4. タイムスタンプ（右寄せ） %>
-  <div class="small text-muted text-end me-2">
+  <div class="small text-muted text-nowrap me-2">
     <%= time_ago_in_words(notification.created_at).upcase %>前
   </div>
 </li>

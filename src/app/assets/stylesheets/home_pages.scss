@@ -1,27 +1,12 @@
 // ログイン後
-// 検索
-.map_search {
-  margin: 0;
-  padding: 0;
-  input {
-    border-radius: 5px 0 0 5px;
-  }
-  button {
-    border-radius: 0 5px 5px 0;
-  }
-}
 
-// 🌟【追記】親の input-group 側でドロップダウンがはみ出して綺麗に下に伸びるのを許可
-.input-group {
-  position: relative !important;
-  overflow: visible !important; /* 👈 超重要：サジェストが消えないようにする設定 */
-
+// 検索div form
+#home_dashboard_container aside section {
+  overflow: visible; // ⭐︎サジェストが消えないようにする
   // 新型GoogleコンポーネントがBootstrapのinput-groupを破壊するのを防ぐ
   gmp-place-autocomplete {
-    flex: 1 1 auto; /* フレックスアイテムとして正しく伸縮させる */
-    width: 1%; /* インプットグループ内で他の要素（ボタン）の幅を確保するためのBootstrapの常套句
-     */
-    position: relative !important;
+    color-scheme: light; // 背景を白くする
+    width: 1%; // Bootstrap 5 の .input-group 内で正しく伸縮
   }
 }
 
@@ -40,27 +25,24 @@
 }
 
 /* pagination */
-#home_feed {
-  nav {
-    // ul
-    .pagination {
-      margin: 16px 0;
-      justify-content: center;
-      li > a {
-        border: none;
-        color: #696969;
-        &:hover {
-          border-radius: 15px;
-        }
-        &:active {
-          color: #b0e7d7;
-        }
-      }
-      /* 表示しているページ番号 */
-      .active > a {
-        background: #93c9ff;
-        border-radius: 15px;
-      }
+// ul
+#home_feed .pagination {
+  margin: 16px 0;
+  justify-content: center;
+
+  .page-link {
+    border: none;
+    color: #696969;
+    &:hover {
+      border-radius: 15px;
     }
+    &:active {
+      color: #b0e7d7;
+    }
+  }
+  /* 表示しているページ番号 */
+  .active > a {
+    background: #93c9ff;
+    border-radius: 15px;
   }
 }

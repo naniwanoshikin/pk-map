@@ -11,30 +11,28 @@
   <%# ② みんなの投稿フィード「すべてのタイムライン」 %>
   data-map-home-feeds-value="<%= @feed_items ? @feed_items.to_json : '[]' %>"
 >
+  <%# Turbo Stream で更新されるデータ受け渡し用エリア %>
+  <div id="map_feeds_updater"></div>
+
   <aside class="col-md-4">
     <h2>スポットを調べる</h2>
     <%# 住所・スポット名入力 (home_login) %>
-    <section class="map_search mb-2">
+    <section class="m-0 p-0 mb-2">
       <%= label_tag :map_search_address, '', class: "form-label font-weight-bold d-block text-center" %>
 
       <%# 検索 %>
-      <div class="input-group mx-auto" data-action="keydown.enter->map-home#preventSubmit">
-
-        <%# ⚠️ ここにサジェストが自動で生えてきます %>
+      <div class="input-group mx-auto"  data-action="keydown.enter->map-home#handleEnterSearch">
+        <%# ⚠️ ここにサジェストが自動で生える %>
         <gmp-place-autocomplete
           class="flex-grow-1"
-          style="position: relative;"
+          placeholder="大阪城刻印広場"
           data-map-home-target="autocomplete"
-          data-action="gmp-placechange->map-home#handlePlaceChange">
-          <input type="text"
-            placeholder="例:大阪城"
-            class='form-control'
-            autocomplete="off">
+          data-action="gmp-select->map-home#handlePlaceSelect">
         </gmp-place-autocomplete>
-
+        <%# 虫眼鏡ボタン %>
         <%= button_tag type: "button", 
                       class: "btn btn-primary", 
-                      data: { action: "click->map-home#search" } do %>
+                      data: { action: "click->map-home#searchByText" } do %>
           <i class="fas fa-search"></i>
         <% end %>
       </div>
@@ -42,14 +40,14 @@
   </aside>
 
   <main class="col-md-8">
-    <h2>スポット一覧</h2>
     <%# 地図 (map_home_controller.js) %>
+    <h2>PKmap</h2>
     <div id='pkmap'
         class="w-100 home-map-canvas"
         data-map-home-target="canvas">
     </div>
 
-    <%# 一覧 %>
+    <h2>スポット一覧</h2>
     <div id="timeline_feed">
       <%= render 'shared/feed' %>
     </div>
