@@ -14,24 +14,9 @@
 
 
 // div エラー 線で囲われた部分
-.field_with_errors {
-  .form-control {
-    @extend .is-invalid !optional; // bootstrap4
-    color: rgb(255, 93, 93);
-  }
-}
-
-input,
-textarea,
-select,
-.uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-input:not([type="checkbox"]):not([type="radio"]) {
-  height: auto !important;
+.field_with_errors .form-control {
+  @extend .is-invalid !optional; // bootstrap4
+  color: rgb(255, 93, 93);
 }
 
 textarea {

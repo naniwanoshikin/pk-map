@@ -12053,43 +12053,16 @@ header .navbar .nav-link.active {
   color: rgb(255, 93, 93);
 }
 
-input,
-textarea,
-select,
-.uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-input:not([type=checkbox]):not([type=radio]) {
-  height: auto !important;
-}
-
 textarea {
   resize: vertical;
 }
 
-.map_search {
-  margin: 0;
-  padding: 0;
+#home_dashboard_container aside section {
+  overflow: visible;
 }
-.map_search input {
-  border-radius: 5px 0 0 5px;
-}
-.map_search button {
-  border-radius: 0 5px 5px 0;
-}
-
-.input-group {
-  position: relative !important;
-  overflow: visible !important; /* 👈 超重要：サジェストが消えないようにする設定 */
-}
-.input-group gmp-place-autocomplete {
-  flex: 1 1 auto; /* フレックスアイテムとして正しく伸縮させる */
-  width: 1%; /* インプットグループ内で他の要素（ボタン）の幅を確保するためのBootstrapの常套句
-*/
-  position: relative !important;
+#home_dashboard_container aside section gmp-place-autocomplete {
+  color-scheme: light;
+  width: 1%;
 }
 
 #pkmap {
@@ -12104,24 +12077,24 @@ textarea {
 }
 
 /* pagination */
-#home_feed nav .pagination {
+#home_feed .pagination {
   margin: 16px 0;
   justify-content: center;
 }
-#home_feed nav .pagination li > a {
+#home_feed .pagination .page-link {
   border: none;
   color: #696969;
 }
-#home_feed nav .pagination li > a:hover {
+#home_feed .pagination .page-link:hover {
   border-radius: 15px;
 }
-#home_feed nav .pagination li > a:active {
+#home_feed .pagination .page-link:active {
   color: #b0e7d7;
 }
-#home_feed nav .pagination {
+#home_feed .pagination {
   /* 表示しているページ番号 */
 }
-#home_feed nav .pagination .active > a {
+#home_feed .pagination .active > a {
   background: #93c9ff;
   border-radius: 15px;
 }
@@ -12218,6 +12191,15 @@ li > .notice .fa-bell .n-circle .counter {
   position: absolute;
   font-size: 0.5em;
 }
+
+header .n-circle {
+  font-size: 1.1em;
+}
+
+footer .n-circle {
+  font-size: 0.9em;
+}
+
 @keyframes rotation {
   0% {
     transform: scale(0) rotate(-80deg);
@@ -12229,52 +12211,35 @@ li > .notice .fa-bell .n-circle .counter {
     transform: scale(1) rotate(0deg);
   }
 }
-
-header .n-circle {
-  font-size: 1.1em;
-}
-
-footer .n-circle {
-  font-size: 0.9em;
-}
-
 #notifications_list {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 5px;
-  margin-bottom: 0;
+  margin: 5px 0 0;
 }
 #notifications_list li {
   border-top: 1px dotted #8c8b8b;
-  padding: 10px 0;
-  padding-bottom: 5px;
+  padding: 10px 0 5px;
 }
 #notifications_list li:hover {
   opacity: 0.8;
   background: rgb(243, 241, 241);
 }
-#notifications_list li .f_inline .action_mark .fa-user {
+#notifications_list li .action_mark .fa-user {
   color: #00a1e9;
 }
-#notifications_list li .f_inline .action_mark .fa-heart {
+#notifications_list li .action_mark .fa-heart {
   color: red;
 }
-#notifications_list li .f_inline .notify_content {
-  width: 100%;
-}
-#notifications_list li .f_inline .notify_content strong > a {
-  color: inherit;
-}
-#notifications_list li .f_inline .notify_content .good_notify a,
-#notifications_list li .f_inline .notify_content .review_notify a {
-  font-size: 0.9em;
-  color: gray;
-  display: block;
-}
-#notifications_list li .f_inline .notify_content .good_notify a:hover,
-#notifications_list li .f_inline .notify_content .review_notify a:hover {
+#notifications_list li strong > a {
   color: inherit;
   text-decoration: none;
+}
+#notifications_list li .notify_quote a {
+  display: block;
+  font-size: 0.9em;
+  color: gray;
+  text-decoration: none;
+}
+#notifications_list li .notify_quote a:hover {
+  color: #212529;
 }
 
 .posts {
@@ -12288,18 +12253,7 @@ footer .n-circle {
   padding: 10px;
   border: 1px solid #e8e8e8;
   border-radius: 5px;
-}
-.posts header .user {
-  margin-top: 5em;
-}
-.posts header .text-truncate-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
+  min-width: 0;
 }
 .posts main {
   margin-bottom: 20px;
@@ -12310,16 +12264,6 @@ footer .n-circle {
 }
 .posts main .link:hover {
   color: inherit;
-  text-decoration: none;
-}
-.posts main .link .content {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
 }
 .posts main .average_score {
   font-size: 1rem;
@@ -12331,17 +12275,12 @@ footer .n-circle {
 }
 .posts main .content {
   color: gray;
-  display: block;
-}
-.posts main .content p {
-  margin-bottom: 0;
-  font-size: 1em;
 }
 .posts footer {
   display: flex;
   align-items: flex-end;
 }
-.posts footer .user_image .gravatar {
+.posts footer .gravatar {
   margin-right: 10px;
 }
 .posts footer .timestamp {
@@ -12351,54 +12290,6 @@ footer .n-circle {
 .posts_show #map_show {
   max-width: 700px;
   height: 300px;
-}
-
-.post_form input[type=radio],
-.post_form input[type=checkbox] {
-  max-width: 30px;
-}
-
-#reviews > ul {
-  max-width: 600px;
-}
-#reviews > ul:has(li) + .empty-reviews-message {
-  display: none;
-}
-#reviews > ul li {
-  padding: 8px 0;
-  border-top: 1px dotted #8c8b8b;
-}
-#reviews > ul li .user_score > a:hover {
-  text-decoration: none;
-}
-
-.review_user {
-  line-height: 0.9em;
-}
-.review_user strong > a,
-.review_user .review_number > a {
-  color: inherit;
-  text-decoration: none;
-  font-size: 0.9em;
-}
-
-.ev_btn {
-  width: 25%;
-}
-.ev_btn a {
-  text-decoration: none;
-}
-.ev_btn a:hover, .ev_btn a:active, .ev_btn a:focus {
-  text-decoration: none;
-}
-.ev_btn .fa-thumbs-up,
-.ev_btn .fa-thumbs-down {
-  color: #6699ff;
-}
-.ev_btn .ev_count {
-  font-size: 16px;
-  margin-left: 8px;
-  color: gray;
 }
 
 .star_rating {
@@ -12413,7 +12304,7 @@ footer .n-circle {
   position: absolute;
   top: 0;
   left: 0;
-  color: #ffcc33;
+  color: #fc3;
   overflow: hidden;
 }
 .star_rating .star_back {
@@ -12421,7 +12312,7 @@ footer .n-circle {
 }
 
 .btn_ratings {
-  color: #ffcc00;
+  color: #fc0;
   margin: 0 20%;
 }
 
@@ -12451,6 +12342,42 @@ footer .n-circle {
   width: 30%;
 }
 
+#reviews > ul {
+  max-width: 600px;
+}
+#reviews > ul:has(li) + .empty-reviews-message {
+  display: none;
+}
+#reviews > ul li {
+  padding: 8px 0;
+  border-top: 1px dotted #8c8b8b;
+}
+
+.review_user {
+  line-height: 0.9em;
+}
+.review_user :is(strong, .review_number) > a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.ev_btn {
+  width: 25%;
+}
+.ev_btn a {
+  text-decoration: none;
+}
+.ev_btn .fa-thumbs-up,
+.ev_btn .fa-thumbs-down {
+  color: #6699ff;
+}
+.ev_btn .ev_count {
+  font-size: 16px;
+  margin-left: 8px;
+  color: gray;
+}
+
 /* universal */
 .gravatar {
   margin-right: 10px;
@@ -12478,7 +12405,6 @@ aside section h1 {
   margin-top: 0px;
 }
 aside section .user_stats_box {
-  overflow: auto;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -12494,36 +12420,22 @@ aside section .user_stats_box a {
 aside section .user_stats_box a:first-child {
   border: 0;
 }
-aside section .user_stats_box a:hover {
-  text-decoration: none;
-}
 aside section .user_stats_box strong {
   display: block;
   color: black;
 }
 
-.profile_edit,
-.profile_follow {
+:is(.profile_edit, .profile_follow) {
   margin: 3px 20px;
 }
-.profile_edit input[type=submit],
-.profile_follow input[type=submit] {
+:is(.profile_edit, .profile_follow) input[type=submit] {
   margin: 0;
   padding: 6px 8px;
+  width: 100%;
   min-width: 120px;
 }
-.profile_edit .btn-follow,
-.profile_follow .btn-follow {
+:is(.profile_edit, .profile_follow) .btn-follow {
   background: #487c38;
-}
-
-#users_list {
-  list-style: none;
-  margin: 0;
-  padding: 0 10px;
-}
-#users_list li {
-  border-bottom: 1px solid gainsboro;
 }
 
 .spot_list {

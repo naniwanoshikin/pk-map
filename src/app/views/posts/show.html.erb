@@ -10,7 +10,11 @@
         <%= link_to @post.user.name, @post.user, class: "text-reset text-decoration-none" %>
         <!-- 投稿削除 -->
         <% if current_user?(@post.user) %>
-          <%= link_to @post, class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "投稿を削除しますか？" } do %>
+          <%= button_to @post,
+            method: :delete,
+            form: {class: "d-inline", data: { turbo: false}},
+            onclick: "return confirm('投稿を削除しますか？')",
+            class: "btn btn-link p-0 border-0 text-danger" do %>
             <i class="fas fa-trash-alt fa-lg"></i>
           <% end %>
         <% end %>
@@ -25,35 +29,25 @@
         data-map-show-api-key-value="<%= ENV['GOOGLE_MAP_API'] %>"
       ></div>
 
-      <div class="d-flex align-items-center ps-2 my-4">
+      <div class="d-flex align-items-center gap-4 ps-2 my-4">
         <%# 戻る %>
         <%= link_to :back do %>
           <i class="fas fa-long-arrow-alt-left fa-lg"></i>
         <% end %>
 
         <%# 情報 %>
-        <div class="ms-4">
-          <div class="text-muted">
-            <%= @post.content %>
-          </div>
-
-          <div class="text-muted mt-2">
+        <div class="text-muted flex-grow-1">
+          <%= simple_format @post.content, {}, wrapper_tag: :span %>
           <%# Post(M) %>
-            場所：<%= @post.munic %>
-          </div>
-
+          <div class=" mt-2">場所：<%= @post.munic %></div>
           <% if @post.spot_quality.present? %>
-            <div class="text-muted mt-2">
-              芝生：<%= @post.spot_quality %>
-            </div>
+            <div class=" mt-2">芝生：<%= @post.spot_quality %></div>
           <% end %>
         </div>
 
-        <div class="ms-2 me-2">
-          <%
-            twitter_url = "https://twitter.com/share?text=#{u(@post.address)} について &hashtags=パルクール,pkmap&url=#{u(request.original_url)}&via=power_of_shikin"
-          %>
-          <%= link_to twitter_url, title: "Twitter", target: "_blank", rel: "noopener" do %>
+        <div class="mx-2">
+          <%# helper %>
+          <%= link_to post_share_url(@post), title: "Twitter", target: "_blank", rel: "noopener" do %>
             <i class="fab fa-twitter fa-lg"></i>
           <% end %>
         </div>
@@ -61,10 +55,8 @@
 
       <div class="show_reviews mb-4">
         <h2 class="mb-3">レビューをしよう</h2>
-        <%# レビューフォーム ⭐︎⭐︎⭐︎⭐︎⭐︎ %>
-        <% if user_signed_in? %>
-          <%= render "reviews/form", review: @review %>
-        <% end %>
+        <%# ⭐︎⭐︎⭐︎⭐︎⭐︎ %>
+        <%= render "reviews/form", review: @review if user_signed_in? %>
 
         <%# レビュー一覧 %>
         <div id="reviews">

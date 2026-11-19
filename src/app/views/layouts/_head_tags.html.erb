@@ -1,21 +1,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <%# (public) %>
-<%= favicon_link_tag('/favicon.ico') %>
-<%= favicon_link_tag('/apple-touch-icon-180x180.png', # iOSアイコン
-                     {:rel => 'apple-touch-icon',
-                      :sizes => '180x180',
-                      :type => 'image/png'}) %>
+<%= favicon_link_tag '/favicon.ico' %>
+<%= favicon_link_tag '/apple-touch-icon-180x180.png', # iOSアイコン
+                  rel: 'apple-touch-icon',
+                  sizes: '180x180',
+                  type: 'image/png' %>
 <%= csrf_meta_tags %>
 <%= csp_meta_tag %>
 <%# pagination アイコン %>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <!-- ドロワーcdnjs 削除済 -->
 
-<%# Rails 7 / WebpackのJavascriptとCSSを読み込む %>
+<%# Rails 7 / Webpack_JavascriptとCSSを読み込む %>
 <%# (app/javascript/packs/application.js) %>
 <%= stylesheet_link_tag 'application', "data-turbo-track": "reload", preload: false %>
+<%= javascript_include_tag 'application', "data-turbo-track": "reload", defer: true %>
 
 <%# Rails7 GoogleMapsAPIスクリプトの読み込みを1回だけに固定 %>
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API'] %>&libraries=marker,places&loading=async" defer></script>
-
-<%= javascript_include_tag 'application', "data-turbo-track": "reload", defer: true %>

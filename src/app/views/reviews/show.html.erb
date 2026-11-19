@@ -18,7 +18,7 @@
         <div class="review_user d-flex align-items-center mb-2">
           <%# 画像 %>
           <%= link_to gravatar_for(@review.user, size: 30), @review.user %>
-          <div class="name_review ms-2">
+          <div class="ms-2">
             <%# 名前 %>
             <strong>
               <%= link_to @review.user.name, @review.user %>
@@ -35,7 +35,7 @@
 
         <main class="mb-0">
           <%# ★★☆☆☆ + 4日前 %>
-          <div class="user_score d-flex align-items-center mt-1">
+          <div class="d-flex align-items-center mt-1">
             <%# ★★☆☆☆ (パーセンテージ制御の星評価) %>
             <div class="star_rating">
               <div class="star_back">★★★★★</div>

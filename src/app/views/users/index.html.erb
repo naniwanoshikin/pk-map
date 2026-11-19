@@ -3,14 +3,12 @@
 
 <h2>ユーザー一覧</h2>
 
-<div>
-  <ul id="users_list">
-    <%= render @users %>
-    <%# (users/_user) %>
-  </ul>
+<ul id="users_list" class="list-unstyled m-0 px-2">
+  <%= render @users %>
+  <%# (users/_user) %>
+</ul>
 
-  <%# もっと見るボタン %>
-  <div id="view_more_container" class="text-center mt-4 mb-4">
-    <%= render 'shared/view_more_button', items: @users %>
-  </div>
+<%# もっと見るボタン %>
+<div id="view_more_container" class="text-center my-4">
+  <%= render 'shared/view_more_button', items: @users %>
 </div>

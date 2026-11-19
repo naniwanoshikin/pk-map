@@ -1,86 +1,6 @@
-// (posts/show)
-#reviews > ul {
-  max-width: 600px;
-
-  // ul に li が1つでもあるとき、
-  &:has(li) + .empty-reviews-message {
-    // 「レビューがまだありません」を非表示に
-    display: none;
-  }
-
-  // (reviews/review)
-  li {
-    padding: 8px 0;
-    border-top: 1px dotted #8c8b8b;
-    .user_score > a:hover {
-      text-decoration: none;
-    }
-  }
-}
-// 共通 (reviews/review, show)
-// □ 丸山愛子 口コミ 6件
-.review_user {
-  line-height: 0.9em;
-  strong > a,
-  .review_number > a {
-    color: inherit;
-    text-decoration: none;
-    font-size: 0.9em;
-  }
-}
-
-// (reviews/review)
-// [Good/Bad]ボタン 親要素
-.ev_btn {
-  width: 25%;
-  // (goods/good, bads/bad)
-  a {
-    text-decoration: none;
-    &:hover,
-    &:active,
-    &:focus {
-      text-decoration: none;
-    }
-  }
-  // 評価アイコン
-  .fa-thumbs-up,
-  .fa-thumbs-down {
-    color: #6699ff;
-  }
-  // 評価数
-  .ev_count {
-    font-size: 16px;
-    margin-left: 8px;
-    color: gray;
-  }
-}
-
-// 共通 (posts/show, /post)
-// ★★☆☆☆
-.star_rating {
-  position: relative;
-  display: inline-block;
-  font-size: 18px;
-  letter-spacing: 2px;
-  line-height: 1;
-  margin-right: 5px;
-  // ★★
-  .star_front {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: #ffcc33;
-    overflow: hidden; // はみ出した部分を隠す
-  }
-  // ☆☆☆☆☆
-  .star_back {
-    color: #ccc;
-  }
-}
-
 // (reviews/form)
 .btn_ratings {
-  color: #ffcc00;
+  color: #fc0;
   margin: 0 20%;
 }
 #exampleModal {
@@ -112,5 +32,55 @@
         width: 30%;
       }
     }
+  }
+}
+
+
+// (posts/show)
+#reviews > ul {
+  max-width: 600px;
+
+  // ul に li が1つでもあるとき、
+  &:has(li) + .empty-reviews-message {
+    // 「レビューがまだありません」を非表示に
+    display: none;
+  }
+
+  // (reviews/review)
+  li {
+    padding: 8px 0;
+    border-top: 1px dotted #8c8b8b;
+  }
+}
+
+// 共通 (reviews/review, show)
+// □ 丸山愛子 口コミ 6件
+.review_user {
+  line-height: 0.9em;
+  :is(strong, .review_number) > a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9em;
+  }
+}
+
+// (reviews/review)
+// [Good/Bad]ボタン 親要素
+.ev_btn {
+  width: 25%;
+  // (goods/good, bads/bad)
+  a {
+    text-decoration: none;
+  }
+  // 評価アイコン
+  .fa-thumbs-up,
+  .fa-thumbs-down {
+    color: #6699ff;
+  }
+  // 評価数
+  .ev_count {
+    font-size: 16px;
+    margin-left: 8px;
+    color: gray;
   }
 }
