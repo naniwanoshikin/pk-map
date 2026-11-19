@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "オートコンプリート導入 & APIキー分離 & リファクタ"
+	git commit -m "RenderAutoDeploy 設定"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
