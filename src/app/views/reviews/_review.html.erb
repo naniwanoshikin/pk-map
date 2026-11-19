@@ -1,41 +1,43 @@
 <%# レビュー (posts/show) %>
-<%# Rails7 TurboStream 向けにdom_IDを付与 %>
-<li id="<%= dom_id(review) %>">
-  <%# 削除ボタン review_id: (C)_private %>
-  <% if current_user?(review.user) %>
-    <%= link_to post_reviews_path(post_id: review.post, review_id: review.id), class: "text-danger float-end", data: { turbo_method: :delete, turbo_confirm: "レビューを削除しますか?" } do %>
-      <i class="fas fa-trash-alt"></i>
-    <% end %>
-  <% end %>
+<% reviewer = review.user %>
 
-  <div class="review_user d-flex align-items-center">
-    <%# 画像 %>
-    <%= link_to gravatar_for(review.user, size: 30), review.user %>
-    <div class="name_review">
-      <%# 名前 %>
-      <strong><%= link_to review.user.name, review.user, class: "" %></strong>
-      <br>
-      <%# ５件の口コミ %>
-      <span class="review_number small text-muted">
-        <%= link_to show_reviews_user_path(review.user), class: "" do %>
-          口コミ<%= review.user.reviews.size %>件
-        <% end %>
-      </span>
+<%# TurboStream ▶︎ dom_ID %>
+<li id="<%= dom_id(review) %>">
+  <div class="d-flex justify-content-between align-items-start">
+    <div class="review_user d-flex align-items-center gap-2">
+      <%# 画像 %>
+      <%= link_to gravatar_for(reviewer, size: 30), reviewer %>
+      <div class="lh-sm">
+        <%# 鈴木 口コミ10件 %>
+        <strong><%= link_to reviewer.name, reviewer %></strong>
+        <div class="review_number small text-muted">
+          <%= link_to show_reviews_user_path(reviewer) do %>
+            口コミ<%= reviewer.reviews.size %>件
+          <% end %>
+        </div>
+      </div>
     </div>
+
+    <%# 削除ボタン review_id: (C)_private %>
+    <% if current_user?(reviewer) %>
+      <%= link_to post_reviews_path(post_id: review.post, review_id: review.id), class: "text-danger", data: { turbo_method: :delete, turbo_confirm: "レビューを削除しますか?" } do %>
+        <i class="fas fa-trash-alt"></i>
+      <% end %>
+    <% end %>
   </div>
 
   <%# ★★☆☆☆ + 4日前 %>
-  <div class="user_score d-flex align-items-center mt-1">
-    <%= link_to review, class: 'd-flex align-items-center text-decoration-none' do %>
+  <div class="mt-1">
+    <%= link_to review, class: 'd-inline-flex align-items-center gap-2 text-decoration-none' do %>
       <%# ★★☆☆☆ %>
       <div class="star_rating">
         <div class="star_back">★★★★★</div>
         <div class="star_front" style="width: <%= (review.score.to_f * 20).to_i %>%;">★★★★★</div>
       </div>
       <%# 4日前 %>
-      <div class="small text-muted ms-2">
+      <span class="small text-muted">
         <%= time_ago_in_words(review.created_at).upcase %>前
-      </div>
+      </span>
     <% end %>
   </div>
 
@@ -44,13 +46,13 @@
     <%= simple_format(review.content, class: "m-0 text-dark") %>
   </div>
 
-  <div class="d-flex mt-2 mb-1">
+  <div class="d-flex gap-3 mt-2 mb-1 ms-5">
     <%# Goodボタン %>
-    <div id="good-<%= review.id %>" class="ev_btn ms-5">
+    <div id="good-<%= review.id %>" class="ev_btn">
       <%= render "goods/good", review: review %>
     </div>
     <%# Badボタン %>
-    <div id="bad-<%= review.id %>" class="ev_btn ms-3">
+    <div id="bad-<%= review.id %>" class="ev_btn">
       <%= render "bads/bad", review: review %>
     </div>
   </div>

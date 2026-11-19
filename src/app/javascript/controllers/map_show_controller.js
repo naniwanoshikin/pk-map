@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-// コードの解説はmap_home_controllerを参照してね
+// コードの意味: map_home_controller.js
 export default class extends Controller {
 
   static values = {
@@ -9,13 +9,9 @@ export default class extends Controller {
     apiKey: String
   }
 
-
   connect() {
-    // console.log('map_show_controller 接続成功');
     this.initMapOnLoad();
   }
-
-
 
   initMapOnLoad() {
     if (typeof window.google === 'undefined' || !window.google.maps || !window.google.maps.marker) {
@@ -25,9 +21,9 @@ export default class extends Controller {
     this.initMap();
   }
 
-
   initMap() {
-    // (posts/show)_データ属性から座標を取得
+    // console.log('詳細地図 初期化');
+    // (posts/show)_データ属性_そこの座標
     const lat = this.latValue || 0;
     const lng = this.lngValue || 0;
     const content = this.contentValue || "";
@@ -50,7 +46,7 @@ export default class extends Controller {
       mapId: 'DEMO_MAP_ID'
     });
 
-    // メンバ変数（this.marker）
+    // this.marker: メンバ変数
     // ピンを設置
     this.marker = new AdvancedMarkerElement({
       map: this.map,

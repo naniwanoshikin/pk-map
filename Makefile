@@ -73,7 +73,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "jQuery廃止 & ページネーション非同期"
+	git commit -m "オートコンプリート導入 & APIキー分離 & リファクタ"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
