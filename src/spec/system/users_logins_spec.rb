@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'ログイン', type: :system do # 8
@@ -7,7 +9,7 @@ describe 'ログイン', type: :system do # 8
   let(:user) { FactoryBot.create(:user) }
 
   scenario 'ログイン失敗: 無効なパスワード' do
-    fill_in 'Eメール',    with: user.email
+    fill_in 'Eメール', with: user.email
     fill_in 'パスワード', with: ' '
     find('#hoge').click # (devise/sessions/new)_ログインの重複
     expect(current_path).to eq login_path
@@ -48,5 +50,4 @@ describe 'ログイン', type: :system do # 8
       expect(cookies[:remember_token]).to eq nil
     end
   end
-
 end

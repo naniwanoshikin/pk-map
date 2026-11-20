@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'ユーザー編集', type: :system do # 10
@@ -28,5 +30,4 @@ describe 'ユーザー編集', type: :system do # 10
     expect(current_path).to eq user_path(user)
     expect(has_css?('.alert-notice')).to be_truthy
   end
-
 end

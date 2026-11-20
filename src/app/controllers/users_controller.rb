@@ -1,8 +1,15 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   # ログインを要求
-  before_action :authenticate_user!, only: [:destroy, :following, :followers]
-  before_action :correct_user, only: [:show, :show_reviews, :following, :followers]
+  before_action :authenticate_user!, only: %i[destroy following followers]
+  before_action :correct_user, only: %i[show show_reviews following followers]
   before_action :admin_user,   only: :destroy
+
+  # ユーザー一覧
+  def index
+    @users = User.page(params[:page]).per(12)
+  end
 
   def show
     # @user
@@ -10,10 +17,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
-      # ログイン後のリダイレクトに、非同期ページネーション(users/show.turbo_stream.erb)を優先して返してしまい、#user_posts_listが存在せず、Turbo は「書き換える場所が見つからない！」と元の画面のままフリーズ ▶︎「もっと見る」のときだけ非同期処理するよう分岐。
+      # ログイン後のリダイレクトに、非同期ページネーション(users/show.turbo_stream.erb)を優先されると、
+      # #user_posts_listが存在せず、Turbo は「書き換える場所が見つからない！」と元の画面のままフリーズするため、
+      # 「もっと見る」のときだけ非同期処理するよう分岐。
       format.turbo_stream if params[:page].present?
     end
-
   end
 
   # レビュー一覧
@@ -21,36 +29,32 @@ class UsersController < ApplicationController
     # @user
     # @userがレビューした投稿集
     @user_review_posts = @user.review_posts
-    .select("posts.*, reviews.created_at AS reviewed_at") # エラー回避
-    .joins(:reviews) # レビューの日付を持ってくる
-    .unscope(:order) # レビューモデルの自動ソートを無効化
-    .order("reviews.created_at DESC") # レビュー順に時系列ソート
-    .page(params[:page]).per(6)
+                              .select('posts.*, reviews.created_at AS reviewed_at') # エラー回避
+                              .joins(:reviews) # レビューの日付を持ってくる
+                              .unscope(:order) # レビューモデルの自動ソートを無効化
+                              .order('reviews.created_at DESC') # レビュー順に時系列ソート
+                              .page(params[:page]).per(6)
   end
 
   # フォロー/フォロワー 一覧 render 共用
   def following
-    @title = "フォロー中"
+    @title = 'フォロー中'
     # @user
     @users = @user.following.page(params[:page]).per(7)
     render 'show_follow'
   end
+
   def followers
-    @title = "フォロワー"
+    @title = 'フォロワー'
     # @user
     @users = @user.followers.page(params[:page]).per(7)
     render 'show_follow'
   end
 
-  # ユーザー一覧
-  def index
-    @users = User.page(params[:page]).per(12)
-  end
-
   # ユーザー削除 管理者のみ
   def destroy
     User.find(params[:id]).destroy
-    redirect_to users_url, alert: "ユーザーが削除されました", status: :see_other
+    redirect_to users_url, alert: 'ユーザーが削除されました', status: :see_other
   end
 
   private
@@ -65,5 +69,4 @@ class UsersController < ApplicationController
   def admin_user
     redirect_to(root_url) unless current_user.admin?
   end
-
 end

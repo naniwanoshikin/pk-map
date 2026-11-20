@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -31,14 +33,13 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
-
   # Deviseのテストヘルパーを有効化 ログインなど
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :system
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
+  config.fixture_paths = [Rails.root.join('spec/fixtures').to_s]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -79,9 +80,9 @@ RSpec.configure do |config|
 
   # Rails7.1 RequestSpecが走る前に、デフォルトのOriginヘッダーを設定
   config.before(:each, type: :request) do
-    host! "localhost"
+    host! 'localhost'
     # Railsのデフォルトテストホストである 'localhost' または 'example.org' を明示
-    default_url_options[:host] = "localhost"
+    default_url_options[:host] = 'localhost'
   end
 
   config.before(:suite) do
@@ -90,12 +91,12 @@ RSpec.configure do |config|
 
     # 「梅田」や「東京駅」などの住所が指定されたときに返す擬似データを登録しておく
     Geocoder::Lookup::Test.add_stub(
-      "梅田", [
+      '梅田', [
         {
-          'coordinates'  => [34.7024, 135.4959], # 緯度, 経度
-          'address'      => '大阪府大阪市北区梅田',
-          'state'        => '大阪府',
-          'country'      => '日本'
+          'coordinates' => [34.7024, 135.4959], # 緯度, 経度
+          'address' => '大阪府大阪市北区梅田',
+          'state' => '大阪府',
+          'country' => '日本'
         }
       ]
     )

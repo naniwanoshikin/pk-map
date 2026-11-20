@@ -420,6 +420,7 @@ DEPENDENCIES
   rails (~> 7.2.0)
   ransack
   rspec-rails (~> 7.1)
+  rubocop
   rubocop-rails
   sass-rails (>= 6)
   selenium-webdriver
@@ -429,6 +430,9 @@ DEPENDENCIES
   stimulus-rails
   turbo-rails
   web-console (>= 4.1.0)
+
+RUBY VERSION
+   ruby 3.3.14p208
 
 BUNDLED WITH
    2.3.27
