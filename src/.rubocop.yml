@@ -21,7 +21,7 @@ Style/Documentation:
   Enabled: false
 
 AllCops:
-  TargetRubyVersion: 3.3 # Rubyバージョンの記法
+  TargetRubyVersion: 3.4 # Rubyバージョンの記法
   NewCops: enable
   SuggestExtensions: false
   Exclude:

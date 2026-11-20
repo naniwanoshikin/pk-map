@@ -4,7 +4,7 @@ ps:
 # ログ
 log:
 	docker-compose logs
-# 起動 時間がだいぶかかる時がある
+# 起動 だいぶ時間かかる時がある
 build:
 	docker-compose up --build -d
 up:
@@ -42,11 +42,28 @@ routeu:
 routep:
 	docker-compose exec web rails routes | grep posts
 
+# migrate
+m:
+	docker-compose exec web rails db:migrate
+# データの中身（テーブル）を削除
+mr:
+	docker-compose exec web rails db:schema:load
+md:
+	docker-compose exec web rails db:migrate:down VERSION=20220309035728
+ms:
+	docker-compose exec web rails db:migrate:status
+seed:
+	docker-compose exec web rails db:seed
+
+# 本番用seed 未実施
+productseed:
+	docker-compose run --rm -e RAILS_ENV=production -e DATABASE_URL="postgresql://neondb_owner:npg_TVN0F5fPyUSk@ep-quiet-grass-a18326s2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require" web bundle exec rails db:seed
+
 # Rubocop
 rub:
 	docker-compose exec web bundle exec rubocop
 rub1:
-	docker-compose exec web bundle exec rubocop app/models/*
+	docker-compose exec web bundle exec rubocop db/seeds.rb
 rub2:
 	docker-compose exec web bundle exec rubocop spec/system
 
@@ -62,24 +79,12 @@ rspecm:
 rspech:
 	docker-compose exec web bundle exec rspec spec/helpers
 
-# migrate
-m:
-	docker-compose exec web rails db:migrate
-# データの中身（テーブル）を削除
-mr:
-	docker-compose exec web rails db:schema:load
-md:
-	docker-compose exec web rails db:migrate:down VERSION=20220309035728
-ms:
-	docker-compose exec web rails db:migrate:status
-seed:
-	docker-compose exec web rails db:seed
 
 # -----------------------------------------------
 # プッシュ
 p:
 	git add .
-	git commit -m "Rubocop一旦完全クリア"
+	git commit -m "Upgrade Ruby to 3.4.13"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
