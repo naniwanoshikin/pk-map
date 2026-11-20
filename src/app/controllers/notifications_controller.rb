@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NotificationsController < ApplicationController
   before_action :authenticate_user!
 
@@ -5,7 +7,8 @@ class NotificationsController < ApplicationController
     # 未確認通知の一覧 User(M)
     unconfirms = current_user.passive_notifications
 
-    # 一括で確認済みにする
+    # 一括で確認済みにする (意図的にrubocop許可)
+    # rubocop:disable-next Rails/SkipsModelValidations
     unconfirms.where(checked: false).update_all(checked: true)
 
     # 表示される通知一覧を一括取得 includes(N+1問題対策)

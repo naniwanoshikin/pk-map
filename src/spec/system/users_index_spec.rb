@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'ユーザ一覧', type: :system do # 10
@@ -8,5 +10,4 @@ describe 'ユーザ一覧', type: :system do # 10
     login_as(user)
     click_link 'Settings'
   end
-
 end

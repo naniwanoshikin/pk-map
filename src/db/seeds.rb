@@ -1,28 +1,30 @@
+# frozen_string_literal: true
+
 # 管理ユーザー
-user1 = User.find_or_create_by!(email: "example@railstutorial.org") do |user|
-  user.name                  = "Jason Pole"
-  user.password              = "foobar" # spec
-  user.password_confirmation = "foobar"
+user1 = User.find_or_create_by!(email: 'example@railstutorial.org') do |user|
+  user.name                  = 'Jason Pole'
+  user.password              = 'foobar' # spec
+  user.password_confirmation = 'foobar'
   user.admin                 = true
   user.address               = '大阪城公園'
 end
 
 # ゲストユーザー
-user2 = User.find_or_create_by!(email: "example-1@railstutorial.org") do |user|
-  user.name                  = "ゲスト鈴木"
-  user.password              = "foobar"
-  user.password_confirmation = "foobar"
+user2 = User.find_or_create_by!(email: 'example-1@railstutorial.org') do |user|
+  user.name                  = 'ゲスト鈴木'
+  user.password              = 'foobar'
+  user.password_confirmation = 'foobar'
   user.address               = '上汐町公園'
 end
 
 # 一般ユーザー n=0
 28.times do |n|
-  email = "example-#{n+2}@railstutorial.org"
+  email = "example-#{n + 2}@railstutorial.org"
 
   User.find_or_create_by!(email: email) do |user|
     user.name                  = Faker::Name.name
-    user.password              = "password"
-    user.password_confirmation = "password"
+    user.password              = 'password'
+    user.password_confirmation = 'password'
     user.address               = Faker::Address.city
     # https://github.com/faker-ruby/faker
   end
@@ -40,138 +42,137 @@ user8 = users[7]
 # followersがuserをフォロー
 [
   [users[2..14].sample(10), user1], # (3~15) 10人
-  [users[3..9].sample(5), user2],
-].shuffle.each { |followers, user|
-  followers.shuffle.each { |follower|
+  [users[3..9].sample(5), user2]
+].shuffle.each do |followers, user|
+  followers.shuffle.each do |follower|
     # フォロー + 通知
     follower.follow(user)
     follower.notify_to_follow!(user)
-  }
-}
+  end
+end
 
 # userがfollowingをフォロー
 [
   [user1, users[1..15]], # (2~16) 15人
-  [user2, users[2..7] + [users[0]]],
-].shuffle.each { |user, following|
-  following.each { |followed|
+  [user2, users[2..7] + [users[0]]]
+].shuffle.each do |user, following|
+  following.each do |followed|
     user.follow(followed)
     user.notify_to_follow!(followed)
-  }
-}
+  end
+end
 
 # -----------------------------------------------
 # 投稿
 [
   [user4, '普通', '真田山公園', 'いろんな遊具がある。子供が多い。', [
-    [user1, 4, "行きたくなる", []],
+    [user1, 4, '行きたくなる', []]
   ]],
   [user4, '普通', '天王寺公園', 'アクセスしやすい', [
-    [user1, 3, "アクセスがしやすい", []],
+    [user1, 3, 'アクセスがしやすい', []]
   ]],
   [user4, '普通', '石が辻公園', 'グライダーで木の枝に止まりたい', [
-    [user4, 3, "自重トレもよさげ", [user4]],
+    [user4, 3, '自重トレもよさげ', [user4]]
   ]],
   [user5, '悪い', '長居公園', 'かなり走れる', [
-    [user1, 1, "スロープ硬いよ..", []],
-    [user8, 3, "まぁまぁな鉄棒", []],
-    [user7, 3, "ランニングしている人で行き交っている", []],
+    [user1, 1, 'スロープ硬いよ..', []],
+    [user8, 3, 'まぁまぁな鉄棒', []],
+    [user7, 3, 'ランニングしている人で行き交っている', []]
   ]],
   [user4, '普通', 'パワーアーツ', 'ピンク色の床', [
-    [user3, 3, "去年ようやく2F行ったよ", []],
+    [user3, 3, '去年ようやく2F行ったよ', []]
   ]],
   [user5, '普通', '浪速公園', '壁が多くて良い', [
-    [user6, 2, "そんなにだった", []],
-    [user7, 3, "新しいスポットになる予感", []],
+    [user6, 2, 'そんなにだった', []],
+    [user7, 3, '新しいスポットになる予感', []]
   ]],
   [user3, '普通', '上汐町公園', 'グライダーがきつい', [
-    [user2, 3, "キャット難しいよな", [user5]],
+    [user2, 3, 'キャット難しいよな', [user5]]
   ]],
   [user2, '良い', '犬山城', '犬山といえば紅葉', [
-    [user3, 3, "いいなぁ愛知行きたくてしょうがない！", [user6]],
+    [user3, 3, 'いいなぁ愛知行きたくてしょうがない！', [user6]]
   ]],
   [user5, '普通', '大阪城公園', '坂道を登った先にある', [
-    [user1, 4, "歴史を感じる", []],
+    [user1, 4, '歴史を感じる', []]
   ]],
   [user6, '良い', '明治村', '自然がいい', [
-    [user3, 3, "ここまでくるのに大変だった", []],
+    [user3, 3, 'ここまでくるのに大変だった', []]
   ]],
   [user4, '普通', '桃谷公園', '斜めのレールがある', [
-    [user3, 4, "秋には紅葉で映える", []],
+    [user3, 4, '秋には紅葉で映える', []]
   ]],
   [user2, '普通', '鶴舞公園', 'ポール使えそう', [
-    [user5, 3, "火山ラーメン行きたい", [user3]],
-    [user6, 2, "無断駐輪はダメ絶対", []],
+    [user5, 3, '火山ラーメン行きたい', [user3]],
+    [user6, 2, '無断駐輪はダメ絶対', []]
   ]],
   [user5, '普通', '久宝寺緑地', '鉄棒2つもあるよ', [
-    [user1, 3, "砂場もある", []],
-    [user3, 4, "鉄棒が1mくらいの高さでちょうどいい", []],
-    [user2, 3, "わいも", []],
+    [user1, 3, '砂場もある', []],
+    [user3, 4, '鉄棒が1mくらいの高さでちょうどいい', []],
+    [user2, 3, 'わいも', []]
   ]],
   [user6, '普通', '小牧山城', '城周囲で動ける', [
-    [user7, 5, "段差が多い", []],
-    [user1, 4, "景色もいい", [user5]],
+    [user7, 5, '段差が多い', []],
+    [user1, 4, '景色もいい', [user5]]
   ]],
   [user3, '普通', 'クラフトパーク', '高い壁がある', [
-    [user1, 4, "トリックしたい", [user2]],
+    [user1, 4, 'トリックしたい', [user2]]
   ]],
   [user2, '良い', 'パルクール・アクロバット施設 PK Guild 鶴見店', '安全なマットがあるよ', [
-    [user1, 4, "久しぶりにダブルゲイナーしたい!!", []],
-    [user3, 5, "スクートトリプルがんばるぞ", []],
+    [user1, 4, '久しぶりにダブルゲイナーしたい!!', []],
+    [user3, 5, 'スクートトリプルがんばるぞ', []]
   ]],
   [user2, '普通', '鶴見緑地', '各国の土地がある', [
-    [user3, 1, "歩くのがしんどすぎる..", []],
-    [user1, 1, "夕方になると中の門が閉まるので要注意..", []],
+    [user3, 1, '歩くのがしんどすぎる..', []],
+    [user1, 1, '夕方になると中の門が閉まるので要注意..', []]
   ]],
   [user1, '普通', 'cafeくるり', 'cafeなのにトランポリンがある!', [
-    [user2, 5, "オシャレで可愛いcafeだよ", []],
-    [user3, 5, "また行きたい", []],
+    [user2, 5, 'オシャレで可愛いcafeだよ', []],
+    [user3, 5, 'また行きたい', []]
   ]],
   [user3, '良い', '各務原市民公園', '噴水がある', [
-    [user2, 5, "モンキーで段差超えられないよぉ", []],
+    [user2, 5, 'モンキーで段差超えられないよぉ', []]
   ]],
   [user2, '良い', '岐阜公園', '滝や橋がある', [
-    [user4, 4, "柵ができたらしい", []],
-    [user3, 3, "ここは山の麓", [user1, user2]],
+    [user4, 4, '柵ができたらしい', []],
+    [user3, 3, 'ここは山の麓', [user1, user2]]
   ]],
   [user2, '普通', '矢場町', 'スロープ最高', [
-    [user5, 5, "レールフロー教えて下さい", []],
+    [user5, 5, 'レールフロー教えて下さい', []]
   ]],
   [user2, '普通', 'エディオン久屋広場', '大きいパイプ', [
-    [user7, 1, "歩くのしんどい...", [user4]],
-    [user5, 4, "壁が噛みやすい", []],
-    [user4, 5, "レールしたい", [user2, user3, user1]],
+    [user7, 1, '歩くのしんどい...', [user4]],
+    [user5, 4, '壁が噛みやすい', []],
+    [user4, 5, 'レールしたい', [user2, user3, user1]]
   ]],
   [user2, '良い', '学びの森', '良い芝生だった', [
-    [user4, 3, "まぁまぁな壁", []],
-    [user3, 4, "トリッキングバトルできる", [user1, user5, user6, user8]],
-    [user7, 4, "とてもやりやすい^_^", []],
+    [user4, 3, 'まぁまぁな壁', []],
+    [user3, 4, 'トリッキングバトルできる', [user1, user5, user6, user8]],
+    [user7, 4, 'とてもやりやすい^_^', []]
   ]],
   [user2, '良い', 'MAXATTACK 岐阜', 'アパレルショップ', [
-    [user5, 5, "1Fがおしゃれ", [user1, user4, user6]],
-    [user1, 5, "手作りだって^_^", [user7]],
-    [user2, 4, "いいフローがしたい", [user3, user8]],
+    [user5, 5, '1Fがおしゃれ', [user1, user4, user6]],
+    [user1, 5, '手作りだって^_^', [user7]],
+    [user2, 4, 'いいフローがしたい', [user3, user8]]
   ]],
   [user1, '普通', '久屋大通公園', 'ロサンゼルス広場があったんだ', [
-    [user5, 4, "枝もないんだよね...", [user3]],
-    [user3, 4, "スロープもうないんだな...", [user2, user5]],
-    [user7, 5, "改装されて綺麗になったよね、cafeがある", [user7]],
-  ]],
-].each do |user, quality, address, content, reviews|
-  # userがpostする
-  post = user.posts.create!(
-    content: content, # 投稿文
-    address: address, # 場所
-    spot_quality: quality, # 質
-  )
-  reviews.each do |other_user, score, his_content, good_users|
-    # 複数のother_userがそのpostにreviewする
-    review = other_user.reviews.create!(
+    [user5, 4, '枝もないんだよね...', [user3]],
+    [user3, 4, 'スロープもうないんだな...', [user2, user5]],
+    [user7, 5, '改装されて綺麗になったよね、cafeがある', [user7]]
+  ]]
+].each do |author, quality, address, content, reviews|
+  # authorがpostする (場所:, 投稿文:)
+  post = author.posts.find_or_create_by!(address:, content:) do |p|
+    p.spot_quality = quality # 質
+  end
+
+  reviews.each do |reviewer, score, his_content, good_users|
+    # 複数のreviewerがそのpostにreviewする
+    review = reviewer.reviews.create!(
       post_id: post.id,     # レビュー先の投稿
       content: his_content, # レビュー文
-      score: score,         # 点数
+      score: score          # 点数
     )
-    other_user.notify_to_review!(post, review.id) # 通知
+    reviewer.notify_to_review!(post, review.id) # 通知
 
     # good_userがそのreviewを高評価
     good_users.each do |good_user|

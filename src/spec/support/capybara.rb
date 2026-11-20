@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # System spec を機能させるコード
 Capybara.register_driver :chrome_headless do |app|
-  options = ::Selenium::WebDriver::Chrome::Options.new
+  options = Selenium::WebDriver::Chrome::Options.new
 
   options.add_argument('--headless')
   options.add_argument('--no-sandbox')
@@ -18,10 +20,10 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system, js: true) do
-    if ENV["SELENIUM_DRIVER_URL"].present?
+    if ENV['SELENIUM_DRIVER_URL'].present?
       driven_by :selenium, using: :chrome, options: {
         browser: :remote,
-        url: ENV.fetch("SELENIUM_DRIVER_URL"),
+        url: ENV.fetch('SELENIUM_DRIVER_URL'),
         desired_capabilities: :chrome
       }
     else

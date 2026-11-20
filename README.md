@@ -46,20 +46,23 @@
 * **スクリプト**: JavaScript
 * **フレームワーク**: Stimulus
 * **ビルドツール**: webpack
-* **外部API**: Maps JavaScript API
+* **外部API**: Maps JavaScript API / Places API (New) / Street View Static API
+
 ### バックエンド
-* **言語**: Ruby 3.3.13
+* **言語**: Ruby 3.3.14
 * **フレームワーク**: Ruby on Rails 7.2.4
-* **認証**: Devise (5.0.4)
+* **認証**: Devise 5.0.4
+* **外部API**: Google Geocoding API
+* **静的解析**: RuboCop (rubocop-rails)
 * **テスト**: RSpec 6.1.5
     <!-- * System spec -->
     <!-- * Request spec -->
 ### データベース & インフラ
 * **データベース**: PostgreSQL 17 / Neon (Serverless PostgreSQL)
 * **開発環境**: Docker 20.10.17 / docker-compose 2.3.3
-* **本番環境**: Render (Docker Web Service)
+* **本番環境**: Render (Docker Web Service / Auto-Deploy)
 * **バージョン管理**: Git / GitHub
-  <!-- * CircleCI -->
+  <!-- * GitHub Actions -->
 <!-- * その他 -->
   <!-- * Visual Studio Code -->
   <!-- インフラ構成図 -->
@@ -67,20 +70,20 @@
   <!-- ファビコン -->
   <!-- * Adobe Fresco -->
 
+## 廃止・移行済み
+* **jQuery**: Vanilla JS / Stimulus へ
+* **Slim**: 標準の ERB へ戻す
+
 ## 今後の課題
+* Rails8.0へバージョン上げる
 * 非推奨警告の修正 / リファクタリング
 * 地図 ボタン機能の実装
-
-## 廃止
-* jQuery
-* Slim
-
 
 |  | 旧 | 今ここ | 将来 |
 | :--- | :--- | :--- | :--- |
 | **Ruby** | 2.7.6 | **3.3.13** | 3.4  |
 | **Rails** | 6.0.4 | **7.2.4** | 8.0 |
-| **Bootstrap** | 4.6.1 | **5.3.8** | - |
+| **Bootstrap** | 3.4.1, 4.6.1 | **5.3.8** | - |
 | **本番環境** | heroku 7.60.2 | Render | AWS (ECS)  |
 <!-- | **jQuery** | 3.6.0 | **廃止** | - | -->
 <!-- | **Rspec** | 3.10 | 6.1.5 | 7.x  | -->
