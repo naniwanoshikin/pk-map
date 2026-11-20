@@ -41,9 +41,15 @@ routeu:
 	docker-compose exec web rails routes | grep users
 routep:
 	docker-compose exec web rails routes | grep posts
+
 # Rubocop
-rb:
-	docker-compose exec web bundle exec rubocop --require rubocop-airbnb
+rub:
+	docker-compose exec web bundle exec rubocop
+rub1:
+	docker-compose exec web bundle exec rubocop app/models/*
+rub2:
+	docker-compose exec web bundle exec rubocop spec/system
+
 # Rspec
 rspec:
 	docker-compose exec web bundle exec rspec
@@ -73,7 +79,7 @@ seed:
 # プッシュ
 p:
 	git add .
-	git commit -m "RenderAutoDeploy 設定"
+	git commit -m "Rubocop一旦完全クリア"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

@@ -1,5 +1,7 @@
 # 追加
+.vscode/
 .DS_Store
+
 src/.env
 # 取得したRubyのライブラリ rspec
 src/vendor/bundle

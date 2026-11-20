@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe User, type: :model do # 6
-
   let(:user) { FactoryBot.build(:user) }
 
   subject { user }
@@ -20,7 +21,6 @@ describe User, type: :model do # 6
     it { should be_valid }
   end
 
-
   describe 'バリデーション' do
     it '名前が空なら無効' do
       user.name = ' '
@@ -35,7 +35,7 @@ describe User, type: :model do # 6
       expect(user).to be_invalid
     end
     it 'emailの文字数が長いなら無効' do
-      user.email = 'a' * 244 + '@example.com'
+      user.email = "#{'a' * 244}@example.com"
       expect(user).to be_invalid
     end
   end
@@ -78,7 +78,7 @@ describe User, type: :model do # 6
     it '保存時に全て小文字変換されること: before_save
     as all lower-case' do
       mixed_case_email = 'Foo@ExAMPle.CoM'
-      user.update_attribute(:email, mixed_case_email) # 変えた
+      user.update!(email: mixed_case_email)
       expect(user.reload.email).to eq mixed_case_email.downcase
     end
   end

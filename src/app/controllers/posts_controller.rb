@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy, :new]
-  before_action :set_post_and_correct_post,  only: :show
-  before_action :set_user_post_and_correct_user,  only: :destroy
+  before_action :authenticate_user!, only: %i[create destroy new]
+  before_action :set_post_and_correct_post, only: :show
+  before_action :set_user_post_and_correct_user, only: :destroy
 
   # 投稿詳細
   def show
@@ -9,11 +11,11 @@ class PostsController < ApplicationController
     # 投稿に対するレビュー集
     @reviews = @post.reviews
     # レビューを新規作成
-    if user_signed_in?
-      @review = current_user.reviews.build
-    else
-      @review = Review.new
-    end
+    @review = if user_signed_in?
+                current_user.reviews.build
+              else
+                Review.new
+              end
   end
 
   # 投稿フォーム
@@ -30,7 +32,7 @@ class PostsController < ApplicationController
       # (shared/feed)
       # @feed_items = current_user.feed.page(params[:page]).per(10)
       # Rails 7(Turbo)
-      render :new, status: :unprocessable_entity # 422エラー
+      render :new, status: :unprocessable_content # 422エラー
     end
   end
 
@@ -40,18 +42,19 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        flash[:alert] = "投稿を削除しました"
+        flash[:alert] = '投稿を削除しました'
         redirect_to root_url, status: :see_other
       end
       format.turbo_stream do
-        flash.now[:alert] = "投稿を削除しました"
+        flash.now[:alert] = '投稿を削除しました'
       end
     end
   end
 
   private
 
-  def post_params # create
+  # create
+  def post_params
     params.require(:post).permit(
       :content,
       :address,

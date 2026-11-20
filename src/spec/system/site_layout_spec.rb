@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'HomePages', type: :system do
@@ -19,8 +21,8 @@ describe 'HomePages', type: :system do
   end
 
   it 'リンクとパスのテスト' do # 5
-    expect(page).to have_link 'PK map',  href: root_path
-    expect(page).to have_link 'PKmapとは',   href: about_path
+    expect(page).to have_link 'PK map', href: root_path
+    expect(page).to have_link 'PKmapとは', href: about_path
     expect(page).to have_link '新規登録', href: new_user_registration_path
   end
 end

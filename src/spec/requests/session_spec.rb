@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-describe "Sessions", type: :request do
+describe 'Sessions', type: :request do
   let(:user) { FactoryBot.create(:user) }
 
-  describe "フレンドリーフォワーディング" do
+  describe 'フレンドリーフォワーディング' do
     it 'succeeds' do
       get edit_user_registration_path(user)
       log_in_as(user)
