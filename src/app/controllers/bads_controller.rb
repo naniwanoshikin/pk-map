@@ -5,7 +5,7 @@ class BadsController < ApplicationController
 
   # 低評価する
   def create
-    @review = Review.find(params[:review])
+    @review = Review.find(params.expect(:review))
 
     current_user.bad(@review)
 
