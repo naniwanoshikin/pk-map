@@ -5,7 +5,7 @@ class RelationshipsController < ApplicationController
 
   def create
     # フォローされるユーザー
-    @user = User.find(params[:followed_id])
+    @user = User.find(params.expect(:followed_id))
     # @userをフォロー
     current_user.follow(@user)
     # @userにフォロー通知
@@ -18,7 +18,7 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    @user = Relationship.find(params[:id]).followed
+    @user = Relationship.find(params.expect(:id)).followed
     current_user.unfollow(@user)
     respond_to do |format|
       format.html { redirect_to @user }

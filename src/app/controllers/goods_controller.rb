@@ -5,7 +5,7 @@ class GoodsController < ApplicationController
 
   # 高評価する
   def create
-    @review = Review.find(params[:review])
+    @review = Review.find(params.expect(:review))
 
     perform_good(@review)
 

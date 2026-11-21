@@ -55,11 +55,13 @@ class PostsController < ApplicationController
 
   # create
   def post_params
-    params.require(:post).permit(
-      :content,
-      :address,
-      :spot_quality, # radio
-      spot_type: [] # checkbox
+    params.expect(
+      post: [
+        :content,
+        :address,
+        :spot_quality, # radio
+        { spot_type: [] } # checkbox
+      ]
     )
   end
 
