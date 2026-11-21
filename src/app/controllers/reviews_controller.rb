@@ -71,10 +71,12 @@ class ReviewsController < ApplicationController
 
   def review_params
     # (posts/show)
-    params.require(:review).permit(
-      :post_id,
-      :score,
-      :content
+    params.expect(
+      review: %i[
+        post_id
+        score
+        content
+      ]
     )
   end
 

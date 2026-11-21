@@ -65,7 +65,7 @@ rub:
 rub1:
 	docker-compose exec web bundle exec rubocop db/seeds.rb
 rub2:
-	docker-compose exec web bundle exec rubocop spec/system
+	docker-compose exec web bundle exec rubocop app/controllers/*
 
 # Rspec
 rspec:
@@ -84,7 +84,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "Upgrade Ruby to 3.4.13"
+	git commit -m "Upgrade Rails to 8.0.5.2"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

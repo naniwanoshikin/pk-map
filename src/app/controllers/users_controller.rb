@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
   # ユーザー削除 管理者のみ
   def destroy
-    User.find(params[:id]).destroy
+    User.find(params.expect(:id)).destroy
     redirect_to users_url, alert: 'ユーザーが削除されました', status: :see_other
   end
 
