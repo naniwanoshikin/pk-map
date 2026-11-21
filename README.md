@@ -49,7 +49,7 @@
 * **外部API**: Maps JavaScript API / Places API (New) / Street View Static API
 
 ### バックエンド
-* **言語**: Ruby 3.3.14
+* **言語**: Ruby 3.4.13
 * **フレームワーク**: Ruby on Rails 7.2.4
 * **認証**: Devise 5.0.4
 * **外部API**: Google Geocoding API
@@ -81,7 +81,7 @@
 
 |  | 旧 | 今ここ | 将来 |
 | :--- | :--- | :--- | :--- |
-| **Ruby** | 2.7.6 | **3.3.13** | 3.4  |
+| **Ruby** | 2.7.6 | **3.4.13** | - |
 | **Rails** | 6.0.4 | **7.2.4** | 8.0 |
 | **Bootstrap** | 3.4.1, 4.6.1 | **5.3.8** | - |
 | **本番環境** | heroku 7.60.2 | Render | AWS (ECS)  |

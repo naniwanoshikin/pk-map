@@ -1,12 +1,17 @@
 # 必要なNode.jsとYarnのバイナリを確保するステージ
 FROM node:20-slim AS node-env
 
-FROM ruby:3.3
+FROM ruby:3.4.13-slim
 
 # Node.jsのバイナリ一式と、コアパック・Yarnの実体を正しくコピー
 COPY --from=node-env /usr/local/bin /usr/local/bin
 COPY --from=node-env /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node-env /opt /opt
+
+# gemのコンパイルとPostgreSQL接続に必要な最小限のパッケージをインストール
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends build-essential libpq-dev git libyaml-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -21,7 +26,8 @@ ARG RAILS_ENV=development
 ENV RAILS_ENV=${RAILS_ENV}
 
 # bundler を lockfile のバージョンに揃える
-RUN gem install bundler -v 2.2.33
+# 最新 Bundler を使用
+RUN gem update --system && gem install bundler
 
 # 本番のときのみ dev/test を除外
 RUN if [ "$RAILS_ENV" = "production" ] ; then \
