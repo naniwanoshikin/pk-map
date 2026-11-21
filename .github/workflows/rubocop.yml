@@ -1,0 +1,28 @@
+name: RuboCop
+
+on:
+  push:
+    branches: [ map ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4.13"
+          bundler-cache: true
+          working-directory: ./src
+
+      - name: Run RuboCop
+        run: bundle exec rubocop --parallel
