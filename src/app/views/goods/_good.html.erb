@@ -1,8 +1,8 @@
 <%# (reviews/_review) %>
-
+<%# User(M) %>
 <% if current_user&.good?(review) %>
-  <%# 高評価している場合 (Good 解除ボタン) %>
-  <%= link_to good_path(current_user.goods.find_by(review: review)),
+  <%# 高評価している場合 (Good 解除ボタン) SQLゼロ %>
+  <%= link_to good_path(review.goods.find { |good| good.user_id == current_user.id }),
         data: { turbo_method: :delete },
         class: '' do %>
     <i class="fas fa-thumbs-up fa-lg"></i>
@@ -17,8 +17,8 @@
   <% end %>
 <% end %>
 
-<%# 高評価数 %>
-<% if review.goods.present? %>
+<%# 高評価数があれば %>
+<% if review.goods.any? %>
   <span class="ev_count">
     <%# (reviews/good_users) 高評価したユーザー一覧 %>
     <%= link_to good_users_review_path(review), class: "text-muted" do %>
