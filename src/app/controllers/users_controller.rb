@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # ログインを要求
   before_action :authenticate_user!, only: %i[destroy following followers]
   before_action :correct_user, only: %i[show show_reviews following followers]
-  before_action :admin_user,   only: :destroy
+  before_action :admin_user, only: :destroy
 
   # ユーザー一覧
   def index
@@ -12,8 +12,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    # @user
-    @posts = @user.posts.page(params[:page]).per(6) # 13
+    # @user 13
+    # N+1問題対策 includes
+    @posts = @user.posts.includes(:reviews).page(params[:page]).per(6)
 
     respond_to do |format|
       format.html
