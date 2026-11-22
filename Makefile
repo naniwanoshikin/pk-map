@@ -84,7 +84,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "Add GitHub Actions workflow for RuboCop"
+	git commit -m "Add counter_cache and optimize N+1 queries"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

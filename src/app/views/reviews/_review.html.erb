@@ -12,7 +12,7 @@
         <strong><%= link_to reviewer.name, reviewer %></strong>
         <div class="review_number small text-muted">
           <%= link_to show_reviews_user_path(reviewer) do %>
-            口コミ<%= reviewer.reviews.size %>件
+            口コミ<%= reviewer.reviews_count %>件
           <% end %>
         </div>
       </div>

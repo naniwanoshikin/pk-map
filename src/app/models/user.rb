@@ -24,8 +24,8 @@ class User < ApplicationRecord
   # 高評価 / 低評価 / userが高評価したレビュー / userが低評価したレビュー
   has_many :goods, dependent: :destroy
   has_many :bads, dependent: :destroy
-  has_many :good_reviews, through: :goods, source: :review
-  has_many :bad_reviews, through: :bads, source: :review
+  # has_many :good_reviews, through: :goods, source: :review
+  # has_many :bad_reviews, through: :bads, source: :review
 
   # フォローする
   has_many :active_relationships, class_name: 'Relationship', foreign_key: 'follower_id',
@@ -115,34 +115,34 @@ class User < ApplicationRecord
   end
 
   # ------------------------------
-  # userがreviewを高評価 (C)
+  # userがreviewを高評価 Goods(C)
   def good(review)
     goods.create(review_id: review.id)
   end
 
-  # 高評価を解除
+  # 高評価を解除 Goods(C)
   def ungood(review)
     goods.find_by(review_id: review.id)&.destroy
   end
 
   # selfがreviewを高評価してたらtrue (goods/good)
   def good?(review)
-    good_reviews.include?(review)
+    review.goods.any? { |good| good.user_id == id }
   end
 
-  # userがreviewを低評価する (C)
+  # userがreviewを低評価 Bads(C)
   def bad(review)
     bads.create(review_id: review.id)
   end
 
-  # 低評価を解除
+  # 低評価を解除 Bads(C)
   def unbad(review)
     bads.find_by(review_id: review.id)&.destroy
   end
 
   # selfがreviewを低評価してたらtrue (bads/bad)
   def bad?(review)
-    bad_reviews.include?(review)
+    review.bads.any? { |bad| bad.user_id == id }
   end
 
   # --- 7. 通知 ---------------

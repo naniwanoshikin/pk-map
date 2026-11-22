@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_10_31_231804) do
+ActiveRecord::Schema[8.0].define(version: 2026_11_21_222520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_31_231804) do
     t.float "longitude"
     t.string "spot_quality"
     t.text "spot_type", array: true
+    t.integer "reviews_count", default: 0, null: false
     t.index ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -97,6 +98,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_10_31_231804) do
     t.string "address", default: "鶴見緑地"
     t.float "latitude", default: 34.711
     t.float "longitude", default: 135.581
+    t.integer "reviews_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

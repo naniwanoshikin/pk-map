@@ -2,8 +2,8 @@
 
 class Review < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
-  belongs_to :user
-  belongs_to :post
+  belongs_to :user, counter_cache: true # SQL減らす
+  belongs_to :post, counter_cache: true # SQL減らす
 
   # 高評価
   has_many :goods, dependent: :destroy

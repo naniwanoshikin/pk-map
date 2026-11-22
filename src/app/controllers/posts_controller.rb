@@ -9,7 +9,7 @@ class PostsController < ApplicationController
   def show
     # @post 下記
     # 投稿に対するレビュー集
-    @reviews = @post.reviews
+    @reviews = @post.reviews.includes(:user, :goods, :bads)
     # レビューを新規作成
     @review = if user_signed_in?
                 current_user.reviews.build
@@ -67,7 +67,7 @@ class PostsController < ApplicationController
 
   # 投稿のない詳細画面は表示できない show
   def set_post_and_correct_post
-    @post = Post.find_by(id: params[:id])
+    @post = Post.includes(:user).find_by(id: params[:id])
     redirect_to root_url if @post.nil?
   end
 
