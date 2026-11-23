@@ -4,21 +4,24 @@
 <div id="user_stats_<%= @user.id %>" class="user_stats_box">
   <%= link_to @user do %>
     <strong class="stat">
-      <%= @user.posts.size %>
+      <%# SQL減らす %>
+      <%= @user.posts_count %>
     </strong>
     投稿数
   <% end %>
 
   <%= link_to followers_user_path(@user) do %>
     <strong id="followers" class="stat">
-      <%= @user.followers.size %>
+      <%# SQL減らす %>
+      <%= @user.followers_count %>
     </strong>
     フォロワー
   <% end %>
 
   <%= link_to following_user_path(@user) do %>
     <strong id="following" class="stat">
-      <%= @user.following.size %>
+      <%# SQL減らす %>
+      <%= @user.following_count %>
     </strong>
     フォロー中
   <% end %>
