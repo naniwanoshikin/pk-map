@@ -15,7 +15,6 @@ export default class extends Controller {
       // hide(): 同じページにいるまま閉じる時に使える
       Modal.getOrCreateInstance(modal).hide()
     }
-
     // 役目を終えた自分自身をDOMから削除（使い捨ての指令役）
     this.element.remove()
   }

@@ -15,7 +15,8 @@ module NotificationsHelper
 
   # 未確認の通知を検索 (layouts/circle)
   def unchecked_notifications
-    current_user.passive_notifications.where(checked: false)
+    # @ メモ化 = 複数回呼ばれても1回しか評価しない SQL実行
+    @unchecked_notifications ||= current_user.passive_notifications.where(checked: false).to_a
   end
 
   # (notifications/_notification)

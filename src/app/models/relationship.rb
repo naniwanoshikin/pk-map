@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Relationship < ApplicationRecord
-  belongs_to :follower, class_name: 'User'
-  belongs_to :followed, class_name: 'User'
-
+  # 「AさんがBさんをフォローした」とする counter_cache = SQL減らす
+  # フォローする側: Aさんの following_count が+1増える
+  belongs_to :follower, class_name: 'User', counter_cache: :following_count
+  # フォローされる側: Bさんの followers_count が+1増える
+  belongs_to :followed, class_name: 'User', counter_cache: :followers_count
   # 自己フォローを禁止する (users/user)
   validate :cannot_follow_self
 

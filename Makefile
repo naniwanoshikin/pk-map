@@ -84,7 +84,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "詳細画面の地図コントローラをモダン化・XSS対策・通信最適化"
+	git commit -m "ユーザー詳細ページのクエリ最適化とcounter_cacheを導入"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

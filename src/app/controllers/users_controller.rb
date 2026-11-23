@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   # ログインを要求
   before_action :authenticate_user!, only: %i[destroy following followers]
-  before_action :correct_user, only: %i[show show_reviews following followers]
+  before_action :set_user, only: %i[show show_reviews following followers]
   before_action :admin_user, only: :destroy
 
   # ユーザー一覧
@@ -13,8 +13,8 @@ class UsersController < ApplicationController
 
   def show
     # @user 13
-    # N+1問題対策
-    @posts = @user.posts.includes(:reviews).page(params[:page]).per(6)
+    # N+1問題対策 includes / without_count
+    @posts = @user.posts.includes(:reviews).page(params[:page]).per(6).without_count
 
     respond_to do |format|
       format.html
@@ -60,8 +60,8 @@ class UsersController < ApplicationController
 
   private
 
-  # 正しいユーザーを要求
-  def correct_user
+  # 対象のユーザーが存在するか確認
+  def set_user
     @user = User.find_by(id: params[:id])
     redirect_to root_url if @user.nil?
   end
