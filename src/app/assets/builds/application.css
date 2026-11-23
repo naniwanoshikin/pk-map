@@ -11891,6 +11891,10 @@ section {
   overflow: auto;
 }
 
+footer ul li a {
+  text-decoration: none;
+}
+
 /* layouts_container */
 #flash_messages {
   width: 95%;
@@ -12473,7 +12477,6 @@ p {
   background: center/cover url(images/mie.JPG) rgba(255, 255, 255, 0.7);
   background-blend-mode: lighten;
   height: 55vh;
-  margin-top: 10px;
 }
 .sotonideyo h1 {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;

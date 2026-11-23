@@ -8,6 +8,12 @@ section {
   overflow: auto;
 }
 
+footer {
+  ul li a {
+    text-decoration: none;
+  }
+}
+
 /* layouts_container */
 
 // ログイン/アウト, Post, Review 後
@@ -113,7 +119,6 @@ header .navbar {
   }
 }
 
-
 // サイドバー
 #offcanvasNavbar {
   --bs-offcanvas-width: 70%;
@@ -173,7 +178,6 @@ header .navbar {
     transform: translateY(-9px) rotate(-45deg);
   }
 }
-
 
 // (shared/_view_more_button.html)
 // もっと見るボタン

@@ -454,70 +454,89 @@ __webpack_require__.r(__webpack_exports__);
     lat: Number,
     lng: Number,
     content: String,
-    apiKey: String
+    apiKey: String,
+    mapId: { type: String, default: "DEMO_MAP_ID" } // GCPにて本番用に要作成
   }
 
   connect() {
-    this.initMapOnLoad();
+    this.initMapOnLoad()
+  }
+
+  disconnect() {
+    if (this.retryTimer) {
+      clearTimeout(this.retryTimer)
+    }
+    this.infowindow?.close()
   }
 
   initMapOnLoad() {
-    if (typeof window.google === 'undefined' || !window.google.maps || !window.google.maps.marker) {
-      setTimeout(() => this.initMapOnLoad(), 100);
-      return;
+    if (!window.google?.maps?.marker) {
+      this.retryTimer = setTimeout(() => this.initMapOnLoad(), 100)
+      return
     }
-    this.initMap();
+    this.initMap()
   }
 
   initMap() {
-    // console.log('詳細地図 初期化');
-    // (posts/show)_データ属性_そこの座標
-    const lat = this.latValue || 0;
-    const lng = this.lngValue || 0;
-    const content = this.contentValue || "";
-    const apiKey = this.apiKeyValue || "";
+    // console.log('投稿詳細 地図の初期化')
+    // (posts/show)_データ属性_そこの座標（緯度・経度）
+    const lat = this.latValue
+    const lng = this.lngValue
 
-    if (isNaN(lat) || isNaN(lng) || (lat === 0 && lng === 0)) {
-      console.warn("警告: 投稿の座標（緯度・経度）が取得できていません");
-      return;
+    if (lat === 0 || lng === 0) {
+      console.warn("警告: 投稿の座標(lat, lng)が取得できていません")
+      return
     }
 
-    const Map = google.maps.Map;
-    const AdvancedMarkerElement = google.maps.marker.AdvancedMarkerElement;
-    const InfoWindow = google.maps.InfoWindow;
+    const position = { lat, lng }
 
     // 地図の生成
-    this.map = new Map(this.element, {
-      center: { lat: lat, lng: lng },
+    this.map = new google.maps.Map(this.element, {
+      center: position,
       zoom: 15,
       mapTypeControl: false,
-      mapId: 'DEMO_MAP_ID'
-    });
+      mapId: this.mapIdValue
+    })
 
     // this.marker: メンバ変数
     // ピンを設置
-    this.marker = new AdvancedMarkerElement({
+    this.marker = new google.maps.marker.AdvancedMarkerElement({
       map: this.map,
-      position: { lat: lat, lng: lng },
-      title: content,
+      position: position,
+      title: this.contentValue,
       gmpClickable: true,
-    });
+    })
 
-    this.infowindow = new InfoWindow();
+    this.infowindow = new google.maps.InfoWindow()
+    // 吹き出しの中身をキャッシュ
+    let cachedContent = null
 
     this.marker.addEventListener('gmp-click', () => {
-      this.infowindow.setContent(
-        // 画像
-        '<div class="infowindow">'
-        + `<span>${content}</span>`
-        + `<img src='https://maps.googleapis.com/maps/api/streetview?size=640x480&heading=160&fov=120&location=${lat},${lng}&key=${apiKey}' >`
-        + '</div>'
-      );
+      if (!cachedContent) {
+        // console.log('div作成')
+        cachedContent = this.buildInfoWindowContent({ lat, lng })
+        this.infowindow.setContent(cachedContent)
+      }
       this.infowindow.open({
         anchor: this.marker,
         map: this.map,
-      });
-    });
+      })
+    })
+
+  }
+  buildInfoWindowContent({ lat, lng }) {
+    const wrapper = document.createElement('div')
+    wrapper.className = 'infowindow'
+
+    const span = document.createElement('span')
+    span.textContent = this.contentValue
+    // 画像
+    const img = document.createElement('img')
+    img.src = `https://maps.googleapis.com/maps/api/streetview?size=400x300&heading=160&fov=120&location=${lat},${lng}&key=${this.apiKeyValue}`
+    img.alt = this.contentValue
+
+    wrapper.append(span, img)
+    return wrapper
   }
 }) }.default;
 
