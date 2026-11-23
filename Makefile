@@ -57,7 +57,7 @@ seed:
 
 # 本番用seed 未実施
 productseed:
-	docker-compose run --rm -e RAILS_ENV=production -e DATABASE_URL="postgresql://neondb_owner:npg_TVN0F5fPyUSk@ep-quiet-grass-a18326s2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require" web bundle exec rails db:seed
+	docker-compose run --rm -e RAILS_ENV=production -e DATABASE_URL="$$DATABASE_URL" web bundle exec rails db:seed
 
 # Rubocop
 rub:
@@ -84,7 +84,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "Add counter_cache and optimize N+1 queries"
+	git commit -m "詳細画面の地図コントローラをモダン化・XSS対策・通信最適化"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

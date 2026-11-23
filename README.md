@@ -1,3 +1,5 @@
+[![RuboCop](https://github.com/naniwanoshikin/pk-map/actions/workflows/rubocop.yml/badge.svg)](https://github.com/naniwanoshikin/pk-map/actions/workflows/rubocop.yml)
+
 # PKmap
 ```
 外で運動できる所を探しませんか。
@@ -21,8 +23,8 @@
 
 ### スポット関連
 * 一覧画面
+  * 地図 (ピン/吹き出し)
   * 検索 オートコンプリート機能 Places API (New)
-  * Googleマップ (ピン/吹き出し)
   * ストリートビュー
 * 詳細画面
   <!-- * 国内の住所の抽出 -->
@@ -34,16 +36,12 @@
 * フラッシュ Stimulus
 * ページネーション kaminari (非同期)
 * 通知 (フォローなど)
-<!-- ドロワー, ローディング, モーダルお片づけ -->
-<!-- 高精度で緯度経度を算出 -->
-<!-- * Geocoding API -->
-<!-- * Street View Static API -->
+<!-- ローディング, モーダルお片づけ -->
 
 ## 使用技術
 ### フロントエンド
-* HTML/CSS/Sass
-* Bootstrap 5.3.8
-* **スクリプト**: JavaScript
+* **マークアップ**: HTML / CSS / Sass / Bootstrap 5.3.8
+* **言語**: JavaScript
 * **フレームワーク**: Stimulus
 * **ビルドツール**: webpack
 * **外部API**: Maps JavaScript API / Places API (New) / Street View Static API
@@ -61,8 +59,7 @@
 * **データベース**: PostgreSQL 17 / Neon (Serverless PostgreSQL)
 * **開発環境**: Docker 20.10.17 / docker-compose 2.3.3
 * **本番環境**: Render (Docker Web Service / Auto-Deploy)
-* **バージョン管理**: Git / GitHub
-* **GitHub Actions**
+* **バージョン管理 / CI**: Git / GitHub / GitHub Actions
 
 <!-- * その他 -->
   <!-- * Visual Studio Code -->
@@ -70,6 +67,10 @@
   <!-- * drawio -->
   <!-- ファビコン -->
   <!-- * Adobe Fresco -->
+
+<!-- ## パフォーマンス・運用コスト最適化の取り組み
+* **N+1問題・クエリ削減**: Bullet gem によるクエリ監視のもと、`includes` による Eager Loading とメモリ上での配列処理、および `counter_cache` を導入し、サーバーレスDB（Neon）との通信回数とレスポンス時間を大幅に削減。
+* **モダン化・保守性向上**: Ruby 3.1 → 3.4、Rails 6.1 → 8.0 への段階的アップグレードおよび jQuery / Webpacker 廃止（Turbo / Stimulus 移行）を実施。 -->
 
 ## 廃止・移行済
 * **jQuery**: Vanilla JS / Stimulus へ
