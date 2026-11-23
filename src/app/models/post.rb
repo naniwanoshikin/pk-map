@@ -2,7 +2,7 @@
 
 class Post < ApplicationRecord
   default_scope -> { order(created_at: :desc) } # 要改善
-  belongs_to :user
+  belongs_to :user, counter_cache: true # posts_count SQL減らす
 
   # レビュー
   has_many :reviews, dependent: :destroy
@@ -25,15 +25,16 @@ class Post < ApplicationRecord
   # (posts/post)
   # 平均評価 3.2
   def avg_score
-    # 空の時のN+1やエラーを防ぐため存在チェック
-    return 0.0 if reviews.blank?
+    # 存在チェック
+    return 0.0 if reviews.empty?
 
-    reviews.average(:score).round(1).to_f # 小数点1桁
+    # N+1 対策 float 小数点1桁
+    (reviews.sum(&:score).to_f / reviews.size).round(1)
   end
 
   # 平均評価 64% ⭐︎のメーター
   def review_score_percentage
-    avg_score * 100 / 5
+    (avg_score * 100 / 5).round(1)
   end
 
   # (posts/show)

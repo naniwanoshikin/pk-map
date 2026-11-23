@@ -570,7 +570,6 @@ __webpack_require__.r(__webpack_exports__);
       // hide(): 同じページにいるまま閉じる時に使える
       bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal.getOrCreateInstance(modal).hide()
     }
-
     // 役目を終えた自分自身をDOMから削除（使い捨ての指令役）
     this.element.remove()
   }

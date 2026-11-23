@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_11_21_222520) do
+ActiveRecord::Schema[8.0].define(version: 2026_11_23_194848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -99,6 +99,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_11_21_222520) do
     t.float "latitude", default: 34.711
     t.float "longitude", default: 135.581
     t.integer "reviews_count", default: 0, null: false
+    t.integer "posts_count", default: 0, null: false
+    t.integer "following_count", default: 0, null: false
+    t.integer "followers_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
