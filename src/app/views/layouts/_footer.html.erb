@@ -34,10 +34,10 @@
       <nav>
         <ul class="list-unstyled d-flex gap-3 mb-0">
           <% if Rails.env.development? %>
-            <li><%= link_to "Help", help_path %></li>
-            <li><%= link_to "Contact", contact_path %></li>
+            <li class="d-md-none"><%= link_to "Help", help_path %></li>
+            <li class="d-md-none"><%= link_to "Contact", contact_path %></li>
+            <li class="d-md-none"><%= link_to "Home", root_path %></li>
           <% end %>
-          <li class="d-md-none"><%= link_to "Home", root_path %></li>
           <li><%= link_to "PKmapとは", about_path %></li>
         </ul>
       </nav>

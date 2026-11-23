@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def show
     # @user 13
-    # N+1問題対策 includes
+    # N+1問題対策
     @posts = @user.posts.includes(:reviews).page(params[:page]).per(6)
 
     respond_to do |format|
