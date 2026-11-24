@@ -28,7 +28,7 @@ class Post < ApplicationRecord
     # 存在チェック
     return 0.0 if reviews.empty?
 
-    # N+1 対策 float 小数点1桁
+    # N+1問題対策 float 小数点1桁
     (reviews.sum(&:score).to_f / reviews.size).round(1)
   end
 
