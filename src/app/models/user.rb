@@ -21,9 +21,10 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :review_posts, -> { distinct }, through: :reviews, source: :post
 
-  # 高評価 / 低評価 / userが高評価したレビュー / userが低評価したレビュー
+  # 高評価 / 低評価
   has_many :goods, dependent: :destroy
   has_many :bads, dependent: :destroy
+  # userが高評価したレビュー / userが低評価したレビュー
   # has_many :good_reviews, through: :goods, source: :review
   # has_many :bad_reviews, through: :bads, source: :review
 

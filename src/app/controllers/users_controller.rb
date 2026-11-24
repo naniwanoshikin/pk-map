@@ -28,16 +28,17 @@ class UsersController < ApplicationController
   # レビュー一覧
   def show_reviews
     # @user
-    # @userがレビューした投稿集
-    @user_review_posts = @user.review_posts
-                              .select('posts.*, reviews.created_at AS reviewed_at') # エラー回避
-                              .joins(:reviews) # レビューの日付を持ってくる
-                              .unscope(:order) # レビューモデルの自動ソートを無効化
-                              .order('reviews.created_at DESC') # レビュー順に時系列ソート
-                              .page(params[:page]).per(6)
+    @user_review_posts = @user.review_posts # @userがレビューした投稿集
+                              .joins(:reviews) # レビューの表を連結 日時を見れる様に
+                              .select('posts.*, reviews.created_at AS reviewed_at') # 投稿データ+レビュー日時(reviewd_at)だけを選ぶ
+                              .preload(:reviews, :user) # SQL減らす 一括で先読み
+                              .unscope(:order) # 元の並び順をリセット
+                              .order('reviews.created_at DESC') # レビュー順に並び替え
+                              .page(params[:page]).per(6) # 6件ずつ小分け
+                              .without_count # SQL減らす 「もっと見る」用の高速化
   end
 
-  # フォロー/フォロワー 一覧 render 共用
+  # フォロー/フォロワー一覧 共用
   def following
     @title = 'フォロー中'
     # @user
