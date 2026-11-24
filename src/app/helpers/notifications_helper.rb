@@ -13,10 +13,10 @@ module NotificationsHelper
     'good' => 'がレビューにいいねしました'
   }.freeze
 
-  # 未確認の通知を検索 (layouts/circle)
+  # 未読通知を検索 (layouts/circle)
   def unchecked_notifications
-    # @ メモ化 = 複数回呼ばれても1回しか評価しない SQL実行
-    @unchecked_notifications ||= current_user.passive_notifications.where(checked: false).to_a
+    # @ メモ化 = (header/footer)複数回呼ばれても1回しか評価しない
+    @unchecked_notifications ||= current_user.passive_notifications.where(checked: false).to_a # .to_aで初めてSQL実行が走る
   end
 
   # (notifications/_notification)
@@ -30,7 +30,7 @@ module NotificationsHelper
     NOTIFICATION_TEXTS[action]
   end
 
-  # 3. 遷移先の投稿（Post）を安全に取得
+  # 遷移先の投稿（Post）を安全に取得
   def notification_target_post(notification)
     notification.action == 'good' ? notification.review.post : notification.post
   end

@@ -84,7 +84,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "ユーザーレビューページのN+1対策とcounter_cacheを導入"
+	git commit -m "通知一覧ページ(notifications/index)の不要なクエリを削減"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
