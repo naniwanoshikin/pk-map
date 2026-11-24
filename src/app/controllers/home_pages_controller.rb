@@ -20,20 +20,28 @@ class HomePagesController < ApplicationController
   def about
     return unless user_signed_in?
 
+    # SQL対策 通知の件数を action ごとに1回でまとめて取得
+    notification_counts = Notification.unscope(:order).group(:action).count
+
+    # SQL対策 usersテーブルへの1回のアクセスでまとめて取得
+    users_count, posts_count, reviews_count = User.pick(
+      Arel.sql('COUNT(*), COALESCE(SUM(posts_count), 0), COALESCE(SUM(reviews_count), 0)')
+    )
+
     @stats = {
-      users_count: User.count,
-      posts_count: Post.count,
-      reviews_count: Review.count,
-      review_notifications_count: Notification.where(action: 'review').count
+      users_count: users_count, # SQL対策
+      posts_count: posts_count, # SQL対策
+      reviews_count: reviews_count, # SQL対策
+      review_notifications_count: notification_counts['review'] || 0
     }
 
     return unless Rails.env.development?
 
     @stats.merge!(
       goods_count: Good.count,
-      good_notifications_count: Notification.where(action: 'good').count,
+      good_notifications_count: notification_counts['good'] || 0,
       relationships_count: Relationship.count,
-      follow_notifications_count: Notification.where(action: 'follow').count
+      follow_notifications_count: notification_counts['follow'] || 0
     )
   end
 

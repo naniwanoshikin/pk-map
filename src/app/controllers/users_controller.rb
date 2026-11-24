@@ -4,16 +4,17 @@ class UsersController < ApplicationController
   # ログインを要求
   before_action :authenticate_user!, only: %i[destroy following followers]
   before_action :set_user, only: %i[show show_reviews following followers]
+  before_action :set_my_relationships, only: %i[index following followers]
   before_action :admin_user, only: :destroy
 
   # ユーザー一覧
   def index
-    @users = User.page(params[:page]).per(12)
+    @users = User.page(params[:page]).per(12).without_count
   end
 
   def show
     # @user 13
-    # N+1問題対策 includes / without_count
+    # SQL対策 includes / without_count
     @posts = @user.posts.includes(:reviews).page(params[:page]).per(6).without_count
 
     respond_to do |format|
@@ -38,18 +39,16 @@ class UsersController < ApplicationController
                               .without_count # SQL減らす 「もっと見る」用の高速化
   end
 
-  # フォロー/フォロワー一覧 共用
-  def following
-    @title = 'フォロー中'
-    # @user
-    @users = @user.following.page(params[:page]).per(7)
+  # 一覧共用 @user
+  def followers
+    @title = 'フォロワー'
+    @users = @user.followers.page(params[:page]).per(7)
     render 'show_follow'
   end
 
-  def followers
-    @title = 'フォロワー'
-    # @user
-    @users = @user.followers.page(params[:page]).per(7)
+  def following
+    @title = 'フォロー中'
+    @users = @user.following.page(params[:page]).per(7)
     render 'show_follow'
   end
 
@@ -65,6 +64,11 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find_by(id: params[:id])
     redirect_to root_url if @user.nil?
+  end
+
+  # SQL対策 フォロー中のデータを一括先読み
+  def set_my_relationships
+    @my_relationships = current_user.active_relationships.to_a if user_signed_in?
   end
 
   # 管理者かどうか確認

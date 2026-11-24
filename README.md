@@ -7,26 +7,38 @@
 ```
 
 ## 公開ページ
-[公開ページ](https://pkmap.onrender.com)です。表示にやや時間がかかります。<br>
+[公開ページ](https://pkmap.onrender.com)
+※無料プランのため初回起動にやや時間がかかります。<br>
 
 |スポット一覧|スポット詳細|
-|---|---|
+| :---: | :---: |
 |![map1-2](https://user-images.githubusercontent.com/67915047/158372178-f114d3a2-51a9-4719-8618-ad869ae6a670.jpg)|![map2-2](https://user-images.githubusercontent.com/67915047/159012821-92dee965-7d5c-4892-b2d0-cbc16d7b5c10.jpg)|
 
+<!-- ## パフォーマンス・運用コスト最適化の取り組み
+サーバーレスDB（Neon）との通信回数削減およびレスポンス高速化のため、Bullet によるクエリ監視のもと継続的なチューニングを実施しました。
 
+* **N+1問題の解消 & Eager Loading**: `includes` / `preload` の適切な使い分けや、一覧画面でのフォロー状態の一括先読みにより、無駄なSQL発行を徹底排除。
+* **キャッシュ・集計最適化**: `counter_cache` の導入、メモリ上での配列計算、kaminari の `.without_count` 活用により、主要画面のSQLクエリ数を大幅に削減。
+  * ユーザー詳細（`users/show`）: **19クエリ → 5クエリ（約74%削減）**
+  * レビュー一覧（`users/show_reviews`）: **18クエリ → 6クエリ（約67%削減）**
+  * フォロー・フォロワー一覧（`users/following`, `followers`）: **19クエリ → 6クエリ（約68%削減）**
+  * ユーザー一覧（`users/index`）: **16クエリ → 4クエリ（75%削減）**
+* **モダン化・技術的負債の解消**: Ruby 2.7 → 3.4、Rails 6.0 → 8.0 への段階的アップグレード、および jQuery / Webpacker / Slim の廃止（Turbo / Stimulus / ERB へ移行）を実施。 -->
+
+---
 ## 実装機能
 
 ### ユーザー関連
-* ユーザー登録、編集 Devise
+* ユーザー登録・編集 Devise
 * ゲストログイン
-* フォロー
+* フォロー / フォロワー
 
 ### スポット関連
-* 一覧画面
+* **一覧画面**
   * 地図 (ピン/吹き出し)
-  * 検索 オートコンプリート機能 Places API (New)
-  * ストリートビュー
-* 詳細画面
+  * 検索 オートコンプリート （Places API New）
+  * ストリートビュー （Street View Static API）
+* **詳細画面**
   <!-- * 国内の住所の抽出 -->
   * モーダル画面の開閉 Stimulus
   * レビューの投稿/削除 (非同期)
@@ -34,12 +46,15 @@
 ### その他
 * ドロワー Bootstrap
 * フラッシュ Stimulus
-* ページネーション kaminari (非同期)
-* 通知 (フォローなど)
+* N+1問題 Bullet
+* ページネーション （kaminari + Turbo Streams）
+* 通知 (フォロー・レビュー・いいね)
+
+---
 
 ## 使用技術
 ### フロントエンド
-* **マークアップ**: HTML / CSS / Sass / Bootstrap 5.3.8
+* **マークアップ / CSS**: ERB / Sass / Bootstrap 5.3.8
 * **言語**: JavaScript
 * **フレームワーク**: Stimulus
 * **ビルドツール**: webpack
@@ -52,8 +67,6 @@
 * **外部API**: Google Geocoding API
 * **静的解析**: RuboCop (rubocop-rails)
 * **テスト**: RSpec 6.1.5
-    <!-- * System spec -->
-    <!-- * Request spec -->
 ### データベース & インフラ
 * **データベース**: PostgreSQL 17 / Neon (Serverless PostgreSQL)
 * **開発環境**: Docker 20.10.17 / docker-compose 2.3.3
@@ -66,25 +79,24 @@
   <!-- * drawio -->
   <!-- ファビコン -->
   <!-- * Adobe Fresco -->
+  <!-- * System spec -->
+  <!-- * Request spec -->
 
-<!-- ## パフォーマンス・運用コスト最適化の取り組み
-* **N+1問題・クエリ削減**: Bullet gem によるクエリ監視のもと、`includes` による Eager Loading とメモリ上での配列処理、および `counter_cache` を導入し、サーバーレスDB（Neon）との通信回数とレスポンス時間を大幅に削減。
-* **モダン化・保守性向上**: Ruby 3.1 → 3.4、Rails 6.1 → 8.0 への段階的アップグレードおよび jQuery / Webpacker 廃止（Turbo / Stimulus 移行）を実施。 -->
+---
 
-## 廃止・移行済
-* **jQuery**: Vanilla JS / Stimulus へ
-* **Slim**: 標準の ERB へ戻す
-
-## 今後の課題
-* 通信量・API課金削減 / N+1対策 / 非推奨警告の修正
-* 地図 ボタン機能の実装
-* Rails8.1へバージョン上げる
-
-|  | 旧 | 現在 | 将来 |
+## バージョン移行履歴
+| 環境 | 旧 | 現在 | 今後 |
 | :--- | :--- | :--- | :--- |
 | **Rails** | 6.0.4 | **8.0.5** | 8.1 |
 | **Ruby** | 2.7.6 | **3.4.13** | - |
 | **Bootstrap** | 3.4.1, 4.6.1 | **5.3.8** | - |
-| **本番環境** | heroku 7.60.2 | Render | AWS (ECS)  |
-<!-- | **jQuery** | 3.6.0 | **廃止** | - | -->
+| **JS** | jQuery 3.6.0| **Stimulus** | -  |
+| **ビルド** | Webpacker | **webpack** | -  |
+| **テンプレート** | slim | **ERB** | -  |
+| **本番環境** | heroku 7.60.2 | Render + Neon | AWS (ECS)  |
 <!-- | **Rspec** | 3.10 | 6.1.5 | 7.x  | -->
+
+## 今後の課題
+* ホームフィード（地図・投稿一覧）のクエリ最適化 & 通信量・API課金削減
+* Rails バージョン上げ 非推奨警告の修正
+<!-- * 地図 ボタン機能の実装 -->
