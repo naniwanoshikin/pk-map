@@ -2,7 +2,7 @@
 
 class Post < ApplicationRecord
   default_scope -> { order(created_at: :desc) } # 要改善
-  belongs_to :user, counter_cache: true # posts_count SQL減らす
+  belongs_to :user, counter_cache: true # posts_count SQL対策
 
   # レビュー
   has_many :reviews, dependent: :destroy
