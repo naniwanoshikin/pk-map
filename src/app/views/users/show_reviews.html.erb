@@ -13,8 +13,8 @@
       <% end %>
       <h2 class="text-dark">レビュー一覧</h2>
     </div>
-
-    <% if @user_review_posts.any? %>
+    <%# SQL減らす %>
+    <% if @user_review_posts.present? %>
       <div id="user_posts_list" class="posts">
         <%# (posts/post) %>
         <%= render @user_review_posts %>
