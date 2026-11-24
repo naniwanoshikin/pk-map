@@ -5,7 +5,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-9 mx-auto">
-      <% if @notifications.any? %>
+      <% if @notifications.present? %>
         <ul id="notifications_list" class="list-unstyled">
           <%= render @notifications %>
         </ul>
