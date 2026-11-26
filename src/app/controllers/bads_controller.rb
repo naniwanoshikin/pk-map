@@ -8,9 +8,8 @@ class BadsController < ApplicationController
     @review = Review.find(params.expect(:review))
 
     current_user.bad(@review)
-
-    # @reviewを既に高評価していれば自動解除
-    current_user.goods.find_by(review_id: @review.id)&.destroy
+    # @reviewを既に高評価していれば自動解除 SQL対策
+    current_user.goods.delete_by(review_id: @review.id)
 
     respond_to do |format|
       format.html { redirect_back_or_to(root_url) }
