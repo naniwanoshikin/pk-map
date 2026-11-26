@@ -6,7 +6,7 @@ class HomePagesController < ApplicationController
 
     @post = current_user.posts.build
     @url = root_path
-    # (shared/feed) 検索結果フィード (地図のピン & タイムライン共通)
+    # (shared/feed) 投稿検索 (地図のピン & タイムライン共通)
     @feed_items = fetch_feed_items
 
     respond_to do |format|
@@ -50,9 +50,9 @@ class HomePagesController < ApplicationController
   private
 
   def fetch_feed_items
-    # Ransack 投稿検索
+    # Users(C)
     @q = current_user.feed.ransack(posts_search_params)
-    @q.result.includes(:user).page(params[:page]).per(6)
+    @q.result.includes(:user, :reviews).page(params[:page]).per(6)
   end
 
   def posts_search_params

@@ -1,6 +1,6 @@
 <%# (home_pages/home_login) %>
 
-<% if @feed_items.any? %>
+<% if @feed_items.present? %>
   <%# 非同期処理 = Fetch API %>
   <%= turbo_frame_tag "home_feed" do %>
     <div class="posts">

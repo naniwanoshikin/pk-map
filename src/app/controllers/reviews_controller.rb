@@ -40,6 +40,8 @@ class ReviewsController < ApplicationController
   def good_users
     # @review
     @review_good_users = @review.good_users.page(params[:page]).per(10)
+    # SQL対策 (users/_follow_form)で使用
+    @my_relationships = current_user.active_relationships.to_a if user_signed_in?
   end
 
   private

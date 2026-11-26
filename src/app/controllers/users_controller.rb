@@ -13,9 +13,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    # @user 13
-    # SQL対策 includes / without_count
-    @posts = @user.posts.includes(:reviews).page(params[:page]).per(6).without_count
+    # @user
+    @posts = @user.posts.includes(:reviews).page(params[:page]).per(6).without_count # SQL対策
 
     respond_to do |format|
       format.html
@@ -66,7 +65,7 @@ class UsersController < ApplicationController
     redirect_to root_url if @user.nil?
   end
 
-  # SQL対策 フォロー中のデータを一括先読み
+  # SQL対策 フォロー中のデータを一括先読み (users/_follow_form)で使用
   def set_my_relationships
     @my_relationships = current_user.active_relationships.to_a if user_signed_in?
   end

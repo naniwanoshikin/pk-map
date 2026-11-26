@@ -12,8 +12,11 @@
         <% if current_user?(@post.user) %>
           <%= button_to @post,
             method: :delete,
-            form: {class: "d-inline", data: { turbo: false}},
-            onclick: "return confirm('投稿を削除しますか？')",
+            form: {
+              class: "d-inline",
+              data: { turbo: false },
+              onsubmit: "return confirm('投稿を削除しますか？')"
+            },
             class: "btn btn-link p-0 border-0 text-danger" do %>
             <i class="fas fa-trash-alt fa-lg"></i>
           <% end %>
