@@ -12,7 +12,6 @@ class Review < ApplicationRecord
   # reviewを高評価したユーザー seedのみ
   has_many :good_users, through: :goods, source: :user
 
-
   # score : 1 ~ 5 の整数ok / 0 はエラー
   validates :score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
 end
