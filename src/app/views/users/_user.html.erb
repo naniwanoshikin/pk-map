@@ -1,4 +1,4 @@
-<%# (users/index), (users/show_follow) 個々のユーザー %>
+<%# 個々のユーザー (users/index), (users/show_follow), (reviews/good_users) %>
 <li class="d-flex align-items-center justify-content-between py-2 border-bottom">
   <%= link_to gravatar_for(user, size: 50), user %>
   <div class="flex-grow-1 min-width-0">
@@ -16,10 +16,10 @@
     </div>
   </div>
 
-  <%# [follow]ボタン Relationship(M) sharedへ (文脈が違う) 自身は表示しない %>
+  <%# [フォロー]ボタン 自身は表示しない Relationship(M) sharedへ (異なる文脈) %>
   <% if user_signed_in? && !current_user?(user) %>
     <div class="profile_follow m-0 ms-2">
-      <%= render 'follow_form', user: user %>
+      <%= render 'users/follow_form', user: user %>
     </div>
   <% end %>
 </li>

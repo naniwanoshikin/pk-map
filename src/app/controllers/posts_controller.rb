@@ -2,8 +2,8 @@
 
 class PostsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy new]
-  before_action :set_post_and_correct_post, only: :show
-  before_action :set_user_post_and_correct_user, only: :destroy
+  before_action :set_post, only: :show
+  before_action :set_current_user_post, only: :destroy
 
   # 投稿詳細
   def show
@@ -29,26 +29,15 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to root_url, notice: 'スポット情報が追加されました'
     else
-      # (shared/feed)
-      # @feed_items = current_user.feed.page(params[:page]).per(10)
-      # Rails 7(Turbo)
+      # Rails7 Turbo
       render :new, status: :unprocessable_content # 422エラー
     end
   end
 
   def destroy
-    # @post
     @post.destroy
-
-    respond_to do |format|
-      format.html do
-        flash[:alert] = '投稿を削除しました'
-        redirect_to root_url, status: :see_other
-      end
-      format.turbo_stream do
-        flash.now[:alert] = '投稿を削除しました'
-      end
-    end
+    flash[:alert] = '投稿を削除しました'
+    redirect_to root_url, status: :see_other
   end
 
   private
@@ -66,13 +55,13 @@ class PostsController < ApplicationController
   end
 
   # 投稿のない詳細画面は表示できない show
-  def set_post_and_correct_post
+  def set_post
     @post = Post.includes(:user).find_by(id: params[:id])
     redirect_to root_url if @post.nil?
   end
 
-  # 自分以外のユーザーの投稿は削除できない destroy
-  def set_user_post_and_correct_user
+  # 他人の投稿は削除できない destroy
+  def set_current_user_post
     @post = current_user.posts.find_by(id: params[:id])
     redirect_to root_url if @post.nil?
   end

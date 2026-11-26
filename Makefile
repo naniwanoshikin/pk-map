@@ -55,17 +55,13 @@ ms:
 seed:
 	docker-compose exec web rails db:seed
 
-# 本番用seed 未実施
-productseed:
-	docker-compose run --rm -e RAILS_ENV=production -e DATABASE_URL="$$DATABASE_URL" web bundle exec rails db:seed
-
 # Rubocop
 rub:
 	docker-compose exec web bundle exec rubocop
 rub1:
 	docker-compose exec web bundle exec rubocop db/seeds.rb
 rub2:
-	docker-compose exec web bundle exec rubocop app/controllers/*
+	docker-compose exec web bundle exec rubocop app/models/*
 
 # Rspec
 rspec:
@@ -84,7 +80,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "ユーザー一覧・フォロー関連ページとAboutページのクエリを最適化"
+	git commit -m "ホームフィードのSQL高速化とUser#feedのサブクエリ化、高評価・低評価(Good/Bad)解除のクエリ最適化"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

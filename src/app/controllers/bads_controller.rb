@@ -20,10 +20,12 @@ class BadsController < ApplicationController
 
   # 低評価を解除
   def destroy
-    bad = Bad.find_by(id: params[:id])
-    @review = bad&.review
+    # 自分の高評価のみ対象 & 連打対策
+    bad = current_user.bads.find_by(id: params[:id])
+    return head :no_content unless bad
 
-    current_user.unbad(@review) if @review
+    @review = bad.review
+    bad.destroy
 
     respond_to do |format|
       format.html { redirect_back_or_to(root_url) }

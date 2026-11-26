@@ -2,17 +2,14 @@
 
 class Review < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
-  belongs_to :user, counter_cache: true # SQL減らす
-  belongs_to :post, counter_cache: true # SQL減らす
+  belongs_to :user, counter_cache: true # SQL対策
+  belongs_to :post, counter_cache: true # SQL対策
 
-  # 高評価
+  # 高評価 / 低評価
   has_many :goods, dependent: :destroy
-  # 低評価
   has_many :bads, dependent: :destroy
   # reviewを高評価したユーザー
   has_many :good_users, through: :goods, source: :user
-  # reviewを低評価したユーザー
-  # has_many :bad_users, through: :bads, source: :user
 
   # 通知
   has_many :notifications, dependent: :destroy

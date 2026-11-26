@@ -23,9 +23,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :destroy] do
     member do
+      get :show_reviews
       get :following
       get :followers
-      get :show_reviews
     end
   end
 
