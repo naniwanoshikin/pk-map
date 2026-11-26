@@ -17,11 +17,12 @@ class GoodsController < ApplicationController
 
   # 高評価を解除
   def destroy
-    # 1. 連打対策
-    good = Good.find_by(id: params[:id])
-    @review = good&.review
-    # 2. 連打対策
-    current_user.ungood(@review) if @review
+    # 自分の高評価のみ対象 & 連打対策
+    good = current_user.goods.find_by(id: params[:id])
+    return head :no_content unless good
+
+    @review = good.review
+    good.destroy
 
     respond_to do |format|
       format.html { redirect_back_or_to(root_url) }

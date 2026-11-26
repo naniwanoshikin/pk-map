@@ -24,7 +24,7 @@ class User < ApplicationRecord
   # 高評価 / 低評価
   has_many :goods, dependent: :destroy
   has_many :bads, dependent: :destroy
-  # userが高評価したレビュー / userが低評価したレビュー
+  # userが高評価 / 低評価したレビュー
   # has_many :good_reviews, through: :goods, source: :review
   # has_many :bad_reviews, through: :bads, source: :review
 
@@ -87,17 +87,13 @@ class User < ApplicationRecord
   end
 
   # --- 6. インスタンスメソッド ---------------
-  # フィード HomePages(C)
+  # HomePages(C)_home @feeds = user.feed
   def feed
-    # - 自身がフォローしているユーザー
-    # - 自身
-    Post.left_outer_joins(user: :followers)
-        .where("
-        relationships.follower_id = :id
-        or posts.user_id = :id
-        ", { id: id })
-        .distinct
-        .includes(:user)
+    # サブクエリ: 自身がフォローしているユーザー&自身の投稿
+    following_ids = 'SELECT followed_id FROM relationships
+                     WHERE follower_id = :user_id'
+    # メインクエリ ()で埋め込んでるのがサブクエリ
+    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
   end
 
   # selfがuserをフォロー Relationship(C)
@@ -110,41 +106,38 @@ class User < ApplicationRecord
     active_relationships.find_by(followed_id: user.id)&.destroy
   end
 
-  # selfがuserをフォローしてたらtrue (users/_follow_form)
-  def following?(user)
-    following.include?(user)
-  end
+  # selfがuserをフォローしてたらtrue テストで使う？
+  # def following?(user)
+  #   following.include?(user)
+  # end
 
   # ------------------------------
-  # userがreviewを高評価 Goods(C)
+  # userがreviewを高評価,低評価 / Goods(C), Bads(C)
   def good(review)
     goods.create(review_id: review.id)
   end
 
-  # 高評価を解除 Goods(C)
-  def ungood(review)
-    goods.find_by(review_id: review.id)&.destroy
-  end
-
-  # selfがreviewを高評価してたらtrue (goods/good)
-  def good?(review)
-    review.goods.any? { |good| good.user_id == id }
-  end
-
-  # userがreviewを低評価 Bads(C)
   def bad(review)
     bads.create(review_id: review.id)
   end
 
-  # 低評価を解除 Bads(C)
-  def unbad(review)
-    bads.find_by(review_id: review.id)&.destroy
+  # selfがreviewを高,低評価してたらtrue (goods/good) (bads/bad)
+  def good?(review)
+    review.goods.any? { |good| good.user_id == id }
   end
 
-  # selfがreviewを低評価してたらtrue (bads/bad)
   def bad?(review)
     review.bads.any? { |bad| bad.user_id == id }
   end
+
+  # 高評価, 低評価を解除 / Goods(C), Bads(C)
+  # def ungood(review)
+  #   goods.find_by(review_id: review.id)&.destroy
+  # end
+
+  # def unbad(review)
+  #   bads.find_by(review_id: review.id)&.destroy
+  # end
 
   # --- 7. 通知 ---------------
 

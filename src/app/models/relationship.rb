@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Relationship < ApplicationRecord
-  # 「AさんがBさんをフォローした」とする counter_cache = SQL減らす
+  # 「AさんがBさんをフォローした」とする
   # フォローする側: Aさんの following_count が+1増える
   belongs_to :follower, class_name: 'User', counter_cache: :following_count
   # フォローされる側: Bさんの followers_count が+1増える
