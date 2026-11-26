@@ -7,7 +7,11 @@ class GoodsController < ApplicationController
   def create
     @review = Review.find(params.expect(:review))
 
-    perform_good(@review)
+    current_user.good(@review)
+    # @reviewを既に低評価していれば自動解除 SQL対策
+    current_user.bads.delete_by(review_id: @review.id)
+    # @review した人に通知
+    current_user.notify_to_good!(@review)
 
     respond_to do |format|
       format.html { redirect_back_or_to(root_url) }
@@ -28,16 +32,5 @@ class GoodsController < ApplicationController
       format.html { redirect_back_or_to(root_url) }
       format.turbo_stream
     end
-  end
-
-  private
-
-  def perform_good(review)
-    # @reviewを高評価
-    current_user.good(review)
-    # @review した人に通知
-    current_user.notify_to_good!(review)
-    # @reviewを既に低評価していれば自動解除
-    current_user.bads.find_by(review_id: review.id)&.destroy
   end
 end

@@ -112,16 +112,16 @@ class User < ApplicationRecord
   # end
 
   # ------------------------------
-  # userがreviewを高評価,低評価 / Goods(C), Bads(C)
+  # userがreviewを高,低評価 / Goods,Bads(C) (seeds.rb)
   def good(review)
-    goods.create(review_id: review.id)
+    goods.create(review: review)
   end
 
   def bad(review)
-    bads.create(review_id: review.id)
+    bads.create(review: review)
   end
 
-  # selfがreviewを高,低評価してたらtrue (goods/good) (bads/bad)
+  # selfがreviewを評価してたらtrue (goods/good) (bads/bad)
   def good?(review)
     review.goods.any? { |good| good.user_id == id }
   end
@@ -146,41 +146,34 @@ class User < ApplicationRecord
     # 過去にuserへのフォロー通知があれば、ここで処理終了 = 「ボタン連打」への備え
     return if active_notifications.exists?(visited_id: user.id, action: 'follow')
 
-    # なければ、userに通知を作成/保存する
+    # なければ、userに通知を作成/保存
     active_notifications.create(visited_id: user.id, action: 'follow')
   end
 
-  # selfがpostユーザーにreviewを通知 Reviews(C), seed
+  # selfがそのpostをしたユーザーにreviewを通知 複数回通知可 Reviews(C), seed
   def notify_to_review!(post, review_id)
     # そのpostにレビューしたことのある自分以外のユーザーid
-    visitor_ids = Review.where(post_id: post.id).where.not(user_id: id).unscope(:order).distinct.pluck(:user_id)
+    visitor_ids = post.reviews.where.not(user_id: id).unscope(:order).distinct.pluck(:user_id)
+    # 通知を送る相手のIDリスト 自分の投稿へは除外
+    # そのpostの過去のレビュアー全員へ、誰もレビューしていなければ投稿者へ
+    target_ids = (visitor_ids.presence || [post.user_id]) - [id]
+    return if target_ids.empty?
 
-    # そのpostに誰もレビューしていない場合
-    if visitor_ids.blank?
-      # 「投稿した本人（post.user_id）」に「あなたの投稿にレビューがつきましたよ」と通知
-      save_notify_review!(post, review_id, post.user_id)
-    else
-      # そのpostに過去にすでに他の人がレビューしている場合
-      visitor_ids.each do |visited_id|
-        # •過去にレビューを書いた全員（`visited_id`）に対して、「あなたがレビューした投稿に、新しく別のレビューが追加されました」と通知
-        save_notify_review!(post, review_id, visited_id)
-      end
+    # 投稿者に「あなたの投稿にレビューがつきました」
+    # 過去のレビュワー全員に「あなたがレビューした投稿に、新しく別のレビューが追加されました」
+    notifications = target_ids.map do |visited_id|
+      {
+        visitor_id: id,         # 自分
+        visited_id: visited_id, # レビュー先の投稿ユーザー
+        post_id: post.id,       # レビュー先の投稿
+        review_id: review_id,   # レビューid
+        action: 'review',
+        checked: false          # 未読
+      }
     end
-  end
-
-  # postへのreviewを投稿ユーザーに通知
-  def save_notify_review!(post, review_id, visited_id)
-    return if id == visited_id # 自分の投稿へのレビュー通知は除外
-
-    # 同じ投稿に複数回通知可
-    notification = active_notifications.new(
-      visited_id: visited_id, # レビュー先の投稿ユーザー
-      post_id: post.id,       # レビュー先の投稿
-      review_id: review_id,   # レビューid
-      action: 'review'
-    )
-    # 通知 無効な通知は除く
-    notification.save if notification.valid?
+    # 通知を保存 集めた配列を1回のSQLでまとめてDBへ登録
+    # rubocop:disable-next Rails/SkipsModelValidations
+    Notification.insert_all(notifications)
   end
 
   # selfがreview したユーザーにGood評価を通知 Goods(C)

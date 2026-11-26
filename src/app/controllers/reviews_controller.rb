@@ -48,6 +48,9 @@ class ReviewsController < ApplicationController
 
   # レビュー保存成功時
   def handle_create_success
+    # SQL対策 rails8 メモリにセット
+    @review.association(:goods).target = []
+    @review.association(:bads).target = []
     # 通知
     current_user.notify_to_review!(@post, @review.id)
     # 最新のレビュー一覧 elseのものとは異なる
