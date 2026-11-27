@@ -54,6 +54,10 @@ ms:
 	docker-compose exec web rails db:migrate:status
 seed:
 	docker-compose exec -e RAILS_ENV=development web rails db:seed:replant
+# 本番環境
+seed_pro:
+	docker compose run --rm --env-file .env.production -e RAILS_ENV=production web bundle exec rails db:seed
+
 # Rubocop
 rub:
 	docker-compose exec web bundle exec rubocop
@@ -79,7 +83,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "投稿削除時の関連通知をdependent: :delete_allで一括削除に最適化"
+	git commit -m "Relationships(C)_create/destroyのクエリ最適化と堅牢化"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

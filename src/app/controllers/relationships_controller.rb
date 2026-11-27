@@ -7,9 +7,11 @@ class RelationshipsController < ApplicationController
     # フォローされるユーザー
     @user = User.find(params.expect(:followed_id))
     # @userをフォロー
-    current_user.follow(@user)
+    relationship = current_user.follow(@user)
     # @userにフォロー通知
     current_user.notify_to_follow!(@user)
+
+    @my_relationships = [relationship] # (users/follow_form)_SQL対策（DB再検索の防止）
 
     respond_to do |format|
       format.html { redirect_to @user }
@@ -18,8 +20,14 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    @user = Relationship.find(params.expect(:id)).followed
-    current_user.unfollow(@user)
+    # 自分のフォロー関係に限定
+    relationship = current_user.active_relationships.find(params.expect(:id))
+    # フォロー相手のユーザー
+    @user = relationship.followed
+    relationship&.destroy
+
+    @my_relationships = []
+
     respond_to do |format|
       format.html { redirect_to @user }
       format.turbo_stream

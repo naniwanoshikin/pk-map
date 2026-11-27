@@ -1,6 +1,6 @@
 <%# [follow]ボタン (users/show),(shared/user)  %>
 <div id="follow_form_<%= user.id %>">
-  <%# SQL対策 Users(C)_@があれば配列から探し、なければDBに1回だけ聞く %>
+  <%# SQL対策 @は配列 Users(C), Relationship(C)より取得 なければDBに問い合わせ %>
   <% relationship = @my_relationships ? @my_relationships.find { |r| r.followed_id == user.id } : current_user.active_relationships.find_by(followed_id: user.id) %>
   <% if relationship %>
     <%# [フォロー中]ボタン %>
