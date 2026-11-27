@@ -53,8 +53,7 @@ md:
 ms:
 	docker-compose exec web rails db:migrate:status
 seed:
-	docker-compose exec web rails db:seed:replant
-
+	docker-compose exec -e RAILS_ENV=development web rails db:seed:replant
 # Rubocop
 rub:
 	docker-compose exec web bundle exec rubocop
@@ -80,7 +79,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "レビュー投稿時の通知一括保存(insert_all)と削除時の関連データ一括削除(delete_all)を実装"
+	git commit -m "User#feedのクエリ最適化（JOIN削減とIN句への統一）"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

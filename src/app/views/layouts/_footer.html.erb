@@ -36,9 +36,9 @@
           <% if Rails.env.development? %>
             <li class="d-md-none"><%= link_to "Help", help_path %></li>
             <li class="d-md-none"><%= link_to "Cont", contact_path %></li>
+            <%= tag.li link_to("ログイン", user_session_path, class: "active"), class: "d-md-none" unless current_page?(user_session_path) %>
           <% end %>
           <%= tag.li link_to("ホーム", root_path, class: "active"), class: "d-md-none" unless current_page?(root_path) %>
-          <%= tag.li link_to("ログイン", user_session_path, class: "active"), class: "d-md-none" unless current_page?(user_session_path) %>
           <li><%= link_to "PKmapとは", about_path %></li>
         </ul>
       </nav>

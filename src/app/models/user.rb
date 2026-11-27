@@ -89,11 +89,10 @@ class User < ApplicationRecord
   # --- 6. インスタンスメソッド ---------------
   # HomePages(C)_home @feeds = user.feed
   def feed
-    # サブクエリ: 自身がフォローしているユーザー&自身の投稿
-    following_ids = 'SELECT followed_id FROM relationships
-                     WHERE follower_id = :user_id'
+    # サブクエリ: 自身がフォローしているユーザー + 自身
+    target_user_ids = active_relationships.pluck(:followed_id) << id
     # メインクエリ ()で埋め込んでるのがサブクエリ
-    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+    Post.where(user_id: target_user_ids)
   end
 
   # selfがuserをフォロー Relationship(C)
@@ -176,12 +175,12 @@ class User < ApplicationRecord
     Notification.insert_all(notifications)
   end
 
-  # selfがreview したユーザーにGood評価を通知 Goods(C)
+  # selfがreviewユーザーに高評価を通知 Goods(C)
   def notify_to_good!(review)
-    # 1. 自分のreviewに対してのgood評価したなら、即終了（自分への通知を防ぐ）
+    # 1. 自身のreviewに対して評価は除外（自分への通知を防ぐ）
     return if id == review.user_id
 
-    # 2. 過去にreviewに対するgood通知が存在するなら、即終了（ボタン連打対策）
+    # 2. 過去にreviewに対する通知が存在するなら、即終了（ボタン連打対策）
     # review.user_id, # 評価されたレビューのユーザー
     # review.id,      # 評価されたレビューのid
     return if active_notifications.exists?(visited_id: review.user_id, review_id: review.id, action: 'good')

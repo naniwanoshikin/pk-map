@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   # ユーザー一覧
   def index
-    @users = User.page(params[:page]).per(12).without_count
+    @users = User.order(:id).page(params[:page]).per(12).without_count
   end
 
   def show
@@ -27,9 +27,9 @@ class UsersController < ApplicationController
 
   # レビュー一覧
   def show_reviews
-    # @user
-    @user_review_posts = @user.review_posts # @userがレビューした投稿集
-                              .joins(:reviews) # レビューの表を連結 日時を見れる様に
+    @user_review_posts = @user.review_posts # @userがレビューした投稿集 User(M)
+                              .joins(:reviews) # レビューの表を連結 日時を見れる様
+                              .where(reviews: { user_id: @user.id }) # @userがレビューした日時順
                               .select('posts.*, reviews.created_at AS reviewed_at') # 投稿データ+レビュー日時(reviewd_at)だけを選ぶ
                               .preload(:reviews, :user) # SQL減らす 一括で先読み
                               .unscope(:order) # 元の並び順をリセット
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
                               .without_count # SQL減らす 「もっと見る」用の高速化
   end
 
-  # 一覧共用 @user
+  # 一覧共用
   def followers
     @title = 'フォロワー'
     @users = @user.followers.page(params[:page]).per(7)
@@ -61,11 +61,16 @@ class UsersController < ApplicationController
 
   # 対象のユーザーが存在するか確認
   def set_user
-    @user = User.find_by(id: params[:id])
-    redirect_to root_url if @user.nil?
+    if user_signed_in? && current_user.id == params[:id].to_i
+      # 自分自身ならDB問い合わせをスキップ SQL対策
+      @user = current_user
+    else
+      @user = User.find_by(id: params[:id])
+      redirect_to root_url if @user.nil?
+    end
   end
 
-  # SQL対策 フォロー中のデータを一括先読み (users/_follow_form)で使用
+  # SQL対策 フォロー中のデータを一括先読み (users/_follow_form)
   def set_my_relationships
     @my_relationships = current_user.active_relationships.to_a if user_signed_in?
   end
