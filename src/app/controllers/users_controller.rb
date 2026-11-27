@@ -27,7 +27,6 @@ class UsersController < ApplicationController
 
   # レビュー一覧
   def show_reviews
-    # @user
     @user_review_posts = @user.review_posts # @userがレビューした投稿集 User(M)
                               .joins(:reviews) # レビューの表を連結 日時を見れる様
                               .where(reviews: { user_id: @user.id }) # @userがレビューした日時順
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
                               .without_count # SQL減らす 「もっと見る」用の高速化
   end
 
-  # 一覧共用 @user
+  # 一覧共用
   def followers
     @title = 'フォロワー'
     @users = @user.followers.page(params[:page]).per(7)

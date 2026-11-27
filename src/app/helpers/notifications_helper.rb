@@ -13,13 +13,10 @@ module NotificationsHelper
     'good' => 'がレビューにいいねしました'
   }.freeze
 
-  # 未読通知を検索 (layouts/circle)
+  # 未読通知を検索 (header/footer)▶︎(layouts/circle)
   def unchecked_notifications
-    # @ メモ化 = (header/footer)複数回呼ばれても1回しか評価しない
-    @unchecked_notifications ||= current_user.passive_notifications
-                                             .unscope(:order)
-                                             .where(checked: false)
-                                             .pluck(:id)
+    # @メモ化 = 複数回呼ばれても1回しか評価しない
+    @unchecked_notifications ||= current_user.passive_notifications.unscope(:order).where(checked: false).pluck(:id)
   end
 
   # (notifications/_notification)
