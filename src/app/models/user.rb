@@ -95,19 +95,22 @@ class User < ApplicationRecord
     Post.where(user_id: target_user_ids)
   end
 
-  # selfがuserをフォロー Relationship(C)
-  def follow(user)
-    following << user
+  # selfがother_userをフォロー Relationship(C)
+  def follow(other_user)
+    active_relationships.create(followed: other_user)
+  rescue ActiveRecord::RecordNotUnique
+    # 連打などで重複エラーが起きた場合のみ、既存のレコードを返す クエリ+1増
+    active_relationships.find_by(followed: other_user)
   end
 
-  # selfがuserをフォロー解除 Relationship(C)
-  def unfollow(user)
-    active_relationships.find_by(followed_id: user.id)&.destroy
-  end
+  # selfがother_userをフォロー解除
+  # def unfollow(other_user)
+  #   active_relationships.find_by(followed_id: other_user.id)&.destroy
+  # end
 
-  # selfがuserをフォローしてたらtrue テストで使う？
-  # def following?(user)
-  #   following.include?(user)
+  # selfがother_userをフォローしてたらtrue テストで使う？
+  # def following?(other_user)
+  #   following.include?(other_user)
   # end
 
   # ------------------------------
