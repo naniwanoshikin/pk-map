@@ -4,10 +4,8 @@ class Post < ApplicationRecord
   default_scope -> { order(created_at: :desc) } # 要改善
   belongs_to :user, counter_cache: true # posts_count SQL対策
 
-  # レビュー
   has_many :reviews, dependent: :destroy
-  # 通知
-  has_many :notifications, dependent: :destroy
+  has_many :notifications, dependent: :delete_all # SQL対策
 
   validates :address, presence: true
   validates :spot_quality, presence: true

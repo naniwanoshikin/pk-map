@@ -79,7 +79,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "User#feedのクエリ最適化（JOIN削減とIN句への統一）"
+	git commit -m "投稿削除時の関連通知をdependent: :delete_allで一括削除に最適化"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:
