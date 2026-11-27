@@ -79,7 +79,7 @@ rspech:
 # プッシュ
 p:
 	git add .
-	git commit -m "ログインユーザー自身の重複SELECTを削減と、show_reviews の対象レビュー絞り込み追加と各一覧のクエリ整理"
+	git commit -m "User#feedのクエリ最適化（JOIN削減とIN句への統一）"
 	git push origin map
 # ▶︎GitHub上で手動操作 Pullrequ & マージ
 me:

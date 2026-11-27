@@ -73,7 +73,7 @@ Rails.application.configure do
   # Docker環境でも確実に変更を検知できるようにする
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  # Bullet
+  # SQL対策
   config.after_initialize do
     Bullet.enable = true
     # Bullet.alert = true          # ブラウザにポップアップで警告を出す

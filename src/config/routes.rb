@@ -43,4 +43,7 @@ Rails.application.routes.draw do
   resources :goods,         only: [:create, :destroy]
   resources :bads,          only: [:create, :destroy]
   resources :notifications, only: :index
+
+  # Chrome DevTools が自動リクエスト （204 No Content）
+  get '/.well-known/*path', to: proc { [204, {}, ['']] } if Rails.env.development?
 end
